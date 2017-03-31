@@ -47,6 +47,29 @@
                 "title": "metaGo:selection"
             }
         ],
+        "keybindings": [
+            {
+                "command": "extension.metaGo.input.stop",
+                "key": "escape",
+                "when": "editorTextFocus && metaGoInput"
+            },
+            {
+                "command": "extension.metaGo",
+                "key": "ctrl+l",
+                "mac": "ctrl+l",
+                "when": "editorTextFocus"
+            },
+            {
+                "key": "ctrl+shift+l",
+                "command": "extension.metaGo.selection"
+            },
+            {
+                "command": "extension.metaGo.center",
+                "key": "shift+space",
+                "mac": "shift+space",
+                "when": "editorTextFocus"
+            }
+        ],
         "configuration": {
             "title": "metaseed metaGo",
             "type": "object",
@@ -104,14 +127,7 @@
                     "default": 40
                 }
             }
-        },
-        "keybindings": [
-            {
-                "command": "extension.metaGo.input.stop",
-                "key": "escape",
-                "when": "editorTextFocus && metaGoInput"
-            }
-        ]
+        }
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",

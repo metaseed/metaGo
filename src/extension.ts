@@ -3,7 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { MetaGo } from './metago';
-
+import { CenterEditor } from './centerEditor';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -13,6 +13,8 @@ export function activate(context: vscode.ExtensionContext) {
     console.log('Congratulations, your extension "metago" is now active!');
     let metaGo = new MetaGo();
     metaGo.configure(context);
+    let centerEditor = new CenterEditor();
+    centerEditor.activate(context);
 }
 
 // this method is called when your extension is deactivated
