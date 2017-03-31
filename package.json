@@ -56,17 +56,16 @@
             {
                 "command": "extension.metaGo",
                 "key": "ctrl+l",
-                "mac": "ctrl+l",
                 "when": "editorTextFocus"
             },
             {
+                "command": "extension.metaGo.selection",
                 "key": "ctrl+shift+l",
-                "command": "extension.metaGo.selection"
+                "when": "editorTextFocus"
             },
             {
                 "command": "extension.metaGo.center",
                 "key": "shift+space",
-                "mac": "shift+space",
                 "when": "editorTextFocus"
             }
         ],
