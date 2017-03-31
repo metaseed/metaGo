@@ -18,7 +18,7 @@ export interface ILineIndexes {
     indexes: IIndexes;
 }
 
-export class MetaGo {
+export class MetaJumper {
     private config: Config = new Config();
     private placeholderCalculus: PlaceHolderCalculus = new PlaceHolderCalculus();
     private placeHolderDecorator: PlaceHolderDecorator = new PlaceHolderDecorator();
