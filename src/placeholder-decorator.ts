@@ -56,13 +56,10 @@ export class PlaceHolderDecorator {
     }
 
     private buildUri = (code: string) => {
-        let cf = this.config.placeholder;
+               let cf = this.config.placeholder;
         let key = this.config.placeholder.upperCase ? code.toUpperCase() : code.toLowerCase();
         let svg = 
-        `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${cf.width} ${cf.height}" height="${cf.height}" width="${cf.width}">
-            <rect width="${cf.width}" height="${cf.height}" rx="2" ry="2" style="fill: ${cf.backgroundColor};"></rect>
-            <text font-family="${cf.fontFamily}" "font-weight"="${cf.fontWeight}" font-size="${cf.fontSize}px" fill="${cf.color}" x="${cf.x}" y="${cf.y}">${key}</text>
-        </svg>`
+        `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${cf.width} ${cf.height}" height="${cf.height}" width="${cf.width}"><rect width="${cf.width}" height="${cf.height}" rx="2" ry="2" style="fill: ${cf.backgroundColor};"/><text font-family="${cf.fontFamily}" font-weight="${cf.fontWeight}" font-size="${cf.fontSize}px" fill="${cf.color};" x="${cf.x}" y="${cf.y}">${key}</text></svg>`;
         return vscode.Uri.parse(svg);
     }
 

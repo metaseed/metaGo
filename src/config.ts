@@ -5,7 +5,6 @@ export class Config {
 
 class PlaceHolderConfig {
     backgroundColor: string = "yellow";
-
     color: string = "black";
     border: string = "dotted thin black";
 
