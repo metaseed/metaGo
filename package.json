@@ -15,16 +15,87 @@
     ],
     "main": "./out/src/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
-        }]
+        "commands": [
+            {
+                "command": "extension.metaGo",
+                "title": "metaGo:GoTo"
+            },
+            {
+                "command": "extension.metaGo.selection",
+                "title": "metaGo:selection"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",
         "compile": "tsc -watch -p ./",
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test"
+    },
+    "keybindings": [
+      {
+        "command": "extension.metaGo.input.stop",
+        "key": "escape",
+        "when": "editorTextFocus && metaGoInput"
+      }
+    ],
+    "configuration":{
+        "title":"metaGo",
+        "type":"object",
+        "properties":{
+            "metaGo.placeholder.backgroundColor": {
+          "type": "string",
+          "default": "yellow"
+        },
+        "metaGo.placeholder.color": {
+          "type": "string",
+          "default": "black"
+        },
+        "metaGo.placeholder.border": {
+          "type": "string",
+          "default": "dotted thin black"
+        },
+        "metaGo.placeholder.width": {
+          "type": "number",
+          "default": 12
+        },
+        "metaGo.placeholder.height": {
+          "type": "number",
+          "default": 14
+        },
+        "metaGo.placeholder.fontSize": {
+          "type": "number",
+          "default": 14
+        },
+        "metaGo.placeholder.textPosX": {
+          "type": "number",
+          "default": 2
+        },
+        "metaGo.placeholder.textPosY": {
+          "type": "number",
+          "default": 12
+        },
+        "metaGo.placeholder.fontWeight": {
+          "type": "string",
+          "default": "normal"
+        },
+        "metaGo.placeholder.fontFamily": {
+          "type": "string",
+          "default": "Consolas"
+        },
+        "metaGo.placeholder.upperCase": {
+          "type": "boolean",
+          "default": false
+        },
+        "metaGo.finder.pattern": {
+          "type": "string",
+          "default": "[ ,-.{_(\"'<\\[]"
+        },
+        "metaGo.finder.range": {
+          "type": "number",
+          "default": 40
+        }
+        }
     },
     "devDependencies": {
         "typescript": "^2.2.2",
