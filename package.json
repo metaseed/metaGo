@@ -46,6 +46,71 @@
                 "command": "extension.metaGo.selection",
                 "title": "metaGo:selection"
             }
+        ],
+        "configuration": {
+            "title": "metaseed metaGo",
+            "type": "object",
+            "properties": {
+                "metaGo.placeholder.backgroundColor": {
+                    "type": "string",
+                    "default": "red"
+                },
+                "metaGo.placeholder.color": {
+                    "type": "string",
+                    "default": "black"
+                },
+                "metaGo.placeholder.border": {
+                    "type": "string",
+                    "default": "dotted thin black"
+                },
+                "metaGo.placeholder.width": {
+                    "type": "number",
+                    "default": 12
+                },
+                "metaGo.placeholder.height": {
+                    "type": "number",
+                    "default": 14
+                },
+                "metaGo.placeholder.fontSize": {
+                    "type": "number",
+                    "default": 14
+                },
+                "metaGo.placeholder.x": {
+                    "type": "number",
+                    "default": 2
+                },
+                "metaGo.placeholder.y": {
+                    "type": "number",
+                    "default": 12
+                },
+                "metaGo.placeholder.fontWeight": {
+                    "type": "string",
+                    "default": "normal"
+                },
+                "metaGo.placeholder.fontFamily": {
+                    "type": "string",
+                    "default": "Consolas"
+                },
+                "metaGo.placeholder.upperCase": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "metaGo.finder.pattern": {
+                    "type": "string",
+                    "default": "[ ,-.{_(\"'<\\/[+]"
+                },
+                "metaGo.finder.range": {
+                    "type": "number",
+                    "default": 40
+                }
+            }
+        },
+        "keybindings": [
+            {
+                "command": "extension.metaGo.input.stop",
+                "key": "escape",
+                "when": "editorTextFocus && metaGoInput"
+            }
         ]
     },
     "scripts": {
@@ -53,71 +118,6 @@
         "compile": "tsc -watch -p ./",
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test"
-    },
-    "keybindings": [
-        {
-            "command": "extension.metaGo.input.stop",
-            "key": "escape",
-            "when": "editorTextFocus && metaGoInput"
-        }
-    ],
-    "configuration": {
-        "title": "metaseed metaGo",
-        "type": "object",
-        "properties": {
-            "metaGo.placeholder.backgroundColor": {
-                "type": "string",
-                "default": "red"
-            },
-            "metaGo.placeholder.color": {
-                "type": "string",
-                "default": "black"
-            },
-            "metaGo.placeholder.border": {
-                "type": "string",
-                "default": "dotted thin black"
-            },
-            "metaGo.placeholder.width": {
-                "type": "number",
-                "default": 12
-            },
-            "metaGo.placeholder.height": {
-                "type": "number",
-                "default": 14
-            },
-            "metaGo.placeholder.fontSize": {
-                "type": "number",
-                "default": 14
-            },
-            "metaGo.placeholder.x": {
-                "type": "number",
-                "default": 2
-            },
-            "metaGo.placeholder.y": {
-                "type": "number",
-                "default": 12
-            },
-            "metaGo.placeholder.fontWeight": {
-                "type": "string",
-                "default": "normal"
-            },
-            "metaGo.placeholder.fontFamily": {
-                "type": "string",
-                "default": "Consolas"
-            },
-            "metaGo.placeholder.upperCase": {
-                "type": "boolean",
-                "default": false
-            },
-            "metaGo.finder.pattern": {
-                "type": "string",
-                "default": "[ ,-.{_(\"'<\\/[+]"
-            },
-            "metaGo.finder.range": {
-                "type": "number",
-                "default": 40
-            }
-        }
     },
     "devDependencies": {
         "typescript": "^2.2.2",

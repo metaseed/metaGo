@@ -66,25 +66,25 @@ export class MetaGo {
     }
 
     private loadConfig = () => {
-        // let config = vscode.workspace.getConfiguration("metaGo");
+        let config = vscode.workspace.getConfiguration("metaGo");
 
-        // this.config.placeholder.backgroundColor = config.get<string>("placeholder.backgroundColor");
-        // this.config.placeholder.color = config.get<string>("placeholder.color");
-        // this.config.placeholder.border = config.get<string>("placeholder.border");
+        this.config.placeholder.backgroundColor = config.get<string>("placeholder.backgroundColor");
+        this.config.placeholder.color = config.get<string>("placeholder.color");
+        this.config.placeholder.border = config.get<string>("placeholder.border");
 
-        // this.config.placeholder.width = config.get<number>("placeholder.width");
-        // this.config.placeholder.height = config.get<number>("placeholder.height");
+        this.config.placeholder.width = config.get<number>("placeholder.width");
+        this.config.placeholder.height = config.get<number>("placeholder.height");
 
-        // this.config.placeholder.x = config.get<number>("placeholder.x");
-        // this.config.placeholder.y = config.get<number>("placeholder.y");
+        this.config.placeholder.x = config.get<number>("placeholder.x");
+        this.config.placeholder.y = config.get<number>("placeholder.y");
 
-        // this.config.placeholder.fontSize = config.get<number>("placeholder.fontSize");
-        // this.config.placeholder.fontWeight = config.get<string>("placeholder.fontWeight");
-        // this.config.placeholder.fontFamily = config.get<string>("placeholder.fontFamily");
-        // this.config.placeholder.upperCase = config.get<boolean>("placeholder.upperCase");
+        this.config.placeholder.fontSize = config.get<number>("placeholder.fontSize");
+        this.config.placeholder.fontWeight = config.get<string>("placeholder.fontWeight");
+        this.config.placeholder.fontFamily = config.get<string>("placeholder.fontFamily");
+        this.config.placeholder.upperCase = config.get<boolean>("placeholder.upperCase");
 
-        // this.config.finder.pattern = config.get<string>("finder.pattern");
-        // this.config.finder.range = config.get<number>("finder.range");
+        this.config.finder.pattern = config.get<string>("finder.pattern");
+        this.config.finder.range = config.get<number>("finder.range");
 
         this.placeholderCalculus.load(this.config);
         this.placeHolderDecorator.load(this.config);
