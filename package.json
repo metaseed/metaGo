@@ -67,6 +67,26 @@
                 "command": "extension.metaGo.center",
                 "key": "shift+space",
                 "when": "editorTextFocus"
+            },
+            {
+                "key": "alt+home",
+                "command": "spaceBlockJumper.moveUp",
+                "when": "editorTextFocus"
+            },
+            {
+                "key": "alt+shift+home",
+                "command": "spaceBlockJumper.selectUp",
+                "when": "editorTextFocus"
+            },
+            {
+                "key": "alt+end",
+                "command": "spaceBlockJumper.moveDown",
+                "when": "editorTextFocus"
+            },
+            {
+                "key": "alt+shift+end",
+                "command": "spaceBlockJumper.selectDown",
+                "when": "editorTextFocus"
             }
         ],
         "configuration": {
