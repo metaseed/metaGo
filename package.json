@@ -139,7 +139,11 @@
                     "type": "boolean",
                     "default": false
                 },
-                "metaGo.finder.pattern": {
+                "metaGo.finder.findAllMode": {
+                    "type": "string",
+                    "default": "on"
+                },
+                "metaGo.finder.wordSeparatorPattern": {
                     "type": "string",
                     "default": "[ ,-.{_(\"'<\\/[+]"
                 },

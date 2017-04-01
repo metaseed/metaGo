@@ -23,6 +23,7 @@ class PlaceHolderConfig {
 
 class FinderConfig {
     characters: string[] = ["k", "j", "d", "f", "l", "s", "a", "h", "g", "i", "o", "n", "u", "r", "v", "c", "w", "e", "x", "m", "b", "p", "q", "t", "y", "z"];
-    pattern: string = "[ ,-.{_(\"'<\\/[+]";
+    findAllMode:string = 'on';
+    wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";
     range: number = 40;
 }

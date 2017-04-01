@@ -83,7 +83,8 @@ export class MetaJumper {
         this.config.placeholder.fontFamily = config.get<string>("placeholder.fontFamily");
         this.config.placeholder.upperCase = config.get<boolean>("placeholder.upperCase");
 
-        this.config.finder.pattern = config.get<string>("finder.pattern");
+        this.config.finder.findAllMode = config.get<string>("finder.findAllMode");
+        this.config.finder.wordSeparatorPattern = config.get<string>("finder.wordSeparatorPattern");
         this.config.finder.range = config.get<number>("finder.range");
 
         this.placeholderCalculus.load(this.config);
@@ -186,7 +187,11 @@ export class MetaJumper {
 
         for (let i = selection.startLine; i < selection.lastLine; i++) {
             let line = editor.document.lineAt(i);
-            let indexes = this.indexesOf(line.text, value);
+            let indexes: number[];
+            if (this.config.finder.findAllMode === 'on')
+                indexes = this.indexesOf(line.text, value);
+            else
+                indexes = this.indexesOfFirstChar(line.text, value);
             lineIndexes.count += indexes.length;
             lineIndexes.indexes[i] = indexes;
         }
@@ -201,7 +206,7 @@ export class MetaJumper {
 
         let indices = [];
         for (let index = 0; index < str.length; index++) {
-            if(char.toLowerCase() === str[index]){
+            if (char.toLowerCase() === str[index]) {
                 indices.push(index);
             }
         }
@@ -215,7 +220,7 @@ export class MetaJumper {
 
         let indices = [];
         //splitted by spaces
-        let words = str.split(new RegExp(this.config.finder.pattern));
+        let words = str.split(new RegExp(this.config.finder.wordSeparatorPattern));
         //current line index
         let index = 0;
 
