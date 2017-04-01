@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 
-export
-    class CenterEditor {
+export class CenterEditor {
     activate(context: vscode.ExtensionContext) {
         let disposable = vscode.commands.registerCommand('center-editor-window.center', () => {
             // The code you place here will be executed every time your command is executed

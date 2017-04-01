@@ -2,7 +2,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { MetaJumper } from './metajumper';
+import { MetaJumper } from './metajumper/metajumper';
 import { CenterEditor } from './center-editor';
 import { SpaceBlockJumper } from './space-block-jumper';
 // this method is called when your extension is activated

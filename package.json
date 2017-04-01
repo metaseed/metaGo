@@ -10,13 +10,15 @@
     "keywords": [
         "jump",
         "jumpy",
-        "metago",
         "goto",
+        "shortcut",
         "move",
         "cursor",
-        "navagition",
+        "navigation",
         "EasyMotion",
-        "metaGo"
+        "metaGo",
+        "center screen",
+        "space jumper"
     ],
     "repository": {
         "type": "git",

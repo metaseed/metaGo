@@ -1,4 +1,4 @@
-import { Config } from "./config";
+import { Config } from "../config";
 import { InlineInput } from "./inline-input";
 import { PlaceHolder, PlaceHolderCalculus } from "./placeholder-calculus";
 import { PlaceHolderDecorator } from "./placeholder-decorator";
@@ -31,7 +31,7 @@ export class MetaJumper {
             if (!this.isJumping) {
                 this.isJumping = true;
                 this.jump((editor, placeholder) => {
-                    editor.selection = new vscode.Selection(new vscode.Position(placeholder.line, placeholder.character), new vscode.Position(placeholder.line, placeholder.character));
+                    editor.selection = new vscode.Selection(new vscode.Position(placeholder.line, placeholder.lineIndex), new vscode.Position(placeholder.line, placeholder.lineIndex));
                 })
                     .then(() => {
                         this.isJumping = false;
@@ -46,7 +46,7 @@ export class MetaJumper {
             if (!this.isJumping) {
                 this.isJumping = true;
                 this.jump((editor, placeholder) => {
-                    editor.selection = new vscode.Selection(new vscode.Position(editor.selection.active.line, editor.selection.active.character), new vscode.Position(placeholder.line, placeholder.character));
+                    editor.selection = new vscode.Selection(new vscode.Position(editor.selection.active.line, editor.selection.active.character), new vscode.Position(placeholder.line, placeholder.lineIndex));
                 })
                     .then(() => {
                         this.isJumping = false;
@@ -187,9 +187,7 @@ export class MetaJumper {
         for (let i = selection.startLine; i < selection.lastLine; i++) {
             let line = editor.document.lineAt(i);
             let indexes = this.indexesOf(line.text, value);
-
             lineIndexes.count += indexes.length;
-
             lineIndexes.indexes[i] = indexes;
         }
 
@@ -197,6 +195,20 @@ export class MetaJumper {
     }
 
     private indexesOf = (str: string, char: string): number[] => {
+        if (char.length === 0) {
+            return [];
+        }
+
+        let indices = [];
+        for (let index = 0; index < str.length; index++) {
+            if(char.toLowerCase() === str[index]){
+                indices.push(index);
+            }
+        }
+        return indices;
+    }
+
+    private indexesOfFirstChar = (str: string, char: string): number[] => {
         if (char.length === 0) {
             return [];
         }

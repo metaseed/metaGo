@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { PlaceHolder } from './placeholder-calculus';
-import { Config } from './config';
+import { Config } from '../config';
 
 export class PlaceHolderDecorator {
     private config: Config;
@@ -23,7 +23,7 @@ export class PlaceHolderDecorator {
         let options = [];
         placeholders.forEach((placeholder) => {
             let option = {
-                range: new vscode.Range(placeholder.line, placeholder.character + 1, placeholder.line, placeholder.character + 1),
+                range: new vscode.Range(placeholder.line, placeholder.lineIndex + 1, placeholder.line, placeholder.lineIndex + 1),
                 renderOptions: {
                     dark: {
                         after: {

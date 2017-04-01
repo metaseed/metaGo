@@ -1,14 +1,14 @@
-import { Config } from './config';
+import { Config } from '../config';
 import * as vscode from 'vscode';
 import * as _ from 'lodash';
-import { ILineIndexes, IIndexes } from './metago';
+import { ILineIndexes, IIndexes } from './metajumper';
 
 
 export class PlaceHolder {
     index: number;
     key: string;
     line: number;
-    character: number;
+    lineIndex: number;
     root?: PlaceHolder;
     children: PlaceHolder[] = [];
 }
@@ -37,7 +37,7 @@ export class PlaceHolderCalculus {
                     break;
                 }
 
-                let character = lineIndex[i];
+                let indexInLine = lineIndex[i];
 
                 if (count >= this.config.finder.characters.length) {
                     for (let y = candidate; y < placeholders.length; y++) {
@@ -67,7 +67,7 @@ export class PlaceHolderCalculus {
 
                 placeholder.key = this.config.finder.characters[placeholder.index];
                 placeholder.line = line;
-                placeholder.character = character;
+                placeholder.lineIndex = indexInLine;
 
                 if (!map[placeholder.index])
                     map[placeholder.index] = [];
@@ -96,7 +96,7 @@ export class PlaceHolderCalculus {
                 placeholder.index = y;
                 placeholder.key = this.config.finder.characters[placeholder.index];
                 placeholder.line = mappedPlaceholder.line;
-                placeholder.character = mappedPlaceholder.character;
+                placeholder.lineIndex = mappedPlaceholder.lineIndex;
 
                 // add a copy of placeholder as children of root
                 root.children.push(placeholder);
