@@ -1,6 +1,6 @@
 import { Config } from "../config";
 import { InlineInput } from "./inline-input";
-import { DecorationModel, DecorationModelManager } from "./decoration-model";
+import { DecorationModel, DecorationModelManager } from "./decoration-model-manager";
 import { PlaceHolderDecorator } from "./decoration";
 import * as _ from "lodash";
 import * as vscode from "vscode";

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { DecorationModel } from './decoration-model';
+import { DecorationModel } from './decoration-model-manager';
 import { Config } from '../config';
 
 export class PlaceHolderDecorator {
