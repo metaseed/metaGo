@@ -97,7 +97,7 @@
             "properties": {
                 "metaGo.placeholder.backgroundColor": {
                     "type": "string",
-                    "default": "red"
+                    "default": "yellow"
                 },
                 "metaGo.placeholder.color": {
                     "type": "string",
@@ -109,7 +109,7 @@
                 },
                 "metaGo.placeholder.width": {
                     "type": "number",
-                    "default": 7
+                    "default": 8
                 },
                 "metaGo.placeholder.height": {
                     "type": "number",
@@ -117,7 +117,7 @@
                 },
                 "metaGo.placeholder.fontSize": {
                     "type": "number",
-                    "default": 11
+                    "default": 13
                 },
                 "metaGo.placeholder.x": {
                     "type": "number",
