@@ -15,19 +15,23 @@ export class PlaceHolderDecorator {
     addDecorations = (editor: vscode.TextEditor, placeholders: DecorationModel[]) => {
         let decorationType = this.createTextEditorDecorationType(1);
         let decorationType2 = this.createTextEditorDecorationType(2);
+        this.decorations.push(decorationType);
+        this.decorations.push(decorationType2);
+
         let options = [];
         let options2 = [];
         placeholders.forEach((placeholder) => {
             let len = placeholder.code.length;
-            let option = this.createDecorationOptions(null, placeholder.line, placeholder.lineIndex + 1, placeholder.lineIndex + 1, placeholder.code);
-            let option2 = this.createDecorationOptions(null, placeholder.line, placeholder.lineIndex + 1, placeholder.lineIndex + 2, placeholder.code);
-            if (len === 1)
+            let option: any;
+            if (len === 1) {
+                option = this.createDecorationOptions(null, placeholder.line, placeholder.lineIndex + 1, placeholder.lineIndex + 1, placeholder.code);
                 options.push(option);
-            else
-                options2.push(option2);
+            }
+            else {
+                option = this.createDecorationOptions(null, placeholder.line, placeholder.lineIndex + 1, placeholder.lineIndex + len, placeholder.code);
+                options2.push(option);
+            }
         })
-        this.decorations.push(decorationType);
-        this.decorations.push(decorationType2);
         editor.setDecorations(decorationType, options);
         editor.setDecorations(decorationType2, options2);
     }
@@ -42,9 +46,9 @@ export class PlaceHolderDecorator {
     private createTextEditorDecorationType = (charsToOffset: number) => {
         return vscode.window.createTextEditorDecorationType({
             after: {
-                margin: `0 0 0 ${charsToOffset * -7}px`,
+                margin: `0 0 0 ${charsToOffset * (-this.config.placeholder.width)}px`,
                 height: `${this.config.placeholder.height}px`,
-                width: `${this.config.placeholder.width}px`
+                width: `${charsToOffset * this.config.placeholder.width}px`
             }
         });
     }
@@ -82,9 +86,7 @@ export class PlaceHolderDecorator {
     private buildUri = (code: string) => {
         let cf = this.config.placeholder;
         let key = this.config.placeholder.upperCase ? code.toUpperCase() : code.toLowerCase();
-        let width = cf.width;
-        if (code.length > 1)
-            width = code.length * (width - 2);
+        let width = code.length * cf.width;
         let svg =
             `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${cf.height}" height="${cf.height}" width="${width}"><rect width="${width}" height="${cf.height}" rx="2" ry="2" style="fill: ${cf.backgroundColor};"/><text font-family="${cf.fontFamily}" font-weight="${cf.fontWeight}" font-size="${cf.fontSize}px" fill="${cf.color};" x="${cf.x}" y="${cf.y}">${key}</text></svg>`;
         return vscode.Uri.parse(svg);

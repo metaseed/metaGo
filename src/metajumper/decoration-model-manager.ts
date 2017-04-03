@@ -94,7 +94,7 @@ export class DecorationModelManager {
 
                 let model = new DecorationModel();
                 model.index = y;
-                model.code = this.config.finder.characters[model.index];
+                model.code = this.config.finder.characters[model.index];// 2 characters support
                 model.line = mappedModel.line;
                 model.lineIndex = mappedModel.lineIndex;
                 mappedModel.code += model.code;

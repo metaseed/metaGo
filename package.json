@@ -109,23 +109,23 @@
                 },
                 "metaGo.placeholder.width": {
                     "type": "number",
-                    "default": 12
+                    "default": 7
                 },
                 "metaGo.placeholder.height": {
                     "type": "number",
-                    "default": 14
+                    "default": 13
                 },
                 "metaGo.placeholder.fontSize": {
                     "type": "number",
-                    "default": 14
+                    "default": 11
                 },
                 "metaGo.placeholder.x": {
                     "type": "number",
-                    "default": 2
+                    "default": 1
                 },
                 "metaGo.placeholder.y": {
                     "type": "number",
-                    "default": 12
+                    "default": 10
                 },
                 "metaGo.placeholder.fontWeight": {
                     "type": "string",
