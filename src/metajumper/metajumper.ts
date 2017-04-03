@@ -1,7 +1,7 @@
 import { Config } from "../config";
 import { InlineInput } from "./inline-input";
-import { PlaceHolder, PlaceHolderCalculus } from "./placeholder-calculus";
-import { PlaceHolderDecorator } from "./placeholder-decorator";
+import { DecorationModel, DecorationModelManager } from "./decoration-model";
+import { PlaceHolderDecorator } from "./decoration";
 import * as _ from "lodash";
 import * as vscode from "vscode";
 
@@ -20,7 +20,7 @@ export interface ILineIndexes {
 
 export class MetaJumper {
     private config: Config = new Config();
-    private placeholderCalculus: PlaceHolderCalculus = new PlaceHolderCalculus();
+    private placeholderCalculus: DecorationModelManager = new DecorationModelManager();
     private placeHolderDecorator: PlaceHolderDecorator = new PlaceHolderDecorator();
     private isJumping: boolean = false;
 
@@ -67,7 +67,7 @@ export class MetaJumper {
         this.placeHolderDecorator.load(this.config);
     }
 
-    private jump = (action: (editor: vscode.TextEditor, placeholder: PlaceHolder) => void): Promise<void> => {
+    private jump = (action: (editor: vscode.TextEditor, placeholder: DecorationModel) => void): Promise<void> => {
         return new Promise<void>((jumpResolve, jumpReject) => {
             let editor = vscode.window.activeTextEditor;
 
@@ -77,7 +77,7 @@ export class MetaJumper {
             }
 
             let messageDisposable = vscode.window.setStatusBarMessage("metaGo: Type");
-            const promise = new Promise<PlaceHolder>((resolve, reject) => {
+            const promise = new Promise<DecorationModel>((resolve, reject) => {
 
                 let firstInlineInput = new InlineInput().show(editor, (v) => v)
                     .then((value: string) => {
@@ -98,7 +98,7 @@ export class MetaJumper {
                             return;
                         }
 
-                        let placeholders: PlaceHolder[] = this.placeholderCalculus.buildPlaceholders(lineIndexes);
+                        let placeholders: DecorationModel[] = this.placeholderCalculus.buildDecorationModel(lineIndexes);
 
                         if (placeholders.length === 0) return;
                         if (placeholders.length === 1) {
@@ -117,7 +117,7 @@ export class MetaJumper {
                         reject();
                     });
             })
-                .then((placeholder: PlaceHolder) => {
+                .then((placeholder: DecorationModel) => {
                     action(editor, placeholder);
                     vscode.window.setStatusBarMessage("metaGo: Jumped!", 2000);
                     jumpResolve();
@@ -163,11 +163,7 @@ export class MetaJumper {
 
         for (let i = selection.startLine; i < selection.lastLine; i++) {
             let line = editor.document.lineAt(i);
-            let indexes: number[];
-            if (this.config.finder.findAllMode === 'on')
-                indexes = this.indexesOf(line.text, value);
-            else
-                indexes = this.indexesOfFirstChar(line.text, value);
+            let indexes = this.indexesOf(line.text, value);
             lineIndexes.count += indexes.length;
             lineIndexes.indexes[i] = indexes;
         }
@@ -175,44 +171,40 @@ export class MetaJumper {
         return lineIndexes;
     }
 
+
     private indexesOf = (str: string, char: string): number[] => {
         if (char.length === 0) {
             return [];
         }
 
         let indices = [];
-        for (let index = 0; index < str.length; index++) {
-            if (char.toLowerCase() === str[index]) {
-                indices.push(index);
+
+        if (this.config.finder.findAllMode === 'on') {
+            let regexp = new RegExp(`[${char}]`, "gi");
+            let match: RegExpMatchArray;
+            while ((match = regexp.exec(str)) != null) {
+                indices.push(match.index);
+            }
+        } else {
+            //splitted by spaces
+            let words = str.split(new RegExp(this.config.finder.wordSeparatorPattern));
+            //current line index
+            let index = 0;
+
+            for (var i = 0; i < words.length; i++) {
+                if (words[i][0] && words[i][0].toLowerCase() === char.toLowerCase()) {
+                    indices.push(index);
+                };
+
+                // increment by word and white space
+                index += words[i].length + 1;
             }
         }
         return indices;
     }
 
-    private indexesOfFirstChar = (str: string, char: string): number[] => {
-        if (char.length === 0) {
-            return [];
-        }
-
-        let indices = [];
-        //splitted by spaces
-        let words = str.split(new RegExp(this.config.finder.wordSeparatorPattern));
-        //current line index
-        let index = 0;
-
-        for (var i = 0; i < words.length; i++) {
-            if (words[i][0] && words[i][0].toLowerCase() === char.toLowerCase()) {
-                indices.push(index);
-            };
-
-            // increment by word and white space
-            index += words[i].length + 1;
-        }
-        return indices;
-    }
-
-    private prepareForJumpTo = (editor: vscode.TextEditor, placeholders: PlaceHolder[]) => {
-        return new Promise<PlaceHolder>((resolve, reject) => {
+    private prepareForJumpTo = (editor: vscode.TextEditor, placeholders: DecorationModel[]) => {
+        return new Promise<DecorationModel>((resolve, reject) => {
             this.placeHolderDecorator.addDecorations(editor, placeholders);
             let messageDisposable = vscode.window.setStatusBarMessage("metaGo: Jump To");
             new InlineInput().show(editor, (v) => v)
@@ -221,7 +213,7 @@ export class MetaJumper {
 
                     if (!value) return;
 
-                    let placeholder = placeholders.find(placeholder => placeholder.key === value.toLowerCase());
+                    let placeholder = placeholders.find(placeholder => placeholder.code[0] === value.toLowerCase());
 
                     if (placeholder.root)
                         placeholder = placeholder.root;
