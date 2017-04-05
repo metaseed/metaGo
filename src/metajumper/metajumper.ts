@@ -1,22 +1,15 @@
 import { Config } from "../config";
 import { InlineInput } from "./inline-input";
-import { DecorationModel, DecorationModelBuilder } from "./decoration-model-builder";
+import { ILineIndexes, IIndexes, DecorationModel, DecorationModelBuilder } from "./decoration-model";
 import { PlaceHolderDecorator } from "./decoration";
 import * as _ from "lodash";
 import * as vscode from "vscode";
 
 class Selection {
+    static Empty = new Selection();
     text: string;
     startLine: number;
     lastLine: number;
-}
-
-export interface IIndexes { [key: number]: number[]; }
-
-export interface ILineIndexes {
-    count: number;
-    indexes: IIndexes;
-    focusLine: number;
 }
 
 export class MetaJumper {
@@ -93,13 +86,13 @@ export class MetaJumper {
 
                         let selection = this.getSelection(editor);
 
-                        let lineIndexes: ILineIndexes = this.find(editor, selection.before, selection.after, value);
+                        let lineIndexes = this.find(editor, selection.before, selection.after, value);
                         if (lineIndexes.count <= 0) {
                             reject("metaGo: no matches");
                             return;
                         }
 
-                        let decorationModels: DecorationModel[] = this.decorationModelBuilder.buildDecorationModel1(lineIndexes);
+                        let decorationModels: DecorationModel[] = this.decorationModelBuilder.buildDecorationModel(lineIndexes);
 
                         if (decorationModels.length === 0) return;
                         if (decorationModels.length === 1) {
@@ -146,7 +139,7 @@ export class MetaJumper {
                 selection.startLine = editor.selection.anchor.line;
                 selection.lastLine = editor.selection.active.line;
             }
-            return { before: selection, after: null };
+            return { before: selection, after:  Selection.Empty};
         }
         else {
             selection.startLine = Math.max(editor.selection.active.line - this.config.finder.range, 0);
