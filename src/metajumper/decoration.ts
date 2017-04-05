@@ -5,7 +5,7 @@ import { Config } from '../config';
 export class PlaceHolderDecorator {
     private config: Config;
     private cache: { [index: string]: vscode.Uri };
-    private decorations: {[index: number]: vscode.TextEditorDecorationType}= {} ;
+    private decorations: { [index: number]: vscode.TextEditorDecorationType } = {};
 
     load = (config: Config) => {
         this.config = config;
@@ -38,7 +38,8 @@ export class PlaceHolderDecorator {
 
     removeDecorations = (editor: vscode.TextEditor) => {
         for (var dec in this.decorations) {
-             editor.setDecorations(this.decorations[dec], []);
+            if (this.decorations[dec] === null) continue;
+            editor.setDecorations(this.decorations[dec], []);
             this.decorations[dec].dispose();
             this.decorations[dec] = null;
         }
@@ -46,7 +47,7 @@ export class PlaceHolderDecorator {
 
     private createTextEditorDecorationType = (charsToOffset: number) => {
         let decorationType = this.decorations[charsToOffset];
-        if(decorationType) return decorationType;
+        if (decorationType) return decorationType;
         decorationType = vscode.window.createTextEditorDecorationType({
             after: {
                 margin: `0 0 0 ${charsToOffset * (-this.config.placeholder.width)}px`,
@@ -92,8 +93,10 @@ export class PlaceHolderDecorator {
         let cf = this.config.placeholder;
         let key = this.config.placeholder.upperCase ? code.toUpperCase() : code.toLowerCase();
         let width = code.length * cf.width;
+        let colors = cf.backgroundColor.split(',');
+        let bgColor = colors[(code.length-1) % colors.length];
         let svg =
-            `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${cf.height}" height="${cf.height}" width="${width}"><rect width="${width}" height="${cf.height}" rx="2" ry="2" style="fill: ${cf.backgroundColor};"/><text font-family="${cf.fontFamily}" font-weight="${cf.fontWeight}" font-size="${cf.fontSize}px" fill="${cf.color};" x="${cf.x}" y="${cf.y}">${key}</text></svg>`;
+            `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${cf.height}" height="${cf.height}" width="${width}"><rect width="${width}" height="${cf.height}" rx="3" ry="3" style="fill: ${bgColor};fill-opacity:0.85;stroke:${cf.stroke};stroke-opacity:0.85;"/><text font-family="${cf.fontFamily}" font-weight="${cf.fontWeight}" font-size="${cf.fontSize}px" fill="${cf.color};" x="${cf.x}" y="${cf.y}">${key}</text></svg>`;
         return vscode.Uri.parse(svg);
     }
 

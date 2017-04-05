@@ -98,23 +98,23 @@
             "properties": {
                 "metaGo.placeholder.backgroundColor": {
                     "type": "string",
-                    "default": "yellow"
+                    "default": "lime,yellow"
                 },
                 "metaGo.placeholder.color": {
                     "type": "string",
                     "default": "black"
                 },
-                "metaGo.placeholder.border": {
+                "metaGo.placeholder.stroke": {
                     "type": "string",
-                    "default": "dotted thin black"
+                    "default": "black"
                 },
                 "metaGo.placeholder.width": {
                     "type": "number",
-                    "default": 8
+                    "default": 9
                 },
                 "metaGo.placeholder.height": {
                     "type": "number",
-                    "default": 13
+                    "default": 15
                 },
                 "metaGo.placeholder.fontSize": {
                     "type": "number",

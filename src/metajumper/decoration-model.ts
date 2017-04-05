@@ -77,8 +77,9 @@ export class DecorationModelBuilder {
             { line: lineIndexes.focusLine, char: 0 },
             { line: lineIndexes.focusLine + 1, char: 0 }
         );
-
-        let leadLetters = Math.trunc(lineIndexes.count % Math.pow(this.config.finder.characters.length, 2) / this.config.finder.characters.length); // just process two letter codes
+        let twoCharsMax = Math.pow(this.config.finder.characters.length, 2);
+        let leadLetters = lineIndexes.count > twoCharsMax ? twoCharsMax : lineIndexes.count
+        leadLetters = Math.trunc(leadLetters / this.config.finder.characters.length); // just process two letter codes
 
         // one char codes
         for (let i = leadLetters; i < this.config.finder.characters.length; i++) {
