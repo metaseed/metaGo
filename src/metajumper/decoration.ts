@@ -1,34 +1,34 @@
 import * as vscode from 'vscode';
-import { DecorationModel } from './decoration-model-manager';
+import { DecorationModel } from './decoration-model-builder';
 import { Config } from '../config';
 
 export class PlaceHolderDecorator {
     private config: Config;
     private cache: { [index: string]: vscode.Uri };
-    private decorations: vscode.TextEditorDecorationType[] = [];
+    private decorations: {[index: number]: vscode.TextEditorDecorationType}= {} ;
 
     load = (config: Config) => {
         this.config = config;
         this.updateCache();
     }
 
-    addDecorations = (editor: vscode.TextEditor, placeholders: DecorationModel[]) => {
+    addDecorations = (editor: vscode.TextEditor, decorationModel: DecorationModel[]) => {
         let decorationType = this.createTextEditorDecorationType(1);
         let decorationType2 = this.createTextEditorDecorationType(2);
-        this.decorations.push(decorationType);
-        this.decorations.push(decorationType2);
 
         let options = [];
         let options2 = [];
-        placeholders.forEach((placeholder) => {
-            let len = placeholder.code.length;
+        decorationModel.forEach((placeholder) => {
+            let code = placeholder.code;
+            let len = code.length;
+
             let option: any;
             if (len === 1) {
-                option = this.createDecorationOptions(null, placeholder.line, placeholder.lineIndex + 1, placeholder.lineIndex + 1, placeholder.code);
+                option = this.createDecorationOptions(null, placeholder.line, placeholder.character + 1, placeholder.character + 1, code);
                 options.push(option);
             }
             else {
-                option = this.createDecorationOptions(null, placeholder.line, placeholder.lineIndex + 1, placeholder.lineIndex + len, placeholder.code);
+                option = this.createDecorationOptions(null, placeholder.line, placeholder.character + 1, placeholder.character + len, code);
                 options2.push(option);
             }
         })
@@ -37,20 +37,25 @@ export class PlaceHolderDecorator {
     }
 
     removeDecorations = (editor: vscode.TextEditor) => {
-        this.decorations.forEach((item) => {
-            editor.setDecorations(item, []);
-            item.dispose();
-        });
+        for (var dec in this.decorations) {
+             editor.setDecorations(this.decorations[dec], []);
+            this.decorations[dec].dispose();
+            this.decorations[dec] = null;
+        }
     }
 
     private createTextEditorDecorationType = (charsToOffset: number) => {
-        return vscode.window.createTextEditorDecorationType({
+        let decorationType = this.decorations[charsToOffset];
+        if(decorationType) return decorationType;
+        decorationType = vscode.window.createTextEditorDecorationType({
             after: {
                 margin: `0 0 0 ${charsToOffset * (-this.config.placeholder.width)}px`,
                 height: `${this.config.placeholder.height}px`,
                 width: `${charsToOffset * this.config.placeholder.width}px`
             }
         });
+        this.decorations[charsToOffset] = decorationType;
+        return decorationType;
     }
 
     private createDecorationOptions = (context: vscode.ExtensionContext, line: number, startCharacter: number, endCharacter: number, code: string): vscode.DecorationOptions => {

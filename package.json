@@ -18,6 +18,7 @@
         "EasyMotion",
         "metaGo",
         "center screen",
+        "focus screen",
         "space jumper"
     ],
     "repository": {
@@ -66,7 +67,7 @@
                 "when": "editorTextFocus"
             },
             {
-                "command": "extension.metaGo.center",
+                "command": "extension.metaGo.centerEditor",
                 "key": "shift+space",
                 "when": "editorTextFocus"
             },

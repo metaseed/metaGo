@@ -1,6 +1,6 @@
 import { Config } from "../config";
 import { InlineInput } from "./inline-input";
-import { DecorationModel, DecorationModelManager } from "./decoration-model-manager";
+import { DecorationModel, DecorationModelBuilder } from "./decoration-model-builder";
 import { PlaceHolderDecorator } from "./decoration";
 import * as _ from "lodash";
 import * as vscode from "vscode";
@@ -16,11 +16,12 @@ export interface IIndexes { [key: number]: number[]; }
 export interface ILineIndexes {
     count: number;
     indexes: IIndexes;
+    focusLine: number;
 }
 
 export class MetaJumper {
     private config: Config = new Config();
-    private placeholderCalculus: DecorationModelManager = new DecorationModelManager();
+    private decorationModelBuilder: DecorationModelBuilder = new DecorationModelBuilder();
     private placeHolderDecorator: PlaceHolderDecorator = new PlaceHolderDecorator();
     private isJumping: boolean = false;
 
@@ -31,7 +32,7 @@ export class MetaJumper {
             if (!this.isJumping) {
                 this.isJumping = true;
                 this.jump((editor, placeholder) => {
-                    editor.selection = new vscode.Selection(new vscode.Position(placeholder.line, placeholder.lineIndex), new vscode.Position(placeholder.line, placeholder.lineIndex));
+                    editor.selection = new vscode.Selection(new vscode.Position(placeholder.line, placeholder.character), new vscode.Position(placeholder.line, placeholder.character));
                 })
                     .then(() => {
                         this.isJumping = false;
@@ -46,7 +47,7 @@ export class MetaJumper {
             if (!this.isJumping) {
                 this.isJumping = true;
                 this.jump((editor, placeholder) => {
-                    editor.selection = new vscode.Selection(new vscode.Position(editor.selection.active.line, editor.selection.active.character), new vscode.Position(placeholder.line, placeholder.lineIndex));
+                    editor.selection = new vscode.Selection(new vscode.Position(editor.selection.active.line, editor.selection.active.character), new vscode.Position(placeholder.line, placeholder.character));
                 })
                     .then(() => {
                         this.isJumping = false;
@@ -63,7 +64,7 @@ export class MetaJumper {
 
         vscode.workspace.onDidChangeConfiguration(this.config.loadConfig);
         this.config.loadConfig();
-        this.placeholderCalculus.load(this.config);
+        this.decorationModelBuilder.load(this.config);
         this.placeHolderDecorator.load(this.config);
     }
 
@@ -90,23 +91,23 @@ export class MetaJumper {
                         if (value && value.length > 1)
                             value = value.substring(0, 1);
 
-                        let selection: Selection = this.getSelection(editor);
+                        let selection = this.getSelection(editor);
 
-                        let lineIndexes: ILineIndexes = this.find(editor, selection, value);
+                        let lineIndexes: ILineIndexes = this.find(editor, selection.before, selection.after, value);
                         if (lineIndexes.count <= 0) {
                             reject("metaGo: no matches");
                             return;
                         }
 
-                        let placeholders: DecorationModel[] = this.placeholderCalculus.buildDecorationModel(lineIndexes);
+                        let decorationModels: DecorationModel[] = this.decorationModelBuilder.buildDecorationModel1(lineIndexes);
 
-                        if (placeholders.length === 0) return;
-                        if (placeholders.length === 1) {
-                            let placeholder = _.first(placeholders);
+                        if (decorationModels.length === 0) return;
+                        if (decorationModels.length === 1) {
+                            let placeholder = _.first(decorationModels);
                             resolve(placeholder);
                         }
                         else {
-                            this.prepareForJumpTo(editor, placeholders).then((placeholder) => {
+                            this.prepareForJumpTo(editor, decorationModels).then((placeholder) => {
                                 resolve(placeholder);
                             }).catch(() => {
                                 reject();
@@ -131,7 +132,7 @@ export class MetaJumper {
         });
     };
 
-    private getSelection = (editor: vscode.TextEditor): Selection => {
+    private getSelection = (editor: vscode.TextEditor): { before: Selection, after: Selection } => {
         let selection: Selection = new Selection();
 
         if (!editor.selection.isEmpty) {
@@ -145,29 +146,43 @@ export class MetaJumper {
                 selection.startLine = editor.selection.anchor.line;
                 selection.lastLine = editor.selection.active.line;
             }
+            return { before: selection, after: null };
         }
         else {
             selection.startLine = Math.max(editor.selection.active.line - this.config.finder.range, 0);
-            selection.lastLine = Math.min(editor.selection.active.line + this.config.finder.range, editor.document.lineCount);
+            selection.lastLine = editor.selection.active.line + 1; //current line included in before
             selection.text = editor.document.getText(new vscode.Range(selection.startLine, 0, selection.lastLine, 0));
-        }
 
-        return selection;
+            let selectionAfter = new Selection();
+            selectionAfter.startLine = editor.selection.active.line + 1;
+            selectionAfter.lastLine = Math.min(editor.selection.active.line + this.config.finder.range, editor.document.lineCount);
+            selectionAfter.text = editor.document.getText(new vscode.Range(selectionAfter.startLine, 0, selectionAfter.lastLine, 0));
+
+            return { before: selection, after: selectionAfter };
+        }
     }
 
-    private find = (editor: vscode.TextEditor, selection: Selection, value: string): ILineIndexes => {
+    private find = (editor: vscode.TextEditor, selectionBefore: Selection, selectionAfter: Selection, value: string): ILineIndexes => {
         let lineIndexes: ILineIndexes = {
             count: 0,
+            focusLine:0,
             indexes: {}
         };
 
-        for (let i = selection.startLine; i < selection.lastLine; i++) {
+        for (let i = selectionBefore.startLine; i < selectionBefore.lastLine; i++) {
             let line = editor.document.lineAt(i);
             let indexes = this.indexesOf(line.text, value);
             lineIndexes.count += indexes.length;
             lineIndexes.indexes[i] = indexes;
         }
+        lineIndexes.focusLine = editor.selection.active.line;
 
+        for (let i = selectionAfter.startLine; i < selectionAfter.lastLine; i++) {
+            let line = editor.document.lineAt(i);
+            let indexes = this.indexesOf(line.text, value);
+            lineIndexes.count += indexes.length;
+            lineIndexes.indexes[i] = indexes;
+        }
         return lineIndexes;
     }
 
@@ -215,8 +230,8 @@ export class MetaJumper {
 
                     let placeholder = placeholders.find(placeholder => placeholder.code[0] === value.toLowerCase());
 
-                    if (placeholder.root)
-                        placeholder = placeholder.root;
+                   // if (placeholder.root)
+                        //placeholder = placeholder.root;
 
                     if (placeholder.children.length > 1) {
                         this.prepareForJumpTo(editor, placeholder.children)

@@ -2,8 +2,7 @@ import * as vscode from 'vscode';
 
 export class CenterEditor {
     activate(context: vscode.ExtensionContext) {
-        let disposable = vscode.commands.registerCommand('center-editor-window.center', () => {
-            // The code you place here will be executed every time your command is executed
+        let disposable = vscode.commands.registerCommand('extension.metaGo.centerEditor', () => {
             const editor = vscode.window.activeTextEditor;
             const selection = editor.selection;
             const range = new vscode.Range(selection.start, selection.end);

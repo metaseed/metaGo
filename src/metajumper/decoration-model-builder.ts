@@ -5,19 +5,116 @@ import { ILineIndexes, IIndexes } from './metajumper';
 
 
 export class DecorationModel {
+    // index in character set array
     index: number;
+    //string displayed in decoration
     code: string;
+    // line index
     line: number;
-    lineIndex: number;
+    //character index in line
+    character: number;
     root?: DecorationModel;
     children: DecorationModel[] = [];
 }
 
-export class DecorationModelManager {
+class LineCharIndex {
+    static END = new LineCharIndex();
+    constructor(public line: number = -1, public char: number = -1) { }
+}
+
+enum Direction {
+    up = -1, down = 1
+}
+
+class LineCharIndexState {
+
+    constructor(private lineIndexes: ILineIndexes, private direction = Direction.up, private up: LineCharIndex, private down: LineCharIndex) { }
+
+    findNextAutoWrap(): LineCharIndex {
+        let lineCharIndex = this.findNext(this.direction);
+        if (lineCharIndex === LineCharIndex.END) {
+            this.toggleDirection();
+            lineCharIndex = this.findNext(this.direction);
+        }
+        return lineCharIndex;
+    }
+
+    toggleDirection() {
+        this.direction = this.direction === Direction.up ? Direction.down : Direction.up;
+    }
+
+    private findNext(direction: Direction): LineCharIndex {
+        let lineCharIndex = direction === Direction.up ? this.up : this.down;
+        let line = lineCharIndex.line;
+        let charIndexes = this.lineIndexes.indexes[line];
+        if (!charIndexes) return LineCharIndex.END;//to end;
+        if (lineCharIndex.char < charIndexes.length) {
+            return new LineCharIndex(line, charIndexes[lineCharIndex.char++]);
+        } else {
+            lineCharIndex.line += direction;
+            lineCharIndex.char = 0
+            return this.findNext(direction);
+        }
+    }
+}
+
+
+
+export class DecorationModelBuilder {
     private config: Config;
 
     load = (config: Config) => {
         this.config = config
+    }
+
+    buildDecorationModel1 = (lineIndexes: ILineIndexes): DecorationModel[] => {
+        let models: DecorationModel[] = [];
+        let lineIndexesState = new LineCharIndexState(lineIndexes, Direction.up,
+            { line: lineIndexes.focusLine, char: 0 },
+            { line: lineIndexes.focusLine + 1, char: 0 }
+        );
+
+        let leadLetters = Math.trunc(lineIndexes.count % Math.pow(this.config.finder.characters.length, 2) / this.config.finder.characters.length); // just process two letter codes
+
+        // one char codes
+        for (let i = leadLetters; i < this.config.finder.characters.length; i++) {
+            let lineCharIndex = lineIndexesState.findNextAutoWrap();
+            if (lineCharIndex === LineCharIndex.END)
+                return models;
+            let model = new DecorationModel();
+            model.code = this.config.finder.characters[i];
+            model.index = i;
+            model.line = lineCharIndex.line;
+            model.character = lineCharIndex.char;
+            models.push(model);
+        }
+
+        // two char codes
+        for (let i = 0; i < leadLetters; i++) {
+            lineIndexesState.toggleDirection();
+            let root: DecorationModel;
+            for (let k = 0; k < this.config.finder.characters.length; k++) {
+                let lineCharIndex = lineIndexesState.findNextAutoWrap();
+                if (lineCharIndex === LineCharIndex.END)
+                    return models;
+                let model = new DecorationModel();
+                if (k === 0) {
+                    root = model;
+                }
+                model.code = this.config.finder.characters[i] + this.config.finder.characters[k];
+                model.index = i;
+                model.line = lineCharIndex.line;
+                model.character = lineCharIndex.char;
+                models.push(model);
+
+                let childModel = Object.assign({}, model);
+                childModel.root = root;
+                childModel.children = [];
+                childModel.code = this.config.finder.characters[k];
+                root.children.push(childModel);
+            }
+        }
+        return models;
     }
 
     buildDecorationModel = (lineIndexes: ILineIndexes): DecorationModel[] => {
@@ -67,7 +164,7 @@ export class DecorationModelManager {
 
                 model.code = this.config.finder.characters[model.index];
                 model.line = line;
-                model.lineIndex = indexInLine;
+                model.character = indexInLine;
 
                 if (!map[model.index])
                     map[model.index] = [];
@@ -96,7 +193,7 @@ export class DecorationModelManager {
                 model.index = y;
                 model.code = this.config.finder.characters[model.index];// 2 characters support
                 model.line = mappedModel.line;
-                model.lineIndex = mappedModel.lineIndex;
+                model.character = mappedModel.character;
                 mappedModel.code += model.code;
                 // add a copy of model as children of root
                 root.children.push(model);
