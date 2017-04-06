@@ -2,7 +2,6 @@ import { Config } from "../config";
 import { InlineInput } from "./inline-input";
 import { ILineIndexes, IIndexes, DecorationModel, DecorationModelBuilder } from "./decoration-model";
 import { PlaceHolderDecorator } from "./decoration";
-import * as _ from "lodash";
 import * as vscode from "vscode";
 
 class Selection {
@@ -96,7 +95,7 @@ export class MetaJumper {
 
                         if (decorationModels.length === 0) return;
                         if (decorationModels.length === 1) {
-                            let placeholder = _.first(decorationModels);
+                            let placeholder = decorationModels[0];
                             resolve(placeholder);
                         }
                         else {

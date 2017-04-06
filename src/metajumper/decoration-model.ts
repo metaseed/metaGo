@@ -1,6 +1,5 @@
 import { Config } from '../config';
 import * as vscode from 'vscode';
-import * as _ from 'lodash';
 
 export interface IIndexes {
     // key is line number, value stores character indexes in line
