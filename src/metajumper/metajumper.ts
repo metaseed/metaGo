@@ -222,9 +222,6 @@ export class MetaJumper {
 
                     let placeholder = placeholders.find(placeholder => placeholder.code[0] === value.toLowerCase());
 
-                   // if (placeholder.root)
-                        //placeholder = placeholder.root;
-
                     if (placeholder.children.length > 1) {
                         this.prepareForJumpTo(editor, placeholder.children)
                             .then((placeholder) => {
