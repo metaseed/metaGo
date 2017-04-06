@@ -20,7 +20,7 @@ If you have any requirements or dependencies, add a section describing those and
 ## Extension Settings
 
 To configure the keybinding, add the following lines to keybindings.json (File -> Preferences -> Keyboard Shortcuts):
-![shortcuts](images/shortcuts.png)
+![shortcuts](images/shortcutSetting.png)
 
         {
             "command": "extension.metaGo.input.cancel",
