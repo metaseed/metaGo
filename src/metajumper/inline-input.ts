@@ -22,7 +22,7 @@ export class InlineInput {
     private input: Input;
 
     constructor() {
-        this.registerTextEditorCommand('extension.metaGo.input.stop', this.cancel);
+        this.registerTextEditorCommand('extension.metaGo.input.cancel', this.cancel);
     }
 
     show = (editor: vscode.TextEditor, validateInput: (text: string) => string): Promise<string> => {

@@ -7,10 +7,11 @@ export class Config {
     loadConfig = () => {
         let config = vscode.workspace.getConfiguration("metaGo");
 
-        this.placeholder.backgroundColor = config.get<string>("placeholder.backgroundColor");
+        this.placeholder.bgColor = config.get<string>("placeholder.backgroundColor");
+        this.placeholder.bgOpacity = config.get<string>("placeholder.backgroundOpacity");
         
         this.placeholder.color = config.get<string>("placeholder.color");
-        this.placeholder.stroke = config.get<string>("placeholder.stroke");
+        this.placeholder.borderColor = config.get<string>("placeholder.borderColor");
 
         this.placeholder.width = config.get<number>("placeholder.width");
         this.placeholder.height = config.get<number>("placeholder.height");
@@ -30,9 +31,10 @@ export class Config {
 }
 
 class PlaceHolderConfig {
-    backgroundColor: string = "lime,yellow";
+    bgOpacity: string = '0.82';
+    bgColor: string = "lime,yellow";
     color: string = "black";
-    stroke: string = "black";
+    borderColor: string = "black";
 
     width: number = 12;
     height: number = 14;

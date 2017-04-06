@@ -93,10 +93,10 @@ export class PlaceHolderDecorator {
         let cf = this.config.placeholder;
         let key = this.config.placeholder.upperCase ? code.toUpperCase() : code.toLowerCase();
         let width = code.length * cf.width;
-        let colors = cf.backgroundColor.split(',');
+        let colors = cf.bgColor.split(',');
         let bgColor = colors[(code.length-1) % colors.length];
         let svg =
-            `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${cf.height}" height="${cf.height}" width="${width}"><rect width="${width}" height="${cf.height}" rx="3" ry="3" style="fill: ${bgColor};fill-opacity:0.85;stroke:${cf.stroke};stroke-opacity:0.85;"/><text font-family="${cf.fontFamily}" font-weight="${cf.fontWeight}" font-size="${cf.fontSize}px" fill="${cf.color};" x="${cf.x}" y="${cf.y}">${key}</text></svg>`;
+            `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${cf.height}" height="${cf.height}" width="${width}"><rect width="${width}" height="${cf.height}" rx="3" ry="3" style="fill: ${bgColor};fill-opacity:${cf.bgOpacity};stroke:${cf.borderColor};stroke-opacity:${cf.bgOpacity};"/><text font-family="${cf.fontFamily}" font-weight="${cf.fontWeight}" font-size="${cf.fontSize}px" fill="${cf.color};" x="${cf.x}" y="${cf.y}">${key}</text></svg>`;
         return vscode.Uri.parse(svg);
     }
 

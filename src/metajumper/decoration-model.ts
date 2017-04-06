@@ -2,7 +2,10 @@ import { Config } from '../config';
 import * as vscode from 'vscode';
 import * as _ from 'lodash';
 
-export interface IIndexes { [key: number]: number[]; }
+export interface IIndexes {
+    // key is line number, value stores character indexes in line
+    [key: number]: number[];
+}
 
 export interface ILineIndexes {
     count: number;

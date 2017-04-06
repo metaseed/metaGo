@@ -19,7 +19,8 @@
         "metaGo",
         "center screen",
         "focus screen",
-        "space jumper"
+        "space jumper",
+        "ace jump"
     ],
     "repository": {
         "type": "git",
@@ -52,43 +53,43 @@
         ],
         "keybindings": [
             {
-                "command": "extension.metaGo.input.stop",
+                "command": "extension.metaGo.input.cancel",
                 "key": "escape",
                 "when": "editorTextFocus && metaGoInput"
             },
             {
                 "command": "extension.metaGo",
-                "key": "ctrl+l",
+                "key": "alt+;",
                 "when": "editorTextFocus"
             },
             {
                 "command": "extension.metaGo.selection",
-                "key": "ctrl+shift+l",
+                "key": "alt+shift+;",
                 "when": "editorTextFocus"
             },
             {
                 "command": "extension.metaGo.centerEditor",
-                "key": "shift+space",
+                "key": "alt+o",
                 "when": "editorTextFocus"
             },
             {
                 "key": "alt+home",
-                "command": "spaceBlockJumper.moveUp",
+                "command": "extension.metaGo.spaceBlockMoveUp",
                 "when": "editorTextFocus"
             },
             {
                 "key": "alt+shift+home",
-                "command": "spaceBlockJumper.selectUp",
+                "command": "extension.metaGo.spaceBlockSelectUp",
                 "when": "editorTextFocus"
             },
             {
                 "key": "alt+end",
-                "command": "spaceBlockJumper.moveDown",
+                "command": "extension.metaGo.spaceBlockMoveDown",
                 "when": "editorTextFocus"
             },
             {
                 "key": "alt+shift+end",
-                "command": "spaceBlockJumper.selectDown",
+                "command": "extension.metaGo.spaceBlockSelectDown",
                 "when": "editorTextFocus"
             }
         ],
@@ -100,11 +101,15 @@
                     "type": "string",
                     "default": "lime,yellow"
                 },
+                "metaGo.placeholder.backgroundOpacity": {
+                    "type": "string",
+                    "default": "0.85"
+                },
                 "metaGo.placeholder.color": {
                     "type": "string",
                     "default": "black"
                 },
-                "metaGo.placeholder.stroke": {
+                "metaGo.placeholder.borderColor": {
                     "type": "string",
                     "default": "black"
                 },
