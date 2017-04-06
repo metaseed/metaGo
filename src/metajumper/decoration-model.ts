@@ -57,7 +57,9 @@ class LineCharIndexState {
         let lineCharIndex = direction === Direction.up ? this.up : this.down;
         let line = lineCharIndex.line;
         let charIndexes = this.lineIndexes.indexes[line];
+
         if (!charIndexes) return LineCharIndex.END;//to end;
+
         if (lineCharIndex.char < charIndexes.length) {
             return new LineCharIndex(line, charIndexes[lineCharIndex.char++]);
         } else {
@@ -82,6 +84,7 @@ export class DecorationModelBuilder {
             { line: lineIndexes.focusLine, char: 0 },
             { line: lineIndexes.focusLine + 1, char: 0 }
         );
+
         let twoCharsMax = Math.pow(this.config.finder.characters.length, 2);
         let leadChars = lineIndexes.count > twoCharsMax ? twoCharsMax : lineIndexes.count
         leadChars = Math.trunc(leadChars / this.config.finder.characters.length); // just process two letter codes
@@ -89,8 +92,10 @@ export class DecorationModelBuilder {
         // one char codes
         for (let i = leadChars; i < this.config.finder.characters.length; i++) {
             let lineCharIndex = lineIndexesState.findNextAutoWrap();
+
             if (lineCharIndex === LineCharIndex.END)
                 return models;
+
             let model = new DecorationModel();
             model.code = this.config.finder.characters[i];
             model.index = i;
@@ -105,12 +110,15 @@ export class DecorationModelBuilder {
             let root: DecorationModel;
             for (let k = 0; k < this.config.finder.characters.length; k++) {
                 let lineCharIndex = lineIndexesState.findNextAutoWrap();
+
                 if (lineCharIndex === LineCharIndex.END)
                     return models;
+
                 let model = new DecorationModel();
                 if (k === 0) {
                     root = model;
                 }
+
                 model.code = this.config.finder.characters[i] + this.config.finder.characters[k];
                 model.index = i;
                 model.line = lineCharIndex.line;
