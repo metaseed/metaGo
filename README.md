@@ -19,14 +19,112 @@ If you have any requirements or dependencies, add a section describing those and
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+To configure the keybinding, add the following lines to keybindings.json (File -> Preferences -> Keyboard Shortcuts):
+![shortcuts](images/shortcuts.png)
 
-For example:
+        {
+            "command": "extension.metaGo.input.cancel",
+            "key": "escape",
+            "when": "editorTextFocus && metaGoInput"
+        },
+        {
+            "command": "extension.metaGo",
+            "key": "alt+;",
+            "when": "editorTextFocus"
+        },
+        {
+            "command": "extension.metaGo.selection",
+            "key": "alt+shift+;",
+            "when": "editorTextFocus"
+        },
+        {
+            "command": "extension.metaGo.centerEditor",
+            "key": "alt+o",
+            "when": "editorTextFocus"
+        },
+        {
+            "key": "alt+home",
+            "command": "extension.metaGo.spaceBlockMoveUp",
+            "when": "editorTextFocus"
+        },
+        {
+            "key": "alt+shift+home",
+            "command": "extension.metaGo.spaceBlockSelectUp",
+            "when": "editorTextFocus"
+        },
+        {
+            "key": "alt+end",
+            "command": "extension.metaGo.spaceBlockMoveDown",
+            "when": "editorTextFocus"
+        },
+        {
+            "key": "alt+shift+end",
+            "command": "extension.metaGo.spaceBlockSelectDown",
+            "when": "editorTextFocus"
+        }
+## extension Settings
 
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+        "metaGo.decoration.backgroundColor": {
+            "type": "string",
+            "default": "Chartreuse,yellow"
+        },
+        "metaGo.decoration.backgroundOpacity": {
+            "type": "string",
+            "default": "0.88"
+        },
+        "metaGo.decoration.borderColor": {
+            "type": "string",
+            "default": "#1e1e1e"
+        },
+        "metaGo.decoration.color": {
+            "type": "string",
+            "default": "black"
+        },
+        "metaGo.decoration.width": {
+            "type": "number",
+            "default": 9
+        },
+        "metaGo.decoration.height": {
+            "type": "number",
+            "default": 15
+        },
+        "metaGo.decoration.fontSize": {
+            "type": "number",
+            "default": 13
+        },
+        "metaGo.decoration.x": {
+            "type": "number",
+            "default": 1
+        },
+        "metaGo.decoration.y": {
+            "type": "number",
+            "default": 10
+        },
+        "metaGo.decoration.fontWeight": {
+            "type": "string",
+            "default": "normal"
+        },
+        "metaGo.decoration.fontFamily": {
+            "type": "string",
+            "default": "Consolas"
+        },
+        "metaGo.decoration.upperCase": {
+            "type": "boolean",
+            "default": false
+        },
+        "metaGo.finder.findAllMode": {
+            "type": "string",
+            "default": "on"
+        },
+        "metaGo.finder.wordSeparatorPattern": {
+            "type": "string",
+            "default": "[ ,-.{_(\"'<\\/[+]"
+        },
+        "metaGo.finder.range": {
+            "type": "number",
+            "default": 40
+        }
+    }
 
 ## Release Notes
 
