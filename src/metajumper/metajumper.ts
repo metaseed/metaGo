@@ -138,7 +138,7 @@ export class MetaJumper {
     private getSelection = (editor: vscode.TextEditor): { before: Selection, after: Selection } => {
         let selection: Selection = new Selection();
 
-        if (!editor.selection.isEmpty) {
+        if (!editor.selection.isEmpty && this.config.finder.findInSelection === 'on') {
             selection.text = editor.document.getText(editor.selection);
 
             if (editor.selection.anchor.line > editor.selection.active.line) {

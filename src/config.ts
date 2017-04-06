@@ -25,6 +25,7 @@ export class Config {
         this.decoration.upperCase = config.get<boolean>("decoration.upperCase");
 
         this.finder.findAllMode = config.get<string>("finder.findAllMode");
+        this.finder.findInSelection = config.get<string>("finder.findInSelection");
         this.finder.wordSeparatorPattern = config.get<string>("finder.wordSeparatorPattern");
         this.finder.range = config.get<number>("finder.range");
     }
@@ -52,6 +53,7 @@ class PlaceHolderConfig {
 class FinderConfig {
     characters: string[] = ["a","b","c","d","e","f","g","h","i","j","k","l"]//["k", "j", "d", "f", "l", "s", "a", "h", "g", "i", "o", "n", "u", "r", "v", "c", "w", "e", "x", "m", "b", "p", "q", "t", "y", "z"];
     findAllMode: string = 'on';
+    findInSelection:string = 'off';
     wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";
     range: number = 40;
 }

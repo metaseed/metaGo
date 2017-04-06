@@ -141,6 +141,10 @@
                     "type": "string",
                     "default": "on"
                 },
+                "metaGo.finder.findInSelection": {
+                    "type": "string",
+                    "default": "off"
+                },
                 "metaGo.finder.wordSeparatorPattern": {
                     "type": "string",
                     "default": "[ ,-.{_(\"'<\\/[+]"
