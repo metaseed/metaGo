@@ -32,7 +32,15 @@ export class MetaJumper {
             this.metaJump()
                 .then((model) => {
                     let editor = vscode.window.activeTextEditor;
-                    editor.selection = new vscode.Selection(new vscode.Position(editor.selection.active.line, editor.selection.active.character), new vscode.Position(model.line, model.character));
+                    let toCharacter = model.character;
+                    if (model.line > editor.selection.active.line) {
+                        toCharacter++;
+                    } else if (model.line === editor.selection.active.line) {
+                        if (model.character > editor.selection.active.character) {
+                            toCharacter++;
+                        }
+                    }
+                    editor.selection = new vscode.Selection(new vscode.Position(editor.selection.active.line, editor.selection.active.character), new vscode.Position(model.line, toCharacter));
                 })
         }));
 
