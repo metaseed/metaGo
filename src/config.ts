@@ -1,28 +1,28 @@
 import * as vscode from "vscode";
 
 export class Config {
-    placeholder: PlaceHolderConfig = new PlaceHolderConfig();
+    decoration: PlaceHolderConfig = new PlaceHolderConfig();
     finder: FinderConfig = new FinderConfig();
 
     loadConfig = () => {
         let config = vscode.workspace.getConfiguration("metaGo");
 
-        this.placeholder.bgColor = config.get<string>("placeholder.backgroundColor");
-        this.placeholder.bgOpacity = config.get<string>("placeholder.backgroundOpacity");
+        this.decoration.bgColor = config.get<string>("decoration.backgroundColor");
+        this.decoration.bgOpacity = config.get<string>("decoration.backgroundOpacity");
         
-        this.placeholder.color = config.get<string>("placeholder.color");
-        this.placeholder.borderColor = config.get<string>("placeholder.borderColor");
+        this.decoration.color = config.get<string>("decoration.color");
+        this.decoration.borderColor = config.get<string>("decoration.borderColor");
 
-        this.placeholder.width = config.get<number>("placeholder.width");
-        this.placeholder.height = config.get<number>("placeholder.height");
+        this.decoration.width = config.get<number>("decoration.width");
+        this.decoration.height = config.get<number>("decoration.height");
 
-        this.placeholder.x = config.get<number>("placeholder.x");
-        this.placeholder.y = config.get<number>("placeholder.y");
+        this.decoration.x = config.get<number>("decoration.x");
+        this.decoration.y = config.get<number>("decoration.y");
 
-        this.placeholder.fontSize = config.get<number>("placeholder.fontSize");
-        this.placeholder.fontWeight = config.get<string>("placeholder.fontWeight");
-        this.placeholder.fontFamily = config.get<string>("placeholder.fontFamily");
-        this.placeholder.upperCase = config.get<boolean>("placeholder.upperCase");
+        this.decoration.fontSize = config.get<number>("decoration.fontSize");
+        this.decoration.fontWeight = config.get<string>("decoration.fontWeight");
+        this.decoration.fontFamily = config.get<string>("decoration.fontFamily");
+        this.decoration.upperCase = config.get<boolean>("decoration.upperCase");
 
         this.finder.findAllMode = config.get<string>("finder.findAllMode");
         this.finder.wordSeparatorPattern = config.get<string>("finder.wordSeparatorPattern");

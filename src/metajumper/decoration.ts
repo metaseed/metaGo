@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { DecorationModel } from './decoration-model';
 import { Config } from '../config';
 
-export class PlaceHolderDecorator {
+export class Decorator {
     private config: Config;
     private cache: { [index: string]: vscode.Uri };
     private decorations: { [index: number]: vscode.TextEditorDecorationType } = {};
@@ -18,17 +18,17 @@ export class PlaceHolderDecorator {
 
         let options = [];
         let options2 = [];
-        decorationModel.forEach((placeholder) => {
-            let code = placeholder.code;
+        decorationModel.forEach((model) => {
+            let code = model.code;
             let len = code.length;
 
             let option: any;
             if (len === 1) {
-                option = this.createDecorationOptions(null, placeholder.line, placeholder.character + 1, placeholder.character + 1, code);
+                option = this.createDecorationOptions(null, model.line, model.character + 1, model.character + 1, code);
                 options.push(option);
             }
             else {
-                option = this.createDecorationOptions(null, placeholder.line, placeholder.character + 1, placeholder.character + len, code);
+                option = this.createDecorationOptions(null, model.line, model.character + 1, model.character + len, code);
                 options2.push(option);
             }
         })
@@ -50,9 +50,9 @@ export class PlaceHolderDecorator {
         if (decorationType) return decorationType;
         decorationType = vscode.window.createTextEditorDecorationType({
             after: {
-                margin: `0 0 0 ${charsToOffset * (-this.config.placeholder.width)}px`,
-                height: `${this.config.placeholder.height}px`,
-                width: `${charsToOffset * this.config.placeholder.width}px`
+                margin: `0 0 0 ${charsToOffset * (-this.config.decoration.width)}px`,
+                height: `${this.config.decoration.height}px`,
+                width: `${charsToOffset * this.config.decoration.width}px`
             }
         });
         this.decorations[charsToOffset] = decorationType;
@@ -90,8 +90,8 @@ export class PlaceHolderDecorator {
     }
 
     private buildUri = (code: string) => {
-        let cf = this.config.placeholder;
-        let key = this.config.placeholder.upperCase ? code.toUpperCase() : code.toLowerCase();
+        let cf = this.config.decoration;
+        let key = this.config.decoration.upperCase ? code.toUpperCase() : code.toLowerCase();
         let width = code.length * cf.width;
         let colors = cf.bgColor.split(',');
         let bgColor = colors[(code.length-1) % colors.length];

@@ -89,51 +89,51 @@
             "title": "metaseed metaGo",
             "type": "object",
             "properties": {
-                "metaGo.placeholder.backgroundColor": {
+                "metaGo.decoration.backgroundColor": {
                     "type": "string",
                     "default": "lime,yellow"
                 },
-                "metaGo.placeholder.backgroundOpacity": {
+                "metaGo.decoration.backgroundOpacity": {
                     "type": "string",
                     "default": "0.85"
                 },
-                "metaGo.placeholder.borderColor": {
+                "metaGo.decoration.borderColor": {
                     "type": "string",
                     "default": "#1e1e1e"
                 },
-                "metaGo.placeholder.color": {
+                "metaGo.decoration.color": {
                     "type": "string",
                     "default": "black"
                 },
-                "metaGo.placeholder.width": {
+                "metaGo.decoration.width": {
                     "type": "number",
                     "default": 9
                 },
-                "metaGo.placeholder.height": {
+                "metaGo.decoration.height": {
                     "type": "number",
                     "default": 15
                 },
-                "metaGo.placeholder.fontSize": {
+                "metaGo.decoration.fontSize": {
                     "type": "number",
                     "default": 13
                 },
-                "metaGo.placeholder.x": {
+                "metaGo.decoration.x": {
                     "type": "number",
                     "default": 1
                 },
-                "metaGo.placeholder.y": {
+                "metaGo.decoration.y": {
                     "type": "number",
                     "default": 10
                 },
-                "metaGo.placeholder.fontWeight": {
+                "metaGo.decoration.fontWeight": {
                     "type": "string",
                     "default": "normal"
                 },
-                "metaGo.placeholder.fontFamily": {
+                "metaGo.decoration.fontFamily": {
                     "type": "string",
                     "default": "Consolas"
                 },
-                "metaGo.placeholder.upperCase": {
+                "metaGo.decoration.upperCase": {
                     "type": "boolean",
                     "default": false
                 },

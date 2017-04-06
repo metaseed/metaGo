@@ -6,7 +6,7 @@ export interface IIndexes {
     [key: number]: number[];
 }
 
-export interface ILineIndexes {
+export interface ILineCharIndexes {
     count: number;
     indexes: IIndexes;
     focusLine: number;
@@ -17,10 +17,12 @@ export class DecorationModel {
     index: number;
     //string displayed in decoration
     code: string;
+
     // line index
     line: number;
     //character index in line
     character: number;
+
     root?: DecorationModel;
     children: DecorationModel[] = [];
 }
@@ -36,7 +38,7 @@ enum Direction {
 
 class LineCharIndexState {
 
-    constructor(private lineIndexes: ILineIndexes, private direction = Direction.up, private up: LineCharIndex, private down: LineCharIndex) { }
+    constructor(private lineIndexes: ILineCharIndexes, private direction = Direction.up, private up: LineCharIndex, private down: LineCharIndex) { }
 
     findNextAutoWrap(): LineCharIndex {
         let lineCharIndex = this.findNext(this.direction);
@@ -73,7 +75,7 @@ export class DecorationModelBuilder {
         this.config = config
     }
 
-    buildDecorationModel = (lineIndexes: ILineIndexes): DecorationModel[] => {
+    buildDecorationModel = (lineIndexes: ILineCharIndexes): DecorationModel[] => {
         let models: DecorationModel[] = [];
         let lineIndexesState = new LineCharIndexState(lineIndexes, Direction.up,
             { line: lineIndexes.focusLine, char: 0 },
