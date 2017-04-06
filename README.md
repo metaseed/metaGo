@@ -6,8 +6,12 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * select code block when moving cursor while hold shift key.
 * scroll the active line (contains cursor) to the screen center.
 
+
+### go to any character on screen
 ![MetaGo.MetaJump](images/metago.jump.gif)
+### scroll active line to the screen center
 ![MetaGo.Center](images/metago.center.gif)
+### moving cursor up/down between blank lines
 ![MetaGo.blankLine](images/metago.blankLine.gif)
 ## Requirements
 
