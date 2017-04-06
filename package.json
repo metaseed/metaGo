@@ -3,7 +3,7 @@
     "displayName": "MetaGo",
     "description": "vscode meta goto. jump, navigation, goto",
     "icon": "images/metago.png",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo",
     "license": "MIT",
@@ -91,11 +91,11 @@
             "properties": {
                 "metaGo.decoration.backgroundColor": {
                     "type": "string",
-                    "default": "lime,yellow"
+                    "default": "Chartreuse,yellow"
                 },
                 "metaGo.decoration.backgroundOpacity": {
                     "type": "string",
-                    "default": "0.85"
+                    "default": "0.88"
                 },
                 "metaGo.decoration.borderColor": {
                     "type": "string",
