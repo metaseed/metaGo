@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 
 export class Config {
-    decoration: PlaceHolderConfig = new PlaceHolderConfig();
+    decoration: DecoratorConfig = new DecoratorConfig();
     finder: FinderConfig = new FinderConfig();
 
     loadConfig = () => {
@@ -31,7 +31,7 @@ export class Config {
     }
 }
 
-class PlaceHolderConfig {
+class DecoratorConfig {
     bgOpacity: string = '0.82';
     bgColor: string = "lime,yellow";
     color: string = "black";

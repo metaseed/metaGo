@@ -12,13 +12,14 @@ class Selection {
 }
 
 export class MetaJumper {
-    private config: Config = new Config();
+    private config: Config;
     private decorationModelBuilder: DecorationModelBuilder = new DecorationModelBuilder();
     private decorator: Decorator = new Decorator();
     private isJumping: boolean = false;
 
-    configure = (context: vscode.ExtensionContext) => {
+    initialize = (context: vscode.ExtensionContext, config: Config) => {
         let disposables: vscode.Disposable[] = [];
+        this.config = config;
 
         disposables.push(vscode.commands.registerCommand('extension.metaGo', () => {
             this.metaJump()
@@ -48,9 +49,11 @@ export class MetaJumper {
             context.subscriptions.push(disposables[i]);
         }
 
-        vscode.workspace.onDidChangeConfiguration(this.config.loadConfig);
-        this.config.loadConfig();
         this.decorationModelBuilder.initialize(this.config);
+        this.decorator.initialize(this.config);
+    }
+
+    updateConfig = ()=>{
         this.decorator.initialize(this.config);
     }
 
