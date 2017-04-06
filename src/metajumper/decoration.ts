@@ -7,7 +7,7 @@ export class Decorator {
     private cache: { [index: string]: vscode.Uri };
     private decorations: { [index: number]: vscode.TextEditorDecorationType } = {};
 
-    load = (config: Config) => {
+    initialize = (config: Config) => {
         this.config = config;
         this.updateCache();
     }

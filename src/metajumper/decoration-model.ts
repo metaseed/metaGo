@@ -71,22 +71,23 @@ class LineCharIndexState {
 export class DecorationModelBuilder {
     private config: Config;
 
-    load = (config: Config) => {
+    initialize = (config: Config) => {
         this.config = config
     }
 
     buildDecorationModel = (lineIndexes: ILineCharIndexes): DecorationModel[] => {
         let models: DecorationModel[] = [];
-        let lineIndexesState = new LineCharIndexState(lineIndexes, Direction.up,
+        let lineIndexesState = new LineCharIndexState(
+            lineIndexes, Direction.up,
             { line: lineIndexes.focusLine, char: 0 },
             { line: lineIndexes.focusLine + 1, char: 0 }
         );
         let twoCharsMax = Math.pow(this.config.finder.characters.length, 2);
-        let leadLetters = lineIndexes.count > twoCharsMax ? twoCharsMax : lineIndexes.count
-        leadLetters = Math.trunc(leadLetters / this.config.finder.characters.length); // just process two letter codes
+        let leadChars = lineIndexes.count > twoCharsMax ? twoCharsMax : lineIndexes.count
+        leadChars = Math.trunc(leadChars / this.config.finder.characters.length); // just process two letter codes
 
         // one char codes
-        for (let i = leadLetters; i < this.config.finder.characters.length; i++) {
+        for (let i = leadChars; i < this.config.finder.characters.length; i++) {
             let lineCharIndex = lineIndexesState.findNextAutoWrap();
             if (lineCharIndex === LineCharIndex.END)
                 return models;
@@ -99,7 +100,7 @@ export class DecorationModelBuilder {
         }
 
         // two char codes
-        for (let i = 0; i < leadLetters; i++) {
+        for (let i = 0; i < leadChars; i++) {
             lineIndexesState.toggleDirection();
             let root: DecorationModel;
             for (let k = 0; k < this.config.finder.characters.length; k++) {

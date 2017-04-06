@@ -19,11 +19,11 @@ export class MetaJumper {
 
     configure = (context: vscode.ExtensionContext) => {
         let disposables: vscode.Disposable[] = [];
-        let editor = vscode.window.activeTextEditor;
 
         disposables.push(vscode.commands.registerCommand('extension.metaGo', () => {
             this.metaJump()
                 .then((model) => {
+                    let editor = vscode.window.activeTextEditor;
                     editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character), new vscode.Position(model.line, model.character));
                 });
         }));
@@ -31,6 +31,7 @@ export class MetaJumper {
         disposables.push(vscode.commands.registerCommand('extension.metaGo.selection', () => {
             this.metaJump()
                 .then((model) => {
+                    let editor = vscode.window.activeTextEditor;
                     editor.selection = new vscode.Selection(new vscode.Position(editor.selection.active.line, editor.selection.active.character), new vscode.Position(model.line, model.character));
                 })
         }));
@@ -41,8 +42,8 @@ export class MetaJumper {
 
         vscode.workspace.onDidChangeConfiguration(this.config.loadConfig);
         this.config.loadConfig();
-        this.decorationModelBuilder.load(this.config);
-        this.decorator.load(this.config);
+        this.decorationModelBuilder.initialize(this.config);
+        this.decorator.initialize(this.config);
     }
 
     private metaJump = () => {
