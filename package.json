@@ -8,19 +8,11 @@
     "homepage": "https://github.com/metaseed/metaGo",
     "license": "MIT",
     "keywords": [
-        "jump",
         "jumpy",
         "goto",
-        "shortcut",
-        "move",
-        "cursor",
         "navigation",
         "EasyMotion",
-        "metaGo",
-        "center screen",
-        "focus screen",
-        "space jumper",
-        "ace jump"
+        "ace jump, metaGo, center screen, focus screen, space jumper, shortcut"
     ],
     "repository": {
         "type": "git",
@@ -31,7 +23,7 @@
         "email": "metaseed@gmail.com"
     },
     "engines": {
-        "vscode": "^1.10.0"
+        "vscode": "^1.8.0"
     },
     "categories": [
         "Other"
@@ -105,11 +97,11 @@
                     "type": "string",
                     "default": "0.85"
                 },
-                "metaGo.placeholder.color": {
-                    "type": "string",
-                    "default": "black"
-                },
                 "metaGo.placeholder.borderColor": {
+                    "type": "string",
+                    "default": "#1e1e1e"
+                },
+                "metaGo.placeholder.color": {
                     "type": "string",
                     "default": "black"
                 },
