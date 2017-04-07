@@ -19,14 +19,19 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 3. type the code characters, you will *go* to that location.
 
 ### select to any character on screen from cursor
-1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kdb>;</kbd> to tell I want to *select* to somewhere.
+1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>;</kbd> to tell I want to *select* to somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *select* to that location.
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
 ### scroll active line to the screen center
+<kbd>Alt</kbd>+<kbd>o</kbd> is the default shortcut.
 ![MetaGo.Center](images/metago.center.gif)
 ### moving cursor up/down between blank lines
+<kbd>Alt</kbd>+<kbd>,</kbd>(default shortcut) to move cursor to the blank line above.
+<kbd>Alt</kbd>+<kbd>.</kbd>(default shortcut) to move cursor to the blank line below.
+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>,</kbd>(default shortcut) to select from the cursor to the blank line above.
+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>.</kbd>(default shortcut) to select from the cursor to the blank line below.
 ![MetaGo.blankLine](images/metago.blankLine.gif)
 ## Requirements
 
