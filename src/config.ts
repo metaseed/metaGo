@@ -33,7 +33,7 @@ export class Config {
 }
 
 class DecoratorConfig {
-    bgOpacity: string = '0.82';
+    bgOpacity: string = '0.88';
     bgColor: string = "lime,yellow";
     color: string = "black";
     borderColor: string = "black";

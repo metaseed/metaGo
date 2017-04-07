@@ -124,7 +124,7 @@
                 },
                 "metaGo.decoration.y": {
                     "type": "number",
-                    "default": 10
+                    "default": 12
                 },
                 "metaGo.decoration.fontWeight": {
                     "type": "string",
