@@ -23,6 +23,7 @@ export class Config {
         this.decoration.fontWeight = config.get<string>("decoration.fontWeight");
         this.decoration.fontFamily = config.get<string>("decoration.fontFamily");
         this.decoration.upperCase = config.get<boolean>("decoration.upperCase");
+        this.finder.characters = config.get<string>("decoration.characters").split(/[\s,]+/);
 
         this.finder.findAllMode = config.get<string>("finder.findAllMode");
         this.finder.findInSelection = config.get<string>("finder.findInSelection");

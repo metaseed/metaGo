@@ -1,7 +1,7 @@
 {
     "name": "metago",
     "displayName": "MetaGo",
-    "description": "vscode meta goto. jump, navigation, goto",
+    "description": "vscode cursor move and select; jump, navigation, goto",
     "icon": "images/metago.png",
     "version": "1.7.0",
     "publisher": "metaseed",
@@ -91,7 +91,8 @@
             "properties": {
                 "metaGo.decoration.backgroundColor": {
                     "type": "string",
-                    "default": "Chartreuse,yellow"
+                    "default": "Chartreuse,yellow",
+                    "description": "one and two character decorator background color"
                 },
                 "metaGo.decoration.backgroundOpacity": {
                     "type": "string",
@@ -137,13 +138,18 @@
                     "type": "boolean",
                     "default": false
                 },
-                "metaGo.finder.findAllMode": {
+                "metaGo.decoration.characters": {
                     "type": "string",
-                    "default": "on"
+                    "default": "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z"
                 },
                 "metaGo.finder.findInSelection": {
                     "type": "string",
                     "default": "off"
+                },
+                "metaGo.finder.findAllMode": {
+                    "type": "string",
+                    "default": "on",
+                    "description": "on: find all characters on viewable screen area; off: only search the first character of the words that are separated by chars configured in 'wordSeparatorPattern'"
                 },
                 "metaGo.finder.wordSeparatorPattern": {
                     "type": "string",
