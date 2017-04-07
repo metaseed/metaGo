@@ -2,6 +2,7 @@ import { Config } from "../config";
 import { InlineInput } from "./inline-input";
 import { ILineCharIndexes, IIndexes, DecorationModel, DecorationModelBuilder } from "./decoration-model";
 import { Decorator } from "./decoration";
+import { ViewPort } from './view-port';
 import * as vscode from "vscode";
 
 class Selection {
@@ -16,17 +17,19 @@ export class MetaJumper {
     private decorationModelBuilder: DecorationModelBuilder = new DecorationModelBuilder();
     private decorator: Decorator = new Decorator();
     private isJumping: boolean = false;
+    private viewPort: ViewPort;
     private cursorMoveBoundary;
 
     initialize = (context: vscode.ExtensionContext, config: Config) => {
         let disposables: vscode.Disposable[] = [];
         this.config = config;
+        this.viewPort = new ViewPort();
         // determines whether to find from center of the screen.
         this.cursorMoveBoundary = Math.trunc(this.config.finder.range / 2);
 
         disposables.push(vscode.commands.registerCommand('extension.metaGo', () => {
             this.metaJump()
-                .then(({model}) => {
+                .then(({ model }) => {
                     let editor = vscode.window.activeTextEditor;
                     editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character), new vscode.Position(model.line, model.character));
                 })
@@ -35,7 +38,7 @@ export class MetaJumper {
 
         disposables.push(vscode.commands.registerCommand('extension.metaGo.selection', () => {
             this.metaJump()
-                .then(({model,fromLine,fromChar}) => {
+                .then(({ model, fromLine, fromChar }) => {
                     let toCharacter = model.character;
                     if (model.line > fromLine) {
                         toCharacter++;
@@ -64,30 +67,30 @@ export class MetaJumper {
         this.decorator.initialize(this.config);
     }
 
-    private metaJump = () => {
+    private async metaJump() {
         let editor = vscode.window.activeTextEditor;
         let fromLine = editor.selection.active.line;
         let fromChar = editor.selection.active.character;
-        return this.moveCursorToCenter(false)
-            .then(() => {
-                let toLine = editor.selection.active.line;
-                if (Math.abs(toLine - fromLine) < this.cursorMoveBoundary) {
-                    // back
-                    editor.selection = new vscode.Selection(new vscode.Position(fromLine, fromChar), new vscode.Position(fromLine, fromChar));
-                };
-                return new Promise<{model:DecorationModel, fromLine:number, fromChar:number}>((resolve) => {
-                    if (!this.isJumping) {
-                        this.isJumping = true;
-                        this.jump((editor, model: any) => { resolve({model,fromLine,fromChar}); })
-                            .then(() => {
-                                this.isJumping = false;
-                            })
-                            .catch(() => {
-                                this.isJumping = false;
-                            });
-                    }
-                });
-            });
+
+        await this.viewPort.moveCursorToCenter(false)
+        let toLine = editor.selection.active.line;
+        let cursorMoveBoundary = this.cursorMoveBoundary;
+        if (Math.abs(toLine - fromLine) < cursorMoveBoundary) {
+            // back
+            editor.selection = new vscode.Selection(new vscode.Position(fromLine, fromChar), new vscode.Position(fromLine, fromChar));
+        };
+        return new Promise<{ model: DecorationModel, fromLine: number, fromChar: number }>((resolve) => {
+            if (!this.isJumping) {
+                this.isJumping = true;
+                this.jump((editor, model: any) => { resolve({ model, fromLine, fromChar }); })
+                    .then(() => {
+                        this.isJumping = false;
+                    })
+                    .catch(() => {
+                        this.isJumping = false;
+                    });
+            }
+        });
     }
     private jump = (jumped: (editor: vscode.TextEditor, model: DecorationModel) => void): Promise<void> => {
         return new Promise<void>((jumpResolve, jumpReject) => {
@@ -156,19 +159,6 @@ export class MetaJumper {
         return firstInlineInput;
     }
 
-    private async moveCursorToCenter(select: boolean) {
-        await vscode.commands.executeCommand("cursorMove", {
-            to: 'viewPortCenter',
-            select: select
-        });
-    }
-
-
-    // private viewPortCenter():number{
-    //  when getCenterLineInViewPort exposed to extension we should switch
-    //  to this api
-    //  cursor.cursors.primaryCursor.getCenterLineInViewPort();
-    // }
     private getSelection = (editor: vscode.TextEditor): { before: Selection, after: Selection } => {
         let selection: Selection = new Selection();
 
