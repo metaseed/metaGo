@@ -17,13 +17,13 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 1. type <kbd>Alt</kbd>+<kbd>;</kbd> to tell I want to *go* somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *go* to that location.
-> at any time press <kbd>ESC<kbd> to cancel
+> at any time press <kbd>ESC</kbd> to cancel
 
 ### select to any character on screen from cursor
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>;</kbd> to tell I want to *select* to somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *select* to that location.
-> at any time press <kbd>ESC<kbd> to cancel
+> at any time press <kbd>ESC</kbd> to cancel
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
 ### scroll active line to the screen center
