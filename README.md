@@ -14,12 +14,12 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * even though your cursor is out of your viewable screen, metaGo still works!
 
 ### go to any character on screen
-1. type *Alt+;* to tell I want to *go* somewhere.
+1. type <kbd>Alt</kbd>+<kbd>;</kbd> to tell I want to *go* somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *go* to that location.
 
 ### select to any character on screen from cursor
-1. type *Alt+Shift+;* to tell I want to *select* to somewhere.
+1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kdb>;</kbd> to tell I want to *select* to somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *select* to that location.
 
