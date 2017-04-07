@@ -25,13 +25,13 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
 ### scroll active line to the screen center
-<kbd>Alt</kbd>+<kbd>o</kbd> is the default shortcut.
+* <kbd>Alt</kbd>+<kbd>o</kbd> is the default shortcut.
 ![MetaGo.Center](images/metago.center.gif)
 ### moving cursor up/down between blank lines
-<kbd>Alt</kbd>+<kbd>,</kbd>(default shortcut) to move cursor to the blank line above.
-<kbd>Alt</kbd>+<kbd>.</kbd>(default shortcut) to move cursor to the blank line below.
-<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>,</kbd>(default shortcut) to select from the cursor to the blank line above.
-<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>.</kbd>(default shortcut) to select from the cursor to the blank line below.
+* <kbd>Alt</kbd>+<kbd>,</kbd>(default shortcut) to move cursor to the blank line above.
+* <kbd>Alt</kbd>+<kbd>.</kbd>(default shortcut) to move cursor to the blank line below.
+* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>,</kbd>(default shortcut) to select from the cursor to the blank line above.
+* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>.</kbd>(default shortcut) to select from the cursor to the blank line below.
 ![MetaGo.blankLine](images/metago.blankLine.gif)
 ## Requirements
 
