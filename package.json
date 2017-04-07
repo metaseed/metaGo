@@ -3,7 +3,7 @@
     "displayName": "MetaGo",
     "description": "vscode meta goto. jump, navigation, goto",
     "icon": "images/metago.png",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo",
     "license": "MIT",

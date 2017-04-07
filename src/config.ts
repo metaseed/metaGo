@@ -51,7 +51,7 @@ class DecoratorConfig {
 }
 
 class FinderConfig {
-    characters: string[] = ["a","b","c","d","e","f","g","h","i","j","k","l"]//["k", "j", "d", "f", "l", "s", "a", "h", "g", "i", "o", "n", "u", "r", "v", "c", "w", "e", "x", "m", "b", "p", "q", "t", "y", "z"];
+    characters: string[] = ["k", "j", "d", "f", "l", "s", "a", "h", "g", "i", "o", "n", "u", "r", "v", "c", "w", "e", "x", "m", "b", "p", "q", "t", "y", "z"];
     findAllMode: string = 'on';
     findInSelection:string = 'off';
     wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";

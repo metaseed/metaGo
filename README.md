@@ -1,10 +1,17 @@
-## Features
 
+
+## Features
 MetaGo provides fast cursor movement/selection for keyboard focused users: 
 * go to any character on screen with 3 or 4 times key press.
 * moving cursor up/down between blank lines.
 * select code block when moving cursor while hold shift key.
 * scroll the active line (contains cursor) to the screen center.
+
+### highlight features
+* code characters are based on priority, the more easier to type character has higher priority. i.e. 'k','j', and it's configurable, if you like.
+* code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
+* only encode characters on viewable screen area, so metaGo is faster.
+* even though your cursor is out of your viewable screen, metaGo still works!
 
 ### go to any character on screen
 1. type *Alt+;* to tell I want to *go* somewhere.
@@ -15,12 +22,6 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 1. type *Alt+Shift+;* to tell I want to *select* to somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *select* to that location.
-
-### highlight features
-* code characters are based on priority, the more easier to type character has higher priority. i.e. 'k','j', and it's configurable, if you like.
-* code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
-* only encode characters on viewable screen area, so metaGo is faster.
-* even though your cursor is out of your viewable screen, metaGo still works!
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
 ### scroll active line to the screen center
