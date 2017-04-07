@@ -28,7 +28,7 @@ export class Config {
         this.finder.findAllMode = config.get<string>("finder.findAllMode");
         this.finder.findInSelection = config.get<string>("finder.findInSelection");
         this.finder.wordSeparatorPattern = config.get<string>("finder.wordSeparatorPattern");
-        this.finder.range = config.get<number>("finder.range");
+        this.finder.range = config.get<number>("finder.screenLineRange");
     }
 }
 
@@ -56,5 +56,5 @@ class FinderConfig {
     findAllMode: string = 'on';
     findInSelection:string = 'off';
     wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";
-    range: number = 40;
+    range: number = 50;
 }

@@ -155,9 +155,10 @@
                     "type": "string",
                     "default": "[ ,-.{_(\"'<\\/[+]"
                 },
-                "metaGo.finder.range": {
+                "metaGo.finder.screenLineRange": {
                     "type": "number",
-                    "default": 40
+                    "default": 50,
+                    "description": "how many lines could be showed in one screen"
                 }
             }
         }

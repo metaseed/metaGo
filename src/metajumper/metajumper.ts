@@ -18,14 +18,16 @@ export class MetaJumper {
     private decorator: Decorator = new Decorator();
     private isJumping: boolean = false;
     private viewPort: ViewPort;
-    private cursorMoveBoundary;
+    private findFromCenterScreenRange;
+    private halfViewPortRange: number;
 
     initialize = (context: vscode.ExtensionContext, config: Config) => {
         let disposables: vscode.Disposable[] = [];
         this.config = config;
         this.viewPort = new ViewPort();
+        this.halfViewPortRange = Math.trunc(this.config.finder.range / 2); // 0.5
         // determines whether to find from center of the screen.
-        this.cursorMoveBoundary = Math.trunc(this.config.finder.range / 2);
+        this.findFromCenterScreenRange = Math.trunc(this.config.finder.range * 2 / 5); // 0.4
 
         disposables.push(vscode.commands.registerCommand('extension.metaGo', () => {
             this.metaJump()
@@ -74,7 +76,7 @@ export class MetaJumper {
 
         await this.viewPort.moveCursorToCenter(false)
         let toLine = editor.selection.active.line;
-        let cursorMoveBoundary = this.cursorMoveBoundary;
+        let cursorMoveBoundary = this.findFromCenterScreenRange;
         if (Math.abs(toLine - fromLine) < cursorMoveBoundary) {
             // back
             editor.selection = new vscode.Selection(new vscode.Position(fromLine, fromChar), new vscode.Position(fromLine, fromChar));
@@ -176,13 +178,14 @@ export class MetaJumper {
             return { before: selection, after: Selection.Empty };
         }
         else {
-            selection.startLine = Math.max(editor.selection.active.line - this.config.finder.range, 0);
+
+            selection.startLine = Math.max(editor.selection.active.line - this.halfViewPortRange, 0);
             selection.lastLine = editor.selection.active.line + 1; //current line included in before
             selection.text = editor.document.getText(new vscode.Range(selection.startLine, 0, selection.lastLine, 0));
 
             let selectionAfter = new Selection();
             selectionAfter.startLine = editor.selection.active.line + 1;
-            selectionAfter.lastLine = Math.min(editor.selection.active.line + this.config.finder.range, editor.document.lineCount);
+            selectionAfter.lastLine = Math.min(editor.selection.active.line + this.halfViewPortRange, editor.document.lineCount);
             selectionAfter.text = editor.document.getText(new vscode.Range(selectionAfter.startLine, 0, selectionAfter.lastLine, 0));
 
             return { before: selection, after: selectionAfter };
