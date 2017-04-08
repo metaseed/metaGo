@@ -61,26 +61,26 @@
             },
             {
                 "command": "extension.metaGo.centerEditor",
-                "key": "alt+o",
+                "key": "alt+c",
                 "when": "editorTextFocus"
             },
             {
-                "key": "alt+,",
+                "key": "alt+home",
                 "command": "extension.metaGo.spaceBlockMoveUp",
                 "when": "editorTextFocus"
             },
             {
-                "key": "alt+shift+,",
+                "key": "alt+shift+home",
                 "command": "extension.metaGo.spaceBlockSelectUp",
                 "when": "editorTextFocus"
             },
             {
-                "key": "alt+.",
+                "key": "alt+end",
                 "command": "extension.metaGo.spaceBlockMoveDown",
                 "when": "editorTextFocus"
             },
             {
-                "key": "alt+shift+.",
+                "key": "alt+shift+end",
                 "command": "extension.metaGo.spaceBlockSelectDown",
                 "when": "editorTextFocus"
             }
