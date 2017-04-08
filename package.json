@@ -96,7 +96,7 @@
                 },
                 "metaGo.decoration.backgroundOpacity": {
                     "type": "string",
-                    "default": "0.88"
+                    "default": "0.8"
                 },
                 "metaGo.decoration.borderColor": {
                     "type": "string",
@@ -104,7 +104,7 @@
                 },
                 "metaGo.decoration.color": {
                     "type": "string",
-                    "default": "black"
+                    "default": "blue"
                 },
                 "metaGo.decoration.width": {
                     "type": "number",
@@ -128,7 +128,7 @@
                 },
                 "metaGo.decoration.fontWeight": {
                     "type": "string",
-                    "default": "normal"
+                    "default": "bold"
                 },
                 "metaGo.decoration.fontFamily": {
                     "type": "string",
