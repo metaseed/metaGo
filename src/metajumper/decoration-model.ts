@@ -75,7 +75,7 @@ class LineCharIndexState {
         } else {
             lineCharIndex.line += this.direction;
             lineCharIndex.char = 0
-            if (oneLineChangeDir) this.toggleDirection();
+            //if (oneLineChangeDir) this.toggleDirection();
             return this.findNext(oneLineChangeDir);
         }
     }

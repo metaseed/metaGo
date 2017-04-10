@@ -85,7 +85,7 @@ export class MetaJumper {
         this.decorator.initialize(this.config);
     }
 
-    private async metaJump() {
+    private async getPosition() {
         let editor = vscode.window.activeTextEditor;
         let fromLine = editor.selection.active.line;
         let fromChar = editor.selection.active.character;
@@ -97,6 +97,13 @@ export class MetaJumper {
             // back
             editor.selection = new vscode.Selection(new vscode.Position(fromLine, fromChar), new vscode.Position(fromLine, fromChar));
         };
+    }
+
+    private async metaJump() {
+        let editor = vscode.window.activeTextEditor;
+        let fromLine = editor.selection.active.line;
+        let fromChar = editor.selection.active.character;
+
         return new Promise<{ model: DecorationModel, fromLine: number, fromChar: number }>((resolve) => {
             if (!this.isJumping) {
                 this.isJumping = true;
@@ -148,27 +155,31 @@ export class MetaJumper {
                 if (value && value.length > 1)
                     value = value.substring(0, 1);
 
-                let selection = this.getSelection(editor);
+                this.getSelection(editor).then((selection)=>{
+                    let lineCharIndexes = this.find(editor, selection.before, selection.after, value);
+                    if (lineCharIndexes.count <= 0) {
+                        reject("metaGo: no matches");
+                        return;
+                    }
 
-                let lineCharIndexes = this.find(editor, selection.before, selection.after, value);
-                if (lineCharIndexes.count <= 0) {
-                    reject("metaGo: no matches");
-                    return;
-                }
+                    let decorationModels: DecorationModel[] = this.decorationModelBuilder.buildDecorationModel(lineCharIndexes);
 
-                let decorationModels: DecorationModel[] = this.decorationModelBuilder.buildDecorationModel(lineCharIndexes);
+                    if (decorationModels.length === 0) {
+                        reject("metaGo: encoding error");
+                        return;
+                    }
+                    if (decorationModels.length === 1) {
+                        resolve(decorationModels[0]);
+                    }
+                    else {
+                        this.prepareForJumpTo(editor, decorationModels).then((model) => {
+                            resolve(model);
+                        }).catch(() => {
+                            reject();
+                        });
+                    }
+                });
 
-                if (decorationModels.length === 0) return;
-                if (decorationModels.length === 1) {
-                    resolve(decorationModels[0]);
-                }
-                else {
-                    this.prepareForJumpTo(editor, decorationModels).then((model) => {
-                        resolve(model);
-                    }).catch(() => {
-                        reject();
-                    });
-                }
             })
             .catch(() => {
                 reject();
@@ -177,7 +188,7 @@ export class MetaJumper {
         return firstInlineInput;
     }
 
-    private getSelection = (editor: vscode.TextEditor): { before: Selection, after: Selection } => {
+    private async getSelection(editor: vscode.TextEditor): Promise<{ before: Selection, after: Selection }> {
         let selection: Selection = new Selection();
 
         if (!editor.selection.isEmpty && this.config.finder.findInSelection === 'on') {
@@ -194,7 +205,7 @@ export class MetaJumper {
             return { before: selection, after: Selection.Empty };
         }
         else {
-
+            await this.getPosition();
             selection.startLine = Math.max(editor.selection.active.line - this.halfViewPortRange, 0);
             selection.lastLine = editor.selection.active.line + 1; //current line included in before
             selection.text = editor.document.getText(new vscode.Range(selection.startLine, 0, selection.lastLine, 0));
@@ -234,11 +245,11 @@ export class MetaJumper {
 
     private inteliAdjBefore(str: string, char: string, index: number): InteliAdjustment {
         let regexp = new RegExp('\\w');
-        if(this.inteliAdjBeforeRegex(str,char,index,regexp)===InteliAdjustment.Before){
+        if (this.inteliAdjBeforeRegex(str, char, index, regexp) === InteliAdjustment.Before) {
             return InteliAdjustment.Before;
         }
         regexp = new RegExp(/[^\w\s]/);
-        return this.inteliAdjBeforeRegex(str,char,index,regexp);
+        return this.inteliAdjBeforeRegex(str, char, index, regexp);
     }
     private inteliAdjBeforeRegex(str: string, char: string, index: number, regexp: RegExp): InteliAdjustment {
 

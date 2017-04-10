@@ -8,7 +8,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * scroll the active line (contains cursor) to the screen center.
 
 ### highlight features
-* code characters are based on priority, the more easier to type character has higher priority. i.e. 'k','j', and it's configurable, if you like.
+* code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
 * code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
 * only encode characters on viewable screen area, so metaGo is faster.
 * even though your cursor is out of your viewable screen, metaGo still works!
@@ -31,7 +31,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
 ### scroll active line to the screen center
-* <kbd>Alt</kbd>+<kbd>c</kbd> is the default shortcut.
+* <kbd>Alt</kbd>+<kbd>m</kbd> is the default shortcut.
 ![MetaGo.Center](images/metago.center.gif)
 ### moving cursor up/down between blank lines
 * <kbd>Alt</kbd>+<kbd>Home</kbd>(default shortcut) to move cursor to the blank line above.
