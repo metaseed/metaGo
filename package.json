@@ -3,7 +3,7 @@
     "displayName": "MetaGo",
     "description": "vscode cursor move and select; jump, navigation, goto",
     "icon": "images/metago.png",
-    "version": "1.10.0",
+    "version": "1.11.0",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo",
     "license": "MIT",
@@ -56,14 +56,13 @@
                 "description": "goto the character and set the cursor after the character"
             },
             {
-                "command": "extension.metaGoBefore",
-                "key": "ctrl+;",
-                "when": "editorTextFocus",
-                "description": "goto the character and set the cursor before the character"
-            },
-            {
                 "command": "extension.metaGo.selection",
                 "key": "alt+shift+;",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "extension.metaGo.selectLineUp",
+                "key": "ctrl+shift+i",
                 "when": "editorTextFocus"
             },
             {

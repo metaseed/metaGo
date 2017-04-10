@@ -6,6 +6,7 @@ import { Config } from "./config";
 import { MetaJumper } from './metajumper/metajumper';
 import { CenterEditor } from './center-editor';
 import { SpaceBlockJumper } from './space-block-jumper';
+import { SelectLineUp } from './select-line-up';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -23,6 +24,8 @@ export function activate(context: vscode.ExtensionContext) {
     centerEditor.activate(context);
     let spaceBlockJumper = new SpaceBlockJumper();
     spaceBlockJumper.activate(context);
+    let selectLineUp = new SelectLineUp();
+    selectLineUp.activate(context);
 }
 
 // this method is called when your extension is deactivated
