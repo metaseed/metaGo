@@ -48,11 +48,11 @@ class LineCharIndexState {
 
     constructor(private lineIndexes: ILineCharIndexes, private direction = Direction.up, private up: LineCharIndex, private down: LineCharIndex) { }
 
-    findNextAutoWrap(oneLineChangeDir = false): LineCharIndex {
-        let lineCharIndex = this.findNext(oneLineChangeDir);
-        if (lineCharIndex === LineCharIndex.END) {
+    findNextAutoWrap(): { lineCharIndex: LineCharIndex, lineChanged: boolean } {
+        let lineCharIndex = this.findNext();
+        if (lineCharIndex.lineCharIndex === LineCharIndex.END) {
             this.toggleDirection();
-            lineCharIndex = this.findNext(oneLineChangeDir);
+            lineCharIndex = this.findNext();
         }
         return lineCharIndex;
     }
@@ -61,22 +61,21 @@ class LineCharIndexState {
         this.direction = this.direction === Direction.up ? Direction.down : Direction.up;
     }
 
-    private findNext( oneLineChangeDir = false): LineCharIndex {
+    private findNext(): { lineCharIndex: LineCharIndex, lineChanged: boolean } {
         let lineCharIndex = this.direction === Direction.up ? this.up : this.down;
         let line = lineCharIndex.line;
         let charIndexes = this.lineIndexes.indexes[line];
 
-        if (!charIndexes) return LineCharIndex.END;//to end;
+        if (!charIndexes) return { lineCharIndex: LineCharIndex.END, lineChanged: false };//to end;
 
         if (lineCharIndex.char < charIndexes.length) {
             let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, charIndexes[lineCharIndex.char].inteliAdj);
             lineCharIndex.char++
-            return r;
+            return { lineCharIndex: r, lineChanged: false };
         } else {
             lineCharIndex.line += this.direction;
             lineCharIndex.char = 0
-            //if (oneLineChangeDir) this.toggleDirection();
-            return this.findNext(oneLineChangeDir);
+            return { lineCharIndex: this.findNext().lineCharIndex, lineChanged: true };
         }
     }
 }
@@ -102,8 +101,8 @@ export class DecorationModelBuilder {
 
         // one char codes
         for (let i = leadChars; i < this.config.finder.characters.length; i++) {
-            let lineCharIndex = lineIndexesState.findNextAutoWrap(true);
-
+            let lci = lineIndexesState.findNextAutoWrap();
+            let lineCharIndex = lci.lineCharIndex;
             if (lineCharIndex === LineCharIndex.END)
                 return models;
 
@@ -114,6 +113,8 @@ export class DecorationModelBuilder {
             model.character = lineCharIndex.char;
             model.inteliAdj = lineCharIndex.inteliAdj;
             models.push(model);
+            if (lci.lineChanged)
+                lineIndexesState.toggleDirection();
         }
 
         // two char codes
@@ -121,7 +122,7 @@ export class DecorationModelBuilder {
             lineIndexesState.toggleDirection();
             let root: DecorationModel;
             for (let k = 0; k < this.config.finder.characters.length; k++) {
-                let lineCharIndex = lineIndexesState.findNextAutoWrap();
+                let lineCharIndex = lineIndexesState.findNextAutoWrap().lineCharIndex;
 
                 if (lineCharIndex === LineCharIndex.END)
                     return models;
@@ -135,6 +136,7 @@ export class DecorationModelBuilder {
                 model.index = i;
                 model.line = lineCharIndex.line;
                 model.character = lineCharIndex.char;
+                model.inteliAdj = lineCharIndex.inteliAdj;
                 models.push(model);
 
                 let childModel = Object.assign({}, model);

@@ -202,6 +202,7 @@ export class MetaJumper {
                 selection.startLine = editor.selection.anchor.line;
                 selection.lastLine = editor.selection.active.line;
             }
+            selection.lastLine++;
             return { before: selection, after: Selection.Empty };
         }
         else {
