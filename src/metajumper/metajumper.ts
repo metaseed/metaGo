@@ -33,7 +33,7 @@ export class MetaJumper {
             this.metaJump()
                 .then(({ model }) => {
                     let editor = vscode.window.activeTextEditor;
-                    editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character+1), new vscode.Position(model.line, model.character+1));
+                    editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1), new vscode.Position(model.line, model.character + 1));
                 })
 
         }));
@@ -226,17 +226,23 @@ export class MetaJumper {
 
 
     private indexesOf = (str: string, char: string): number[] => {
-        if (char.length === 0) {
+        if (char && char.length === 0) {
             return [];
         }
 
         let indices = [];
-
+        let ignoreCase = this.config.finder.targetIgnoreCase;
         if (this.config.finder.findAllMode === 'on') {
             for (var i = 0; i < str.length; i++) {
-                if (str[i] && str[i].toLowerCase() === char.toLowerCase()) {
-                    indices.push(i);
-                };
+                if (ignoreCase) {
+                    if (str[i] === char) {
+                        indices.push(i);
+                    };
+                } else {
+                    if (str[i] && str[i].toLowerCase() === char.toLowerCase()) {
+                        indices.push(i);
+                    }
+                }
             }
         } else {
             //splitted by spaces
@@ -245,10 +251,15 @@ export class MetaJumper {
             let index = 0;
 
             for (var i = 0; i < words.length; i++) {
-                if (words[i][0] && words[i][0].toLowerCase() === char.toLowerCase()) {
-                    indices.push(index);
-                };
-
+                if (ignoreCase) {
+                    if (words[i][0] === char) {
+                        indices.push(index);
+                    }
+                } else {
+                    if (words[i][0] && words[i][0].toLowerCase() === char.toLowerCase()) {
+                        indices.push(index);
+                    }
+                }
                 // increment by word and white space
                 index += words[i].length + 1;
             }
@@ -266,7 +277,7 @@ export class MetaJumper {
 
                     if (!value) return;
 
-                    let model = models.find(model => model.code[0] === value.toLowerCase());
+                    let model = models.find(model => model.code[0] && model.code[0].toLowerCase() === value.toLowerCase());
 
                     if (model.children.length > 1) {
                         this.prepareForJumpTo(editor, model.children)

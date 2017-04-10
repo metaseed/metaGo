@@ -18,6 +18,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *go* to that location.
 > at any time press <kbd>ESC</kbd> to cancel
+> <kbd>Alt</kbd>+<kbd>;</kbd> set cursor after the character after navigation.
+> <kbd>Ctrl</kbd>+<kbd>;</kbd> set cursor before the character after navigation.
 
 ### select to any character on screen from cursor
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>;</kbd> to tell I want to *select* to somewhere.
@@ -27,13 +29,13 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
 ### scroll active line to the screen center
-* <kbd>Alt</kbd>+<kbd>o</kbd> is the default shortcut.
+* <kbd>Alt</kbd>+<kbd>c</kbd> is the default shortcut.
 ![MetaGo.Center](images/metago.center.gif)
 ### moving cursor up/down between blank lines
-* <kbd>Alt</kbd>+<kbd>,</kbd>(default shortcut) to move cursor to the blank line above.
-* <kbd>Alt</kbd>+<kbd>.</kbd>(default shortcut) to move cursor to the blank line below.
-* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>,</kbd>(default shortcut) to select from the cursor to the blank line above.
-* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>.</kbd>(default shortcut) to select from the cursor to the blank line below.
+* <kbd>Alt</kbd>+<kbd>Home</kbd>(default shortcut) to move cursor to the blank line above.
+* <kbd>Alt</kbd>+<kbd>End</kbd>(default shortcut) to move cursor to the blank line below.
+* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Home</kbd>(default shortcut) to select from the cursor to the blank line above.
+* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>End</kbd>(default shortcut) to select from the cursor to the blank line below.
 ![MetaGo.blankLine](images/metago.blankLine.gif)
 ## Requirements
 

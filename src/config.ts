@@ -9,7 +9,7 @@ export class Config {
 
         this.decoration.bgColor = config.get<string>("decoration.backgroundColor");
         this.decoration.bgOpacity = config.get<string>("decoration.backgroundOpacity");
-        
+
         this.decoration.color = config.get<string>("decoration.color");
         this.decoration.borderColor = config.get<string>("decoration.borderColor");
 
@@ -29,6 +29,7 @@ export class Config {
         this.finder.findInSelection = config.get<string>("finder.findInSelection");
         this.finder.wordSeparatorPattern = config.get<string>("finder.wordSeparatorPattern");
         this.finder.range = config.get<number>("finder.screenLineRange");
+        this.finder.targetIgnoreCase = config.get<boolean>("finder.targetIgnoreCase");
     }
 }
 
@@ -54,7 +55,8 @@ class DecoratorConfig {
 class FinderConfig {
     characters: string[] = ["k", "j", "d", "f", "l", "s", "a", "h", "g", "i", "o", "n", "u", "r", "v", "c", "w", "e", "x", "m", "b", "p", "q", "t", "y", "z"];
     findAllMode: string = 'on';
-    findInSelection:string = 'off';
+    findInSelection: string = 'off';
     wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";
     range: number = 50;
+    targetIgnoreCase: boolean = false;
 }
