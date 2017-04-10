@@ -1,11 +1,18 @@
 import { Config } from '../config';
 import * as vscode from 'vscode';
 
+export class CharIndex {
+    constructor(public charIndex, public inteliAdj = InteliAdjustment.Default) {
+    }
+}
 export interface IIndexes {
     // key is line number, value stores character indexes in line
-    [key: number]: number[];
+    [key: number]: CharIndex[];
 }
 
+export enum InteliAdjustment {
+    Before = -1, Default = 0 // default is after
+}
 export interface ILineCharIndexes {
     count: number;
     indexes: IIndexes;
@@ -22,6 +29,7 @@ export class DecorationModel {
     line: number;
     //character index in line
     character: number;
+    inteliAdj: InteliAdjustment;
 
     root?: DecorationModel;
     children: DecorationModel[] = [];
@@ -29,7 +37,7 @@ export class DecorationModel {
 
 class LineCharIndex {
     static END = new LineCharIndex();
-    constructor(public line: number = -1, public char: number = -1) { }
+    constructor(public line: number = -1, public char: number = -1, public inteliAdj: InteliAdjustment = InteliAdjustment.Default) { }
 }
 
 enum Direction {
@@ -61,7 +69,9 @@ class LineCharIndexState {
         if (!charIndexes) return LineCharIndex.END;//to end;
 
         if (lineCharIndex.char < charIndexes.length) {
-            return new LineCharIndex(line, charIndexes[lineCharIndex.char++]);
+            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, charIndexes[lineCharIndex.char].inteliAdj);
+            lineCharIndex.char++
+            return r;
         } else {
             lineCharIndex.line += direction;
             lineCharIndex.char = 0
@@ -81,8 +91,8 @@ export class DecorationModelBuilder {
         let models: DecorationModel[] = [];
         let lineIndexesState = new LineCharIndexState(
             lineIndexes, Direction.up,
-            { line: lineIndexes.focusLine, char: 0 },
-            { line: lineIndexes.focusLine + 1, char: 0 }
+            new LineCharIndex(lineIndexes.focusLine, 0),
+            new LineCharIndex(lineIndexes.focusLine + 1, 0)
         );
 
         let twoCharsMax = Math.pow(this.config.finder.characters.length, 2);
@@ -101,6 +111,7 @@ export class DecorationModelBuilder {
             model.index = i;
             model.line = lineCharIndex.line;
             model.character = lineCharIndex.char;
+            model.inteliAdj = lineCharIndex.inteliAdj;
             models.push(model);
         }
 

@@ -1,6 +1,6 @@
 import { Config } from "../config";
 import { InlineInput } from "./inline-input";
-import { ILineCharIndexes, IIndexes, DecorationModel, DecorationModelBuilder } from "./decoration-model";
+import { ILineCharIndexes, IIndexes, DecorationModel, DecorationModelBuilder, InteliAdjustment, CharIndex } from "./decoration-model";
 import { Decorator } from "./decoration";
 import { ViewPort } from './view-port';
 import * as vscode from "vscode";
@@ -29,11 +29,19 @@ export class MetaJumper {
         // determines whether to find from center of the screen.
         this.findFromCenterScreenRange = Math.trunc(this.config.finder.range * 2 / 5); // 0.4
 
-        disposables.push(vscode.commands.registerCommand('extension.metaGo', () => {
+        disposables.push(vscode.commands.registerCommand('extension.metaGoAfter', () => {
             this.metaJump()
                 .then(({ model }) => {
                     let editor = vscode.window.activeTextEditor;
                     editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1), new vscode.Position(model.line, model.character + 1));
+                })
+
+        }));
+        disposables.push(vscode.commands.registerCommand('extension.metaGo', () => {
+            this.metaJump()
+                .then(({ model }) => {
+                    let editor = vscode.window.activeTextEditor;
+                    editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1 + model.inteliAdj), new vscode.Position(model.line, model.character + 1 + model.inteliAdj));
                 })
 
         }));
@@ -224,8 +232,28 @@ export class MetaJumper {
         return lineIndexes;
     }
 
+    private inteliAdjBefore(str: string, char: string, index: number): InteliAdjustment {
+        let regexp = new RegExp('\\w');
+        if(this.inteliAdjBeforeRegex(str,char,index,regexp)===InteliAdjustment.Before){
+            return InteliAdjustment.Before;
+        }
+        regexp = new RegExp(/[^\w\s]/);
+        return this.inteliAdjBeforeRegex(str,char,index,regexp);
+    }
+    private inteliAdjBeforeRegex(str: string, char: string, index: number, regexp: RegExp): InteliAdjustment {
 
-    private indexesOf = (str: string, char: string): number[] => {
+        if (regexp.test(char)) {
+            if (index === 0 && str.length !== 1) {
+                if (regexp.test(str[1])) return InteliAdjustment.Before;
+            } else {
+                if (str[index + 1] && regexp.test(str[index + 1]) && !regexp.test(str[index - 1]))
+                    return InteliAdjustment.Before;
+            }
+        }
+        return InteliAdjustment.Default;
+    }
+
+    private indexesOf = (str: string, char: string): CharIndex[] => {
         if (char && char.length === 0) {
             return [];
         }
@@ -236,11 +264,13 @@ export class MetaJumper {
             for (var i = 0; i < str.length; i++) {
                 if (ignoreCase) {
                     if (str[i] === char) {
-                        indices.push(i);
+                        let adj = this.inteliAdjBefore(str, char, i);
+                        indices.push(new CharIndex(i, adj));
                     };
                 } else {
                     if (str[i] && str[i].toLowerCase() === char.toLowerCase()) {
-                        indices.push(i);
+                        let adj = this.inteliAdjBefore(str, char, i);
+                        indices.push(new CharIndex(i, adj));
                     }
                 }
             }
@@ -253,11 +283,12 @@ export class MetaJumper {
             for (var i = 0; i < words.length; i++) {
                 if (ignoreCase) {
                     if (words[i][0] === char) {
-                        indices.push(index);
+                        indices.push(new CharIndex(index));
                     }
                 } else {
                     if (words[i][0] && words[i][0].toLowerCase() === char.toLowerCase()) {
-                        indices.push(index);
+                        let adj = this.inteliAdjBefore(str, char, i);
+                        indices.push(new CharIndex(index, adj));
                     }
                 }
                 // increment by word and white space

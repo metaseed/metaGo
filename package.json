@@ -63,7 +63,7 @@
             },
             {
                 "command": "extension.metaGo.selection",
-                "key": "ctrl+shift+;",
+                "key": "alt+shift+;",
                 "when": "editorTextFocus"
             },
             {
