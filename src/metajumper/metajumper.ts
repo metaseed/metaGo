@@ -33,6 +33,14 @@ export class MetaJumper {
             this.metaJump()
                 .then(({ model }) => {
                     let editor = vscode.window.activeTextEditor;
+                    editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character+1), new vscode.Position(model.line, model.character+1));
+                })
+
+        }));
+        disposables.push(vscode.commands.registerCommand('extension.metaGoBefore', () => {
+            this.metaJump()
+                .then(({ model }) => {
+                    let editor = vscode.window.activeTextEditor;
                     editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character), new vscode.Position(model.line, model.character));
                 })
 

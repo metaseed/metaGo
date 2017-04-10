@@ -52,7 +52,14 @@
             {
                 "command": "extension.metaGo",
                 "key": "alt+;",
-                "when": "editorTextFocus"
+                "when": "editorTextFocus",
+                "description":"goto the character and set the cursor after the character"
+            },
+            {
+                "command": "extension.metaGoBefore",
+                "key": "alt+ctrl+;",
+                "when": "editorTextFocus",
+                "description":"goto the character and set the cursor before the character"
             },
             {
                 "command": "extension.metaGo.selection",
@@ -96,7 +103,7 @@
                 },
                 "metaGo.decoration.backgroundOpacity": {
                     "type": "string",
-                    "default": "0.8"
+                    "default": "0.7"
                 },
                 "metaGo.decoration.borderColor": {
                     "type": "string",
