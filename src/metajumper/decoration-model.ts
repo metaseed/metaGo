@@ -48,11 +48,11 @@ class LineCharIndexState {
 
     constructor(private lineIndexes: ILineCharIndexes, private direction = Direction.up, private up: LineCharIndex, private down: LineCharIndex) { }
 
-    findNextAutoWrap(): LineCharIndex {
-        let lineCharIndex = this.findNext(this.direction);
+    findNextAutoWrap(oneLineChangeDir = false): LineCharIndex {
+        let lineCharIndex = this.findNext(oneLineChangeDir);
         if (lineCharIndex === LineCharIndex.END) {
             this.toggleDirection();
-            lineCharIndex = this.findNext(this.direction);
+            lineCharIndex = this.findNext(oneLineChangeDir);
         }
         return lineCharIndex;
     }
@@ -61,8 +61,8 @@ class LineCharIndexState {
         this.direction = this.direction === Direction.up ? Direction.down : Direction.up;
     }
 
-    private findNext(direction: Direction): LineCharIndex {
-        let lineCharIndex = direction === Direction.up ? this.up : this.down;
+    private findNext( oneLineChangeDir = false): LineCharIndex {
+        let lineCharIndex = this.direction === Direction.up ? this.up : this.down;
         let line = lineCharIndex.line;
         let charIndexes = this.lineIndexes.indexes[line];
 
@@ -73,9 +73,10 @@ class LineCharIndexState {
             lineCharIndex.char++
             return r;
         } else {
-            lineCharIndex.line += direction;
+            lineCharIndex.line += this.direction;
             lineCharIndex.char = 0
-            return this.findNext(direction);
+            if (oneLineChangeDir) this.toggleDirection();
+            return this.findNext(oneLineChangeDir);
         }
     }
 }
@@ -101,7 +102,7 @@ export class DecorationModelBuilder {
 
         // one char codes
         for (let i = leadChars; i < this.config.finder.characters.length; i++) {
-            let lineCharIndex = lineIndexesState.findNextAutoWrap();
+            let lineCharIndex = lineIndexesState.findNextAutoWrap(true);
 
             if (lineCharIndex === LineCharIndex.END)
                 return models;
