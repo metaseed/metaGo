@@ -17,15 +17,17 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 1. type <kbd>Alt</kbd>+<kbd>;</kbd> to tell I want to *go* somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *go* to that location. 
-   or you can press <kdb>Enter</kdb> to directly go to the one before the cursor. This is useful for the parameter block separators: { , ( and ) }, and you can press <kbd>Alt</kbd>+<kbd>;</kbd> and then <kbd>Enter</kbd> to goto the previous or <kbd>Space</kbd> to go to next.
+   or you can press <kdb>Enter</kdb> to directly go to the one before the cursor. This is useful for the parameter or code block separators: { , ( and ) }, and you can press <kbd>Alt</kbd>+<kbd>;</kbd> and then <kbd>Enter</kbd> to goto the previous or <kbd>Space</kbd> to go to next.
 
 > at any time press <kbd>ESC</kbd> to cancel
+
 > <kbd>Alt</kbd>+<kbd>;</kbd> will intelligently set cursor position after navigation:
 > if the target is at the begin of the word, the cursor will be before target character, otherwise after it;
 > word is defined as a group of all alphanumeric or punctuation characters. 
 > we also provide commands that set cursor before/after the character after navigation, you can config the shortcut by yourself.
 
 > type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Enter</kbd> to go to the one above;
+
 > type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Space</kbd> to go to the one below;
 
 ### select to any character on screen from cursor
