@@ -20,6 +20,9 @@ export class MetaJumper {
     private viewPort: ViewPort;
     private findFromCenterScreenRange;
     private halfViewPortRange: number;
+    private nextFindDownIndex = -1;
+    private nextFindUpIndex = -1;
+    private decorationModels: DecorationModel[];
 
     initialize = (context: vscode.ExtensionContext, config: Config) => {
         let disposables: vscode.Disposable[] = [];
@@ -144,13 +147,34 @@ export class MetaJumper {
         });
     }
 
-    private getFirstInput(editor: vscode.TextEditor, resolve, reject): Promise<void> {
+    private getFirstInput = (editor: vscode.TextEditor, resolve, reject): Promise<void> => {
         let firstInlineInput = new InlineInput().show(editor, (v) => v)
             .then((value: string) => {
                 if (!value) {
                     reject();
                     return;
                 };
+
+                if (value === ' ' && this.nextFindDownIndex !== -1 && this.decorationModels) {
+                    let model = this.decorationModels.find((model) => model.indexInModels.index === this.nextFindDownIndex && model.indexInModels.dir === Direction.down);
+                    if (model){
+                        resolve(model);
+                        this.nextFindDownIndex++;
+                        return;
+                    }
+                } else if (value === '\n' && this.nextFindUpIndex !== -1 && this.decorationModels) {
+                    let model = this.decorationModels.find((model) => model.indexInModels.index === this.nextFindUpIndex && model.indexInModels.dir === Direction.up);
+                    if (model){
+                        resolve(model);
+                        this.nextFindUpIndex++;
+                        return;
+                    }
+                } else {
+
+                    this.decorationModels = null;
+                    this.nextFindDownIndex = -1;
+                    this.nextFindUpIndex = -1;
+                }
 
                 if (value && value.length > 1)
                     value = value.substring(0, 1);
@@ -162,17 +186,17 @@ export class MetaJumper {
                         return;
                     }
 
-                    let decorationModels: DecorationModel[] = this.decorationModelBuilder.buildDecorationModel(lineCharIndexes);
+                    this.decorationModels = this.decorationModelBuilder.buildDecorationModel(lineCharIndexes);
 
-                    if (decorationModels.length === 0) {
+                    if (this.decorationModels.length === 0) {
                         reject("metaGo: encoding error");
                         return;
                     }
-                    if (decorationModels.length === 1) {
-                        resolve(decorationModels[0]);
+                    if (this.decorationModels.length === 1) {
+                        resolve(this.decorationModels[0]);
                     }
                     else {
-                        this.prepareForJumpTo(editor, decorationModels).then((model) => {
+                        this.prepareForJumpTo(editor, this.decorationModels).then((model) => {
                             resolve(model);
                         }).catch(() => {
                             reject();
@@ -321,10 +345,19 @@ export class MetaJumper {
 
                     if (value === '\n') {
                         let model = models.find(model => model.indexInModels.index === 0 && model.indexInModels.dir === Direction.up);
-                        if (model) resolve(model);
+                        if (model) {
+                            this.nextFindUpIndex++;
+                            resolve(model);
+                        }
                     } else if (value === ' ') {
                         let model = models.find(model => model.indexInModels.index === 0 && model.indexInModels.dir === Direction.down);
-                        if (model) resolve(model);
+                        if (model) {
+                            this.nextFindDownIndex++;
+                            resolve(model);
+                        }
+                    } else {
+                        this.nextFindDownIndex = -1;
+                        this.nextFindUpIndex = -1;
                     }
 
                     let model = models.find(model => model.code[0] && model.code[0].toLowerCase() === value.toLowerCase());
