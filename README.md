@@ -21,9 +21,12 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 > at any time press <kbd>ESC</kbd> to cancel
 
-> <kbd>Alt</kbd>+<kbd>;</kbd> will intelligently set cursor position after navigation:
-> if the target is at the begin of the word, the cursor will be before target character, otherwise after it;
-> word is defined as a group of all alphanumeric or punctuation characters. 
+> the <kbd>Alt</kbd>+<kbd>;</kbd> command will intelligently set cursor position after navigation:
+>
+> if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
+>
+> word is defined as a group of all alphanumeric or punctuation characters.
+>
 > we also provide commands that set cursor before/after the character after navigation, you can config the shortcut by yourself.
 
 > type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Enter</kbd> to go to the one above;
