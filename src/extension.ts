@@ -4,7 +4,7 @@
 import * as vscode from 'vscode';
 import { Config } from "./config";
 import { MetaJumper } from './metajumper/metajumper';
-import { CenterEditor } from './center-editor';
+import { CurrentLineScroller } from './current-line-scroller';
 import { SpaceBlockJumper } from './space-block-jumper';
 import { SelectLineUp } from './select-line-up';
 // this method is called when your extension is activated
@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
     config.loadConfig();
     metaJumper.initialize(context, config);
-    let centerEditor = new CenterEditor();
+    let centerEditor = new CurrentLineScroller();
     centerEditor.activate(context);
     let spaceBlockJumper = new SpaceBlockJumper();
     spaceBlockJumper.activate(context);
