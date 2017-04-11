@@ -49,9 +49,9 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
-## Extension Settings
+## Default Shortcut Settings
 
-To configure the keybinding, add the following lines to keybindings.json (File -> Preferences -> Keyboard Shortcuts):
+To configure the keybinding, add the following lines to *keybindings.json* (File -> Preferences -> Keyboard Shortcuts):
 
         {
             "command": "extension.metaGo.input.cancel",
@@ -61,7 +61,8 @@ To configure the keybinding, add the following lines to keybindings.json (File -
         {
             "command": "extension.metaGo",
             "key": "alt+;",
-            "when": "editorTextFocus"
+            "when": "editorTextFocus",
+            "description": "goto the character and set the cursor after the character"
         },
         {
             "command": "extension.metaGo.selection",
@@ -69,8 +70,13 @@ To configure the keybinding, add the following lines to keybindings.json (File -
             "when": "editorTextFocus"
         },
         {
+            "command": "extension.metaGo.selectLineUp",
+            "key": "ctrl+shift+i",
+            "when": "editorTextFocus"
+        },
+        {
             "command": "extension.metaGo.centerEditor",
-            "key": "alt+o",
+            "key": "alt+m",
             "when": "editorTextFocus"
         },
         {
@@ -97,11 +103,12 @@ To configure the keybinding, add the following lines to keybindings.json (File -
 
         "metaGo.decoration.backgroundColor": {
             "type": "string",
-            "default": "Chartreuse,yellow"
+            "default": "Chartreuse,yellow",
+            "description": "one and two character decorator background color"
         },
         "metaGo.decoration.backgroundOpacity": {
             "type": "string",
-            "default": "0.88"
+            "default": "0.7"
         },
         "metaGo.decoration.borderColor": {
             "type": "string",
@@ -109,7 +116,7 @@ To configure the keybinding, add the following lines to keybindings.json (File -
         },
         "metaGo.decoration.color": {
             "type": "string",
-            "default": "black"
+            "default": "blue"
         },
         "metaGo.decoration.width": {
             "type": "number",
@@ -129,11 +136,11 @@ To configure the keybinding, add the following lines to keybindings.json (File -
         },
         "metaGo.decoration.y": {
             "type": "number",
-            "default": 10
+            "default": 12
         },
         "metaGo.decoration.fontWeight": {
             "type": "string",
-            "default": "normal"
+            "default": "bold"
         },
         "metaGo.decoration.fontFamily": {
             "type": "string",
@@ -143,28 +150,29 @@ To configure the keybinding, add the following lines to keybindings.json (File -
             "type": "boolean",
             "default": false
         },
+        "metaGo.decoration.characters": {
+            "type": "string",
+            "default": "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z"
+        },
+        "metaGo.finder.findInSelection": {
+            "type": "string",
+            "default": "off"
+        },
+        "metaGo.finder.targetIgnoreCase": {
+            "type": "string",
+            "default": "false"
+        },
         "metaGo.finder.findAllMode": {
             "type": "string",
-            "default": "on"
+            "default": "on",
+            "description": "on: find all characters on viewable screen area; off: only search the first character of the words that are separated by chars configured in 'wordSeparatorPattern'"
         },
         "metaGo.finder.wordSeparatorPattern": {
             "type": "string",
             "default": "[ ,-.{_(\"'<\\/[+]"
         },
-        "metaGo.finder.range": {
+        "metaGo.finder.screenLineRange": {
             "type": "number",
-            "default": 40
+            "default": 50,
+            "description": "how many lines could be showed in one screen"
         }
-    }
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.1.0
-
-Added features.
-
-### 1.0.1
-
-Initial release
