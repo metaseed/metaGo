@@ -20,8 +20,7 @@ export class MetaJumper {
     private viewPort: ViewPort;
     private findFromCenterScreenRange;
     private halfViewPortRange: number;
-    private nextFindDownIndex = -1;
-    private nextFindUpIndex = -1;
+    private currentFindIndex = -1;
     private decorationModels: DecorationModel[];
 
     initialize = (context: vscode.ExtensionContext, config: Config) => {
@@ -37,7 +36,7 @@ export class MetaJumper {
                 .then(({ model }) => {
                     let editor = vscode.window.activeTextEditor;
                     editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1), new vscode.Position(model.line, model.character + 1));
-                })
+                }).catch(()=>this.isJumping = false);
 
         }));
         disposables.push(vscode.commands.registerCommand('extension.metaGo', () => {
@@ -45,7 +44,7 @@ export class MetaJumper {
                 .then(({ model }) => {
                     let editor = vscode.window.activeTextEditor;
                     editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1 + model.inteliAdj), new vscode.Position(model.line, model.character + 1 + model.inteliAdj));
-                })
+                }).catch(()=>this.isJumping = false);
 
         }));
         disposables.push(vscode.commands.registerCommand('extension.metaGoBefore', () => {
@@ -53,7 +52,7 @@ export class MetaJumper {
                 .then(({ model }) => {
                     let editor = vscode.window.activeTextEditor;
                     editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character), new vscode.Position(model.line, model.character));
-                })
+                }).catch(()=>this.isJumping = false);
 
         }));
 
@@ -72,7 +71,7 @@ export class MetaJumper {
                     editor.selection = new vscode.Selection(
                         new vscode.Position(fromLine, fromChar),
                         new vscode.Position(model.line, toCharacter));
-                })
+                }).catch(()=>this.isJumping = false);
 
         }));
 
@@ -155,25 +154,23 @@ export class MetaJumper {
                     return;
                 };
 
-                if (value === ' ' && this.nextFindDownIndex !== -1 && this.decorationModels) {
-                    let model = this.decorationModels.find((model) => model.indexInModels.index === this.nextFindDownIndex && model.indexInModels.dir === Direction.down);
+                if (value === ' ' && this.currentFindIndex!==Number.NaN && this.decorationModels) {
+                    let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex+1));
                     if (model){
                         resolve(model);
-                        this.nextFindDownIndex++;
+                        this.currentFindIndex++;
                         return;
                     }
-                } else if (value === '\n' && this.nextFindUpIndex !== -1 && this.decorationModels) {
-                    let model = this.decorationModels.find((model) => model.indexInModels.index === this.nextFindUpIndex && model.indexInModels.dir === Direction.up);
+                    reject();
+                    return;
+                } else if (value === '\n' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
+                    let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex-1));
                     if (model){
                         resolve(model);
-                        this.nextFindUpIndex++;
-                        return;
+                        this.currentFindIndex--;
                     }
-                } else {
-
-                    this.decorationModels = null;
-                    this.nextFindDownIndex = -1;
-                    this.nextFindUpIndex = -1;
+                    reject();
+                    return;
                 }
 
                 if (value && value.length > 1)
@@ -202,7 +199,7 @@ export class MetaJumper {
                             reject();
                         });
                     }
-                });
+                }).catch(()=>reject());
 
             })
             .catch(() => {
@@ -344,20 +341,17 @@ export class MetaJumper {
                     if (!value) return;
 
                     if (value === '\n') {
-                        let model = models.find(model => model.indexInModels.index === 0 && model.indexInModels.dir === Direction.up);
+                        let model = models.find(model => model.indexInModels=== 0);
                         if (model) {
-                            this.nextFindUpIndex++;
+                            this.currentFindIndex = 0;
                             resolve(model);
                         }
                     } else if (value === ' ') {
-                        let model = models.find(model => model.indexInModels.index === 0 && model.indexInModels.dir === Direction.down);
+                        let model = models.find(model => model.indexInModels=== 1);
                         if (model) {
-                            this.nextFindDownIndex++;
+                            this.currentFindIndex = 1;
                             resolve(model);
                         }
-                    } else {
-                        this.nextFindDownIndex = -1;
-                        this.nextFindUpIndex = -1;
                     }
 
                     let model = models.find(model => model.code[0] && model.code[0].toLowerCase() === value.toLowerCase());
@@ -373,6 +367,7 @@ export class MetaJumper {
                     }
                     else {
                         resolve(model);
+                        this.currentFindIndex = model.indexInModels;
                     }
                 }).catch(() => {
                     this.decorator.removeDecorations(editor);

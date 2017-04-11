@@ -23,12 +23,6 @@ export enum Direction {
     up = -1, down = 1
 }
 
-export class IndexInModels {
-    static Default = new IndexInModels();
-    constructor(public index: number = -1, public dir: Direction = Direction.up
-    ) { }
-}
-
 export class DecorationModel {
     // index in character set array
     index: number;
@@ -41,19 +35,19 @@ export class DecorationModel {
     character: number;
     inteliAdj: InteliAdjustment;
 
-    indexInModels: IndexInModels;
+    indexInModels: number;
     root?: DecorationModel;
     children: DecorationModel[] = [];
 }
 
 class LineCharIndex {
     static END = new LineCharIndex();
-    constructor(public line: number = -1, public char: number = -1, public indexInModels: IndexInModels = IndexInModels.Default, public inteliAdj: InteliAdjustment = InteliAdjustment.Default) { }
+    constructor(public line: number = -1, public char: number = -1, public indexInModels: number = -1, public inteliAdj: InteliAdjustment = InteliAdjustment.Default) { }
 }
 
 class LineCharIndexState {
     upIndexCounter = 0;
-    downIndexCounter = 0;
+    downIndexCounter = 1;
 
     constructor(private lineIndexes: ILineCharIndexes, private direction = Direction.up, private up: LineCharIndex, private down: LineCharIndex) { }
 
@@ -86,7 +80,7 @@ class LineCharIndexState {
         if (!charIndexes) return { lineCharIndex: LineCharIndex.END, lineChanged: false };//to end;
 
         if (lineCharIndex.char >= 0) {
-            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, new IndexInModels(this.upIndexCounter++, Direction.up), charIndexes[lineCharIndex.char].inteliAdj);
+            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, this.upIndexCounter--,  charIndexes[lineCharIndex.char].inteliAdj);
             lineCharIndex.char--
             return { lineCharIndex: r, lineChanged: false };
         } else {
@@ -105,7 +99,7 @@ class LineCharIndexState {
         if (!charIndexes) return { lineCharIndex: LineCharIndex.END, lineChanged: false };//to end;
 
         if (lineCharIndex.char < charIndexes.length) {
-            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, new IndexInModels(this.downIndexCounter++, Direction.down), charIndexes[lineCharIndex.char].inteliAdj);
+            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, this.downIndexCounter++, charIndexes[lineCharIndex.char].inteliAdj);
             lineCharIndex.char++
             return { lineCharIndex: r, lineChanged: false };
         } else {
