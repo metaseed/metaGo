@@ -22,16 +22,12 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > at any time press <kbd>ESC</kbd> to cancel
 
 > the <kbd>Alt</kbd>+<kbd>;</kbd> command will intelligently set cursor position after navigation:
->
 > if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
->
-> word is defined as a group of all alphanumeric or punctuation characters.
->
-> we also provide commands that set cursor before/after the character after navigation, you can config the shortcut by yourself.
+> The 'word' is defined as a group of all alphanumeric or punctuation characters. 
+> MetaGo also provide commands that set cursor before/after the character after navigation, you can config the shortcut by yourself.
 
-> type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Enter</kbd> to go to the one above;
-
-> type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Space</kbd> to go to the one below;
+> * type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Enter</kbd> to go to the one above;
+> * type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Space</kbd> to go to the one below;
 
 ### select to any character on screen from cursor
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>;</kbd> to tell I want to *select* to somewhere.
