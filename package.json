@@ -67,7 +67,7 @@
             },
             {
                 "command": "extension.metaGo.centerEditor",
-                "key": "alt+c",
+                "key": "alt+m",
                 "when": "editorTextFocus"
             },
             {

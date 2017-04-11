@@ -1,6 +1,6 @@
 import { Config } from "../config";
 import { InlineInput } from "./inline-input";
-import { ILineCharIndexes, IIndexes, DecorationModel, DecorationModelBuilder, InteliAdjustment, CharIndex } from "./decoration-model";
+import { ILineCharIndexes, IIndexes, DecorationModel, DecorationModelBuilder, InteliAdjustment, Direction, CharIndex } from "./decoration-model";
 import { Decorator } from "./decoration";
 import { ViewPort } from './view-port';
 import * as vscode from "vscode";
@@ -155,7 +155,7 @@ export class MetaJumper {
                 if (value && value.length > 1)
                     value = value.substring(0, 1);
 
-                this.getSelection(editor).then((selection)=>{
+                this.getSelection(editor).then((selection) => {
                     let lineCharIndexes = this.find(editor, selection.before, selection.after, value);
                     if (lineCharIndexes.count <= 0) {
                         reject("metaGo: no matches");
@@ -317,8 +317,15 @@ export class MetaJumper {
             new InlineInput().show(editor, (v) => v)
                 .then((value: string) => {
                     this.decorator.removeDecorations(editor);
-
                     if (!value) return;
+
+                    if (value === '\n') {
+                        let model = models.find(model => model.indexInModels.index === 0 && model.indexInModels.dir === Direction.up);
+                        if (model) resolve(model);
+                    } else if (value === ' ') {
+                        let model = models.find(model => model.indexInModels.index === 0 && model.indexInModels.dir === Direction.down);
+                        if (model) resolve(model);
+                    }
 
                     let model = models.find(model => model.code[0] && model.code[0].toLowerCase() === value.toLowerCase());
 

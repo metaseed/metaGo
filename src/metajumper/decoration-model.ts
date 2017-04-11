@@ -19,6 +19,16 @@ export interface ILineCharIndexes {
     focusLine: number;
 }
 
+export enum Direction {
+    up = -1, down = 1
+}
+
+export class IndexInModels {
+    static Default = new IndexInModels();
+    constructor(public index: number = -1, public dir: Direction = Direction.up
+    ) { }
+}
+
 export class DecorationModel {
     // index in character set array
     index: number;
@@ -31,20 +41,19 @@ export class DecorationModel {
     character: number;
     inteliAdj: InteliAdjustment;
 
+    indexInModels: IndexInModels;
     root?: DecorationModel;
     children: DecorationModel[] = [];
 }
 
 class LineCharIndex {
     static END = new LineCharIndex();
-    constructor(public line: number = -1, public char: number = -1, public inteliAdj: InteliAdjustment = InteliAdjustment.Default) { }
-}
-
-enum Direction {
-    up = -1, down = 1
+    constructor(public line: number = -1, public char: number = -1, public indexInModels: IndexInModels = IndexInModels.Default, public inteliAdj: InteliAdjustment = InteliAdjustment.Default) { }
 }
 
 class LineCharIndexState {
+    upIndexCounter = 0;
+    downIndexCounter = 0;
 
     constructor(private lineIndexes: ILineCharIndexes, private direction = Direction.up, private up: LineCharIndex, private down: LineCharIndex) { }
 
@@ -62,18 +71,45 @@ class LineCharIndexState {
     }
 
     private findNext(): { lineCharIndex: LineCharIndex, lineChanged: boolean } {
-        let lineCharIndex = this.direction === Direction.up ? this.up : this.down;
+        if (this.direction === Direction.up) {
+            return this.findUp();
+        } else {
+            return this.findDown();
+        }
+    }
+
+    private findUp(): { lineCharIndex: LineCharIndex, lineChanged: boolean } {
+        let lineCharIndex = this.up;
+        let line = lineCharIndex.line;
+        let charIndexes = this.lineIndexes.indexes[line];
+
+        if (!charIndexes) return { lineCharIndex: LineCharIndex.END, lineChanged: false };//to end;
+
+        if (lineCharIndex.char >= 0) {
+            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, new IndexInModels(this.upIndexCounter++, Direction.up), charIndexes[lineCharIndex.char].inteliAdj);
+            lineCharIndex.char--
+            return { lineCharIndex: r, lineChanged: false };
+        } else {
+            lineCharIndex.line -= 1;
+            charIndexes = this.lineIndexes.indexes[lineCharIndex.line]
+            if (!charIndexes) return { lineCharIndex: LineCharIndex.END, lineChanged: false };//to end;
+            lineCharIndex.char = charIndexes.length - 1;
+            return { lineCharIndex: this.findNext().lineCharIndex, lineChanged: true };
+        }
+    }
+    private findDown(): { lineCharIndex: LineCharIndex, lineChanged: boolean } {
+        let lineCharIndex = this.down;
         let line = lineCharIndex.line;
         let charIndexes = this.lineIndexes.indexes[line];
 
         if (!charIndexes) return { lineCharIndex: LineCharIndex.END, lineChanged: false };//to end;
 
         if (lineCharIndex.char < charIndexes.length) {
-            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, charIndexes[lineCharIndex.char].inteliAdj);
+            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, new IndexInModels(this.downIndexCounter++, Direction.down), charIndexes[lineCharIndex.char].inteliAdj);
             lineCharIndex.char++
             return { lineCharIndex: r, lineChanged: false };
         } else {
-            lineCharIndex.line += this.direction;
+            lineCharIndex.line += 1;
             lineCharIndex.char = 0
             return { lineCharIndex: this.findNext().lineCharIndex, lineChanged: true };
         }
@@ -89,10 +125,11 @@ export class DecorationModelBuilder {
 
     buildDecorationModel = (lineIndexes: ILineCharIndexes): DecorationModel[] => {
         let models: DecorationModel[] = [];
+        let line = lineIndexes.focusLine;
         let lineIndexesState = new LineCharIndexState(
             lineIndexes, Direction.up,
-            new LineCharIndex(lineIndexes.focusLine, 0),
-            new LineCharIndex(lineIndexes.focusLine + 1, 0)
+            new LineCharIndex(line, lineIndexes.indexes[line].length - 1),
+            new LineCharIndex(line + 1, 0)
         );
 
         let twoCharsMax = Math.pow(this.config.finder.characters.length, 2);
@@ -111,6 +148,7 @@ export class DecorationModelBuilder {
             model.index = i;
             model.line = lineCharIndex.line;
             model.character = lineCharIndex.char;
+            model.indexInModels = lineCharIndex.indexInModels;
             model.inteliAdj = lineCharIndex.inteliAdj;
             models.push(model);
             if (lci.lineChanged)
@@ -137,6 +175,7 @@ export class DecorationModelBuilder {
                 model.line = lineCharIndex.line;
                 model.character = lineCharIndex.char;
                 model.inteliAdj = lineCharIndex.inteliAdj;
+                model.indexInModels = lineCharIndex.indexInModels;
                 models.push(model);
 
                 let childModel = Object.assign({}, model);
