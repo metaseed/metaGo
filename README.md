@@ -36,8 +36,9 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > at any time press <kbd>ESC</kbd> to cancel
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
-### scroll active line to the screen center
-* <kbd>Alt</kbd>+<kbd>m</kbd> is the default shortcut.
+### scroll line to the screen center/top
+* <kbd>Alt</kbd>+<kbd>m</kbd> is the default shortcut to scroll current line to screen center.
+* <kbd>Alt</kbd>+<kbd>t</kbd> is the default shortcut to scroll current line to screen top.
 ![MetaGo.Center](images/metago.center.gif)
 ### moving cursor up/down between blank lines
 * <kbd>Alt</kbd>+<kbd>Home</kbd>(default shortcut) to move cursor to the blank line above.
