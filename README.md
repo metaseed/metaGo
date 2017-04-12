@@ -21,8 +21,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
     * press <kdb>Enter</kdb> to directly go to the one *before* the cursor.(useful for the parameter or code block separators: { , ( and ) })
     * press <kdb>Space</kdb> to directly go to the one *after* the cursor.(useful for the parameter or code block separators: { , ( and ) })
 4. now you have two options to do further navigation or just do nothing:
-    * press <kbd>Alt</kbd>+<kbd>;</kbd> and then <kbd>Enter</kbd> to goto the one *before* the cursor.
-    * press <kbd>Alt</kbd>+<kbd>;</kbd> and then <kbd>Space</kbd> to goto the one *after* the cursor.
+    * press <kbd>Alt</kbd>+<kbd>;</kbd> and then <kbd>Enter</kbd> to goto the next one *before* the cursor.
+    * press <kbd>Alt</kbd>+<kbd>;</kbd> and then <kbd>Space</kbd> to goto the next one *after* the cursor.
 
 > at any time press <kbd>ESC</kbd> to cancel
 

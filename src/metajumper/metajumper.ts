@@ -22,6 +22,7 @@ export class MetaJumper {
     private halfViewPortRange: number;
     private currentFindIndex = -1;
     private decorationModels: DecorationModel[];
+    private isSelectionMode: boolean;
 
     initialize = (context: vscode.ExtensionContext, config: Config) => {
         let disposables: vscode.Disposable[] = [];
@@ -32,46 +33,57 @@ export class MetaJumper {
         this.findFromCenterScreenRange = Math.trunc(this.config.finder.range * 2 / 5); // 0.4
 
         disposables.push(vscode.commands.registerCommand('extension.metaGoAfter', () => {
+            this.isSelectionMode = false;
             this.metaJump()
                 .then(({ model }) => {
                     let editor = vscode.window.activeTextEditor;
                     editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1), new vscode.Position(model.line, model.character + 1));
-                }).catch(()=>this.isJumping = false);
+                }).catch(() => this.isJumping = false);
 
         }));
         disposables.push(vscode.commands.registerCommand('extension.metaGo', () => {
+            this.isSelectionMode = false;
             this.metaJump()
                 .then(({ model }) => {
                     let editor = vscode.window.activeTextEditor;
                     editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1 + model.inteliAdj), new vscode.Position(model.line, model.character + 1 + model.inteliAdj));
-                }).catch(()=>this.isJumping = false);
+                }).catch(() => this.isJumping = false);
 
         }));
         disposables.push(vscode.commands.registerCommand('extension.metaGoBefore', () => {
+            this.isSelectionMode = false;
             this.metaJump()
                 .then(({ model }) => {
                     let editor = vscode.window.activeTextEditor;
                     editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character), new vscode.Position(model.line, model.character));
-                }).catch(()=>this.isJumping = false);
+                }).catch(() => this.isJumping = false);
 
         }));
 
         disposables.push(vscode.commands.registerCommand('extension.metaGo.selection', () => {
-            this.metaJump()
-                .then(({ model, fromLine, fromChar }) => {
-                    let toCharacter = model.character;
-                    if (model.line > fromLine) {
-                        toCharacter++;
-                    } else if (model.line === fromLine) {
-                        if (model.character > fromChar) {
+            this.isSelectionMode = true;
+            try {
+                this.metaJump()
+                    .then(({ model, fromLine, fromChar }) => {
+                        let toCharacter = model.character;
+                        if (model.line > fromLine) {
                             toCharacter++;
+                        } else if (model.line === fromLine) {
+                            if (model.character > fromChar) {
+                                toCharacter++;
+                            }
                         }
-                    }
-                    let editor = vscode.window.activeTextEditor;
-                    editor.selection = new vscode.Selection(
-                        new vscode.Position(fromLine, fromChar),
-                        new vscode.Position(model.line, toCharacter));
-                }).catch(()=>this.isJumping = false);
+                        let editor = vscode.window.activeTextEditor;
+                        editor.selection = new vscode.Selection(
+                            new vscode.Position(fromLine, fromChar),
+                            new vscode.Position(model.line, toCharacter));
+                    })
+                    .catch(() => this.isJumping = false);
+            }
+            catch (err) {
+                this.isJumping = false;
+                console.log("metago:" + err);
+            }
 
         }));
 
@@ -106,7 +118,7 @@ export class MetaJumper {
         let fromLine = editor.selection.active.line;
         let fromChar = editor.selection.active.character;
 
-        return new Promise<{ model: DecorationModel, fromLine: number, fromChar: number }>((resolve) => {
+        return new Promise<{ model: DecorationModel, fromLine: number, fromChar: number }>((resolve, reject) => {
             if (!this.isJumping) {
                 this.isJumping = true;
                 this.jump((editor, model: any) => { resolve({ model, fromLine, fromChar }); })
@@ -115,6 +127,7 @@ export class MetaJumper {
                     })
                     .catch(() => {
                         this.isJumping = false;
+                        reject();
                     });
             }
         });
@@ -128,13 +141,15 @@ export class MetaJumper {
                 return;
             }
 
-            let messageDisposable = vscode.window.setStatusBarMessage("metaGo: Type");
+            let msg = this.isSelectionMode ? "metaGo: Type to Select" : "metaGo: Type To Jump"
+            let messageDisposable = vscode.window.setStatusBarMessage(msg);
             const promise = new Promise<DecorationModel>((resolve, reject) => {
                 this.getFirstInput(editor, resolve, reject)
             })
                 .then((model: DecorationModel) => {
                     jumped(editor, model);
-                    vscode.window.setStatusBarMessage("metaGo: Jumped!", 2000);
+                    let msg = this.isSelectionMode ? 'metaGo: Selected!' : 'metaGo: Jumped!';
+                    vscode.window.setStatusBarMessage(msg, 2000);
                     jumpResolve();
                 })
                 .catch((reason?: string) => {
@@ -147,16 +162,17 @@ export class MetaJumper {
     }
 
     private getFirstInput = (editor: vscode.TextEditor, resolve, reject): Promise<void> => {
-        let firstInlineInput = new InlineInput().show(editor, (v) => v)
+        let firstInlineInput = new InlineInput()
+            .show(editor, (v) => v)
             .then((value: string) => {
                 if (!value) {
                     reject();
                     return;
                 };
 
-                if (value === ' ' && this.currentFindIndex!==Number.NaN && this.decorationModels) {
-                    let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex+1));
-                    if (model){
+                if (value === ' ' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
+                    let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex + 1));
+                    if (model) {
                         resolve(model);
                         this.currentFindIndex++;
                         return;
@@ -164,8 +180,8 @@ export class MetaJumper {
                     reject();
                     return;
                 } else if (value === '\n' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
-                    let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex-1));
-                    if (model){
+                    let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex - 1));
+                    if (model) {
                         resolve(model);
                         this.currentFindIndex--;
                     }
@@ -176,30 +192,32 @@ export class MetaJumper {
                 if (value && value.length > 1)
                     value = value.substring(0, 1);
 
-                this.getSelection(editor).then((selection) => {
-                    let lineCharIndexes = this.find(editor, selection.before, selection.after, value);
-                    if (lineCharIndexes.count <= 0) {
-                        reject("metaGo: no matches");
-                        return;
-                    }
+                this.getSelection(editor)
+                    .then((selection) => {
+                        let lineCharIndexes = this.find(editor, selection.before, selection.after, value);
+                        if (lineCharIndexes.count <= 0) {
+                            reject("metaGo: no matches");
+                            return;
+                        }
 
-                    this.decorationModels = this.decorationModelBuilder.buildDecorationModel(lineCharIndexes);
+                        this.decorationModels = this.decorationModelBuilder.buildDecorationModel(lineCharIndexes);
 
-                    if (this.decorationModels.length === 0) {
-                        reject("metaGo: encoding error");
-                        return;
-                    }
-                    if (this.decorationModels.length === 1) {
-                        resolve(this.decorationModels[0]);
-                    }
-                    else {
-                        this.prepareForJumpTo(editor, this.decorationModels).then((model) => {
-                            resolve(model);
-                        }).catch(() => {
-                            reject();
-                        });
-                    }
-                }).catch(()=>reject());
+                        if (this.decorationModels.length === 0) {
+                            reject("metaGo: encoding error");
+                            return;
+                        }
+                        if (this.decorationModels.length === 1) {
+                            resolve(this.decorationModels[0]);
+                        }
+                        else {
+                            this.prepareForJumpTo(editor, this.decorationModels).then((model) => {
+                                resolve(model);
+                            }).catch(() => {
+                                reject();
+                            });
+                        }
+                    })
+                    .catch(() => reject());
 
             })
             .catch(() => {
@@ -334,20 +352,21 @@ export class MetaJumper {
     private prepareForJumpTo = (editor: vscode.TextEditor, models: DecorationModel[]) => {
         return new Promise<DecorationModel>((resolve, reject) => {
             this.decorator.addDecorations(editor, models);
-            let messageDisposable = vscode.window.setStatusBarMessage("metaGo: Jump To");
+            let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
+            let messageDisposable = vscode.window.setStatusBarMessage(msg);
             new InlineInput().show(editor, (v) => v)
                 .then((value: string) => {
                     this.decorator.removeDecorations(editor);
                     if (!value) return;
 
                     if (value === '\n') {
-                        let model = models.find(model => model.indexInModels=== 0);
+                        let model = models.find(model => model.indexInModels === 0);
                         if (model) {
                             this.currentFindIndex = 0;
                             resolve(model);
                         }
                     } else if (value === ' ') {
-                        let model = models.find(model => model.indexInModels=== 1);
+                        let model = models.find(model => model.indexInModels === 1);
                         if (model) {
                             this.currentFindIndex = 1;
                             resolve(model);

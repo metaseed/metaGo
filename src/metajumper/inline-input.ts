@@ -61,14 +61,6 @@ export class InlineInput {
             vscode.commands.executeCommand('default:type', event);
     }
 
-    private cancel = (editor: vscode.TextEditor) => {
-        if (this.input) {
-            this.input.reject("canceled");
-        }
-        this.dispose();
-        this.setContext(false);
-    }
-
     private complete = (editor: vscode.TextEditor) => {
         if (this.input) {
             this.input.resolve(this.input.text);
@@ -79,5 +71,17 @@ export class InlineInput {
 
     private setContext(value: boolean) {
         vscode.commands.executeCommand('setContext', "metaGoInput", value);
+    }
+
+    private cancel = (editor: vscode.TextEditor) => {
+        if (this.input) {
+            this.input.reject("canceled");
+        }
+        this.dispose();
+        this.setContext(false);
+    }
+
+    public cancelInput(){
+        this.cancel(vscode.window.activeTextEditor);
     }
 }
