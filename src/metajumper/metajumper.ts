@@ -80,7 +80,8 @@ export class MetaJumper {
         disposables.push(vscode.commands.registerCommand('extension.metaGo.selection', () => {
             this.isSelectionMode = true;
             let editor = vscode.window.activeTextEditor;
-            let position = this.anchorPosition(editor.selection);
+            const selection = editor.selection;
+            let position = selection.active.line === selection.end.line ? selection.start : selection.end
             let fromLine = position.line;
             let fromChar = position.character;
             try {
@@ -118,10 +119,6 @@ export class MetaJumper {
 
     updateConfig = () => {
         this.decorator.initialize(this.config);
-    }
-
-    private anchorPosition(selection: vscode.Selection) {
-        return selection.active.line === selection.end.line ? selection.start : selection.end
     }
 
     private async getPosition() {
