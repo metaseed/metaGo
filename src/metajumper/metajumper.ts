@@ -158,11 +158,11 @@ export class MetaJumper {
         });
     }
     private jump = (jumped: (editor: vscode.TextEditor, model: DecorationModel) => void): Promise<void> => {
-        return new Promise<void>((jumpResolve, jumpReject) => {
+        return new Promise<void>((resolve, reject) => {
             let editor = vscode.window.activeTextEditor;
 
             if (!editor) {
-                jumpReject();
+                reject();
                 return;
             }
 
@@ -175,13 +175,13 @@ export class MetaJumper {
                     jumped(editor, model);
                     let msg = this.isSelectionMode ? 'metaGo: Selected!' : 'metaGo: Jumped!';
                     vscode.window.setStatusBarMessage(msg, 2000);
-                    jumpResolve();
+                    resolve();
                 })
                 .catch((reason?: string) => {
                     if (!reason) reason = "Canceled!";
                     vscode.window.setStatusBarMessage(`metaGo: ${reason}`, 2000);
                     messageDisposable.dispose();
-                    jumpReject();
+                    reject();
                 });
         });
     }
