@@ -41,6 +41,46 @@
             {
                 "command": "extension.metaGo.selection",
                 "title": "metaGo:selection"
+            },
+            {
+                "command": "extension.metaGoAfter",
+                "title": "metaGo:GoToAfter"
+            },
+            {
+                "command": "extension.metaGo.metaGoBefore",
+                "title": "metaGo:metaGoBefore"
+            },
+            {
+                "command": "extension.metaGo.selectLineUp",
+                "title": "metaGo:selectLineUp"
+            },
+            {
+                "command": "extension.metaGo.selectLineDown",
+                "title": "metaGo:selectLineDown"
+            },
+            {
+                "command": "extension.metaGo.currentLineToCenter",
+                "title": "metaGo:currentLineToCenter"
+            },
+            {
+                "command": "extension.metaGo.currentLineToTop",
+                "title": "metaGo:currentLineToTop"
+            },
+            {
+                "command": "extension.metaGo.spaceBlockMoveUp",
+                "title": "metaGo:spaceBlockMoveUp"
+            },
+            {
+                "command": "extension.metaGo.spaceBlockSelectUp",
+                "title": "metaGo:spaceBlockSelectUp"
+            },
+            {
+                "command": "extension.metaGo.spaceBlockMoveDown",
+                "title": "metaGo:spaceBlockMoveDown"
+            },
+            {
+                "command": "extension.metaGo.spaceBlockSelectDown",
+                "title": "metaGo:spaceBlockSelectDown"
             }
         ],
         "keybindings": [
