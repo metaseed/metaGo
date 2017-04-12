@@ -36,7 +36,7 @@ export class MetaJumper {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
-                    .then(({ model }) => {
+                    .then((model) => {
                         let editor = vscode.window.activeTextEditor;
                         editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1), new vscode.Position(model.line, model.character + 1));
                     }).catch(() => this.isJumping = false);
@@ -51,7 +51,7 @@ export class MetaJumper {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
-                    .then(({ model }) => {
+                    .then((model) => {
                         let editor = vscode.window.activeTextEditor;
                         editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1 + model.inteliAdj), new vscode.Position(model.line, model.character + 1 + model.inteliAdj));
                     }).catch(() => this.isJumping = false);
@@ -66,7 +66,7 @@ export class MetaJumper {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
-                    .then(({ model }) => {
+                    .then((model) => {
                         let editor = vscode.window.activeTextEditor;
                         editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character), new vscode.Position(model.line, model.character));
                     }).catch(() => this.isJumping = false);
@@ -79,9 +79,13 @@ export class MetaJumper {
 
         disposables.push(vscode.commands.registerCommand('extension.metaGo.selection', () => {
             this.isSelectionMode = true;
+            let editor = vscode.window.activeTextEditor;
+            let position = this.anchorPosition(editor.selection);
+            let fromLine = position.line;
+            let fromChar = position.character;
             try {
                 this.metaJump()
-                    .then(({ model, fromLine, fromChar }) => {
+                    .then((model) => {
                         let toCharacter = model.character;
                         if (model.line > fromLine) {
                             toCharacter++;
@@ -116,6 +120,10 @@ export class MetaJumper {
         this.decorator.initialize(this.config);
     }
 
+    private anchorPosition(selection: vscode.Selection) {
+        return selection.active.line === selection.end.line ? selection.start : selection.end
+    }
+
     private async getPosition() {
         let editor = vscode.window.activeTextEditor;
         let fromLine = editor.selection.active.line;
@@ -135,10 +143,10 @@ export class MetaJumper {
         let fromLine = editor.selection.active.line;
         let fromChar = editor.selection.active.character;
 
-        return new Promise<{ model: DecorationModel, fromLine: number, fromChar: number }>((resolve, reject) => {
+        return new Promise<DecorationModel>((resolve, reject) => {
             if (!this.isJumping) {
                 this.isJumping = true;
-                this.jump((editor, model: any) => { resolve({ model, fromLine, fromChar }); })
+                this.jump((editor, model: any) => { resolve(model); })
                     .then(() => {
                         this.isJumping = false;
                     })
