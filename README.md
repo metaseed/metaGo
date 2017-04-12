@@ -38,6 +38,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>;</kbd> to tell I want to *select* to somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *select* to that location.
+4. repeat 1-3 to adjust your current selection.
 > at any time press <kbd>ESC</kbd> to cancel
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
