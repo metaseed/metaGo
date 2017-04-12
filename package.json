@@ -66,6 +66,11 @@
                 "when": "editorTextFocus"
             },
             {
+                "command": "extension.metaGo.selectLineDown",
+                "key": "ctrl+i",
+                "when": "editorTextFocus"
+            },
+            {
                 "command": "extension.metaGo.currentLineToCenter",
                 "key": "alt+m",
                 "when": "editorTextFocus"
