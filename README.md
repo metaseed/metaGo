@@ -6,6 +6,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * moving cursor up/down between blank lines.
 * select code block when moving cursor while hold shift key.
 * scroll the active line (contains cursor) to the screen center.
+* select line up/down.
 
 ### highlight features
 * code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
@@ -51,6 +52,10 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * <kbd>Alt</kbd>+<kbd>End</kbd>(default shortcut) to move cursor to the blank line below.
 * <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Home</kbd>(default shortcut) to select from the cursor to the blank line above.
 * <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>End</kbd>(default shortcut) to select from the cursor to the blank line below.
+
+### select line up/down
+* <kbd>Ctrl</kbd>+<kbd>i</kbd> to select line up.
+* <kbd>Ctrl</kbd>+<kbd>shift</kbd>+i to select line down.
 ![MetaGo.blankLine](images/metago.blankLine.gif)
 ## Requirements
 
