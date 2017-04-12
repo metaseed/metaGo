@@ -34,30 +34,47 @@ export class MetaJumper {
 
         disposables.push(vscode.commands.registerCommand('extension.metaGoAfter', () => {
             this.isSelectionMode = false;
-            this.metaJump()
-                .then(({ model }) => {
-                    let editor = vscode.window.activeTextEditor;
-                    editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1), new vscode.Position(model.line, model.character + 1));
-                }).catch(() => this.isJumping = false);
+            try {
+                this.metaJump()
+                    .then(({ model }) => {
+                        let editor = vscode.window.activeTextEditor;
+                        editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1), new vscode.Position(model.line, model.character + 1));
+                    }).catch(() => this.isJumping = false);
+            }
+            catch (err) {
+                this.isJumping = false;
+                console.log("metago:" + err);
+            }
 
         }));
         disposables.push(vscode.commands.registerCommand('extension.metaGo', () => {
             this.isSelectionMode = false;
-            this.metaJump()
-                .then(({ model }) => {
-                    let editor = vscode.window.activeTextEditor;
-                    editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1 + model.inteliAdj), new vscode.Position(model.line, model.character + 1 + model.inteliAdj));
-                }).catch(() => this.isJumping = false);
+            try {
+                this.metaJump()
+                    .then(({ model }) => {
+                        let editor = vscode.window.activeTextEditor;
+                        editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1 + model.inteliAdj), new vscode.Position(model.line, model.character + 1 + model.inteliAdj));
+                    }).catch(() => this.isJumping = false);
+            }
+            catch (err) {
+                this.isJumping = false;
+                console.log("metago:" + err);
+            }
 
         }));
         disposables.push(vscode.commands.registerCommand('extension.metaGoBefore', () => {
             this.isSelectionMode = false;
-            this.metaJump()
-                .then(({ model }) => {
-                    let editor = vscode.window.activeTextEditor;
-                    editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character), new vscode.Position(model.line, model.character));
-                }).catch(() => this.isJumping = false);
-
+            try {
+                this.metaJump()
+                    .then(({ model }) => {
+                        let editor = vscode.window.activeTextEditor;
+                        editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character), new vscode.Position(model.line, model.character));
+                    }).catch(() => this.isJumping = false);
+            }
+            catch (err) {
+                this.isJumping = false;
+                console.log("metago:" + err);
+            }
         }));
 
         disposables.push(vscode.commands.registerCommand('extension.metaGo.selection', () => {
