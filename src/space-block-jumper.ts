@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 
 
 export class SpaceBlockJumper {
-    activate(context: vscode.ExtensionContext) {
+    constructor(context: vscode.ExtensionContext) {
         context.subscriptions.push(vscode.commands.registerCommand("extension.metaGo.spaceBlockMoveUp", () => {
             const editor = vscode.window.activeTextEditor;
             this.markSelection(editor, this.nextPosition(editor.document, editor.selection.active, true));

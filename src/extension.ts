@@ -11,21 +11,18 @@ import { SelectLineUp } from './select-line-up';
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
     console.log('Congratulations, your extension "metago" is now active!');
-    // Event to update active configuration items when changed without restarting vscode
-    let metaJumper = new MetaJumper();
     let config = new Config();
+    config.loadConfig();
+    // Event to update active configuration items when changed without restarting vscode
     vscode.workspace.onDidChangeConfiguration((e: void) => {
         config.loadConfig();
         metaJumper.updateConfig();
     });
-    config.loadConfig();
-    metaJumper.initialize(context, config);
-    let centerEditor = new CurrentLineScroller();
-    centerEditor.activate(context);
-    let spaceBlockJumper = new SpaceBlockJumper();
-    spaceBlockJumper.activate(context);
-    let selectLineUp = new SelectLineUp();
-    selectLineUp.activate(context);
+
+    let metaJumper = new MetaJumper(context, config);
+    let centerEditor = new CurrentLineScroller(context);
+    let spaceBlockJumper = new SpaceBlockJumper(context);
+    let selectLineUp = new SelectLineUp(context);
 }
 
 // this method is called when your extension is deactivated

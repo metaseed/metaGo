@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
 export class CurrentLineScroller {
-    activate(context: vscode.ExtensionContext) {
+    constructor(context: vscode.ExtensionContext) {
         let disposable = vscode.commands.registerCommand('extension.metaGo.currentLineToCenter', () => {
             const editor = vscode.window.activeTextEditor;
             const selection = editor.selection;

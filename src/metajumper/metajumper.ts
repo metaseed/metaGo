@@ -24,7 +24,7 @@ export class MetaJumper {
     private decorationModels: DecorationModel[];
     private isSelectionMode: boolean;
 
-    initialize = (context: vscode.ExtensionContext, config: Config) => {
+    constructor(context: vscode.ExtensionContext, config: Config) {
         let disposables: vscode.Disposable[] = [];
         this.config = config;
         this.viewPort = new ViewPort();
@@ -268,13 +268,13 @@ export class MetaJumper {
         }
         else {
             await this.getPosition();
-            selection.startLine = Math.max(editor.selection.active.line - this.halfViewPortRange, 0);
+            selection.startLine = Math.max(editor.selection.active.line - this.config.finder.range, 0);
             selection.lastLine = editor.selection.active.line + 1; //current line included in before
             selection.text = editor.document.getText(new vscode.Range(selection.startLine, 0, selection.lastLine, 0));
 
             let selectionAfter = new Selection();
             selectionAfter.startLine = editor.selection.active.line + 1;
-            selectionAfter.lastLine = Math.min(editor.selection.active.line + this.halfViewPortRange, editor.document.lineCount);
+            selectionAfter.lastLine = Math.min(editor.selection.active.line + this.config.finder.range, editor.document.lineCount);
             selectionAfter.text = editor.document.getText(new vscode.Range(selectionAfter.startLine, 0, selectionAfter.lastLine, 0));
 
             return { before: selection, after: selectionAfter };
