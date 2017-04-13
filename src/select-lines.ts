@@ -1,14 +1,15 @@
 import * as vscode from 'vscode';
+import { Utilities } from './lib';
 
-export class SelectLineUp {
+export class SelectLines {
     constructor(context: vscode.ExtensionContext) {
         let disposable = vscode.commands.registerCommand('extension.metaGo.selectLineUp', () => {
             const editor = vscode.window.activeTextEditor;
             const line = editor.selection.active.line - 1;
             const selection = editor.selection;
-            let anchor = selection.active.line === selection.start.line ? selection.end : selection.start;
+            let anchor = Utilities.anchorPosition(selection);
             if (selection.isEmpty)
-                anchor = new vscode.Position(anchor.line, 0);
+                anchor = new vscode.Position(anchor.line + 1, 0);
             const toLine = line >= 0 ? line : 0;
             editor.selection = new vscode.Selection(
                 anchor,
@@ -23,7 +24,7 @@ export class SelectLineUp {
             const editor = vscode.window.activeTextEditor;
             const line = editor.selection.active.line + 1;
             const selection = editor.selection;
-            let anchor = selection.active.line === selection.end.line ? selection.start : selection.end;
+            let anchor = Utilities.anchorPosition(selection);
             if (selection.isEmpty)
                 anchor = new vscode.Position(anchor.line, 0);
             const boundary = editor.document.lineCount;

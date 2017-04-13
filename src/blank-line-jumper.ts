@@ -1,8 +1,8 @@
 import * as readline from "readline";
 import * as vscode from "vscode";
+import { Utilities } from './lib';
 
-
-export class SpaceBlockJumper {
+export class BlankLineJumper {
     constructor(context: vscode.ExtensionContext) {
         context.subscriptions.push(vscode.commands.registerCommand("extension.metaGo.spaceBlockMoveUp", () => {
             const editor = vscode.window.activeTextEditor;
@@ -19,7 +19,7 @@ export class SpaceBlockJumper {
             this.markSelection(
                 editor,
                 this.nextPosition(editor.document, editor.selection.active, true),
-                this.anchorPosition(editor.selection)
+                Utilities.anchorPosition(editor.selection)
             );
         }));
 
@@ -28,7 +28,7 @@ export class SpaceBlockJumper {
             this.markSelection(
                 editor,
                 this.nextPosition(editor.document, editor.selection.active, false),
-                this.anchorPosition(editor.selection)
+                Utilities.anchorPosition(editor.selection)
             );
         }));
     }
@@ -45,10 +45,6 @@ export class SpaceBlockJumper {
         return index === boundary || startedBlock && line.isEmptyOrWhitespace
             ? index
             : this.afterBlock(document, step, boundary, index + step, startedBlock || !line.isEmptyOrWhitespace);
-    }
-
-    private anchorPosition(selection: vscode.Selection) {
-        return selection.active.line === selection.end.line ? selection.start : selection.end
     }
 
     private markSelection(editor: vscode.TextEditor, next: number, anchor?: vscode.Position) {

@@ -1,4 +1,5 @@
 import { Config } from "../config";
+import { Utilities } from '../lib';
 import { InlineInput } from "./inline-input";
 import { ILineCharIndexes, IIndexes, DecorationModel, DecorationModelBuilder, InteliAdjustment, Direction, CharIndex } from "./decoration-model";
 import { Decorator } from "./decoration";
@@ -31,48 +32,50 @@ export class MetaJumper {
         this.halfViewPortRange = Math.trunc(this.config.finder.range / 2); // 0.5
         // determines whether to find from center of the screen.
         this.findFromCenterScreenRange = Math.trunc(this.config.finder.range * 2 / 5); // 0.4
-
+        // disposables.push(vscode.commands.registerCommand('extension.metaGo.cancel', ()=>this.cancel));
         disposables.push(vscode.commands.registerCommand('extension.metaGoAfter', () => {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
                     .then((model) => {
-                        let editor = vscode.window.activeTextEditor;
-                        editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1), new vscode.Position(model.line, model.character + 1));
-                    }).catch(() => this.isJumping = false);
+                        this.done();
+                        Utilities.goto(model.line, model.character + 1);
+                    }).catch(() => this.cancel());
             }
             catch (err) {
-                this.isJumping = false;
+                this.cancel();
                 console.log("metago:" + err);
             }
 
         }));
+
         disposables.push(vscode.commands.registerCommand('extension.metaGo', () => {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
                     .then((model) => {
-                        let editor = vscode.window.activeTextEditor;
-                        editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character + 1 + model.inteliAdj), new vscode.Position(model.line, model.character + 1 + model.inteliAdj));
-                    }).catch(() => this.isJumping = false);
+                        this.done();
+                        Utilities.goto(model.line, model.character + 1 + model.inteliAdj);
+                    }).catch(() => this.cancel());
             }
             catch (err) {
-                this.isJumping = false;
+                this.cancel();
                 console.log("metago:" + err);
             }
 
         }));
+
         disposables.push(vscode.commands.registerCommand('extension.metaGoBefore', () => {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
                     .then((model) => {
-                        let editor = vscode.window.activeTextEditor;
-                        editor.selection = new vscode.Selection(new vscode.Position(model.line, model.character), new vscode.Position(model.line, model.character));
-                    }).catch(() => this.isJumping = false);
+                        this.done();
+                        Utilities.goto(model.line, model.character);
+                    }).catch(() => this.cancel());
             }
             catch (err) {
-                this.isJumping = false;
+                this.cancel();
                 console.log("metago:" + err);
             }
         }));
@@ -84,9 +87,11 @@ export class MetaJumper {
             let position = selection.active.line === selection.end.line ? selection.start : selection.end
             let fromLine = position.line;
             let fromChar = position.character;
+
             try {
                 this.metaJump()
                     .then((model) => {
+                        this.done();
                         let toCharacter = model.character;
                         if (model.line > fromLine) {
                             toCharacter++;
@@ -95,18 +100,14 @@ export class MetaJumper {
                                 toCharacter++;
                             }
                         }
-                        let editor = vscode.window.activeTextEditor;
-                        editor.selection = new vscode.Selection(
-                            new vscode.Position(fromLine, fromChar),
-                            new vscode.Position(model.line, toCharacter));
+                        Utilities.select(fromLine, fromChar, model.line, toCharacter);
                     })
-                    .catch(() => this.isJumping = false);
+                    .catch(() => this.cancel());
             }
             catch (err) {
-                this.isJumping = false;
+                this.cancel();
                 console.log("metago:" + err);
             }
-
         }));
 
         for (let i = 0; i < disposables.length; i++) {
@@ -121,6 +122,16 @@ export class MetaJumper {
         this.decorator.initialize(this.config);
     }
 
+    private done() {
+        this.isJumping = false;
+    }
+
+    private cancel() {
+        this.isJumping = false;
+        while (InlineInput.instances.length > 0) {
+            InlineInput.instances[0].cancelInput();
+        }
+    }
     private async getPosition() {
         let editor = vscode.window.activeTextEditor;
         let fromLine = editor.selection.active.line;
@@ -135,23 +146,24 @@ export class MetaJumper {
         };
     }
 
-    private async metaJump() {
+    private  metaJump() {
         let editor = vscode.window.activeTextEditor;
         let fromLine = editor.selection.active.line;
         let fromChar = editor.selection.active.character;
 
         return new Promise<DecorationModel>((resolve, reject) => {
+            //let jumpTimeoutId = null;
             if (!this.isJumping) {
                 this.isJumping = true;
-                this.jump((editor, model: any) => { resolve(model); })
+                return this.jump((editor, model: any) => { resolve(model); })
                     .then(() => {
-                        this.isJumping = false;
+                        //if (jumpTimeoutId) clearTimeout(jumpTimeoutId);
                     })
                     .catch(() => {
-                        this.isJumping = false;
                         reject();
                     });
             }
+            //else jumpTimeoutId = setTimeout(() => { jumpTimeoutId = null; reject(); }, 10000);
         });
     }
     private jump = (jumped: (editor: vscode.TextEditor, model: DecorationModel) => void): Promise<void> => {

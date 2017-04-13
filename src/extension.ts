@@ -5,8 +5,8 @@ import * as vscode from 'vscode';
 import { Config } from "./config";
 import { MetaJumper } from './metajumper/metajumper';
 import { CurrentLineScroller } from './current-line-scroller';
-import { SpaceBlockJumper } from './space-block-jumper';
-import { SelectLineUp } from './select-line-up';
+import { BlankLineJumper } from './blank-line-jumper';
+import { SelectLines } from './select-lines';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -21,8 +21,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     let metaJumper = new MetaJumper(context, config);
     let centerEditor = new CurrentLineScroller(context);
-    let spaceBlockJumper = new SpaceBlockJumper(context);
-    let selectLineUp = new SelectLineUp(context);
+    let spaceBlockJumper = new BlankLineJumper(context);
+    let selectLineUp = new SelectLines(context);
 }
 
 // this method is called when your extension is deactivated

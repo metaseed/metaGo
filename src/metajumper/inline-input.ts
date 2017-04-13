@@ -5,6 +5,7 @@ class Input {
     validateInput: (text: string) => string;
     resolve: (text: string) => void;
     reject: (reason: any) => void;
+
     constructor(options: {
         validateInput: (text: string) => string,
         resolve: (text: string) => void,
@@ -20,12 +21,16 @@ class Input {
 export class InlineInput {
     private subscriptions: vscode.Disposable[] = [];
     private input: Input;
+    static instances:InlineInput[] = [];
+    private editor:vscode.TextEditor;
 
     constructor() {
         this.registerTextEditorCommand('extension.metaGo.input.cancel', this.cancel);
+        InlineInput.instances.push(this);
     }
 
     show = (editor: vscode.TextEditor, validateInput: (text: string) => string): Promise<string> => {
+        this.editor = editor;
         this.setContext(true);
         const promise = new Promise<string>((resolve, reject) => {
             this.input = new Input({ validateInput: validateInput, resolve: resolve, reject: reject });
@@ -39,6 +44,8 @@ export class InlineInput {
 
     private dispose = () => {
         this.subscriptions.forEach((d) => d.dispose());
+        const i = InlineInput.instances.indexOf(this);
+        if(i > -1) InlineInput.instances.splice(i,1);
     }
 
     private registerTextEditorCommand = (commandId: string, run: (editor: vscode.TextEditor, edit: vscode.TextEditorEdit, ...args: any[]) => void): void => {
@@ -82,6 +89,6 @@ export class InlineInput {
     }
 
     public cancelInput(){
-        this.cancel(vscode.window.activeTextEditor);
+        this.cancel(this.editor);
     }
 }
