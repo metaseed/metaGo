@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 
 export class Config {
     decoration: DecoratorConfig = new DecoratorConfig();
-    finder: FinderConfig = new FinderConfig();
+    jumper: FinderConfig = new FinderConfig();
 
     loadConfig = () => {
         let config = vscode.workspace.getConfiguration("metaGo");
@@ -23,13 +23,15 @@ export class Config {
         this.decoration.fontWeight = config.get<string>("decoration.fontWeight");
         this.decoration.fontFamily = config.get<string>("decoration.fontFamily");
         this.decoration.upperCase = config.get<boolean>("decoration.upperCase");
-        this.finder.characters = config.get<string>("decoration.characters").split(/[\s,]+/);
+        this.jumper.characters = config.get<string>("decoration.characters").split(/[\s,]+/);
 
-        this.finder.findAllMode = config.get<string>("finder.findAllMode");
-        this.finder.findInSelection = config.get<string>("finder.findInSelection");
-        this.finder.wordSeparatorPattern = config.get<string>("finder.wordSeparatorPattern");
-        this.finder.range = config.get<number>("finder.screenLineRange");
-        this.finder.targetIgnoreCase = config.get<boolean>("finder.targetIgnoreCase");
+        this.jumper.findAllMode = config.get<string>("jumper.findAllMode");
+        this.jumper.findInSelection = config.get<string>("jumper.findInSelection");
+        this.jumper.wordSeparatorPattern = config.get<string>("jumper.wordSeparatorPattern");
+        this.jumper.range = config.get<number>("jumper.screenLineRange");
+        this.jumper.targetIgnoreCase = config.get<boolean>("jumper.targetIgnoreCase");
+        let timeout = config.get<number>("jumper.timeout");
+        this.jumper.timeout = isNaN(timeout) ? 12000 : timeout * 1000;
     }
 }
 
@@ -59,4 +61,5 @@ class FinderConfig {
     wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";
     range: number = 50;
     targetIgnoreCase: boolean = false;
+    timeout: number = 12;
 }

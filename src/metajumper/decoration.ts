@@ -86,7 +86,8 @@ export class Decorator {
 
     private updateCache = () => {
         this.cache = {};
-        this.config.finder.characters.forEach(code => this.cache[code] = this.buildUri(code))
+        this.config.jumper.characters
+            .forEach(code => this.cache[code] = this.buildUri(code))
     }
 
     private buildUri = (code: string) => {
@@ -94,7 +95,7 @@ export class Decorator {
         let key = this.config.decoration.upperCase ? code.toUpperCase() : code.toLowerCase();
         let width = code.length * cf.width;
         let colors = cf.bgColor.split(',');
-        let bgColor = colors[(code.length-1) % colors.length];
+        let bgColor = colors[(code.length - 1) % colors.length];
         let svg =
             `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${cf.height}" height="${cf.height}" width="${width}"><rect width="${width}" height="${cf.height}" rx="2" ry="3" style="fill: ${bgColor};fill-opacity:${cf.bgOpacity};stroke:${cf.borderColor};stroke-opacity:${cf.bgOpacity};"/><text font-family="${cf.fontFamily}" font-weight="${cf.fontWeight}" font-size="${cf.fontSize}px" style="fill:${cf.color}" x="${cf.x}" y="${cf.y}">${key}</text></svg>`;
         return vscode.Uri.parse(svg);

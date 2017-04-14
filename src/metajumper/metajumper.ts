@@ -29,9 +29,9 @@ export class MetaJumper {
         let disposables: vscode.Disposable[] = [];
         this.config = config;
         this.viewPort = new ViewPort();
-        this.halfViewPortRange = Math.trunc(this.config.finder.range / 2); // 0.5
+        this.halfViewPortRange = Math.trunc(this.config.jumper.range / 2); // 0.5
         // determines whether to find from center of the screen.
-        this.findFromCenterScreenRange = Math.trunc(this.config.finder.range * 2 / 5); // 0.4
+        this.findFromCenterScreenRange = Math.trunc(this.config.jumper.range * 2 / 5); // 0.4
         // disposables.push(vscode.commands.registerCommand('extension.metaGo.cancel', ()=>this.cancel));
         disposables.push(vscode.commands.registerCommand('extension.metaGoAfter', () => {
             this.isSelectionMode = false;
@@ -56,7 +56,11 @@ export class MetaJumper {
                     .then((model) => {
                         this.done();
                         Utilities.goto(model.line, model.character + 1 + model.inteliAdj);
-                    }).catch(() => this.cancel());
+                    })
+                    .catch(
+                    () => {
+                        this.cancel();
+                    });
             }
             catch (err) {
                 this.cancel();
@@ -127,10 +131,10 @@ export class MetaJumper {
     }
 
     private cancel() {
-        this.isJumping = false;
         while (InlineInput.instances.length > 0) {
             InlineInput.instances[0].cancelInput();
         }
+        this.isJumping = false;
     }
     private async getPosition() {
         let editor = vscode.window.activeTextEditor;
@@ -146,25 +150,25 @@ export class MetaJumper {
         };
     }
 
-    private  metaJump() {
+    private metaJump() {
         let editor = vscode.window.activeTextEditor;
         let fromLine = editor.selection.active.line;
         let fromChar = editor.selection.active.character;
+        let jumpTimeoutId = null;
 
-        return new Promise<DecorationModel>((resolve, reject) => {
-            //let jumpTimeoutId = null;
-            if (!this.isJumping) {
-                this.isJumping = true;
+        if (!this.isJumping) {
+            this.isJumping = true;
+            jumpTimeoutId = setTimeout(() => { jumpTimeoutId = null; this.cancel(); }, this.config.jumper.timeout);
+            return new Promise<DecorationModel>((resolve, reject) => {
                 return this.jump((editor, model: any) => { resolve(model); })
                     .then(() => {
-                        //if (jumpTimeoutId) clearTimeout(jumpTimeoutId);
+                        if (jumpTimeoutId) clearTimeout(jumpTimeoutId);
                     })
                     .catch(() => {
                         reject();
                     });
-            }
-            //else jumpTimeoutId = setTimeout(() => { jumpTimeoutId = null; reject(); }, 10000);
-        });
+            });
+        }
     }
     private jump = (jumped: (editor: vscode.TextEditor, model: DecorationModel) => void): Promise<void> => {
         return new Promise<void>((resolve, reject) => {
@@ -264,7 +268,7 @@ export class MetaJumper {
     private async getSelection(editor: vscode.TextEditor): Promise<{ before: Selection, after: Selection }> {
         let selection: Selection = new Selection();
 
-        if (!editor.selection.isEmpty && this.config.finder.findInSelection === 'on') {
+        if (!editor.selection.isEmpty && this.config.jumper.findInSelection === 'on') {
             selection.text = editor.document.getText(editor.selection);
 
             if (editor.selection.anchor.line > editor.selection.active.line) {
@@ -280,13 +284,13 @@ export class MetaJumper {
         }
         else {
             await this.getPosition();
-            selection.startLine = Math.max(editor.selection.active.line - this.config.finder.range, 0);
+            selection.startLine = Math.max(editor.selection.active.line - this.config.jumper.range, 0);
             selection.lastLine = editor.selection.active.line + 1; //current line included in before
             selection.text = editor.document.getText(new vscode.Range(selection.startLine, 0, selection.lastLine, 0));
 
             let selectionAfter = new Selection();
             selectionAfter.startLine = editor.selection.active.line + 1;
-            selectionAfter.lastLine = Math.min(editor.selection.active.line + this.config.finder.range, editor.document.lineCount);
+            selectionAfter.lastLine = Math.min(editor.selection.active.line + this.config.jumper.range, editor.document.lineCount);
             selectionAfter.text = editor.document.getText(new vscode.Range(selectionAfter.startLine, 0, selectionAfter.lastLine, 0));
 
             return { before: selection, after: selectionAfter };
@@ -344,8 +348,8 @@ export class MetaJumper {
         }
 
         let indices = [];
-        let ignoreCase = this.config.finder.targetIgnoreCase;
-        if (this.config.finder.findAllMode === 'on') {
+        let ignoreCase = this.config.jumper.targetIgnoreCase;
+        if (this.config.jumper.findAllMode === 'on') {
             for (var i = 0; i < str.length; i++) {
                 if (ignoreCase) {
                     if (str[i] === char) {
@@ -361,7 +365,7 @@ export class MetaJumper {
             }
         } else {
             //splitted by spaces
-            let words = str.split(new RegExp(this.config.finder.wordSeparatorPattern));
+            let words = str.split(new RegExp(this.config.jumper.wordSeparatorPattern));
             //current line index
             let index = 0;
 

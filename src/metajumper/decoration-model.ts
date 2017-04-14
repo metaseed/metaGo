@@ -126,19 +126,19 @@ export class DecorationModelBuilder {
             new LineCharIndex(line + 1, 0)
         );
 
-        let twoCharsMax = Math.pow(this.config.finder.characters.length, 2);
+        let twoCharsMax = Math.pow(this.config.jumper.characters.length, 2);
         let leadChars = lineIndexes.count > twoCharsMax ? twoCharsMax : lineIndexes.count
-        leadChars = Math.trunc(leadChars / this.config.finder.characters.length); // just process two letter codes
+        leadChars = Math.trunc(leadChars / this.config.jumper.characters.length); // just process two letter codes
 
         // one char codes
-        for (let i = leadChars; i < this.config.finder.characters.length; i++) {
+        for (let i = leadChars; i < this.config.jumper.characters.length; i++) {
             let lci = lineIndexesState.findNextAutoWrap();
             let lineCharIndex = lci.lineCharIndex;
             if (lineCharIndex === LineCharIndex.END)
                 return models;
 
             let model = new DecorationModel();
-            model.code = this.config.finder.characters[i];
+            model.code = this.config.jumper.characters[i];
             model.index = i;
             model.line = lineCharIndex.line;
             model.character = lineCharIndex.char;
@@ -153,7 +153,7 @@ export class DecorationModelBuilder {
         for (let i = 0; i < leadChars; i++) {
             lineIndexesState.toggleDirection();
             let root: DecorationModel;
-            for (let k = 0; k < this.config.finder.characters.length; k++) {
+            for (let k = 0; k < this.config.jumper.characters.length; k++) {
                 let lineCharIndex = lineIndexesState.findNextAutoWrap().lineCharIndex;
 
                 if (lineCharIndex === LineCharIndex.END)
@@ -164,7 +164,7 @@ export class DecorationModelBuilder {
                     root = model;
                 }
 
-                model.code = this.config.finder.characters[i] + this.config.finder.characters[k];
+                model.code = this.config.jumper.characters[i] + this.config.jumper.characters[k];
                 model.index = i;
                 model.line = lineCharIndex.line;
                 model.character = lineCharIndex.char;
@@ -175,7 +175,7 @@ export class DecorationModelBuilder {
                 let childModel = Object.assign({}, model);
                 childModel.root = root;
                 childModel.children = [];
-                childModel.code = this.config.finder.characters[k];
+                childModel.code = this.config.jumper.characters[k];
                 root.children.push(childModel);
             }
         }

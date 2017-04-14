@@ -169,24 +169,24 @@ To configure the keybinding, add the following lines to *keybindings.json* (File
             "type": "string",
             "default": "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z"
         },
-        "metaGo.finder.findInSelection": {
+        "metaGo.jumper.findInSelection": {
             "type": "string",
             "default": "off"
         },
-        "metaGo.finder.targetIgnoreCase": {
+        "metaGo.jumper.targetIgnoreCase": {
             "type": "string",
             "default": "false"
         },
-        "metaGo.finder.findAllMode": {
+        "metaGo.jumper.findAllMode": {
             "type": "string",
             "default": "on",
             "description": "on: find all characters on viewable screen area; off: only search the first character of the words that are separated by chars configured in 'wordSeparatorPattern'"
         },
-        "metaGo.finder.wordSeparatorPattern": {
+        "metaGo.jumper.wordSeparatorPattern": {
             "type": "string",
             "default": "[ ,-.{_(\"'<\\/[+]"
         },
-        "metaGo.finder.screenLineRange": {
+        "metaGo.jumper.screenLineRange": {
             "type": "number",
             "default": 50,
             "description": "how many lines could be showed in one screen"
