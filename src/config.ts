@@ -1,10 +1,13 @@
 import * as vscode from "vscode";
+import { BookmarkConfig } from './bookmark/config';
 
 export class Config {
     decoration: DecoratorConfig = new DecoratorConfig();
     jumper: FinderConfig = new FinderConfig();
+    bookmark = new BookmarkConfig();
 
     loadConfig = () => {
+        this.bookmark.loadConfig();
         let config = vscode.workspace.getConfiguration("metaGo");
 
         this.decoration.bgColor = config.get<string>("decoration.backgroundColor");

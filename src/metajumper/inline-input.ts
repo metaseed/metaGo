@@ -25,7 +25,7 @@ export class InlineInput {
     private editor:vscode.TextEditor;
 
     constructor() {
-        this.registerTextEditorCommand('extension.metaGo.input.cancel', this.cancel);
+        this.registerTextEditorCommand('metaGo.input.cancel', this.cancel);
         InlineInput.instances.push(this);
     }
 

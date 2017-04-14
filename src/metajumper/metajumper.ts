@@ -32,8 +32,8 @@ export class MetaJumper {
         this.halfViewPortRange = Math.trunc(this.config.jumper.range / 2); // 0.5
         // determines whether to find from center of the screen.
         this.findFromCenterScreenRange = Math.trunc(this.config.jumper.range * 2 / 5); // 0.4
-        // disposables.push(vscode.commands.registerCommand('extension.metaGo.cancel', ()=>this.cancel));
-        disposables.push(vscode.commands.registerCommand('extension.metaGoAfter', () => {
+        // disposables.push(vscode.commands.registerCommand('metaGo.cancel', ()=>this.cancel));
+        disposables.push(vscode.commands.registerCommand('extension.gotoAfter', () => {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
@@ -49,7 +49,7 @@ export class MetaJumper {
 
         }));
 
-        disposables.push(vscode.commands.registerCommand('extension.metaGo', () => {
+        disposables.push(vscode.commands.registerCommand('metaGo.goto', () => {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
@@ -69,7 +69,7 @@ export class MetaJumper {
 
         }));
 
-        disposables.push(vscode.commands.registerCommand('extension.metaGoBefore', () => {
+        disposables.push(vscode.commands.registerCommand('extension.gotoBefore', () => {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
@@ -84,7 +84,7 @@ export class MetaJumper {
             }
         }));
 
-        disposables.push(vscode.commands.registerCommand('extension.metaGo.selection', () => {
+        disposables.push(vscode.commands.registerCommand('metaGo.selection', () => {
             this.isSelectionMode = true;
             let editor = vscode.window.activeTextEditor;
             const selection = editor.selection;

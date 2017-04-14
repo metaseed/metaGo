@@ -3,7 +3,7 @@ import { Utilities } from './lib';
 
 export class SelectLines {
     constructor(context: vscode.ExtensionContext) {
-        let disposable = vscode.commands.registerCommand('extension.metaGo.selectLineUp', () => {
+        let disposable = vscode.commands.registerCommand('metaGo.selectLineUp', () => {
             const editor = vscode.window.activeTextEditor;
             const line = editor.selection.active.line - 1;
             const selection = editor.selection;
@@ -20,7 +20,7 @@ export class SelectLines {
 
         context.subscriptions.push(disposable);
 
-        let disposableD = vscode.commands.registerCommand('extension.metaGo.selectLineDown', () => {
+        let disposableD = vscode.commands.registerCommand('metaGo.selectLineDown', () => {
             const editor = vscode.window.activeTextEditor;
             const line = editor.selection.active.line + 1;
             const selection = editor.selection;

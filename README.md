@@ -69,49 +69,49 @@ If you have any requirements or dependencies, add a section describing those and
 To configure the keybinding, add the following lines to *keybindings.json* (File -> Preferences -> Keyboard Shortcuts):
 
         {
-            "command": "extension.metaGo.input.cancel",
+            "command": "metaGo.input.cancel",
             "key": "escape",
             "when": "editorTextFocus && metaGoInput"
         },
         {
-            "command": "extension.metaGo",
+            "command": "metaGo",
             "key": "alt+;",
             "when": "editorTextFocus",
             "description": "goto the character and set the cursor after the character"
         },
         {
-            "command": "extension.metaGo.selection",
+            "command": "metaGo.selection",
             "key": "alt+shift+;",
             "when": "editorTextFocus"
         },
         {
-            "command": "extension.metaGo.selectLineUp",
+            "command": "metaGo.selectLineUp",
             "key": "ctrl+shift+i",
             "when": "editorTextFocus"
         },
         {
-            "command": "extension.metaGo.centerEditor",
+            "command": "metaGo.centerEditor",
             "key": "alt+m",
             "when": "editorTextFocus"
         },
         {
             "key": "alt+home",
-            "command": "extension.metaGo.spaceBlockMoveUp",
+            "command": "metaGo.spaceBlockMoveUp",
             "when": "editorTextFocus"
         },
         {
             "key": "alt+shift+home",
-            "command": "extension.metaGo.spaceBlockSelectUp",
+            "command": "metaGo.spaceBlockSelectUp",
             "when": "editorTextFocus"
         },
         {
             "key": "alt+end",
-            "command": "extension.metaGo.spaceBlockMoveDown",
+            "command": "metaGo.spaceBlockMoveDown",
             "when": "editorTextFocus"
         },
         {
             "key": "alt+shift+end",
-            "command": "extension.metaGo.spaceBlockSelectDown",
+            "command": "metaGo.spaceBlockSelectDown",
             "when": "editorTextFocus"
         }
 ## extension Settings

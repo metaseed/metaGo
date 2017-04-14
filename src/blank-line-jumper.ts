@@ -4,17 +4,17 @@ import { Utilities } from './lib';
 
 export class BlankLineJumper {
     constructor(context: vscode.ExtensionContext) {
-        context.subscriptions.push(vscode.commands.registerCommand("extension.metaGo.spaceBlockMoveUp", () => {
+        context.subscriptions.push(vscode.commands.registerCommand("metaGo.spaceBlockMoveUp", () => {
             const editor = vscode.window.activeTextEditor;
             this.markSelection(editor, this.nextPosition(editor.document, editor.selection.active, true));
         }));
 
-        context.subscriptions.push(vscode.commands.registerCommand("extension.metaGo.spaceBlockMoveDown", () => {
+        context.subscriptions.push(vscode.commands.registerCommand("metaGo.spaceBlockMoveDown", () => {
             const editor = vscode.window.activeTextEditor;
             this.markSelection(editor, this.nextPosition(editor.document, editor.selection.active, false));
         }));
 
-        context.subscriptions.push(vscode.commands.registerCommand("extension.metaGo.spaceBlockSelectUp", () => {
+        context.subscriptions.push(vscode.commands.registerCommand("metaGo.spaceBlockSelectUp", () => {
             const editor = vscode.window.activeTextEditor;
             this.markSelection(
                 editor,
@@ -23,7 +23,7 @@ export class BlankLineJumper {
             );
         }));
 
-        context.subscriptions.push(vscode.commands.registerCommand("extension.metaGo.spaceBlockSelectDown", () => {
+        context.subscriptions.push(vscode.commands.registerCommand("metaGo.spaceBlockSelectDown", () => {
             const editor = vscode.window.activeTextEditor;
             this.markSelection(
                 editor,

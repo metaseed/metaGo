@@ -35,112 +35,160 @@
     "contributes": {
         "commands": [
             {
-                "command": "extension.metaGo",
+                "command": "metaGo.goto",
                 "title": "metaGo:GoTo"
             },
             {
-                "command": "extension.metaGo.selection",
+                "command": "metaGo.selection",
                 "title": "metaGo:selection"
             },
             {
-                "command": "extension.metaGoAfter",
+                "command": "metaGo.gotoAfter",
                 "title": "metaGo:GoToAfter"
             },
             {
-                "command": "extension.metaGo.metaGoBefore",
-                "title": "metaGo:metaGoBefore"
+                "command": "metaGo.gotoBefore",
+                "title": "metaGo:gotoBefore"
             },
             {
-                "command": "extension.metaGo.selectLineUp",
+                "command": "metaGo.selectLineUp",
                 "title": "metaGo:selectLineUp"
             },
             {
-                "command": "extension.metaGo.selectLineDown",
+                "command": "metaGo.selectLineDown",
                 "title": "metaGo:selectLineDown"
             },
             {
-                "command": "extension.metaGo.currentLineToCenter",
+                "command": "metaGo.currentLineToCenter",
                 "title": "metaGo:currentLineToCenter"
             },
             {
-                "command": "extension.metaGo.currentLineToTop",
+                "command": "metaGo.currentLineToTop",
                 "title": "metaGo:currentLineToTop"
             },
             {
-                "command": "extension.metaGo.spaceBlockMoveUp",
+                "command": "metaGo.spaceBlockMoveUp",
                 "title": "metaGo:spaceBlockMoveUp"
             },
             {
-                "command": "extension.metaGo.spaceBlockSelectUp",
+                "command": "metaGo.spaceBlockSelectUp",
                 "title": "metaGo:spaceBlockSelectUp"
             },
             {
-                "command": "extension.metaGo.spaceBlockMoveDown",
+                "command": "metaGo.spaceBlockMoveDown",
                 "title": "metaGo:spaceBlockMoveDown"
             },
             {
-                "command": "extension.metaGo.spaceBlockSelectDown",
+                "command": "metaGo.spaceBlockSelectDown",
                 "title": "metaGo:spaceBlockSelectDown"
+            },
+            {
+                "command": "metaGo.bookmark.toggle",
+                "title": "metaGo:bookmark:Toggle"
+            },
+            {
+                "command": "metaGo.bookmark.view",
+                "title": "metaGo:bookmark:View"
+            },
+            {
+                "command": "metaGo.bookmark.clear",
+                "title": "metaGo:bookmark:Clear"
             }
         ],
         "keybindings": [
             {
-                "command": "extension.metaGo.input.cancel",
+                "command": "metaGo.input.cancel",
                 "key": "escape",
                 "when": "editorTextFocus && metaGoInput"
             },
             {
-                "command": "extension.metaGo",
+                "command": "metaGo.goto",
                 "key": "alt+;",
                 "when": "editorTextFocus",
                 "description": "goto the character and set the cursor after the character"
             },
             {
-                "command": "extension.metaGo.selection",
+                "command": "metaGo.selection",
                 "key": "alt+shift+;",
                 "when": "editorTextFocus"
             },
             {
-                "command": "extension.metaGo.selectLineUp",
+                "command": "metaGo.selectLineUp",
                 "key": "ctrl+shift+i",
+                "mac": "cmd+shift+i",
                 "when": "editorTextFocus"
             },
             {
-                "command": "extension.metaGo.selectLineDown",
+                "command": "metaGo.selectLineDown",
                 "key": "ctrl+i",
+                "mac": "cmd+i",
                 "when": "editorTextFocus"
             },
             {
-                "command": "extension.metaGo.currentLineToCenter",
+                "command": "metaGo.currentLineToCenter",
                 "key": "alt+m",
                 "when": "editorTextFocus"
             },
             {
-                "command": "extension.metaGo.currentLineToTop",
+                "command": "metaGo.currentLineToTop",
                 "key": "alt+t",
                 "when": "editorTextFocus"
             },
             {
+                "command": "metaGo.spaceBlockMoveUp",
                 "key": "alt+home",
-                "command": "extension.metaGo.spaceBlockMoveUp",
                 "when": "editorTextFocus"
             },
             {
+                "command": "metaGo.spaceBlockSelectUp",
                 "key": "alt+shift+home",
-                "command": "extension.metaGo.spaceBlockSelectUp",
                 "when": "editorTextFocus"
             },
             {
+                "command": "metaGo.spaceBlockMoveDown",
                 "key": "alt+end",
-                "command": "extension.metaGo.spaceBlockMoveDown",
                 "when": "editorTextFocus"
             },
             {
+                "command": "metaGo.spaceBlockSelectDown",
                 "key": "alt+shift+end",
-                "command": "extension.metaGo.spaceBlockSelectDown",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.bookmark.toggle",
+                "key": "alt+b",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.bookmark.view",
+                "key": "alt+v",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.bookmark.viewInFile",
+                "key": "alt+s",
                 "when": "editorTextFocus"
             }
+
         ],
+        "menus": {
+            "editor/context": [
+                {
+                    "command": "metaGo.bookmark.toggle",
+                    "group": "bookmarks"
+                }
+            ],
+            "editor/title": [
+                {
+                    "command": "metaGo.bookmark.view",
+                    "group": "bookmarks"
+                },
+                {
+                    "command": "metaGo.bookmark.clear",
+                    "group": "bookmarks"
+                }
+            ]
+        },
         "configuration": {
             "title": "metaseed metaGo",
             "type": "object",
@@ -224,6 +272,16 @@
                     "type": "number",
                     "default": 50,
                     "description": "how many lines could be showed in one screen"
+                },
+                "metaGo.bookmark.saveBookmarksInProject": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Allow bookmarks to be saved (and restored) locally in the opened Project/Folder instead of VS Code"
+                },
+                "metaGo.bookmark.gutterIconPath": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Path to another image to be presented as Bookmark"
                 }
             }
         }
