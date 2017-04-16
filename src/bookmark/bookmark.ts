@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import fs = require("fs");
 
+import { BookmarkConfig } from './config';
 export const NO_BOOKMARKS = -1;
 export const NO_MORE_BOOKMARKS = -2;
 
@@ -9,12 +10,17 @@ export const JUMP_BACKWARD = -1;
 export enum JUMP_DIRECTION { JUMP_FORWARD, JUMP_BACKWARD };
 
 export class Bookmark {
+
     public fsPath: string;
     public bookmarks: number[];
 
-    constructor(fsPath: string) {
+    private navigateThroughAllFiles: boolean;
+
+    constructor(fsPath: string, private config: BookmarkConfig) {
         this.fsPath = fsPath;
         this.bookmarks = [];
+        this.navigateThroughAllFiles = vscode.workspace.getConfiguration("bookmarks").get("navigateThroughAllFiles", true);
+
     }
 
     public nextBookmark(currentLine: number, direction: JUMP_DIRECTION = JUMP_FORWARD) {
@@ -26,11 +32,9 @@ export class Bookmark {
                 return;
             }
 
-            let navigateThroughAllFiles: boolean;
-            navigateThroughAllFiles = vscode.workspace.getConfiguration("bookmarks").get("navigateThroughAllFiles", false);
 
             if (this.bookmarks.length === 0) {
-                if (navigateThroughAllFiles) {
+                if (this.navigateThroughAllFiles) {
                     resolve(NO_BOOKMARKS);
                     return;
                 } else {
@@ -52,11 +56,11 @@ export class Bookmark {
                 }
 
                 if (typeof nextBookmark === "undefined") {
-                    if (navigateThroughAllFiles) {
+                    if (this.navigateThroughAllFiles) {
                         resolve(NO_MORE_BOOKMARKS);
                         return;
                     } else {
-                        resolve(this.bookmarks[ 0 ]);
+                        resolve(this.bookmarks[0]);
                         return;
                     }
                 } else {
@@ -65,18 +69,18 @@ export class Bookmark {
                 }
             } else { // JUMP_BACKWARD
                 for (let index = this.bookmarks.length; index >= 0; index--) {
-                    let element = this.bookmarks[ index ];
+                    let element = this.bookmarks[index];
                     if (element < currentLine) {
                         nextBookmark = element;
                         break;
                     }
                 }
                 if (typeof nextBookmark === "undefined") {
-                    if (navigateThroughAllFiles) {
+                    if (this.navigateThroughAllFiles) {
                         resolve(NO_MORE_BOOKMARKS);
                         return;
                     } else {
-                        resolve(this.bookmarks[this.bookmarks.length - 1 ]);
+                        resolve(this.bookmarks[this.bookmarks.length - 1]);
                         return;
                     }
                 } else {
@@ -110,7 +114,7 @@ export class Bookmark {
                 let invalids = [];
                 // tslint:disable-next-line:prefer-for-of
                 for (let index = 0; index < this.bookmarks.length; index++) {
-                    let element = this.bookmarks[ index ] + 1;
+                    let element = this.bookmarks[index] + 1;
                     // check for 'invalidated' bookmarks, when its outside the document length
                     if (element <= doc.lineCount) {
                         let lineText = doc.lineAt(element - 1).text;
@@ -128,7 +132,7 @@ export class Bookmark {
                     let idxInvalid: number;
                     // tslint:disable-next-line:prefer-for-of
                     for (let indexI = 0; indexI < invalids.length; indexI++) {
-                        idxInvalid = this.bookmarks.indexOf(invalids[ indexI ] - 1);
+                        idxInvalid = this.bookmarks.indexOf(invalids[indexI] - 1);
                         this.bookmarks.splice(idxInvalid, 1);
                     }
                 }

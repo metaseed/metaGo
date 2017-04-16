@@ -11,7 +11,7 @@ export class BookmarkExt {
     private bookmarkDecorationType: vscode.TextEditorDecorationType;
     private context: vscode.ExtensionContext;
 
-    constructor(context: vscode.ExtensionContext, config: BookmarkConfig) {
+    constructor(context: vscode.ExtensionContext, private config: BookmarkConfig) {
         this.context = context
         let activeEditorCountLine: number;
 
@@ -187,7 +187,7 @@ export class BookmarkExt {
     private loadWorkspaceState(): boolean {
         let saveBookmarksInProject: boolean = vscode.workspace.getConfiguration("bookmarks").get("saveBookmarksInProject", false);
 
-        this.bookmarks = new Bookmarks("");
+        this.bookmarks = new Bookmarks("",this.config);
 
         if (vscode.workspace.rootPath && saveBookmarksInProject) {
             let bookmarksFileInProject: string = path.join(vscode.workspace.rootPath, ".vscode", "bookmarks.json");
@@ -800,9 +800,9 @@ export class BookmarkExt {
             let promises = [];
             let currentLine: number = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.selection.active.line + 1 : -1;
 
-            // for (let index = 0; index < this.bookmarks.bookmarks.length; index++) {
-            for (let bookmark of this.bookmarks.bookmarks) {
-                // let bookmark = this.bookmarks.bookmarks.index];
+            for (let index = 0; index < this.bookmarks.bookmarks.length; index++) {
+                // for (let bookmark of this.bookmarks.bookmarks) {
+                let bookmark = this.bookmarks.bookmarks[index];
 
                 let pp = bookmark.listBookmarks();
                 promises.push(pp);
@@ -812,11 +812,9 @@ export class BookmarkExt {
                 (values) => {
 
                     for (let index = 0; index < values.length; index++) {
-                    //for (let element of values) {
                         let element = values[index];
 
                         for (let indexInside = 0; indexInside < element.length; indexInside++) {
-                        //for (let elementInside of element) {
                             let elementInside = element[indexInside];
 
                             if (elementInside.detail.toString().toLowerCase() === activeTextEditorPath.toLowerCase()) {
