@@ -36,63 +36,63 @@
         "commands": [
             {
                 "command": "metaGo.goto",
-                "title": "metaGo:GoTo"
+                "title": "metaGo: GoTo"
             },
             {
                 "command": "metaGo.selection",
-                "title": "metaGo:selection"
+                "title": "metaGo: selection"
             },
             {
                 "command": "metaGo.gotoAfter",
-                "title": "metaGo:GoToAfter"
+                "title": "metaGo: GoToAfter"
             },
             {
                 "command": "metaGo.gotoBefore",
-                "title": "metaGo:gotoBefore"
+                "title": "metaGo: gotoBefore"
             },
             {
                 "command": "metaGo.selectLineUp",
-                "title": "metaGo:selectLineUp"
+                "title": "metaGo: selectLineUp"
             },
             {
                 "command": "metaGo.selectLineDown",
-                "title": "metaGo:selectLineDown"
+                "title": "metaGo: selectLineDown"
             },
             {
                 "command": "metaGo.currentLineToCenter",
-                "title": "metaGo:currentLineToCenter"
+                "title": "metaGo: currentLineToCenter"
             },
             {
                 "command": "metaGo.currentLineToTop",
-                "title": "metaGo:currentLineToTop"
+                "title": "metaGo: currentLineToTop"
             },
             {
                 "command": "metaGo.spaceBlockMoveUp",
-                "title": "metaGo:spaceBlockMoveUp"
+                "title": "metaGo: spaceBlockMoveUp"
             },
             {
                 "command": "metaGo.spaceBlockSelectUp",
-                "title": "metaGo:spaceBlockSelectUp"
+                "title": "metaGo: spaceBlockSelectUp"
             },
             {
                 "command": "metaGo.spaceBlockMoveDown",
-                "title": "metaGo:spaceBlockMoveDown"
+                "title": "metaGo: spaceBlockMoveDown"
             },
             {
                 "command": "metaGo.spaceBlockSelectDown",
-                "title": "metaGo:spaceBlockSelectDown"
+                "title": "metaGo: spaceBlockSelectDown"
             },
             {
                 "command": "metaGo.bookmark.toggle",
-                "title": "metaGo:bookmark:Toggle"
+                "title": "metaGo: bookmark: Toggle"
             },
             {
                 "command": "metaGo.bookmark.view",
-                "title": "metaGo:bookmark:View"
+                "title": "metaGo: bookmark: View"
             },
             {
                 "command": "metaGo.bookmark.clear",
-                "title": "metaGo:bookmark:Clear"
+                "title": "metaGo: bookmark: Clear"
             }
         ],
         "keybindings": [

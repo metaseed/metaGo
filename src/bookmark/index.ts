@@ -2,9 +2,10 @@ import * as vscode from "vscode";
 import fs = require("fs");
 import path = require("path");
 
-import { JUMP_BACKWARD, JUMP_DIRECTION, JUMP_FORWARD, NO_BOOKMARKS, NO_MORE_BOOKMARKS } from "./Bookmark";
-import { Bookmarks } from "./Bookmarks";
+import { JUMP_BACKWARD, JUMP_DIRECTION, JUMP_FORWARD, NO_BOOKMARKS, NO_MORE_BOOKMARKS } from "./bookmark";
+import { Bookmarks } from "./bookmarks";
 import { BookmarkConfig } from './config';
+import { BookmarkItem } from './bookmark';
 
 export class BookmarkExt {
     private bookmarks: Bookmarks;
@@ -187,7 +188,7 @@ export class BookmarkExt {
     private loadWorkspaceState(): boolean {
         let saveBookmarksInProject: boolean = vscode.workspace.getConfiguration("bookmarks").get("saveBookmarksInProject", false);
 
-        this.bookmarks = new Bookmarks("",this.config);
+        this.bookmarks = new Bookmarks("", this.config);
 
         if (vscode.workspace.rootPath && saveBookmarksInProject) {
             let bookmarksFileInProject: string = path.join(vscode.workspace.rootPath, ".vscode", "bookmarks.json");
@@ -561,9 +562,7 @@ export class BookmarkExt {
 
         vscode.commands.registerCommand("metaGo.bookmark.clear", () => {
 
-            // for (let index = 0; index < this.bookmarks.bookmarks.length; index++) {
             for (let element of this.bookmarks.bookmarks) {
-                // let element = this.bookmarks.bookmarks.index];
                 element.clear();
             }
 
@@ -758,7 +757,7 @@ export class BookmarkExt {
                 let element = this.bookmarks.activeBookmark.bookmarks[index] + 1;
 
                 let lineText = vscode.window.activeTextEditor.document.lineAt(element - 1).text;
-                items.push({ label: element.toString(), description: lineText });
+                items.push(new BookmarkItem(element.toString(), lineText));
             }
 
             // pick one
@@ -781,12 +780,9 @@ export class BookmarkExt {
         });
 
         vscode.commands.registerCommand("metaGo.bookmark.view", () => {
-
             // no bookmark
             let totalBookmarkCount: number = 0;
-            // for (let index = 0; index < this.bookmarks.bookmarks.length; index++) {
             for (let element of this.bookmarks.bookmarks) {
-                // totalBookmarkCount = totalBookmarkCount +  this.bookmarks.bookmarks.index].bookmarks.length;
                 totalBookmarkCount = totalBookmarkCount + element.bookmarks.length;
             }
             if (totalBookmarkCount === 0) {
@@ -801,16 +797,13 @@ export class BookmarkExt {
             let currentLine: number = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.selection.active.line + 1 : -1;
 
             for (let index = 0; index < this.bookmarks.bookmarks.length; index++) {
-                // for (let bookmark of this.bookmarks.bookmarks) {
                 let bookmark = this.bookmarks.bookmarks[index];
-
                 let pp = bookmark.listBookmarks();
                 promises.push(pp);
             }
 
             Promise.all(promises).then(
                 (values) => {
-
                     for (let index = 0; index < values.length; index++) {
                         let element = values[index];
 
@@ -819,19 +812,17 @@ export class BookmarkExt {
 
                             if (elementInside.detail.toString().toLowerCase() === activeTextEditorPath.toLowerCase()) {
                                 items.push(
-                                    {
-                                        label: elementInside.label,
-                                        description: elementInside.description
-                                    }
+                                    new BookmarkItem(elementInside.label,
+                                        elementInside.description
+                                    )
                                 );
                             } else {
                                 let itemPath = this.removeRootPathFrom(elementInside.detail);
                                 items.push(
-                                    {
-                                        label: elementInside.label,
-                                        description: elementInside.description,
-                                        detail: itemPath
-                                    }
+                                    new BookmarkItem(elementInside.label,
+                                        elementInside.description,
+                                        itemPath
+                                    )
                                 );
                             }
                         }
@@ -867,11 +858,21 @@ export class BookmarkExt {
                         }
                     });
 
+                    items.push(
+                        new BookmarkItem('c',
+                            'clear bookmarks',
+                            null, 'metaGo.bookmark.clear'
+                        )
+                    );
+
                     let options = <vscode.QuickPickOptions>{
                         placeHolder: "Type a line number or a piece of code to navigate to",
                         matchOnDescription: true,
-                        onDidSelectItem: item => {
-
+                        onDidSelectItem: (item: BookmarkItem) => {
+                            if (item.commandId) {
+                                vscode.commands.executeCommand(item.commandId);
+                                return;
+                            }
                             let filePath: string;
                             // no detail - previously active document
                             if (!item.detail) {
@@ -897,7 +898,7 @@ export class BookmarkExt {
                             }
                         }
                     };
-                    vscode.window.showQuickPick(itemsSorted, options).then(selection => {
+                    vscode.window.showQuickPick(itemsSorted, options).then((selection: BookmarkItem) => {
                         if (typeof selection === "undefined") {
                             if (activeTextEditorPath === "") {
                                 return;
@@ -915,17 +916,18 @@ export class BookmarkExt {
                         if (typeof selection === "undefined") {
                             return;
                         }
-
-                        if (!selection.detail) {
-                            this.revealLine(parseInt(selection.label, 10) - 1);
-                        } else {
-                            let newPath = vscode.workspace.rootPath + selection.detail.toString();
-                            let uriDocument: vscode.Uri = vscode.Uri.file(newPath);
-                            vscode.workspace.openTextDocument(uriDocument).then(doc => {
-                                vscode.window.showTextDocument(doc).then(editor => {
-                                    this.revealLine(parseInt(selection.label, 10) - 1);
+                        if (!selection.commandId) {
+                            if (!selection.detail) {
+                                this.revealLine(parseInt(selection.label, 10) - 1);
+                            } else {
+                                let newPath = vscode.workspace.rootPath + selection.detail.toString();
+                                let uriDocument: vscode.Uri = vscode.Uri.file(newPath);
+                                vscode.workspace.openTextDocument(uriDocument).then(doc => {
+                                    vscode.window.showTextDocument(doc).then(editor => {
+                                        this.revealLine(parseInt(selection.label, 10) - 1);
+                                    });
                                 });
-                            });
+                            }
                         }
                     });
                 }

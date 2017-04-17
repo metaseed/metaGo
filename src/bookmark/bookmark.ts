@@ -9,6 +9,11 @@ export const JUMP_FORWARD = 1;
 export const JUMP_BACKWARD = -1;
 export enum JUMP_DIRECTION { JUMP_FORWARD, JUMP_BACKWARD };
 
+export class BookmarkItem {
+    constructor(public label: string, public description: string, public detail?: string,
+        public commandId?: string) { }
+}
+
 export class Bookmark {
 
     public fsPath: string;
@@ -119,11 +124,11 @@ export class Bookmark {
                     if (element <= doc.lineCount) {
                         let lineText = doc.lineAt(element - 1).text;
                         let normalizedPath = doc.uri.fsPath;
-                        items.push({
-                            label: element.toString(),
-                            description: lineText,
-                            detail: normalizedPath
-                        });
+                        items.push(new BookmarkItem(
+                            element.toString(),
+                            lineText,
+                            normalizedPath
+                        ));
                     } else {
                         invalids.push(element);
                     }
