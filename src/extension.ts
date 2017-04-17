@@ -8,6 +8,8 @@ import { CurrentLineScroller } from './current-line-scroller';
 import { BlankLineJumper } from './blank-line-jumper';
 import { SelectLines } from './select-lines';
 import { BookmarkExt } from './bookmark';
+import { BracketJumper } from './bracket-jumper';
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -24,7 +26,8 @@ export function activate(context: vscode.ExtensionContext) {
     let centerEditor = new CurrentLineScroller(context);
     let spaceBlockJumper = new BlankLineJumper(context);
     let selectLineUp = new SelectLines(context);
-    let bookmark = new BookmarkExt(context,config.bookmark);
+    let bookmark = new BookmarkExt(context, config.bookmark);
+    let bracketJumper = new BracketJumper(context);
 
 }
 

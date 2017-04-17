@@ -60,6 +60,10 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * <kbd>Ctrl</kbd>+<kbd>i</kbd> to select line up.
 * <kbd>Ctrl</kbd>+<kbd>shift</kbd>+i to select line down.
 
+### jump to bracket
+* has all the function of default jumpToBracket command.
+* if the cursor is not beside the bracket it will jump to the nearest begin bracket that contains the cursor.
+
 ## Requirements
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.

@@ -168,8 +168,12 @@
                 "command": "metaGo.bookmark.viewInFile",
                 "key": "alt+s",
                 "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.jumpToBracket",
+                "key": "ctrl+shift+\\",
+                "when": "editorTextFocus"
             }
-
         ],
         "menus": {
             "editor/context": [
