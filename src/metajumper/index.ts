@@ -165,6 +165,7 @@ export class MetaJumper {
                         if (jumpTimeoutId) clearTimeout(jumpTimeoutId);
                     })
                     .catch(() => {
+                        if (jumpTimeoutId) clearTimeout(jumpTimeoutId);
                         reject();
                     });
             });
