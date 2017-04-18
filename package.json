@@ -3,7 +3,7 @@
     "displayName": "MetaGo",
     "description": "vscode cursor move and select; jump, navigation, goto",
     "icon": "images/metago.png",
-    "version": "1.22.0",
+    "version": "1.23.0",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo",
     "license": "MIT",
@@ -127,6 +127,11 @@
             {
                 "command": "metaGo.currentLineToCenter",
                 "key": "alt+m",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.currentLineToBottom",
+                "key": "alt+b",
                 "when": "editorTextFocus"
             },
             {

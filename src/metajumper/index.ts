@@ -3,7 +3,7 @@ import { Utilities } from '../lib';
 import { InlineInput } from "./inline-input";
 import { ILineCharIndexes, IIndexes, DecorationModel, DecorationModelBuilder, InteliAdjustment, Direction, CharIndex } from "./decoration-model";
 import { Decorator } from "./decoration";
-import { ViewPort } from './view-port';
+import { ViewPort } from '../lib/viewport';
 import * as vscode from "vscode";
 
 class Selection {

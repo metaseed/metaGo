@@ -61,6 +61,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 ### scroll line to the screen center/top
 * <kbd>Alt</kbd>+<kbd>m</kbd> is the default shortcut to scroll current line to screen center.
 * <kbd>Alt</kbd>+<kbd>t</kbd> is the default shortcut to scroll current line to screen top.
+* <kbd>Alt</kbd>+<kbd>b</kbd> is the default shortcut to scroll current line to screen bottom.
+
 ![MetaGo.Center](images/metago.center.gif)
 
 ### moving cursor up/down between blank lines

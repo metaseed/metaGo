@@ -14,12 +14,12 @@ export class ViewPort {
         let editor = vscode.window.activeTextEditor;
         let fromLine = editor.selection.active.line;
         let fromChar = editor.selection.active.character;
-        vscode.commands.executeCommand("cursorMove", {
+        return vscode.commands.executeCommand("cursorMove", {
             to: 'viewPortTop',
             select: false
         }).then(() => {
             let topLine = editor.selection.active.line;
-            vscode.commands.executeCommand("cursorMove", {
+            return vscode.commands.executeCommand("cursorMove", {
                 to: 'viewPortBottom',
                 select: false
             })
@@ -33,7 +33,6 @@ export class ViewPort {
                 });
 
         });
-
 
     }
     // private viewPortCenter():number{
