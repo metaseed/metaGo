@@ -199,7 +199,7 @@
                 },
                 "metaGo.decoration.backgroundOpacity": {
                     "type": "string",
-                    "default": "0.7"
+                    "default": "0.8"
                 },
                 "metaGo.decoration.borderColor": {
                     "type": "string",
