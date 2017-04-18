@@ -896,9 +896,9 @@ export class BookmarkExt {
                                 // with icon - document outside project
                                 if (item.detail.toString().indexOf("$(link) ") === 0) {
                                     filePath = item.detail.toString().split("$(link) ").pop();
-                                } else if (item.detail.toString().indexOf("$(tag) ") === 0) {// no icon - document inside project
+                                } else if (item.detail.toString().indexOf("$(tag) ") === 0) {// tag - document inside project
                                     filePath = vscode.workspace.rootPath + item.detail.toString().split("$(tag) ").pop();
-                                } else {// no icon - document inside project
+                                } else {// no icon
                                     filePath = vscode.workspace.rootPath + item.detail.toString();
                                 }
                             }
