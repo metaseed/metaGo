@@ -1,10 +1,10 @@
 
-[![Version](http://vsmarketplacebadge.apphb.com/version/robertohuertasm.metago.svg)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.metago)
-[![Installs](http://vsmarketplacebadge.apphb.com/installs/robertohuertasm.metago.svg)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.metago)
-[![Ratings](https://vsmarketplacebadge.apphb.com/rating/robertohuertasm.metago.svg)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.metago)
+[![Version](http://vsmarketplacebadge.apphb.com/version/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
+[![Installs](http://vsmarketplacebadge.apphb.com/installs/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
+[![Ratings](https://vsmarketplacebadge.apphb.com/rating/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
 
 [![Build Status](https://travis-ci.org/metago/metago.svg?branch=master)](https://travis-ci.org/metago/metago)
-[![Build Status](https://ci.appveyor.com/api/projects/status/github/metago/metago?branch=master&svg=true)](https://ci.appveyor.com/project/robertohuertasm/metago)
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/metago/metago?branch=master&svg=true)](https://ci.appveyor.com/project/metaseed/metago)
 [![Dependencies Status](https://david-dm.org/metago/metago/status.svg)](https://david-dm.org/metago/metago)
 [![DevDependencies Status](https://david-dm.org/metago/metago/dev-status.svg)](https://david-dm.org/metago/metago?type=dev)
 [![codecov](https://codecov.io/gh/metago/metago/branch/master/graph/badge.svg)](https://codecov.io/gh/metago/metago)
