@@ -860,7 +860,13 @@ export class BookmarkExt {
 
                     items.push(
                         new BookmarkItem('c',
-                            'clear bookmarks',
+                            'clear bookmarks in current file',
+                            null, 'metaGo.bookmark.clearInFile'
+                        )
+                    );
+                    items.push(
+                        new BookmarkItem('cc',
+                            'clear all bookmarks',
                             null, 'metaGo.bookmark.clear'
                         )
                     );
@@ -869,10 +875,6 @@ export class BookmarkExt {
                         placeHolder: "Type a line number or a piece of code to navigate to",
                         matchOnDescription: true,
                         onDidSelectItem: (item: BookmarkItem) => {
-                            if (item.commandId) {
-                                vscode.commands.executeCommand(item.commandId);
-                                return;
-                            }
                             let filePath: string;
                             // no detail - previously active document
                             if (!item.detail) {
@@ -916,7 +918,12 @@ export class BookmarkExt {
                         if (typeof selection === "undefined") {
                             return;
                         }
-                        if (!selection.commandId) {
+
+                        if (selection.commandId) {
+                            vscode.commands.executeCommand(selection.commandId);
+                            return;
+
+                        } else {
                             if (!selection.detail) {
                                 this.revealLine(parseInt(selection.label, 10) - 1);
                             } else {
