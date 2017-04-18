@@ -156,17 +156,12 @@
             },
             {
                 "command": "metaGo.bookmark.toggle",
-                "key": "alt+b",
+                "key": "alt+'",
                 "when": "editorTextFocus"
             },
             {
                 "command": "metaGo.bookmark.view",
-                "key": "alt+v",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.bookmark.viewInFile",
-                "key": "alt+s",
+                "key": "alt+/",
                 "when": "editorTextFocus"
             },
             {
