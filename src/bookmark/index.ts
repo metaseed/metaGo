@@ -831,8 +831,8 @@ export class BookmarkExt {
 
                     // sort
                     // - active document
-                    // - no icon - document inside project
-                    // - with icon - document outside project
+                    // - no Octicons - document inside project
+                    // - with Octicons - document outside project
                     let itemsSorted: vscode.QuickPickItem[];
                     itemsSorted = items.sort(function (a: vscode.QuickPickItem, b: vscode.QuickPickItem): number {
                         if (!a.detail && !b.detail) {

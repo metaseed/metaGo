@@ -17,7 +17,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 ### go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>;</kbd> to tell I want to *go* somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
-3.  type the code characters, you will *go* to that location. 
+3. type the code characters, you will *go* to that location. 
 
 > at any time press <kbd>ESC</kbd> to cancel
 
@@ -55,8 +55,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * <kbd>Ctrl</kbd>+<kbd>shift</kbd>+i to select line down.
 
 ### jump to bracket
-* has all the function of default jumpToBracket command.
-* if the cursor is not beside the bracket it will jump to the nearest begin bracket that contains the cursor.
+* extend the default jumpToBracket command.
+* <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>\</kbd>jump to the begin bracket that contains the cursor. Press the shortcut again jump to the end bracket.
 
 ## Requirements
 
