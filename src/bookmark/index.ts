@@ -442,9 +442,9 @@ export class BookmarkExt {
         }
 
         if (path.indexOf(vscode.workspace.rootPath) === 0) {
-            return path.split(vscode.workspace.rootPath).pop();
+            return "$(tag) " + path.split(vscode.workspace.rootPath).pop();
         } else {
-            return "$(file-directory) " + path;
+            return "$(link) " + path;
         }
     }
 
@@ -755,8 +755,8 @@ export class BookmarkExt {
             // tslint:disable-next-line:prefer-for-of
             for (let index = 0; index < this.bookmarks.activeBookmark.bookmarks.length; index++) {
                 let element = this.bookmarks.activeBookmark.bookmarks[index] + 1;
-
                 let lineText = vscode.window.activeTextEditor.document.lineAt(element - 1).text;
+
                 items.push(new BookmarkItem(element.toString(), lineText));
             }
 
@@ -844,10 +844,10 @@ export class BookmarkExt {
                                 if (a.detail && !b.detail) {
                                     return 1;
                                 } else {
-                                    if ((a.detail.toString().indexOf("$(file-directory) ") === 0) && (b.detail.toString().indexOf("$(file-directory) ") === -1)) {
+                                    if ((a.detail.toString().indexOf("$(link) ") === 0) && (b.detail.toString().indexOf("$(link) ") === -1)) {
                                         return 1;
                                     } else {
-                                        if ((a.detail.toString().indexOf("$(file-directory) ") === -1) && (b.detail.toString().indexOf("$(file-directory) ") === 0)) {
+                                        if ((a.detail.toString().indexOf("$(link) ") === -1) && (b.detail.toString().indexOf("$(link) ") === 0)) {
                                             return -1;
                                         } else {
                                             return 0;
@@ -866,8 +866,20 @@ export class BookmarkExt {
                     );
                     items.push(
                         new BookmarkItem('cc',
-                            'clear all bookmarks',
+                            'clear all bookmarks in workspace',
                             null, 'metaGo.bookmark.clear'
+                        )
+                    );
+                    items.push(
+                        new BookmarkItem('p',
+                            'jump to previous bookmark',
+                            null, 'metaGo.bookmark.jumpToPrevious'
+                        )
+                    );
+                    items.push(
+                        new BookmarkItem('n',
+                            'jump to previous bookmark',
+                            null, 'metaGo.bookmark.jumpToNext'
                         )
                     );
 
@@ -876,13 +888,16 @@ export class BookmarkExt {
                         matchOnDescription: true,
                         onDidSelectItem: (item: BookmarkItem) => {
                             let filePath: string;
+                            if (item.commandId) return;
                             // no detail - previously active document
                             if (!item.detail) {
                                 filePath = activeTextEditorPath;
                             } else {
                                 // with icon - document outside project
-                                if (item.detail.toString().indexOf("$(file-directory) ") === 0) {
-                                    filePath = item.detail.toString().split("$(file-directory) ").pop();
+                                if (item.detail.toString().indexOf("$(link) ") === 0) {
+                                    filePath = item.detail.toString().split("$(link) ").pop();
+                                } else if (item.detail.toString().indexOf("$(tag) ") === 0) {// no icon - document inside project
+                                    filePath = vscode.workspace.rootPath + item.detail.toString().split("$(tag) ").pop();
                                 } else {// no icon - document inside project
                                     filePath = vscode.workspace.rootPath + item.detail.toString();
                                 }
@@ -922,7 +937,6 @@ export class BookmarkExt {
                         if (selection.commandId) {
                             vscode.commands.executeCommand(selection.commandId);
                             return;
-
                         } else {
                             if (!selection.detail) {
                                 this.revealLine(parseInt(selection.label, 10) - 1);
