@@ -186,9 +186,9 @@ export class BookmarkExt {
     }
 
     private loadWorkspaceState(): boolean {
-        let saveBookmarksInProject: boolean = vscode.workspace.getConfiguration("bookmarks").get("saveBookmarksInProject", false);
+        let saveBookmarksInProject: boolean = this.config.saveBookmarksInProject;
 
-        this.bookmarks = new Bookmarks("", this.config);
+        this.bookmarks = new Bookmarks();
 
         if (vscode.workspace.rootPath && saveBookmarksInProject) {
             let bookmarksFileInProject: string = path.join(vscode.workspace.rootPath, ".vscode", "bookmarks.json");
@@ -203,7 +203,7 @@ export class BookmarkExt {
                 return false;
             }
         } else {
-            let savedBookmarks = this.context.workspaceState.get("this.bookmarks", "");
+            let savedBookmarks = this.context.workspaceState.get("bookmarks", "");
             if (savedBookmarks !== "") {
                 this.bookmarks.loadFrom(JSON.parse(savedBookmarks));
             }
@@ -212,10 +212,10 @@ export class BookmarkExt {
     }
 
     private saveWorkspaceState(): void {
-        let saveBookmarksInProject: boolean = vscode.workspace.getConfiguration("bookmarks").get("saveBookmarksInProject", false);
+        let saveBookmarksInProject: boolean = this.config.saveBookmarksInProject;
 
         if (vscode.workspace.rootPath && saveBookmarksInProject) {
-            let bookmarksFileInProject: string = path.join(vscode.workspace.rootPath, ".vscode", "this.bookmarks.json");
+            let bookmarksFileInProject: string = path.join(vscode.workspace.rootPath, ".vscode", "bookmarks.json");
             if (!fs.existsSync(path.dirname(bookmarksFileInProject))) {
                 fs.mkdirSync(path.dirname(bookmarksFileInProject));
             }

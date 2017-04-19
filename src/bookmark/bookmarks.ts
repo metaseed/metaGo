@@ -14,7 +14,7 @@ export class Bookmarks {
     public bookmarks: Bookmark[];
     public activeBookmark: Bookmark = undefined;
 
-    constructor(jsonObject, private config: BookmarkConfig) {
+    constructor() {
         this.bookmarks = [];
     }
 
@@ -33,7 +33,6 @@ export class Bookmarks {
 
             // each bookmark (line)
             this.add(jsonBookmark.fsPath);
-            // for (let index = 0; index < jsonBookmark.bookmarks.length; index++) {
             for (let element of jsonBookmark.bookmarks) {
                 this.bookmarks[idx].bookmarks.push(element); // jsonBookmark.bookmarks[index]);
             }
@@ -64,7 +63,7 @@ export class Bookmarks {
 
         let existing: Bookmark = this.fromUri(uri);
         if (typeof existing === "undefined") {
-            let bookmark = new Bookmark(uri, this.config);
+            let bookmark = new Bookmark(uri);
             this.bookmarks.push(bookmark);
         }
     }
@@ -168,8 +167,7 @@ export class Bookmarks {
             return book.bookmarks.length > 0;
         }
 
-        let newBookmarks: Bookmarks = new Bookmarks("",this.config);
-        //  newBookmarks.bookmarks = this.bookmarks.filter(isNotEmpty);
+        let newBookmarks: Bookmarks = new Bookmarks();
         newBookmarks.bookmarks = JSON.parse(JSON.stringify(this.bookmarks)).filter(isNotEmpty);
 
         if (!relativePath) {

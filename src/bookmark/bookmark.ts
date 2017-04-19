@@ -19,16 +19,16 @@ export class Bookmark {
     public fsPath: string;
     public bookmarks: number[];
 
-    private navigateThroughAllFiles: boolean;
 
-    constructor(fsPath: string, private config: BookmarkConfig) {
+    constructor(fsPath: string) {
         this.fsPath = fsPath;
         this.bookmarks = [];
-        this.navigateThroughAllFiles = vscode.workspace.getConfiguration("bookmarks").get("navigateThroughAllFiles", true);
 
     }
 
     public nextBookmark(currentLine: number, direction: JUMP_DIRECTION = JUMP_FORWARD) {
+
+        let navigateThroughAllFiles = vscode.workspace.getConfiguration("bookmarks").get("navigateThroughAllFiles", true);
 
         return new Promise((resolve, reject) => {
 
@@ -39,7 +39,7 @@ export class Bookmark {
 
 
             if (this.bookmarks.length === 0) {
-                if (this.navigateThroughAllFiles) {
+                if (navigateThroughAllFiles) {
                     resolve(NO_BOOKMARKS);
                     return;
                 } else {
@@ -51,9 +51,7 @@ export class Bookmark {
             let nextBookmark: number;
 
             if (direction === JUMP_FORWARD) {
-                // for (let index = 0; index < this.bookmarks.length; index++) {
                 for (let element of this.bookmarks) {
-                    // let element = this.bookmarks[ index ];
                     if (element > currentLine) {
                         nextBookmark = element;
                         break;
@@ -61,7 +59,7 @@ export class Bookmark {
                 }
 
                 if (typeof nextBookmark === "undefined") {
-                    if (this.navigateThroughAllFiles) {
+                    if (navigateThroughAllFiles) {
                         resolve(NO_MORE_BOOKMARKS);
                         return;
                     } else {
@@ -81,7 +79,7 @@ export class Bookmark {
                     }
                 }
                 if (typeof nextBookmark === "undefined") {
-                    if (this.navigateThroughAllFiles) {
+                    if (navigateThroughAllFiles) {
                         resolve(NO_MORE_BOOKMARKS);
                         return;
                     } else {
