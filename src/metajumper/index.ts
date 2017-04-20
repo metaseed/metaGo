@@ -170,7 +170,9 @@ export class MetaJumper {
                     });
             });
         } else {
-            return Promise.reject(new Error('metago: reinvoke goto command'));
+            return new Promise<DecorationModel>((resolve, reject) => {
+                reject('metago: reinvoke goto command');
+            });
         }
     }
     private jump = (jumped: (editor: vscode.TextEditor, model: DecorationModel) => void): Promise<void> => {
