@@ -251,16 +251,16 @@ export class MetaJumper {
                         else {
                             this.prepareForJumpTo(editor, this.decorationModels).then((model) => {
                                 resolve(model);
-                            }).catch(() => {
-                                reject();
+                            }).catch((e) => {
+                                reject(e);
                             });
                         }
                     })
-                    .catch(() => reject());
+                    .catch((e) => reject(e));
 
             })
-            .catch(() => {
-                reject();
+            .catch((e) => {
+                reject(e);
             });
 
         return firstInlineInput;

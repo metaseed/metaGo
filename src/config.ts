@@ -7,35 +7,41 @@ export class Config {
     bookmark = new BookmarkConfig();
 
     loadConfig = () => {
-        this.bookmark.loadConfig();
-        let config = vscode.workspace.getConfiguration("metaGo");
+        try {
+            this.bookmark.loadConfig();
+            let config = vscode.workspace.getConfiguration("metaGo");
 
-        this.decoration.bgColor = config.get<string>("decoration.backgroundColor");
-        this.decoration.bgOpacity = config.get<string>("decoration.backgroundOpacity");
+            this.decoration.bgColor = config.get<string>("decoration.backgroundColor", this.decoration.bgColor);
+            this.decoration.bgOpacity = config.get<string>("decoration.backgroundOpacity", this.decoration.bgOpacity);
 
-        this.decoration.color = config.get<string>("decoration.color");
-        this.decoration.borderColor = config.get<string>("decoration.borderColor");
+            this.decoration.color = config.get<string>("decoration.color", this.decoration.color);
+            this.decoration.borderColor = config.get<string>("decoration.borderColor", this.decoration.borderColor);
 
-        this.decoration.width = config.get<number>("decoration.width");
-        this.decoration.height = config.get<number>("decoration.height");
+            this.decoration.width = config.get<number>("decoration.width", this.decoration.width);
+            this.decoration.height = config.get<number>("decoration.height", this.decoration.height);
 
-        this.decoration.x = config.get<number>("decoration.x");
-        this.decoration.y = config.get<number>("decoration.y");
+            this.decoration.x = config.get<number>("decoration.x", this.decoration.x);
+            this.decoration.y = config.get<number>("decoration.y", this.decoration.y);
 
-        this.decoration.fontSize = config.get<number>("decoration.fontSize");
-        this.decoration.fontWeight = config.get<string>("decoration.fontWeight");
-        this.decoration.fontFamily = config.get<string>("decoration.fontFamily");
-        this.decoration.upperCase = config.get<boolean>("decoration.upperCase");
-        this.jumper.characters = config.get<string>("decoration.characters").split(/[\s,]+/);
+            this.decoration.fontSize = config.get<number>("decoration.fontSize", this.decoration.fontSize);
+            this.decoration.fontWeight = config.get<string>("decoration.fontWeight", this.decoration.fontWeight);
+            this.decoration.fontFamily = config.get<string>("decoration.fontFamily", this.decoration.fontFamily);
+            this.decoration.upperCase = config.get<boolean>("decoration.upperCase", this.decoration.upperCase);
+            this.jumper.characters = config.get<string>("decoration.characters", "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z").split(/[\s,]+/);
 
-        this.jumper.findAllMode = config.get<string>("jumper.findAllMode");
-        this.jumper.findInSelection = config.get<string>("jumper.findInSelection");
-        this.jumper.wordSeparatorPattern = config.get<string>("jumper.wordSeparatorPattern");
-        this.jumper.range = config.get<number>("jumper.screenLineRange");
-        this.jumper.targetIgnoreCase = config.get<boolean>("jumper.targetIgnoreCase");
-        let timeout = config.get<number>("jumper.timeout");
-        this.jumper.timeout = isNaN(timeout) ? 12000 : timeout * 1000;
+            this.jumper.findAllMode = config.get<string>("jumper.findAllMode", this.jumper.findAllMode);
+            this.jumper.findInSelection = config.get<string>("jumper.findInSelection", this.jumper.findInSelection);
+            this.jumper.wordSeparatorPattern = config.get<string>("jumper.wordSeparatorPattern", this.jumper.wordSeparatorPattern);
+            this.jumper.range = config.get<number>("jumper.screenLineRange", this.jumper.range);
+            this.jumper.targetIgnoreCase = config.get<boolean>("jumper.targetIgnoreCase", this.jumper.targetIgnoreCase);
+            let timeout = config.get<number>("jumper.timeout", this.jumper.timeout);
+            this.jumper.timeout = isNaN(timeout) ? 12000 : timeout * 1000;
+        }
+        catch (e) {
+            vscode.window.showErrorMessage('metaGo: please double check your metaGo config->' + e);
+        }
     }
+
 }
 
 class DecoratorConfig {
@@ -64,5 +70,5 @@ class FinderConfig {
     wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";
     range: number = 50;
     targetIgnoreCase: boolean = false;
-    timeout: number = 12;
+    timeout: number = 12000;
 }
