@@ -1,3 +1,10 @@
 {
-	"bookmarks": []
+	"bookmarks": [
+		{
+			"fsPath": "$ROOTPATH$\\src\\blank-line-jumper.ts",
+			"bookmarks": [
+				36
+			]
+		}
+	]
 }
