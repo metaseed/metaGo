@@ -5,17 +5,36 @@
 //         let disposable = vscode.commands.registerCommand('metaGo.cursorUp', () => {
 //             const editor = vscode.window.activeTextEditor;
 //             const lineN = editor.selection.active.line;
+//             if (lineN === 0) return;
+
 //             let line = editor.document.lineAt(lineN);
-//             line.text
-//             const selection = editor.selection;
-//             let anchor = Utilities.anchorPosition(selection);
-//             if (selection.isEmpty)
-//                 anchor = new vscode.Position(anchor.line + 1, 0);
-//             const toLine = line >= 0 ? line : 0;
-//             editor.selection = new vscode.Selection(
-//                 anchor,
-//                 new vscode.Position(toLine, 0));
-//             editor.revealRange(new vscode.Range(editor.selection.start, editor.selection.end));
+//             if (line.isEmptyOrWhitespace) {
+//                 vscode.commands.executeCommand('cursorUp');
+//                 return;
+//             }
+//             let startChar = line.firstNonWhitespaceCharacterIndex;
+//             let currentChar = editor.selection.active.character;
+//             let executeCommand = false;
+//             if (currentChar === startChar) {
+//                 executeCommand = true;
+//             } else {
+//                 let endChar = line.text.length - 1;
+//                 while (endChar > 0 && (line.text[endChar] === ' ' || line.text[endChar] === '\t')) {
+//                     --endChar;
+//                 }
+//                 if (currentChar === endChar + 1) {
+//                     executeCommand = true;
+//                 }
+//             }
+
+//             if (!executeCommand) {
+//                 vscode.commands.executeCommand('cursorUp');
+//                 return;
+//             }
+
+//             let lastLine = editor.document.lineAt(lineN - 1);
+//             if (currentChar < lastLine.firstNonWhitespaceCharacterIndex)
+
 
 //         });
 

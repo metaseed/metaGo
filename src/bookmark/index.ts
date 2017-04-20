@@ -212,6 +212,10 @@ export class BookmarkExt {
     }
 
     private saveWorkspaceState(): void {
+        if (this.bookmarks.bookmarks.length === 0) {
+            return;
+        }
+
         let saveBookmarksInProject: boolean = this.config.saveBookmarksInProject;
 
         if (vscode.workspace.rootPath && saveBookmarksInProject) {
