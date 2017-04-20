@@ -64,7 +64,7 @@ export class MetaJumper {
             }
             catch (err) {
                 this.cancel();
-                console.log("metago:" + err);
+                console.log("metago:" + err.message + err.stack);
             }
 
         }));
@@ -169,6 +169,8 @@ export class MetaJumper {
                         reject();
                     });
             });
+        } else {
+            return Promise.reject(new Error('metago: reinvoke goto command'));
         }
     }
     private jump = (jumped: (editor: vscode.TextEditor, model: DecorationModel) => void): Promise<void> => {
@@ -183,7 +185,7 @@ export class MetaJumper {
             let msg = this.isSelectionMode ? "metaGo: Type to Select" : "metaGo: Type To Jump"
             let messageDisposable = vscode.window.setStatusBarMessage(msg);
             const promise = new Promise<DecorationModel>((resolve, reject) => {
-                this.getFirstInput(editor, resolve, reject)
+                return this.getFirstInput(editor, resolve, reject)
             })
                 .then((model: DecorationModel) => {
                     jumped(editor, model);
