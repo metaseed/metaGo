@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import fs = require("fs");
-import { Bookmark, JUMP_DIRECTION, JUMP_FORWARD, NO_MORE_BOOKMARKS } from "./Bookmark";
+import { Bookmark, JUMP_DIRECTION, JUMP_FORWARD, NO_MORE_BOOKMARKS } from "./bookmark";
 import { BookmarkConfig } from './config';
 
 export class Bookmarks {
