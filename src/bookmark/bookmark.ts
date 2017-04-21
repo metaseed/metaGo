@@ -14,11 +14,14 @@ export class BookmarkItem {
         public commandId?: string) { }
 }
 
+export class BookmarkLocation {
+    constructor(public line: number, public char: number) { }
+}
+
 export class Bookmark {
 
     public fsPath: string;
-    public bookmarks: number[];
-
+    public bookmarks: BookmarkLocation[];
 
     constructor(fsPath: string) {
         this.fsPath = fsPath;
@@ -28,7 +31,8 @@ export class Bookmark {
 
     public nextBookmark(currentLine: number, direction: JUMP_DIRECTION = JUMP_FORWARD) {
 
-        let navigateThroughAllFiles = vscode.workspace.getConfiguration("bookmarks").get("navigateThroughAllFiles", true);
+        let navigateThroughAllFiles = vscode.workspace.getConfiguration("metaGo")
+            .get("bookmark.navigateThroughAllFiles", true);
 
         return new Promise((resolve, reject) => {
 
@@ -36,7 +40,6 @@ export class Bookmark {
                 reject('typeof this.bookmarks == "undefined"');
                 return;
             }
-
 
             if (this.bookmarks.length === 0) {
                 if (navigateThroughAllFiles) {
@@ -51,9 +54,9 @@ export class Bookmark {
             let nextBookmark: number;
 
             if (direction === JUMP_FORWARD) {
-                for (let element of this.bookmarks) {
-                    if (element > currentLine) {
-                        nextBookmark = element;
+                for (let location of this.bookmarks) {
+                    if (location.line > currentLine) {
+                        nextBookmark = location.line;
                         break;
                     }
                 }
@@ -63,7 +66,7 @@ export class Bookmark {
                         resolve(NO_MORE_BOOKMARKS);
                         return;
                     } else {
-                        resolve(this.bookmarks[0]);
+                        resolve(this.bookmarks[0].line);
                         return;
                     }
                 } else {
@@ -71,10 +74,10 @@ export class Bookmark {
                     return;
                 }
             } else { // JUMP_BACKWARD
-                for (let index = this.bookmarks.length; index >= 0; index--) {
-                    let element = this.bookmarks[index];
-                    if (element < currentLine) {
-                        nextBookmark = element;
+                for (let index = this.bookmarks.length - 1; index >= 0; --index) {
+                    let location = this.bookmarks[index];
+                    if (location.line < currentLine) {
+                        nextBookmark = location.line;
                         break;
                     }
                 }
@@ -83,7 +86,7 @@ export class Bookmark {
                         resolve(NO_MORE_BOOKMARKS);
                         return;
                     } else {
-                        resolve(this.bookmarks[this.bookmarks.length - 1]);
+                        resolve(this.bookmarks[this.bookmarks.length - 1].line);
                         return;
                     }
                 } else {
@@ -117,7 +120,7 @@ export class Bookmark {
                 let invalids = [];
                 // tslint:disable-next-line:prefer-for-of
                 for (let index = 0; index < this.bookmarks.length; index++) {
-                    let element = this.bookmarks[index] + 1;
+                    let element = this.bookmarks[index].line + 1;
                     // check for 'invalidated' bookmarks, when its outside the document length
                     if (element <= doc.lineCount) {
                         let lineText = doc.lineAt(element - 1).text;
@@ -135,7 +138,7 @@ export class Bookmark {
                     let idxInvalid: number;
                     // tslint:disable-next-line:prefer-for-of
                     for (let indexI = 0; indexI < invalids.length; indexI++) {
-                        idxInvalid = this.bookmarks.indexOf(invalids[indexI] - 1);
+                        idxInvalid = this.bookmarks.findIndex((i) => i.line === (invalids[indexI] - 1));
                         this.bookmarks.splice(idxInvalid, 1);
                     }
                 }

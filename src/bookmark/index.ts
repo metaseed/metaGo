@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import fs = require("fs");
 import path = require("path");
 
-import { JUMP_BACKWARD, JUMP_DIRECTION, JUMP_FORWARD, NO_BOOKMARKS, NO_MORE_BOOKMARKS } from "./bookmark";
+import { JUMP_BACKWARD, JUMP_DIRECTION, JUMP_FORWARD, NO_BOOKMARKS, NO_MORE_BOOKMARKS, BookmarkLocation } from "./bookmark";
 import { Bookmarks } from "./bookmarks";
 import { BookmarkConfig } from './config';
 import { BookmarkItem } from './bookmark';
@@ -115,14 +115,14 @@ export class BookmarkExt {
         } else {
             let invalids = [];
             // for (let index = 0; index < this.bookmarks.activeBookmark.bookmarks.length; index++) {
-            for (let element of this.bookmarks.activeBookmark.bookmarks) {
+            for (let location of this.bookmarks.activeBookmark.bookmarks) {
                 // let element = this.bookmarks.activeBookmark.bookmarks.index];
 
-                if (element <= activeEditor.document.lineCount) {
-                    let decoration = new vscode.Range(element, 0, element, 0);
+                if (location.line <= activeEditor.document.lineCount) {
+                    let decoration = new vscode.Range(location.line, 0, location.line, 0);
                     books.push(decoration);
                 } else {
-                    invalids.push(element);
+                    invalids.push(location);
                 }
             }
 
@@ -241,12 +241,8 @@ export class BookmarkExt {
             return true;
         } else { // has 2, but is it a trimAutoWhitespace issue?
             if (event.contentChanges.length === 2) {
-                let trimAutoWhitespace: boolean = vscode.workspace.getConfiguration("editor").get("trimAutoWhitespace", true);
-                if (!trimAutoWhitespace) {
-                    return false;
-                }
 
-                // check if the first range is 'equal' and if the second is 'empty'
+                // check if the first range is 'equal' and if the second is 'empty', do trim
                 let fistRangeEquals: boolean =
                     (event.contentChanges[0].range.start.character === event.contentChanges[0].range.end.character) &&
                     (event.contentChanges[0].range.start.line === event.contentChanges[0].range.end.line);
@@ -263,11 +259,6 @@ export class BookmarkExt {
 
     // function used to attach this.bookmarks.at the line
     private stickyBookmarks(event): boolean {
-        // sticky is now the default/only behavior
-        // let useStickyBookmarks: boolean = vscode.workspace.getConfiguration("this.bookmarks.).get("useStickyBookmarks", false);
-        // if (!useStickyBookmarks) {
-        //     return false;
-        // }
 
         let diffLine: number;
         let updatedBookmark: boolean = false;
@@ -327,12 +318,12 @@ export class BookmarkExt {
                         ((this.bookmarks.activeBookmark.bookmarks[index] > eventLine) && (eventCharacter > 0)) ||
                         ((this.bookmarks.activeBookmark.bookmarks[index] >= eventLine) && (eventCharacter === 0))
                     ) {
-                        let newLine = this.bookmarks.activeBookmark.bookmarks[index] + diffLine;
+                        let newLine = this.bookmarks.activeBookmark.bookmarks[index].line + diffLine;
                         if (newLine < 0) {
                             newLine = 0;
                         }
 
-                        this.bookmarks.activeBookmark.bookmarks[index] = newLine;
+                        this.bookmarks.activeBookmark.bookmarks[index].line = newLine;
                         updatedBookmark = true;
                     }
                 }
@@ -397,7 +388,7 @@ export class BookmarkExt {
         if (direction === "up") {
             diffLine = 1;
 
-            let index = this.bookmarks.activeBookmark.bookmarks.indexOf(lineMin - 1);
+            let index = this.bookmarks.activeBookmark.bookmarks.findIndex((l) => l.line === lineMin - 1);
             if (index > -1) {
                 diffChange = lineMax;
                 this.bookmarks.activeBookmark.bookmarks.splice(index, 1);
@@ -425,15 +416,15 @@ export class BookmarkExt {
         }
 
         for (let i in lineRange) {
-            let index = this.bookmarks.activeBookmark.bookmarks.indexOf(lineRange[i]);
+            let index = this.bookmarks.activeBookmark.bookmarks.findIndex((l) => l.line === lineRange[i]);
             if (index > -1) {
-                this.bookmarks.activeBookmark.bookmarks[index] -= diffLine;
+                this.bookmarks.activeBookmark.bookmarks[index].line -= diffLine;
                 updatedBookmark = true;
             }
         }
 
         if (diffChange > -1) {
-            this.bookmarks.activeBookmark.bookmarks.push(diffChange);
+            this.bookmarks.activeBookmark.bookmarks.push(new BookmarkLocation(diffChange, 0));
             updatedBookmark = true;
         }
 
@@ -574,13 +565,13 @@ export class BookmarkExt {
             this.updateDecorations();
         });
 
-        function selectLines(editor: vscode.TextEditor, lines: number[]): void {
+        function selectLines(editor: vscode.TextEditor, lines: BookmarkLocation[]): void {
             const doc = editor.document;
             editor.selections.shift();
             let selections = new Array<vscode.Selection>();
             let newSe;
             lines.forEach(line => {
-                newSe = new vscode.Selection(line, 0, line, doc.lineAt(line).text.length);
+                newSe = new vscode.Selection(line.line, 0, line.line, doc.lineAt(line.line).text.length);
                 selections.push(newSe);
             });
             editor.selections = selections;
@@ -616,9 +607,9 @@ export class BookmarkExt {
                 this.bookmarks.activeBookmark = this.bookmarks.fromUri(vscode.window.activeTextEditor.document.uri.fsPath);
             }
 
-            let index = this.bookmarks.activeBookmark.bookmarks.indexOf(line);
+            let index = this.bookmarks.activeBookmark.bookmarks.findIndex((l) => l.line === line);
             if (index < 0) {
-                this.bookmarks.activeBookmark.bookmarks.push(line);
+                this.bookmarks.activeBookmark.bookmarks.push(new BookmarkLocation(line, 0));
             } else {
                 this.bookmarks.activeBookmark.bookmarks.splice(index, 1);
             }
@@ -666,11 +657,11 @@ export class BookmarkExt {
                                 // same document?
                                 let activeDocument = Bookmarks.normalize(vscode.window.activeTextEditor.document.uri.fsPath);
                                 if (nextDocument.toString() === activeDocument) {
-                                    this.revealLine(this.bookmarks.activeBookmark.bookmarks[0]);
+                                    this.revealLine(this.bookmarks.activeBookmark.bookmarks[0].line);
                                 } else {
                                     vscode.workspace.openTextDocument(nextDocument.toString()).then(doc => {
                                         vscode.window.showTextDocument(doc).then(editor => {
-                                            this.revealLine(this.bookmarks.activeBookmark.bookmarks[0]);
+                                            this.revealLine(this.bookmarks.activeBookmark.bookmarks[0].line);
                                         });
                                     });
                                 }
@@ -758,7 +749,7 @@ export class BookmarkExt {
             let items: vscode.QuickPickItem[] = [];
             // tslint:disable-next-line:prefer-for-of
             for (let index = 0; index < this.bookmarks.activeBookmark.bookmarks.length; index++) {
-                let element = this.bookmarks.activeBookmark.bookmarks[index] + 1;
+                let element = this.bookmarks.activeBookmark.bookmarks[index].line + 1;
                 let lineText = vscode.window.activeTextEditor.document.lineAt(element - 1).text;
 
                 items.push(new BookmarkItem(element.toString(), lineText));
@@ -874,15 +865,15 @@ export class BookmarkExt {
                             null, 'metaGo.bookmark.clear'
                         )
                     );
-                    items.push(
+                    items.splice(0, 0,
                         new BookmarkItem('p',
                             'jump to previous bookmark',
                             null, 'metaGo.bookmark.jumpToPrevious'
                         )
                     );
-                    items.push(
+                    items.splice(0, 0,
                         new BookmarkItem('n',
-                            'jump to previous bookmark',
+                            'jump to next bookmark',
                             null, 'metaGo.bookmark.jumpToNext'
                         )
                     );

@@ -1,14 +1,13 @@
 import * as vscode from "vscode";
 
 export class BookmarkConfig {
-    pathIcon:string;
-    saveBookmarksInProject:boolean;
+    pathIcon: string;
+    saveBookmarksInProject: boolean;
 
-    loadConfig(){
+    loadConfig() {
         let config = vscode.workspace.getConfiguration("metaGo");
-        let bookmark = vscode.workspace.getConfiguration("bookmark");
-        this.pathIcon = bookmark.get("gutterIconPath", "");
-        this.saveBookmarksInProject = bookmark.get<boolean>('saveBookmarksInProject', true);
+        this.pathIcon = config.get("bookmark.gutterIconPath", "");
+        this.saveBookmarksInProject = config.get<boolean>('bookmark.saveBookmarksInProject', true);
 
     }
 }
