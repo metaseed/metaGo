@@ -19,6 +19,10 @@ export class BookmarkPosition {
     public static NO_BOOKMARKS = new BookmarkPosition(-1, 0);
     constructor(public line: number, public char: number) { }
 
+    static GetFrom(position: vscode.Position) {
+        return new BookmarkPosition(position.line, position.character);
+    }
+
     getPosition(): vscode.Position {
         return new vscode.Position(this.line, this.char);
     }
@@ -37,17 +41,18 @@ export class Bookmark {
 
     public nextBookmark(position: vscode.Position,
         direction: JUMP_DIRECTION = JUMP_FORWARD): Promise<BookmarkPosition> {
+
         let navigateThroughAllFiles = vscode.workspace.getConfiguration("metaGo")
             .get("bookmark.navigateThroughAllFiles", true);
-
         let currentLine: number = position.line;
+
         return new Promise((resolve, reject) => {
             if (this.bookmarks.length === 0) {
                 if (navigateThroughAllFiles) {
                     resolve(BookmarkPosition.NO_BOOKMARKS);
                     return;
                 } else {
-                    resolve(new BookmarkPosition(currentLine, 0));
+                    resolve(BookmarkPosition.GetFrom(position));
                     return;
                 }
             }

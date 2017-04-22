@@ -192,9 +192,11 @@ export class BookmarkExt {
 
         if (vscode.workspace.rootPath && saveBookmarksInProject) {
             let bookmarksFileInProject: string = path.join(vscode.workspace.rootPath, ".vscode", "bookmarks.json");
+
             if (!fs.existsSync(bookmarksFileInProject)) {
                 return false;
             }
+
             try {
                 this.bookmarks.loadFrom(JSON.parse(fs.readFileSync(bookmarksFileInProject).toString()), true);
                 return true;
@@ -204,6 +206,7 @@ export class BookmarkExt {
             }
         } else {
             let savedBookmarks = this.context.workspaceState.get("bookmarks", "");
+
             if (savedBookmarks !== "") {
                 this.bookmarks.loadFrom(JSON.parse(savedBookmarks));
             }

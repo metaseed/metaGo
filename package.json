@@ -279,7 +279,7 @@
                 },
                 "metaGo.bookmark.saveBookmarksInProject": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Allow bookmarks to be saved (and restored) locally in the opened Project/Folder instead of VS Code"
                 },
                 "metaGo.bookmark.gutterIconPath": {
