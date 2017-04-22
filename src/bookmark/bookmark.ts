@@ -2,26 +2,32 @@ import * as vscode from "vscode";
 import fs = require("fs");
 
 import { BookmarkConfig } from './config';
-export const NO_BOOKMARKS = -1;
-export const NO_MORE_BOOKMARKS = -2;
 
 export const JUMP_FORWARD = 1;
 export const JUMP_BACKWARD = -1;
 export enum JUMP_DIRECTION { JUMP_FORWARD, JUMP_BACKWARD };
 
 export class BookmarkItem {
-    constructor(public label: string, public description: string, public detail?: string,
-        public commandId?: string) { }
+    constructor(public label: string, public description: string,
+        public detail?: string,
+        public commandId?: string,
+        public location?: BookmarkPosition) { }
 }
 
-export class BookmarkLocation {
+export class BookmarkPosition {
+    public static NO_MORE_BOOKMARKS = new BookmarkPosition(-2, 0);
+    public static NO_BOOKMARKS = new BookmarkPosition(-1, 0);
     constructor(public line: number, public char: number) { }
+
+    getPosition(): vscode.Position {
+        return new vscode.Position(this.line, this.char);
+    }
 }
 
 export class Bookmark {
 
     public fsPath: string;
-    public bookmarks: BookmarkLocation[];
+    public bookmarks: BookmarkPosition[];
 
     constructor(fsPath: string) {
         this.fsPath = fsPath;
@@ -29,44 +35,39 @@ export class Bookmark {
 
     }
 
-    public nextBookmark(currentLine: number, direction: JUMP_DIRECTION = JUMP_FORWARD) {
-
+    public nextBookmark(position: vscode.Position,
+        direction: JUMP_DIRECTION = JUMP_FORWARD): Promise<BookmarkPosition> {
         let navigateThroughAllFiles = vscode.workspace.getConfiguration("metaGo")
             .get("bookmark.navigateThroughAllFiles", true);
 
+        let currentLine: number = position.line;
         return new Promise((resolve, reject) => {
-
-            if (typeof this.bookmarks === "undefined") {
-                reject('typeof this.bookmarks == "undefined"');
-                return;
-            }
-
             if (this.bookmarks.length === 0) {
                 if (navigateThroughAllFiles) {
-                    resolve(NO_BOOKMARKS);
+                    resolve(BookmarkPosition.NO_BOOKMARKS);
                     return;
                 } else {
-                    resolve(currentLine);
+                    resolve(new BookmarkPosition(currentLine, 0));
                     return;
                 }
             }
 
-            let nextBookmark: number;
+            let nextBookmark: BookmarkPosition;
 
             if (direction === JUMP_FORWARD) {
                 for (let location of this.bookmarks) {
                     if (location.line > currentLine) {
-                        nextBookmark = location.line;
+                        nextBookmark = location;
                         break;
                     }
                 }
 
                 if (typeof nextBookmark === "undefined") {
                     if (navigateThroughAllFiles) {
-                        resolve(NO_MORE_BOOKMARKS);
+                        resolve(BookmarkPosition.NO_MORE_BOOKMARKS);
                         return;
                     } else {
-                        resolve(this.bookmarks[0].line);
+                        resolve(this.bookmarks[0]);
                         return;
                     }
                 } else {
@@ -77,16 +78,16 @@ export class Bookmark {
                 for (let index = this.bookmarks.length - 1; index >= 0; --index) {
                     let location = this.bookmarks[index];
                     if (location.line < currentLine) {
-                        nextBookmark = location.line;
+                        nextBookmark = location;
                         break;
                     }
                 }
                 if (typeof nextBookmark === "undefined") {
                     if (navigateThroughAllFiles) {
-                        resolve(NO_MORE_BOOKMARKS);
+                        resolve(BookmarkPosition.NO_MORE_BOOKMARKS);
                         return;
                     } else {
-                        resolve(this.bookmarks[this.bookmarks.length - 1].line);
+                        resolve(this.bookmarks[this.bookmarks.length - 1]);
                         return;
                     }
                 } else {
@@ -97,10 +98,8 @@ export class Bookmark {
         });
     }
 
-    public listBookmarks() {
-
+    public listBookmarks(): Promise<Array<BookmarkItem>> {
         return new Promise((resolve, reject) => {
-
             // no bookmark, returns empty
             if (this.bookmarks.length === 0) {
                 resolve({});
@@ -115,23 +114,23 @@ export class Bookmark {
 
             let uriDocBookmark: vscode.Uri = vscode.Uri.file(this.fsPath);
             vscode.workspace.openTextDocument(uriDocBookmark).then(doc => {
-
                 let items = [];
                 let invalids = [];
+
                 // tslint:disable-next-line:prefer-for-of
                 for (let index = 0; index < this.bookmarks.length; index++) {
-                    let element = this.bookmarks[index].line + 1;
+                    let lineNumber = this.bookmarks[index].line + 1;
                     // check for 'invalidated' bookmarks, when its outside the document length
-                    if (element <= doc.lineCount) {
-                        let lineText = doc.lineAt(element - 1).text;
+                    if (lineNumber <= doc.lineCount) {
+                        let lineText = doc.lineAt(lineNumber - 1).text;
                         let normalizedPath = doc.uri.fsPath;
                         items.push(new BookmarkItem(
-                            element.toString(),
+                            lineNumber.toString(),
                             lineText,
-                            normalizedPath
+                            normalizedPath, null, this.bookmarks[index]
                         ));
                     } else {
-                        invalids.push(element);
+                        invalids.push(lineNumber);
                     }
                 }
                 if (invalids.length > 0) {

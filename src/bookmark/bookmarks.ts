@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import fs = require("fs");
-import { Bookmark, JUMP_DIRECTION, JUMP_FORWARD, NO_MORE_BOOKMARKS } from "./bookmark";
+import { Bookmark, JUMP_DIRECTION, JUMP_FORWARD } from "./bookmark";
 import { BookmarkConfig } from './config';
 
 export class Bookmarks {
@@ -47,10 +47,7 @@ export class Bookmarks {
 
     public fromUri(uri: string) {
         uri = Bookmarks.normalize(uri);
-        // for (let index = 0; index < this.bookmarks.length; index++) {
         for (let element of this.bookmarks) {
-            // let element = this.bookmarks[index];
-
             if (element.fsPath === uri) {
                 return element;
             }
@@ -68,36 +65,35 @@ export class Bookmarks {
         }
     }
 
-    public nextDocumentWithBookmarks(active: Bookmark, direction: JUMP_DIRECTION = JUMP_FORWARD) {
+    public nextDocumentWithBookmarks(active: Bookmark, direction: JUMP_DIRECTION = JUMP_FORWARD): Promise<string> {
 
         let currentBookmark: Bookmark = active;
-        let currentBookmarkId: number;
+        let currentBookmarkIndex: number;
         for (let index = 0; index < this.bookmarks.length; index++) {
             let element = this.bookmarks[index];
             if (element === active) {
-                currentBookmarkId = index;
+                currentBookmarkIndex = index;
             }
         }
 
         return new Promise((resolve, reject) => {
-
             if (direction === JUMP_FORWARD) {
-                currentBookmarkId++;
-                if (currentBookmarkId === this.bookmarks.length) {
-                    currentBookmarkId = 0;
+                currentBookmarkIndex++;
+                if (currentBookmarkIndex === this.bookmarks.length) {
+                    currentBookmarkIndex = 0;
                 }
             } else {
-                currentBookmarkId--;
-                if (currentBookmarkId === -1) {
-                    currentBookmarkId = this.bookmarks.length - 1;
+                currentBookmarkIndex--;
+                if (currentBookmarkIndex === -1) {
+                    currentBookmarkIndex = this.bookmarks.length - 1;
                 }
             }
 
-            currentBookmark = this.bookmarks[currentBookmarkId];
+            currentBookmark = this.bookmarks[currentBookmarkIndex];
 
             if (currentBookmark.bookmarks.length === 0) {
                 if (currentBookmark === this.activeBookmark) {
-                    resolve(NO_MORE_BOOKMARKS);
+                    resolve('');
                     return;
                 } else {
                     this.nextDocumentWithBookmarks(currentBookmark, direction)
@@ -131,8 +127,8 @@ export class Bookmarks {
 
     }
 
-    public nextBookmark(active: Bookmark, currentLine: number) {
-
+    public nextBookmark(active: Bookmark, position: vscode.Position) {
+        let currentLine: number = position.line;
         let currentBookmark: Bookmark = active;
         let currentBookmarkId: number;
         for (let index = 0; index < this.bookmarks.length; index++) {
@@ -143,14 +139,13 @@ export class Bookmarks {
         }
 
         return new Promise((resolve, reject) => {
-
-            currentBookmark.nextBookmark(currentLine)
+            currentBookmark.nextBookmark(position)
                 .then((newLine) => {
                     resolve(newLine);
                     return;
                 })
                 .catch((error) => {
-                    // next document                  
+                    // next document
                     currentBookmarkId++;
                     if (currentBookmarkId === this.bookmarks.length) {
                         currentBookmarkId = 0;
