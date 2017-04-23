@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import fs = require("fs");
 import path = require("path");
 
-import { JUMP_BACKWARD, JUMP_DIRECTION, JUMP_FORWARD, BookmarkPosition } from "./bookmark";
+import { JumpDirection, BookmarkPosition } from "./bookmark";
 import { Bookmarks } from "./bookmarks";
 import { BookmarkConfig } from './config';
 import { BookmarkItem } from './bookmark';
@@ -42,7 +42,6 @@ export class BookmarkExt {
                 clearTimeout(timeout);
             }
             timeout = setTimeout(this.updateDecorations, 100);
-            //        updateDecorations();
         }
         // Connect it to the Editors Events
         let activeEditor = vscode.window.activeTextEditor;
@@ -57,7 +56,6 @@ export class BookmarkExt {
 
         // new docs
         vscode.workspace.onDidOpenTextDocument(doc => {
-            // activeEditorCountLine = doc.lineCount;
             this.bookmarks.add(doc.uri.fsPath);
         });
 
@@ -109,15 +107,13 @@ export class BookmarkExt {
         }
 
         let books: vscode.Range[] = [];
-        // Remove all this.bookmarks.if active file is empty
+        // Remove all bookmarks.if active file is empty
         if (activeEditor.document.lineCount === 1 && activeEditor.document.lineAt(0).text === "") {
             this.bookmarks.activeBookmark.bookmarks = [];
         } else {
             let invalids = [];
-            // for (let index = 0; index < this.bookmarks.activeBookmark.bookmarks.length; index++) {
-            for (let location of this.bookmarks.activeBookmark.bookmarks) {
-                // let element = this.bookmarks.activeBookmark.bookmarks.index];
 
+            for (let location of this.bookmarks.activeBookmark.bookmarks) {
                 if (location.line <= activeEditor.document.lineCount) {
                     let decoration = new vscode.Range(location.line, 0, location.line, 0);
                     books.push(decoration);
@@ -128,7 +124,6 @@ export class BookmarkExt {
 
             if (invalids.length > 0) {
                 let idxInvalid: number;
-                // for (let indexI = 0; indexI < invalids.length; indexI++) {
                 for (const element of invalids) {
                     idxInvalid = this.bookmarks.activeBookmark.bookmarks.indexOf(element); // invalids[indexI]);
                     this.bookmarks.activeBookmark.bookmarks.splice(idxInvalid, 1);
@@ -138,13 +133,13 @@ export class BookmarkExt {
         activeEditor.setDecorations(this.bookmarkDecorationType, books);
     }
 
-    private expandLineRange(editor: vscode.TextEditor, toLine: number, direction: JUMP_DIRECTION) {
+    private expandLineRange(editor: vscode.TextEditor, toLine: number, direction: JumpDirection) {
         const doc = editor.document;
         let newSe: vscode.Selection;
         let actualSelection: vscode.Selection = editor.selection;
 
         // no matter 'the previous selection'. going FORWARD will become 'isReversed = FALSE'
-        if (direction === JUMP_FORWARD) {
+        if (direction === JumpDirection.FORWARD) {
 
             if (actualSelection.isEmpty || !actualSelection.isReversed) {
                 newSe = new vscode.Selection(editor.selection.start.line, editor.selection.start.character, toLine, doc.lineAt(toLine).text.length);
@@ -162,12 +157,12 @@ export class BookmarkExt {
         editor.selection = newSe;
     }
 
-    private shrinkLineRange(editor: vscode.TextEditor, toLine: number, direction: JUMP_DIRECTION) {
+    private shrinkLineRange(editor: vscode.TextEditor, toLine: number, direction: JumpDirection) {
         const doc = editor.document;
         let newSe: vscode.Selection;
 
         // no matter 'the previous selection'. going FORWARD will become 'isReversed = FALSE'
-        if (direction === JUMP_FORWARD) {
+        if (direction === JumpDirection.FORWARD) {
             newSe = new vscode.Selection(editor.selection.end.line, editor.selection.end.character, toLine, 0);
         } else { // going BACKWARD , select to line length
             newSe = new vscode.Selection(editor.selection.start.line, editor.selection.start.character, toLine, doc.lineAt(toLine).text.length);
@@ -468,11 +463,11 @@ export class BookmarkExt {
         }
 
         // which direction?
-        let direction: JUMP_DIRECTION = vscode.window.activeTextEditor.selection.isReversed ? JUMP_FORWARD : JUMP_BACKWARD;
+        let direction: JumpDirection = vscode.window.activeTextEditor.selection.isReversed ? JumpDirection.FORWARD : JumpDirection.BACKWARD;
         let activeSelectionStartLine: number = vscode.window.activeTextEditor.selection.isReversed ? vscode.window.activeTextEditor.selection.end.line : vscode.window.activeTextEditor.selection.start.line;
 
         let pos: vscode.Position;
-        if (direction === JUMP_FORWARD) {
+        if (direction === JumpDirection.FORWARD) {
             pos = vscode.window.activeTextEditor.selection.start;
         } else {
             pos = vscode.window.activeTextEditor.selection.end;
@@ -485,8 +480,8 @@ export class BookmarkExt {
                     return;
                 } else {
 
-                    if ((direction === JUMP_BACKWARD && nextLine.line < activeSelectionStartLine) ||
-                        (direction === JUMP_FORWARD && nextLine.line > activeSelectionStartLine)) {
+                    if ((direction === JumpDirection.BACKWARD && nextLine.line < activeSelectionStartLine) ||
+                        (direction === JumpDirection.FORWARD && nextLine.line > activeSelectionStartLine)) {
                         // vscode.window.showInformationMessage('No more this.bookmarks.to shrink...');
                         vscode.window.setStatusBarMessage("No more this.bookmarks.to shrink", 2000);
                     } else {
@@ -499,7 +494,7 @@ export class BookmarkExt {
             });
     }
 
-    private expandSelectionToNextBookmark(direction: JUMP_DIRECTION) {
+    private expandSelectionToNextBookmark(direction: JumpDirection) {
         if (!vscode.window.activeTextEditor) {
             vscode.window.showInformationMessage("Open a file first to clear this.bookmarks");
             return;
@@ -519,7 +514,7 @@ export class BookmarkExt {
         if (vscode.window.activeTextEditor.selection.isEmpty) {
             pos = vscode.window.activeTextEditor.selection.active;
         } else {
-            if (direction === JUMP_FORWARD) {
+            if (direction === JumpDirection.FORWARD) {
                 pos = vscode.window.activeTextEditor.selection.end;
             } else {
                 pos = vscode.window.activeTextEditor.selection.start;
@@ -541,8 +536,8 @@ export class BookmarkExt {
             });
     };
     private registerCommands() {
-        vscode.commands.registerCommand("metaGo.bookmark.expandSelectionToNext", () => this.expandSelectionToNextBookmark(JUMP_FORWARD));
-        vscode.commands.registerCommand("metaGo.bookmark.expandSelectionToPrevious", () => this.expandSelectionToNextBookmark(JUMP_BACKWARD));
+        vscode.commands.registerCommand("metaGo.bookmark.expandSelectionToNext", () => this.expandSelectionToNextBookmark(JumpDirection.FORWARD));
+        vscode.commands.registerCommand("metaGo.bookmark.expandSelectionToPrevious", () => this.expandSelectionToNextBookmark(JumpDirection.BACKWARD));
         vscode.commands.registerCommand("metaGo.bookmark.shrinkSelection", () => this.shrinkSelection());
 
         vscode.commands.registerCommand("metaGo.bookmark.clearInFile", () => {
@@ -651,18 +646,18 @@ export class BookmarkExt {
                 .then((nextLine) => {
                     if ((nextLine === BookmarkPosition.NO_MORE_BOOKMARKS) || (nextLine === BookmarkPosition.NO_BOOKMARKS)) {
                         this.bookmarks.nextDocumentWithBookmarks(this.bookmarks.activeBookmark)
-                            .then((nextDocument) => {
-                                if (!nextDocument) {
+                            .then((nextDocumentPath) => {
+                                if (!nextDocumentPath) {
                                     return;
                                 }
 
                                 // same document?
-                                let activeDocument = Bookmarks.normalize(vscode.window.activeTextEditor.document.uri.fsPath);
-                                if (nextDocument.toString() === activeDocument) {
+                                let activeDocumentPath = Bookmarks.normalize(vscode.window.activeTextEditor.document.uri.fsPath);
+                                if (nextDocumentPath.toString() === activeDocumentPath) {
                                     let location = this.bookmarks.activeBookmark.bookmarks[0];
                                     this.revealLine(location);
                                 } else {
-                                    vscode.workspace.openTextDocument(nextDocument.toString()).then(doc => {
+                                    vscode.workspace.openTextDocument(nextDocumentPath.toString()).then(doc => {
                                         vscode.window.showTextDocument(doc).then(editor => {
                                             let location = this.bookmarks.activeBookmark.bookmarks[0];
                                             this.revealLine(location);
@@ -693,10 +688,10 @@ export class BookmarkExt {
                 return;
             }
 
-            this.bookmarks.activeBookmark.nextBookmark(vscode.window.activeTextEditor.selection.active, JUMP_BACKWARD)
+            this.bookmarks.activeBookmark.nextBookmark(vscode.window.activeTextEditor.selection.active, JumpDirection.BACKWARD)
                 .then((location) => {
                     if ((location === BookmarkPosition.NO_MORE_BOOKMARKS) || (location === BookmarkPosition.NO_BOOKMARKS)) {
-                        this.bookmarks.nextDocumentWithBookmarks(this.bookmarks.activeBookmark, JUMP_BACKWARD)
+                        this.bookmarks.nextDocumentWithBookmarks(this.bookmarks.activeBookmark, JumpDirection.BACKWARD)
                             .then((nextDocument) => {
 
                                 if (!nextDocument) {

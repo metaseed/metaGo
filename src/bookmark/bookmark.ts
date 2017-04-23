@@ -3,12 +3,11 @@ import fs = require("fs");
 
 import { BookmarkConfig } from './config';
 
-export const JUMP_FORWARD = 1;
-export const JUMP_BACKWARD = -1;
-export enum JUMP_DIRECTION { JUMP_FORWARD, JUMP_BACKWARD };
+export enum JumpDirection { FORWARD, BACKWARD };
 
 export class BookmarkItem {
-    constructor(public label: string, public description: string,
+    constructor(public label: string,
+        public description: string,
         public detail?: string,
         public commandId?: string,
         public location?: BookmarkPosition) { }
@@ -40,26 +39,19 @@ export class Bookmark {
     }
 
     public nextBookmark(position: vscode.Position,
-        direction: JUMP_DIRECTION = JUMP_FORWARD): Promise<BookmarkPosition> {
+        direction: JumpDirection = JumpDirection.FORWARD): Promise<BookmarkPosition> {
 
-        let navigateThroughAllFiles = vscode.workspace.getConfiguration("metaGo")
-            .get("bookmark.navigateThroughAllFiles", true);
         let currentLine: number = position.line;
 
         return new Promise((resolve, reject) => {
             if (this.bookmarks.length === 0) {
-                if (navigateThroughAllFiles) {
-                    resolve(BookmarkPosition.NO_BOOKMARKS);
-                    return;
-                } else {
-                    resolve(BookmarkPosition.GetFrom(position));
-                    return;
-                }
+                resolve(BookmarkPosition.NO_BOOKMARKS);
+                return;
             }
 
             let nextBookmark: BookmarkPosition;
 
-            if (direction === JUMP_FORWARD) {
+            if (direction === JumpDirection.FORWARD) {
                 for (let location of this.bookmarks) {
                     if (location.line > currentLine) {
                         nextBookmark = location;
@@ -68,13 +60,8 @@ export class Bookmark {
                 }
 
                 if (typeof nextBookmark === "undefined") {
-                    if (navigateThroughAllFiles) {
-                        resolve(BookmarkPosition.NO_MORE_BOOKMARKS);
-                        return;
-                    } else {
-                        resolve(this.bookmarks[0]);
-                        return;
-                    }
+                    resolve(BookmarkPosition.NO_MORE_BOOKMARKS);
+                    return;
                 } else {
                     resolve(nextBookmark);
                     return;
@@ -88,13 +75,8 @@ export class Bookmark {
                     }
                 }
                 if (typeof nextBookmark === "undefined") {
-                    if (navigateThroughAllFiles) {
-                        resolve(BookmarkPosition.NO_MORE_BOOKMARKS);
-                        return;
-                    } else {
-                        resolve(this.bookmarks[this.bookmarks.length - 1]);
-                        return;
-                    }
+                    resolve(BookmarkPosition.NO_MORE_BOOKMARKS);
+                    return;
                 } else {
                     resolve(nextBookmark);
                     return;

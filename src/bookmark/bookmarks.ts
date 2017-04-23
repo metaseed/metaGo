@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import fs = require("fs");
-import { Bookmark, JUMP_DIRECTION, JUMP_FORWARD } from "./bookmark";
+import { Bookmark, JumpDirection } from "./bookmark";
 import { BookmarkConfig } from './config';
 
 export class Bookmarks {
@@ -34,7 +34,7 @@ export class Bookmarks {
             // each bookmark (line)
             this.add(jsonBookmark.fsPath);
             for (let element of jsonBookmark.bookmarks) {
-                this.bookmarks[idx].bookmarks.push(element); // jsonBookmark.bookmarks[index]);
+                this.bookmarks[idx].bookmarks.push(element);
             }
         }
 
@@ -55,7 +55,6 @@ export class Bookmarks {
     }
 
     public add(uri: string) {
-        // console.log(`Adding bookmark/file: ${uri}`);
         uri = Bookmarks.normalize(uri);
 
         let existing: Bookmark = this.fromUri(uri);
@@ -65,8 +64,7 @@ export class Bookmarks {
         }
     }
 
-    public nextDocumentWithBookmarks(active: Bookmark, direction: JUMP_DIRECTION = JUMP_FORWARD): Promise<string> {
-
+    public nextDocumentWithBookmarks(active: Bookmark, direction: JumpDirection = JumpDirection.FORWARD): Promise<string> {
         let currentBookmark: Bookmark = active;
         let currentBookmarkIndex: number;
         for (let index = 0; index < this.bookmarks.length; index++) {
@@ -77,7 +75,7 @@ export class Bookmarks {
         }
 
         return new Promise((resolve, reject) => {
-            if (direction === JUMP_FORWARD) {
+            if (direction === JumpDirection.FORWARD) {
                 currentBookmarkIndex++;
                 if (currentBookmarkIndex === this.bookmarks.length) {
                     currentBookmarkIndex = 0;
