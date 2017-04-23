@@ -10,16 +10,17 @@ export class BookmarkItem {
         public description: string,
         public detail?: string,
         public commandId?: string,
-        public location?: BookmarkPosition) { }
+        public location?: Bookmark) { }
 }
 
-export class BookmarkPosition {
-    public static NO_MORE_BOOKMARKS = new BookmarkPosition(-2, 0);
-    public static NO_BOOKMARKS = new BookmarkPosition(-1, 0);
+export class Bookmark {
+    public static NO_MORE_BOOKMARKS = new Bookmark(-2, 0);
+    public static NO_BOOKMARKS = new Bookmark(-1, 0);
+
     constructor(public line: number, public char: number) { }
 
     static GetFrom(position: vscode.Position) {
-        return new BookmarkPosition(position.line, position.character);
+        return new Bookmark(position.line, position.character);
     }
 
     getPosition(): vscode.Position {
@@ -27,10 +28,10 @@ export class BookmarkPosition {
     }
 }
 
-export class Bookmark {
+export class Document {
 
     public fsPath: string;
-    public bookmarks: BookmarkPosition[];
+    public bookmarks: Bookmark[];
 
     constructor(fsPath: string) {
         this.fsPath = fsPath;
@@ -39,17 +40,17 @@ export class Bookmark {
     }
 
     public nextBookmark(position: vscode.Position,
-        direction: JumpDirection = JumpDirection.FORWARD): Promise<BookmarkPosition> {
+        direction: JumpDirection = JumpDirection.FORWARD): Promise<Bookmark> {
 
         let currentLine: number = position.line;
 
         return new Promise((resolve, reject) => {
             if (this.bookmarks.length === 0) {
-                resolve(BookmarkPosition.NO_BOOKMARKS);
+                resolve(Bookmark.NO_BOOKMARKS);
                 return;
             }
 
-            let nextBookmark: BookmarkPosition;
+            let nextBookmark: Bookmark;
 
             if (direction === JumpDirection.FORWARD) {
                 for (let location of this.bookmarks) {
@@ -60,7 +61,7 @@ export class Bookmark {
                 }
 
                 if (typeof nextBookmark === "undefined") {
-                    resolve(BookmarkPosition.NO_MORE_BOOKMARKS);
+                    resolve(Bookmark.NO_MORE_BOOKMARKS);
                     return;
                 } else {
                     resolve(nextBookmark);
@@ -75,7 +76,7 @@ export class Bookmark {
                     }
                 }
                 if (typeof nextBookmark === "undefined") {
-                    resolve(BookmarkPosition.NO_MORE_BOOKMARKS);
+                    resolve(Bookmark.NO_MORE_BOOKMARKS);
                     return;
                 } else {
                     resolve(nextBookmark);

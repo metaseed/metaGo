@@ -1,9 +1,9 @@
 import * as vscode from "vscode";
 import fs = require("fs");
-import { Bookmark, JumpDirection } from "./bookmark";
+import { Document, JumpDirection } from "./document";
 import { BookmarkConfig } from './config';
 
-export class Bookmarks {
+export class BookmarkManager {
 
     public static normalize(uri: string): string {
         // a simple workaround for what appears to be a vscode.Uri bug
@@ -11,11 +11,13 @@ export class Bookmarks {
         return uri.replace("///", "/");
     }
 
-    public bookmarks: Bookmark[];
-    public activeBookmark: Bookmark = undefined;
+    public documents: Document[];
+    public activeDocument: Document = undefined;
+    public history: Array<{ docIndex: number, bookmarkIndex: number }>;
 
     constructor() {
-        this.bookmarks = [];
+        this.documents = [];
+        this.history = [];
     }
 
     public dispose() {
@@ -34,20 +36,20 @@ export class Bookmarks {
             // each bookmark (line)
             this.add(jsonBookmark.fsPath);
             for (let element of jsonBookmark.bookmarks) {
-                this.bookmarks[idx].bookmarks.push(element);
+                this.documents[idx].bookmarks.push(element);
             }
         }
 
         if (relativePath) {
-            for (let element of this.bookmarks) {
+            for (let element of this.documents) {
                 element.fsPath = element.fsPath.replace("$ROOTPATH$", vscode.workspace.rootPath);
             }
         }
     }
 
     public fromUri(uri: string) {
-        uri = Bookmarks.normalize(uri);
-        for (let element of this.bookmarks) {
+        uri = BookmarkManager.normalize(uri);
+        for (let element of this.documents) {
             if (element.fsPath === uri) {
                 return element;
             }
@@ -55,20 +57,20 @@ export class Bookmarks {
     }
 
     public add(uri: string) {
-        uri = Bookmarks.normalize(uri);
+        uri = BookmarkManager.normalize(uri);
 
-        let existing: Bookmark = this.fromUri(uri);
+        let existing: Document = this.fromUri(uri);
         if (typeof existing === "undefined") {
-            let bookmark = new Bookmark(uri);
-            this.bookmarks.push(bookmark);
+            let bookmark = new Document(uri);
+            this.documents.push(bookmark);
         }
     }
 
-    public nextDocumentWithBookmarks(active: Bookmark, direction: JumpDirection = JumpDirection.FORWARD): Promise<string> {
-        let currentBookmark: Bookmark = active;
+    public nextDocumentWithBookmarks(active: Document, direction: JumpDirection = JumpDirection.FORWARD): Promise<string> {
+        let currentBookmark: Document = active;
         let currentBookmarkIndex: number;
-        for (let index = 0; index < this.bookmarks.length; index++) {
-            let element = this.bookmarks[index];
+        for (let index = 0; index < this.documents.length; index++) {
+            let element = this.documents[index];
             if (element === active) {
                 currentBookmarkIndex = index;
             }
@@ -77,20 +79,20 @@ export class Bookmarks {
         return new Promise((resolve, reject) => {
             if (direction === JumpDirection.FORWARD) {
                 currentBookmarkIndex++;
-                if (currentBookmarkIndex === this.bookmarks.length) {
+                if (currentBookmarkIndex === this.documents.length) {
                     currentBookmarkIndex = 0;
                 }
             } else {
                 currentBookmarkIndex--;
                 if (currentBookmarkIndex === -1) {
-                    currentBookmarkIndex = this.bookmarks.length - 1;
+                    currentBookmarkIndex = this.documents.length - 1;
                 }
             }
 
-            currentBookmark = this.bookmarks[currentBookmarkIndex];
+            currentBookmark = this.documents[currentBookmarkIndex];
 
             if (currentBookmark.bookmarks.length === 0) {
-                if (currentBookmark === this.activeBookmark) {
+                if (currentBookmark === this.activeDocument) {
                     resolve('');
                     return;
                 } else {
@@ -125,12 +127,12 @@ export class Bookmarks {
 
     }
 
-    public nextBookmark(active: Bookmark, position: vscode.Position) {
+    public nextBookmark(active: Document, position: vscode.Position) {
         let currentLine: number = position.line;
-        let currentBookmark: Bookmark = active;
+        let currentBookmark: Document = active;
         let currentBookmarkId: number;
-        for (let index = 0; index < this.bookmarks.length; index++) {
-            let element = this.bookmarks[index];
+        for (let index = 0; index < this.documents.length; index++) {
+            let element = this.documents[index];
             if (element === active) {
                 currentBookmarkId = index;
             }
@@ -145,29 +147,29 @@ export class Bookmarks {
                 .catch((error) => {
                     // next document
                     currentBookmarkId++;
-                    if (currentBookmarkId === this.bookmarks.length) {
+                    if (currentBookmarkId === this.documents.length) {
                         currentBookmarkId = 0;
                     }
-                    currentBookmark = this.bookmarks[currentBookmarkId];
+                    currentBookmark = this.documents[currentBookmarkId];
 
                 });
 
         });
     }
 
-    public zip(relativePath?: boolean): Bookmarks {
-        function isNotEmpty(book: Bookmark): boolean {
+    public zip(relativePath?: boolean): BookmarkManager {
+        function isNotEmpty(book: Document): boolean {
             return book.bookmarks.length > 0;
         }
 
-        let newBookmarks: Bookmarks = new Bookmarks();
-        newBookmarks.bookmarks = JSON.parse(JSON.stringify(this.bookmarks)).filter(isNotEmpty);
+        let newBookmarks: BookmarkManager = new BookmarkManager();
+        newBookmarks.documents = JSON.parse(JSON.stringify(this.documents)).filter(isNotEmpty);
 
         if (!relativePath) {
             return newBookmarks;
         }
 
-        for (let element of newBookmarks.bookmarks) {
+        for (let element of newBookmarks.documents) {
             element.fsPath = element.fsPath.replace(vscode.workspace.rootPath, "$ROOTPATH$");
         }
         return newBookmarks;
