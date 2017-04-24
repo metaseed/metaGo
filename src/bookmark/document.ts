@@ -15,14 +15,26 @@ export class BookmarkItem {
 }
 
 export class Document {
-
     public fsPath: string;
-    public bookmarks: Bookmark[];
+
+    public bookmarks: Map<vscode.Position, Bookmark> = new Map<vscode.Position, Bookmark>();
 
     constructor(fsPath: string) {
         this.fsPath = fsPath;
-        this.bookmarks = [];
+    }
 
+    public findIndex(lineIndex: number, charIndex: number = -1) {
+        for (let bk, i of this.bookmarks.values()) {
+            if (charIndex === -1) {
+                return bk.line === lineIndex;
+            } else {
+                return bk.line === lineIndex && bk.char === charIndex;
+            }
+        }
+        let bkIndex = this.bookmarks.forEach((bk) => {
+
+        });
+        return bkIndex;
     }
 
     public nextBookmark(position: vscode.Position,
@@ -74,13 +86,11 @@ export class Document {
 
     public listBookmarks(): Promise<Array<BookmarkItem>> {
         return new Promise((resolve, reject) => {
-            // no bookmark, returns empty
             if (this.bookmarks.length === 0) {
                 resolve({});
                 return;
             }
 
-            // file does not exist, returns empty
             if (!fs.existsSync(this.fsPath)) {
                 resolve({});
                 return;

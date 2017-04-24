@@ -3,6 +3,8 @@ import fs = require("fs");
 import { Document, JumpDirection } from "./document";
 import { BookmarkConfig } from './config';
 import { Bookmark } from './bookmark';
+import { History } from './history';
+
 export class BookmarkManager {
 
     public static normalize(uri: string): string {
@@ -12,8 +14,8 @@ export class BookmarkManager {
     }
 
     public documents: Document[];
+    public history: History = new History();
     public activeDocument: Document = undefined;
-    public history: Array<{ docIndex: number, bookmarkIndex: number }>;
 
     constructor() {
         this.documents = [];
@@ -34,7 +36,7 @@ export class BookmarkManager {
             let jsonBookmark = jsonBookmarks[idx];
 
             // each bookmark (line)
-            this.add(jsonBookmark.fsPath);
+            this.addDocumentIfNotExist(jsonBookmark.fsPath);
             for (let element of jsonBookmark.bookmarks) {
                 this.documents[idx].bookmarks.push(element);
             }
@@ -47,23 +49,45 @@ export class BookmarkManager {
         }
     }
 
-    public fromUri(uri: string) {
+    public findDocument(uri: string) {
         uri = BookmarkManager.normalize(uri);
-        for (let element of this.documents) {
-            if (element.fsPath === uri) {
-                return element;
-            }
+        return this.documents.find((doc) => doc.fsPath === uri);
+    }
+
+    public addBookmark(lineIndex: number, charIndex: number, doc: Document = this.activeDocument) {
+        let bookmarkIndex = doc.bookmarks.findIndex((bk) => bk.line > lineIndex);
+        if (bookmarkIndex === -1) { bookmarkIndex = doc.bookmarks.length; }
+        doc.bookmarks.splice(bookmarkIndex, 0, new Bookmark(lineIndex, charIndex));
+        const docIndex = this.documents.indexOf(doc);
+        this.history.add(docIndex, bookmarkIndex);
+    }
+
+    public removeBookmark(lineIndex: number, charIndex: number = -1, doc: Document = this.activeDocument) {
+        let bkIndex = doc.findIndex(lineIndex, charIndex);
+        doc.bookmarks.splice(bkIndex, 1);
+        const docIndex = this.documents.indexOf(doc);
+        this.history.remove(docIndex, bkIndex);
+    }
+
+    public toggleBookmark(lineIndex: number, charIndex: number = -1, doc: Document = this.activeDocument) {
+        const bkIndex = doc.findIndex(lineIndex, charIndex);
+        if (bkIndex === -1) {
+            this.addBookmark(lineIndex, charIndex, doc);
+        } else {
+            this.removeBookmark(lineIndex, charIndex, doc);
         }
     }
 
-    public add(uri: string) {
+    public addDocumentIfNotExist(uri: string): Document {
         uri = BookmarkManager.normalize(uri);
+        let existing: Document = this.findDocument(uri);
 
-        let existing: Document = this.fromUri(uri);
         if (typeof existing === "undefined") {
-            let bookmark = new Document(uri);
-            this.documents.push(bookmark);
+            let doc = new Document(uri);
+            this.documents.push(doc);
+            return doc;
         }
+        return existing;
     }
 
     public nextDocumentWithBookmarks(active: Document, direction: JumpDirection = JumpDirection.FORWARD): Promise<string> {
@@ -129,7 +153,7 @@ export class BookmarkManager {
 
     public nextBookmark(active: Document, position: vscode.Position) {
         let currentLine: number = position.line;
-        let currentBookmark: Document = active;
+        let currentDoc: Document = active;
         let currentBookmarkId: number;
         for (let index = 0; index < this.documents.length; index++) {
             let element = this.documents[index];
@@ -139,9 +163,9 @@ export class BookmarkManager {
         }
 
         return new Promise((resolve, reject) => {
-            currentBookmark.nextBookmark(position)
-                .then((newLine) => {
-                    resolve(newLine);
+            currentDoc.nextBookmark(position)
+                .then((bookmark) => {
+                    resolve(bookmark);
                     return;
                 })
                 .catch((error) => {
@@ -150,7 +174,7 @@ export class BookmarkManager {
                     if (currentBookmarkId === this.documents.length) {
                         currentBookmarkId = 0;
                     }
-                    currentBookmark = this.documents[currentBookmarkId];
+                    currentDoc = this.documents[currentBookmarkId];
 
                 });
 
