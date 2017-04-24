@@ -2,7 +2,8 @@ import * as vscode from "vscode";
 import fs = require("fs");
 import path = require("path");
 
-import { JumpDirection, Bookmark, BookmarkItem } from "./document";
+import { JumpDirection, BookmarkItem } from "./document";
+import { Bookmark } from './bookmark';
 import { BookmarkManager } from "./bookmark-manager";
 import { BookmarkConfig } from './config';
 
@@ -554,8 +555,8 @@ export class BookmarkExt {
 
         vscode.commands.registerCommand("metaGo.bookmark.clear", () => {
 
-            for (let element of this.bookmarkManager.documents) {
-                element.clear();
+            for (let doc of this.bookmarkManager.documents) {
+                doc.clear();
             }
 
             this.saveWorkspaceState();

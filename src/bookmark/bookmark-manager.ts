@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import fs = require("fs");
 import { Document, JumpDirection } from "./document";
 import { BookmarkConfig } from './config';
-
+import { Bookmark } from './bookmark';
 export class BookmarkManager {
 
     public static normalize(uri: string): string {

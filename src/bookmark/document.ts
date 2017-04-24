@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import fs = require("fs");
 
 import { BookmarkConfig } from './config';
+import { Bookmark } from './bookmark';
 
 export enum JumpDirection { FORWARD, BACKWARD };
 
@@ -11,21 +12,6 @@ export class BookmarkItem {
         public detail?: string,
         public commandId?: string,
         public location?: Bookmark) { }
-}
-
-export class Bookmark {
-    public static NO_MORE_BOOKMARKS = new Bookmark(-2, 0);
-    public static NO_BOOKMARKS = new Bookmark(-1, 0);
-
-    constructor(public line: number, public char: number) { }
-
-    static GetFrom(position: vscode.Position) {
-        return new Bookmark(position.line, position.character);
-    }
-
-    getPosition(): vscode.Position {
-        return new vscode.Position(this.line, this.char);
-    }
 }
 
 export class Document {
