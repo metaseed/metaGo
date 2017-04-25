@@ -6,21 +6,11 @@ import { Bookmark } from './bookmark';
 import { History } from './history';
 
 export class BookmarkManager {
-
-    public static normalize(uri: string): string {
-        // a simple workaround for what appears to be a vscode.Uri bug
-        // (inconsistent fsPath values for the same document, ex. ///foo/x.cpp and /foo/x.cpp)
-        return uri.replace("///", "/");
-    }
-
-    public documents: Document[];
-    public history: History = new History();
+    public documents = new Map<string, Document>();
+    public history = new History();
     public activeDocument: Document = undefined;
 
-    constructor() {
-        this.documents = [];
-        this.history = [];
-    }
+    constructor() { }
 
     public dispose() {
         this.zip();
@@ -44,47 +34,18 @@ export class BookmarkManager {
 
         if (relativePath) {
             for (let element of this.documents) {
-                element.fsPath = element.fsPath.replace("$ROOTPATH$", vscode.workspace.rootPath);
+                element.key = element.key.replace("$ROOTPATH$", vscode.workspace.rootPath);
             }
         }
     }
 
-    public findDocument(uri: string) {
-        uri = BookmarkManager.normalize(uri);
-        return this.documents.find((doc) => doc.fsPath === uri);
-    }
-
-    public addBookmark(lineIndex: number, charIndex: number, doc: Document = this.activeDocument) {
-        let bookmarkIndex = doc.bookmarks.findIndex((bk) => bk.line > lineIndex);
-        if (bookmarkIndex === -1) { bookmarkIndex = doc.bookmarks.length; }
-        doc.bookmarks.splice(bookmarkIndex, 0, new Bookmark(lineIndex, charIndex));
-        const docIndex = this.documents.indexOf(doc);
-        this.history.add(docIndex, bookmarkIndex);
-    }
-
-    public removeBookmark(lineIndex: number, charIndex: number = -1, doc: Document = this.activeDocument) {
-        let bkIndex = doc.findIndex(lineIndex, charIndex);
-        doc.bookmarks.splice(bkIndex, 1);
-        const docIndex = this.documents.indexOf(doc);
-        this.history.remove(docIndex, bkIndex);
-    }
-
-    public toggleBookmark(lineIndex: number, charIndex: number = -1, doc: Document = this.activeDocument) {
-        const bkIndex = doc.findIndex(lineIndex, charIndex);
-        if (bkIndex === -1) {
-            this.addBookmark(lineIndex, charIndex, doc);
-        } else {
-            this.removeBookmark(lineIndex, charIndex, doc);
-        }
-    }
-
     public addDocumentIfNotExist(uri: string): Document {
-        uri = BookmarkManager.normalize(uri);
-        let existing: Document = this.findDocument(uri);
+        uri = Document.normalize(uri);
+        let existing: Document = this.documents[uri];
 
         if (typeof existing === "undefined") {
-            let doc = new Document(uri);
-            this.documents.push(doc);
+            let doc = new Document(uri, this.history);
+            this.documents[uri] = doc;
             return doc;
         }
         return existing;
@@ -131,8 +92,8 @@ export class BookmarkManager {
                         });
                 }
             } else {
-                if (fs.existsSync(currentBookmark.fsPath)) {
-                    resolve(currentBookmark.fsPath);
+                if (fs.existsSync(currentBookmark.key)) {
+                    resolve(currentBookmark.key);
                     return;
                 } else {
                     this.nextDocumentWithBookmarks(currentBookmark, direction)
@@ -194,7 +155,7 @@ export class BookmarkManager {
         }
 
         for (let element of newBookmarks.documents) {
-            element.fsPath = element.fsPath.replace(vscode.workspace.rootPath, "$ROOTPATH$");
+            element.key = element.key.replace(vscode.workspace.rootPath, "$ROOTPATH$");
         }
         return newBookmarks;
     }

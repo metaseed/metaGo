@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-
+import { Bookmark } from './bookmark';
 export class HistoryItem {
     constructor(public docKey: string, public bookmarkKey: string) { }
 }
@@ -31,6 +31,13 @@ export class History {
         return rm[0];
     }
 
+    public removeDoc(docKey: string) {
+        this.history = this.history.filter((hi) => hi.docKey !== docKey);
+    }
+
+    public clear() {
+        this.history.length = 0;
+    }
     public replace(docKey: string, bkKey: string, toDocKey: string, toBkKey: string) {
         let i = this.history.findIndex((e) => e.docKey === docKey && e.bookmarkKey === bkKey);
         if (i !== -1) {

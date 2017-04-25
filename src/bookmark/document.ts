@@ -3,6 +3,7 @@ import fs = require("fs");
 
 import { BookmarkConfig } from './config';
 import { Bookmark } from './bookmark';
+import { History } from './history';
 
 export enum JumpDirection { FORWARD, BACKWARD };
 
@@ -15,26 +16,40 @@ export class BookmarkItem {
 }
 
 export class Document {
-    public fsPath: string;
-
-    public bookmarks: Map<vscode.Position, Bookmark> = new Map<vscode.Position, Bookmark>();
-
-    constructor(fsPath: string) {
-        this.fsPath = fsPath;
+    public static normalize(uri: string): string {
+        // a simple workaround for what appears to be a vscode.Uri bug
+        // (inconsistent fsPath values for the same document, ex. ///foo/x.cpp and /foo/x.cpp)
+        return uri.replace("///", "/");
     }
 
-    public findIndex(lineIndex: number, charIndex: number = -1) {
-        for (let bk, i of this.bookmarks.values()) {
-            if (charIndex === -1) {
-                return bk.line === lineIndex;
-            } else {
-                return bk.line === lineIndex && bk.char === charIndex;
-            }
-        }
-        let bkIndex = this.bookmarks.forEach((bk) => {
+    public bookmarks = new Map<string, Bookmark>();
 
-        });
-        return bkIndex;
+    constructor(public key: string, private history: History) { }
+
+    public addBookmark(bookmark: Bookmark) {
+        let key = bookmark.toString();
+        if (this.bookmarks.has(key)) {
+            return;
+        }
+        this.bookmarks.set(key, bookmark);
+        this.history.add(this.key, bookmark.key);
+    }
+
+    public removeBookmark(bookmark: Bookmark) {
+        let key = bookmark.toString();
+        if (this.bookmarks.has(key)) {
+            return;
+        }
+        this.bookmarks.delete(key);
+        this.history.remove(this.key, bookmark.key);
+    }
+
+    public toggleBookmark(bookmark: Bookmark) {
+        if (this.bookmarks.has(bookmark.key)) {
+            this.addBookmark(bookmark);
+        } else {
+            this.removeBookmark(bookmark);
+        }
     }
 
     public nextBookmark(position: vscode.Position,
@@ -43,7 +58,7 @@ export class Document {
         let currentLine: number = position.line;
 
         return new Promise((resolve, reject) => {
-            if (this.bookmarks.length === 0) {
+            if (this.bookmarks.size === 0) {
                 resolve(Bookmark.NO_BOOKMARKS);
                 return;
             }
@@ -86,44 +101,42 @@ export class Document {
 
     public listBookmarks(): Promise<Array<BookmarkItem>> {
         return new Promise((resolve, reject) => {
-            if (this.bookmarks.length === 0) {
-                resolve({});
+            if (this.bookmarks.size === 0) {
+                this.history.clear();
+                resolve([]);
                 return;
             }
 
-            if (!fs.existsSync(this.fsPath)) {
-                resolve({});
+            if (!fs.existsSync(this.key)) {
+                this.history.removeDoc(this.key);
+                resolve([]);
                 return;
             }
 
-            let uriDocBookmark: vscode.Uri = vscode.Uri.file(this.fsPath);
+            let uriDocBookmark: vscode.Uri = vscode.Uri.file(this.key);
             vscode.workspace.openTextDocument(uriDocBookmark).then(doc => {
                 let items = [];
                 let invalids = [];
 
-                // tslint:disable-next-line:prefer-for-of
-                for (let index = 0; index < this.bookmarks.length; index++) {
-                    let lineNumber = this.bookmarks[index].line + 1;
-                    // check for 'invalidated' bookmarks, when its outside the document length
+                for (let [key, value] of this.bookmarks) {
+                    let lineNumber = value.line + 1;
                     if (lineNumber <= doc.lineCount) {
                         let lineText = doc.lineAt(lineNumber - 1).text;
-                        let normalizedPath = doc.uri.fsPath;
+                        let normalizedPath = Document.normalize(doc.uri.fsPath);
                         items.push(new BookmarkItem(
                             lineNumber.toString(),
                             lineText,
-                            normalizedPath, null, this.bookmarks[index]
+                            normalizedPath, null, value
                         ));
                     } else {
-                        invalids.push(lineNumber);
+                        invalids.push(key);
                     }
                 }
                 if (invalids.length > 0) {
-                    let idxInvalid: number;
-                    // tslint:disable-next-line:prefer-for-of
-                    for (let indexI = 0; indexI < invalids.length; indexI++) {
-                        idxInvalid = this.bookmarks.findIndex((i) => i.line === (invalids[indexI] - 1));
-                        this.bookmarks.splice(idxInvalid, 1);
-                    }
+                    invalids.forEach((key) => {
+                        this.bookmarks.delete(key)
+                        this.history.remove(this.key, key)
+                    });
                 }
 
                 resolve(items);
@@ -133,6 +146,8 @@ export class Document {
     }
 
     public clear() {
-        this.bookmarks.length = 0;
+        this.bookmarks.clear();
+        this.history.removeDoc(this.key);
     }
+
 }
