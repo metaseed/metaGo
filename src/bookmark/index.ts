@@ -2,24 +2,24 @@ import * as vscode from "vscode";
 import fs = require("fs");
 import path = require("path");
 
-import { JumpDirection, BookmarkItem } from "./document";
+import { BookmarkItem } from "./document";
 import { Bookmark } from './bookmark';
-import { BookmarkManager } from "./bookmark-manager";
+import { BookmarkManager, JumpDirection } from "./bookmark-manager";
 import { BookmarkConfig } from './config';
+import { Storage } from './storage';
 
 export class BookmarkExt {
-    private bookmarkManager: BookmarkManager;
-    private bookmarkDecorationType: vscode.TextEditorDecorationType;
-    private context: vscode.ExtensionContext;
+    private manager: BookmarkManager;
+    private decorationType: vscode.TextEditorDecorationType;
+    private storage: Storage;
 
-    constructor(context: vscode.ExtensionContext, private config: BookmarkConfig) {
-        this.context = context
+    constructor(private context: vscode.ExtensionContext, private config: BookmarkConfig) {
+        this.manager = new BookmarkManager();
+        this.storage = new Storage(this.config, this.context, this.manager);
         let activeEditorCountLine: number;
 
-        // load pre-saved bookmarks
-        let didLoadBookmarks: boolean = this.loadWorkspaceState();
+        let didLoadBookmarks: boolean = this.storage.load();
 
-        // Define the Bookmark Decoration
         if (config.pathIcon !== "") {
             if (!fs.existsSync(config.pathIcon)) {
                 vscode.window.showErrorMessage('The file "' + config.pathIcon + '" used for "this.bookmarks.gutterIconPath" does not exists.');
@@ -30,7 +30,7 @@ export class BookmarkExt {
         }
         config.pathIcon = config.pathIcon.replace(/\\/g, "/");
 
-        this.bookmarkDecorationType = vscode.window.createTextEditorDecorationType({
+        this.decorationType = vscode.window.createTextEditorDecorationType({
             gutterIconPath: config.pathIcon,
             overviewRulerLane: vscode.OverviewRulerLane.Full,
             overviewRulerColor: "rgba(21, 126, 251, 0.7)"
@@ -47,33 +47,28 @@ export class BookmarkExt {
         let activeEditor = vscode.window.activeTextEditor;
         if (activeEditor) {
             if (!didLoadBookmarks) {
-                this.bookmarkManager.addDocumentIfNotExist(activeEditor.document.uri.fsPath);
+                this.manager.addDocumentIfNotExist(activeEditor.document.uri.fsPath);
             }
             let activeEditorCountLine = activeEditor.document.lineCount;
-            this.bookmarkManager.activeDocument = this.bookmarkManager.findDocument(activeEditor.document.uri.fsPath);
+            this.manager.activeDocument = this.manager.addDocumentIfNotExist(activeEditor.document.uri.fsPath);
             triggerUpdateDecorations();
         }
-
-        // new docs
-        vscode.workspace.onDidOpenTextDocument(doc => {
-            this.bookmarkManager.addDocumentIfNotExist(doc.uri.fsPath);
-        });
-
         vscode.window.onDidChangeActiveTextEditor(editor => {
-            activeEditor = editor;
             if (editor) {
-                activeEditorCountLine = editor.document.lineCount;
-                this.bookmarkManager.activeDocument = this.bookmarkManager.findDocument(editor.document.uri.fsPath);
+                this.manager.activeDocument = this.manager.addDocumentIfNotExist(editor.document.uri.fsPath);
                 triggerUpdateDecorations();
             }
         }, null, context.subscriptions);
+        // new docs
+        vscode.workspace.onDidOpenTextDocument(doc => {
+            this.manager.addDocumentIfNotExist(doc.uri.fsPath);
+        });
 
         vscode.workspace.onDidChangeTextDocument(event => {
             if (activeEditor && event.document === activeEditor.document) {
-                //            triggerUpdateDecorations();
                 let updatedBookmark: boolean = true;
                 // call sticky function when the activeEditor is changed
-                if (this.bookmarkManager.activeDocument && this.bookmarkManager.activeDocument.bookmarks.length > 0) {
+                if (this.manager.activeDocument && this.manager.activeDocument.bookmarks.length > 0) {
                     updatedBookmark = this.stickyBookmarks(event);
                 }
 
@@ -95,25 +90,25 @@ export class BookmarkExt {
             return;
         }
 
-        if (!this.bookmarkManager.activeDocument) {
+        if (!this.manager.activeDocument) {
             return;
         }
 
-        if (this.bookmarkManager.activeDocument.bookmarks.length === 0) {
+        if (this.manager.activeDocument.bookmarks.length === 0) {
             let books: vscode.Range[] = [];
 
-            activeEditor.setDecorations(this.bookmarkDecorationType, books);
+            activeEditor.setDecorations(this.decorationType, books);
             return;
         }
 
         let books: vscode.Range[] = [];
         // Remove all bookmarks.if active file is empty
         if (activeEditor.document.lineCount === 1 && activeEditor.document.lineAt(0).text === "") {
-            this.bookmarkManager.activeDocument.bookmarks = [];
+            this.manager.activeDocument.bookmarks = [];
         } else {
             let invalids = [];
 
-            for (let location of this.bookmarkManager.activeDocument.bookmarks) {
+            for (let location of this.manager.activeDocument.bookmarks) {
                 if (location.line <= activeEditor.document.lineCount) {
                     let decoration = new vscode.Range(location.line, 0, location.line, 0);
                     books.push(decoration);
@@ -125,12 +120,12 @@ export class BookmarkExt {
             if (invalids.length > 0) {
                 let idxInvalid: number;
                 for (const element of invalids) {
-                    idxInvalid = this.bookmarkManager.activeDocument.bookmarks.indexOf(element); // invalids[indexI]);
-                    this.bookmarkManager.activeDocument.bookmarks.splice(idxInvalid, 1);
+                    idxInvalid = this.manager.activeDocument.bookmarks.indexOf(element); // invalids[indexI]);
+                    this.manager.activeDocument.bookmarks.splice(idxInvalid, 1);
                 }
             }
         }
-        activeEditor.setDecorations(this.bookmarkDecorationType, books);
+        activeEditor.setDecorations(this.decorationType, books);
     }
 
     private expandLineRange(editor: vscode.TextEditor, toLine: number, direction: JumpDirection) {
@@ -180,52 +175,6 @@ export class BookmarkExt {
         vscode.window.activeTextEditor.revealRange(newSe, reviewType);
     }
 
-    private loadWorkspaceState(): boolean {
-        let saveBookmarksInProject: boolean = this.config.saveBookmarksInProject;
-
-        this.bookmarkManager = new BookmarkManager();
-
-        if (vscode.workspace.rootPath && saveBookmarksInProject) {
-            let bookmarksFileInProject: string = path.join(vscode.workspace.rootPath, ".vscode", "bookmarks.json");
-
-            if (!fs.existsSync(bookmarksFileInProject)) {
-                return false;
-            }
-
-            try {
-                this.bookmarkManager.loadFrom(JSON.parse(fs.readFileSync(bookmarksFileInProject).toString()), true);
-                return true;
-            } catch (error) {
-                vscode.window.showErrorMessage("Error loading Bookmarks: " + error.toString());
-                return false;
-            }
-        } else {
-            let savedBookmarks = this.context.workspaceState.get("bookmarks", "");
-
-            if (savedBookmarks !== "") {
-                this.bookmarkManager.loadFrom(JSON.parse(savedBookmarks));
-            }
-            return savedBookmarks !== "";
-        }
-    }
-
-    private saveWorkspaceState(): void {
-        if (this.bookmarkManager.documents.length === 0) {
-            return;
-        }
-
-        let saveBookmarksInProject: boolean = this.config.saveBookmarksInProject;
-
-        if (vscode.workspace.rootPath && saveBookmarksInProject) {
-            let bookmarksFileInProject: string = path.join(vscode.workspace.rootPath, ".vscode", "bookmarks.json");
-            if (!fs.existsSync(path.dirname(bookmarksFileInProject))) {
-                fs.mkdirSync(path.dirname(bookmarksFileInProject));
-            }
-            fs.writeFileSync(bookmarksFileInProject, JSON.stringify(this.bookmarkManager.zip(true), null, "\t"));
-        } else {
-            this.context.workspaceState.update("bookmarks", JSON.stringify(this.bookmarkManager.zip()));
-        }
-    }
 
     private HadOnlyOneValidContentChange(event): boolean {
 
@@ -278,19 +227,19 @@ export class BookmarkExt {
                         if ((event.contentChanges[0].range.end.character === 0) &&
                             (event.contentChanges[0].range.start.character === 0)) {
                             // the bookmarked one
-                            let bookmarkIndex = this.bookmarkManager.activeDocument.bookmarks.indexOf(event.contentChanges[0].range.start.line);
+                            let bookmarkIndex = this.manager.activeDocument.bookmarks.indexOf(event.contentChanges[0].range.start.line);
                             if (bookmarkIndex > -1) {
-                                this.bookmarkManager.activeDocument.bookmarks.splice(bookmarkIndex, 1);
+                                this.manager.activeDocument.bookmarks.splice(bookmarkIndex, 1);
                             }
                         }
                     }
 
                     if (event.contentChanges[0].range.end.line - event.contentChanges[0].range.start.line > 1) {
                         for (let i = event.contentChanges[0].range.start.line/* + 1*/; i <= event.contentChanges[0].range.end.line; i++) {
-                            let index = this.bookmarkManager.activeDocument.bookmarks.indexOf(i);
+                            let index = this.manager.activeDocument.bookmarks.indexOf(i);
 
                             if (index > -1) {
-                                this.bookmarkManager.activeDocument.bookmarks.splice(index, 1);
+                                this.manager.activeDocument.bookmarks.splice(index, 1);
                                 updatedBookmark = true;
                             }
                         }
@@ -298,7 +247,7 @@ export class BookmarkExt {
                 }
 
                 // for (let index in this.bookmarks.activeBookmark.bookmarks. {
-                for (let index = 0; index < this.bookmarkManager.activeDocument.bookmarks.length; index++) {
+                for (let index = 0; index < this.manager.activeDocument.bookmarks.length; index++) {
                     let eventLine = event.contentChanges[0].range.start.line;
                     let eventCharacter = event.contentChanges[0].range.start.character;
 
@@ -313,15 +262,15 @@ export class BookmarkExt {
 
                     // also =
                     if (
-                        ((this.bookmarkManager.activeDocument.bookmarks[index] > eventLine) && (eventCharacter > 0)) ||
-                        ((this.bookmarkManager.activeDocument.bookmarks[index] >= eventLine) && (eventCharacter === 0))
+                        ((this.manager.activeDocument.bookmarks[index] > eventLine) && (eventCharacter > 0)) ||
+                        ((this.manager.activeDocument.bookmarks[index] >= eventLine) && (eventCharacter === 0))
                     ) {
-                        let newLine = this.bookmarkManager.activeDocument.bookmarks[index].line + diffLine;
+                        let newLine = this.manager.activeDocument.bookmarks[index].line + diffLine;
                         if (newLine < 0) {
                             newLine = 0;
                         }
 
-                        this.bookmarkManager.activeDocument.bookmarks[index].line = newLine;
+                        this.manager.activeDocument.bookmarks[index].line = newLine;
                         updatedBookmark = true;
                     }
                 }
@@ -344,9 +293,9 @@ export class BookmarkExt {
 
                 if (lineMin <= lineMax) {
                     for (let i = lineMin; i <= lineMax; i++) {
-                        let index = this.bookmarkManager.activeDocument.bookmarks.indexOf(i);
+                        let index = this.manager.activeDocument.bookmarks.indexOf(i);
                         if (index > -1) {
-                            this.bookmarkManager.activeDocument.bookmarks.splice(index, 1);
+                            this.manager.activeDocument.bookmarks.splice(index, 1);
                             updatedBookmark = true;
                         }
                     }
@@ -386,20 +335,20 @@ export class BookmarkExt {
         if (direction === "up") {
             diffLine = 1;
 
-            let index = this.bookmarkManager.activeDocument.bookmarks.findIndex((l) => l.line === lineMin - 1);
+            let index = this.manager.activeDocument.bookmarks.findIndex((l) => l.line === lineMin - 1);
             if (index > -1) {
                 diffChange = lineMax;
-                this.bookmarkManager.activeDocument.bookmarks.splice(index, 1);
+                this.manager.activeDocument.bookmarks.splice(index, 1);
                 updatedBookmark = true;
             }
         } else if (direction === "down") {
             diffLine = -1;
 
             let index: number;
-            index = this.bookmarkManager.activeDocument.bookmarks.indexOf(lineMax + 1);
+            index = this.manager.activeDocument.bookmarks.indexOf(lineMax + 1);
             if (index > -1) {
                 diffChange = lineMin;
-                this.bookmarkManager.activeDocument.bookmarks.splice(index, 1);
+                this.manager.activeDocument.bookmarks.splice(index, 1);
                 updatedBookmark = true;
             }
         }
@@ -414,15 +363,15 @@ export class BookmarkExt {
         }
 
         for (let i in lineRange) {
-            let index = this.bookmarkManager.activeDocument.bookmarks.findIndex((l) => l.line === lineRange[i]);
+            let index = this.manager.activeDocument.bookmarks.findIndex((l) => l.line === lineRange[i]);
             if (index > -1) {
-                this.bookmarkManager.activeDocument.bookmarks[index].line -= diffLine;
+                this.manager.activeDocument.bookmarks[index].line -= diffLine;
                 updatedBookmark = true;
             }
         }
 
         if (diffChange > -1) {
-            this.bookmarkManager.activeDocument.bookmarks.push(new Bookmark(diffChange, 0));
+            this.manager.activeDocument.bookmarks.push(new Bookmark(diffChange, 0));
             updatedBookmark = true;
         }
 
@@ -457,7 +406,7 @@ export class BookmarkExt {
             return;
         }
 
-        if (this.bookmarkManager.activeDocument.bookmarks.length === 0) {
+        if (this.manager.activeDocument.bookmarks.length === 0) {
             vscode.window.showInformationMessage("No Bookmark found");
             return;
         }
@@ -473,7 +422,7 @@ export class BookmarkExt {
             pos = vscode.window.activeTextEditor.selection.end;
         }
 
-        this.bookmarkManager.activeDocument.nextBookmark(pos, direction)
+        this.manager.activeDocument.nextBookmark(pos, direction)
             .then((nextLine) => {
                 if ((nextLine === Bookmark.NO_MORE_BOOKMARKS) || (nextLine === Bookmark.NO_BOOKMARKS)) {
                     vscode.window.setStatusBarMessage("No more bookmarks", 2000);
@@ -500,12 +449,12 @@ export class BookmarkExt {
             return;
         }
 
-        if (this.bookmarkManager.activeDocument.bookmarks.length === 0) {
+        if (this.manager.activeDocument.bookmarks.length === 0) {
             vscode.window.showInformationMessage("No Bookmark found");
             return;
         }
 
-        if (this.bookmarkManager.activeDocument.bookmarks.length === 1) {
+        if (this.manager.activeDocument.bookmarks.length === 1) {
             vscode.window.showInformationMessage("There is only one bookmark in this file");
             return;
         }
@@ -521,7 +470,7 @@ export class BookmarkExt {
             }
         }
 
-        this.bookmarkManager.activeDocument.nextBookmark(pos, direction)
+        this.manager.activeDocument.nextBookmark(pos, direction)
             .then((nextLine) => {
                 if ((nextLine === Bookmark.NO_MORE_BOOKMARKS) || (nextLine === Bookmark.NO_BOOKMARKS)) {
                     // vscode.window.showInformationMessage('No more bookmarks...');
@@ -547,7 +496,7 @@ export class BookmarkExt {
                 return;
             }
 
-            this.bookmarkManager.activeDocument.clear();
+            this.manager.activeDocument.clear();
 
             this.saveWorkspaceState();
             this.updateDecorations();
@@ -555,7 +504,7 @@ export class BookmarkExt {
 
         vscode.commands.registerCommand("metaGo.bookmark.clear", () => {
 
-            for (let doc of this.bookmarkManager.documents) {
+            for (let doc of this.manager.documents) {
                 doc.clear();
             }
 
@@ -582,30 +531,17 @@ export class BookmarkExt {
                 return;
             }
 
-            if (this.bookmarkManager.activeDocument.bookmarks.length === 0) {
+            if (this.manager.activeDocument.bookmarks.length === 0) {
                 vscode.window.showInformationMessage("No Bookmark found");
                 return;
             }
 
-            selectLines(vscode.window.activeTextEditor, this.bookmarkManager.activeDocument.bookmarks);
+            selectLines(vscode.window.activeTextEditor, this.manager.activeDocument.bookmarks);
         });
 
         vscode.commands.registerCommand("metaGo.bookmark.toggle", () => {
 
-            if (!vscode.window.activeTextEditor) {
-                vscode.window.showInformationMessage("Open a file first to toggle bookmarks");
-                return;
-            }
 
-            let line = vscode.window.activeTextEditor.selection.active.line;
-            let char = vscode.window.activeTextEditor.selection.active.character;
-            // fix issue emptyAtLaunch
-            if (!this.bookmarkManager.activeDocument) {
-                let doc = this.bookmarkManager.addDocumentIfNotExist(vscode.window.activeTextEditor.document.uri.fsPath);
-                this.bookmarkManager.activeDocument = doc;
-            }
-
-            this.bookmarkManager.toggleBookmark(line, char);
             this.saveWorkspaceState();
             this.updateDecorations();
         });
@@ -616,14 +552,14 @@ export class BookmarkExt {
                 return;
             }
 
-            if (!this.bookmarkManager.activeDocument) {
+            if (!this.manager.activeDocument) {
                 return;
             }
 
-            this.bookmarkManager.activeDocument.nextBookmark(vscode.window.activeTextEditor.selection.active)
+            this.manager.activeDocument.nextBookmark(vscode.window.activeTextEditor.selection.active)
                 .then((nextLine) => {
                     if ((nextLine === Bookmark.NO_MORE_BOOKMARKS) || (nextLine === Bookmark.NO_BOOKMARKS)) {
-                        this.bookmarkManager.nextDocumentWithBookmarks(this.bookmarkManager.activeDocument)
+                        this.manager.nextDocumentWithBookmarks(this.manager.activeDocument)
                             .then((nextDocumentPath) => {
                                 if (!nextDocumentPath) {
                                     return;
@@ -632,12 +568,12 @@ export class BookmarkExt {
                                 // same document?
                                 let activeDocumentPath = BookmarkManager.normalize(vscode.window.activeTextEditor.document.uri.fsPath);
                                 if (nextDocumentPath.toString() === activeDocumentPath) {
-                                    let location = this.bookmarkManager.activeDocument.bookmarks[0];
+                                    let location = this.manager.activeDocument.bookmarks[0];
                                     this.revealLine(location);
                                 } else {
                                     vscode.workspace.openTextDocument(nextDocumentPath.toString()).then(doc => {
                                         vscode.window.showTextDocument(doc).then(editor => {
-                                            let location = this.bookmarkManager.activeDocument.bookmarks[0];
+                                            let location = this.manager.activeDocument.bookmarks[0];
                                             this.revealLine(location);
                                         });
                                     });
@@ -662,14 +598,14 @@ export class BookmarkExt {
                 return;
             }
 
-            if (!this.bookmarkManager.activeDocument) {
+            if (!this.manager.activeDocument) {
                 return;
             }
 
-            this.bookmarkManager.activeDocument.nextBookmark(vscode.window.activeTextEditor.selection.active, JumpDirection.BACKWARD)
+            this.manager.activeDocument.nextBookmark(vscode.window.activeTextEditor.selection.active, JumpDirection.BACKWARD)
                 .then((location) => {
                     if ((location === Bookmark.NO_MORE_BOOKMARKS) || (location === Bookmark.NO_BOOKMARKS)) {
-                        this.bookmarkManager.nextDocumentWithBookmarks(this.bookmarkManager.activeDocument, JumpDirection.BACKWARD)
+                        this.manager.nextDocumentWithBookmarks(this.manager.activeDocument, JumpDirection.BACKWARD)
                             .then((nextDocument) => {
 
                                 if (!nextDocument) {
@@ -679,12 +615,12 @@ export class BookmarkExt {
                                 // same document?
                                 let activeDocument = BookmarkManager.normalize(vscode.window.activeTextEditor.document.uri.fsPath);
                                 if (nextDocument.toString() === activeDocument) {
-                                    let locations = this.bookmarkManager.activeDocument.bookmarks;
+                                    let locations = this.manager.activeDocument.bookmarks;
                                     this.revealLine(locations.pop());
                                 } else {
                                     vscode.workspace.openTextDocument(nextDocument.toString()).then(doc => {
                                         vscode.window.showTextDocument(doc).then(editor => {
-                                            let locations = this.bookmarkManager.activeDocument.bookmarks;
+                                            let locations = this.manager.activeDocument.bookmarks;
                                             this.revealLine(locations.pop());
                                         });
                                     });
@@ -705,7 +641,7 @@ export class BookmarkExt {
         vscode.commands.registerCommand("metaGo.bookmark.view", () => {
             // no bookmark
             let totalBookmarkCount: number = 0;
-            for (let element of this.bookmarkManager.documents) {
+            for (let element of this.manager.documents) {
                 totalBookmarkCount = totalBookmarkCount + element.bookmarks.length;
             }
             if (totalBookmarkCount === 0) {
@@ -719,8 +655,8 @@ export class BookmarkExt {
             let promises = [];
             let currentLine: number = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.selection.active.line + 1 : -1;
 
-            for (let index = 0; index < this.bookmarkManager.documents.length; index++) {
-                let bookmark = this.bookmarkManager.documents[index];
+            for (let index = 0; index < this.manager.documents.length; index++) {
+                let bookmark = this.manager.documents[index];
                 let pp = bookmark.listBookmarks();
                 promises.push(pp);
             }

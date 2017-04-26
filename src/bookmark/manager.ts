@@ -1,42 +1,24 @@
 import * as vscode from "vscode";
 import fs = require("fs");
-import { Document, JumpDirection } from "./document";
+import { Document } from "./document";
 import { BookmarkConfig } from './config';
 import { Bookmark } from './bookmark';
 import { History } from './history';
+
+export class BookmarkModel {
+    constructor(document: Document, bookmark: Bookmark) { }
+}
+
+export enum JumpDirection { FORWARD, BACKWARD };
 
 export class BookmarkManager {
     public documents = new Map<string, Document>();
     public history = new History();
     public activeDocument: Document = undefined;
 
-    constructor() { }
 
     public dispose() {
         this.zip();
-    }
-
-    public loadFrom(jsonObject, relativePath?: boolean) {
-        if (jsonObject === "") {
-            return;
-        }
-
-        let jsonBookmarks = jsonObject.bookmarks;
-        for (let idx = 0; idx < jsonBookmarks.length; idx++) {
-            let jsonBookmark = jsonBookmarks[idx];
-
-            // each bookmark (line)
-            this.addDocumentIfNotExist(jsonBookmark.fsPath);
-            for (let element of jsonBookmark.bookmarks) {
-                this.documents[idx].bookmarks.push(element);
-            }
-        }
-
-        if (relativePath) {
-            for (let element of this.documents) {
-                element.key = element.key.replace("$ROOTPATH$", vscode.workspace.rootPath);
-            }
-        }
     }
 
     public addDocumentIfNotExist(uri: string): Document {
@@ -49,6 +31,23 @@ export class BookmarkManager {
             return doc;
         }
         return existing;
+    }
+
+    public toggleBookmark() {
+        if (!vscode.window.activeTextEditor) {
+            vscode.window.showInformationMessage("Open a file first to toggle bookmarks");
+            return;
+        }
+
+        let line = vscode.window.activeTextEditor.selection.active.line;
+        let char = vscode.window.activeTextEditor.selection.active.character;
+        // fix issue emptyAtLaunch
+        if (!this.activeDocument) {
+            let doc = this.addDocumentIfNotExist(vscode.window.activeTextEditor.document.uri.fsPath);
+            this.activeDocument = doc;
+        }
+
+        this.activeDocument.toggleBookmark(new Bookmark(line, char));
     }
 
     public nextDocumentWithBookmarks(active: Document, direction: JumpDirection = JumpDirection.FORWARD): Promise<string> {
@@ -112,51 +111,37 @@ export class BookmarkManager {
 
     }
 
-    public nextBookmark(active: Document, position: vscode.Position) {
-        let currentLine: number = position.line;
-        let currentDoc: Document = active;
-        let currentBookmarkId: number;
-        for (let index = 0; index < this.documents.length; index++) {
-            let element = this.documents[index];
-            if (element === active) {
-                currentBookmarkId = index;
+    public nextBookmark(direction: JumpDirection = JumpDirection.FORWARD): Promise<BookmarkModel> {
+        return new Promise<BookmarkModel>((resolve, reject) => {
+            const bm = direction === JumpDirection.FORWARD ? this.history.next() : this.history.previous();
+            if (bm === null) {
+                resolve(Bookmark.NO_BOOKMARKS);
+                return;
             }
-        }
 
-        return new Promise((resolve, reject) => {
-            currentDoc.nextBookmark(position)
-                .then((bookmark) => {
-                    resolve(bookmark);
-                    return;
-                })
-                .catch((error) => {
-                    // next document
-                    currentBookmarkId++;
-                    if (currentBookmarkId === this.documents.length) {
-                        currentBookmarkId = 0;
-                    }
-                    currentDoc = this.documents[currentBookmarkId];
+            if (!this.documents.has(bm.documentKey)) {
+                this.history.removeDoc(bm.documentKey);
+                this.nextBookmark().then((bm) => resolve(bm)).catch((e) => reject(e));
+                return;
+            }
 
-                });
+            if (!this.documents[bm.documentKey].bookmarks.has(bm.bookmarkKey)) {
+                this.history.remove(bm.documentKey, bm.bookmarkKey);
+                this.nextBookmark().then((bm) => resolve(bm)).catch((e) => reject(e));
+                return;
+            }
 
+            if (!fs.existsSync(bm.documentKey)) {
+                this.documents.delete(bm.documentKey);
+                this.history.removeDoc(bm.documentKey);
+                this.nextBookmark().then((bm) => resolve(bm)).catch((e) => reject(e));
+                return;
+            }
+
+            const doc = this.documents[bm.documentKey];
+            return resolve(new BookmarkModel(doc, doc.bookmarks[bm.bookmarkKey]));
         });
     }
 
-    public zip(relativePath?: boolean): BookmarkManager {
-        function isNotEmpty(book: Document): boolean {
-            return book.bookmarks.length > 0;
-        }
 
-        let newBookmarks: BookmarkManager = new BookmarkManager();
-        newBookmarks.documents = JSON.parse(JSON.stringify(this.documents)).filter(isNotEmpty);
-
-        if (!relativePath) {
-            return newBookmarks;
-        }
-
-        for (let element of newBookmarks.documents) {
-            element.key = element.key.replace(vscode.workspace.rootPath, "$ROOTPATH$");
-        }
-        return newBookmarks;
-    }
 }

@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { Bookmark } from './bookmark';
 export class HistoryItem {
-    constructor(public docKey: string, public bookmarkKey: string) { }
+    constructor(public documentKey: string, public bookmarkKey: string) { }
 }
 export class History {
     private history: Array<HistoryItem>;
@@ -15,12 +15,12 @@ export class History {
             this.history.push(item);
             return item;
         }
-        this.history.splice(this.index++, 0, item);
+        this.history.splice(++this.index, 0, item);
         return item;
     }
 
     public remove(docKey: string, bkKey: string): HistoryItem {
-        let i = this.history.findIndex((e) => e.docKey === docKey && e.bookmarkKey === bkKey);
+        let i = this.history.findIndex((e) => e.documentKey === docKey && e.bookmarkKey === bkKey);
         if (i === -1) return null;
         const len = this.history.length;
         if (len !== 1 && this.index >= i && this.index === len - 1) {
@@ -32,17 +32,27 @@ export class History {
     }
 
     public removeDoc(docKey: string) {
-        this.history = this.history.filter((hi) => hi.docKey !== docKey);
+        this.history = this.history.filter((hi) => hi.documentKey !== docKey);
     }
 
     public clear() {
         this.history.length = 0;
     }
+
+    public goto(docKey: string, bkKey: string): boolean {
+        let i = this.history.findIndex((e) => e.documentKey === docKey && e.bookmarkKey === bkKey);
+        if (i === -1) {
+            return false;
+        }
+
+        this.index = i;
+    }
+
     public replace(docKey: string, bkKey: string, toDocKey: string, toBkKey: string) {
-        let i = this.history.findIndex((e) => e.docKey === docKey && e.bookmarkKey === bkKey);
+        let i = this.history.findIndex((e) => e.documentKey === docKey && e.bookmarkKey === bkKey);
         if (i !== -1) {
             this.history[i].bookmarkKey = toDocKey;
-            this.history[i].docKey = toDocKey;
+            this.history[i].documentKey = toDocKey;
         }
     }
 
