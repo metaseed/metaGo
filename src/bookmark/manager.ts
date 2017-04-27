@@ -16,11 +16,6 @@ export class BookmarkManager {
     public history = new History();
     public activeDocument: Document = undefined;
 
-
-    public dispose() {
-        this.zip();
-    }
-
     public addDocumentIfNotExist(uri: string): Document {
         uri = Document.normalize(uri);
         let existing: Document = this.documents[uri];
@@ -41,74 +36,13 @@ export class BookmarkManager {
 
         let line = vscode.window.activeTextEditor.selection.active.line;
         let char = vscode.window.activeTextEditor.selection.active.character;
-        // fix issue emptyAtLaunch
+
         if (!this.activeDocument) {
             let doc = this.addDocumentIfNotExist(vscode.window.activeTextEditor.document.uri.fsPath);
             this.activeDocument = doc;
         }
 
         this.activeDocument.toggleBookmark(new Bookmark(line, char));
-    }
-
-    public nextDocumentWithBookmarks(active: Document, direction: JumpDirection = JumpDirection.FORWARD): Promise<string> {
-        let currentBookmark: Document = active;
-        let currentBookmarkIndex: number;
-        for (let index = 0; index < this.documents.length; index++) {
-            let element = this.documents[index];
-            if (element === active) {
-                currentBookmarkIndex = index;
-            }
-        }
-
-        return new Promise((resolve, reject) => {
-            if (direction === JumpDirection.FORWARD) {
-                currentBookmarkIndex++;
-                if (currentBookmarkIndex === this.documents.length) {
-                    currentBookmarkIndex = 0;
-                }
-            } else {
-                currentBookmarkIndex--;
-                if (currentBookmarkIndex === -1) {
-                    currentBookmarkIndex = this.documents.length - 1;
-                }
-            }
-
-            currentBookmark = this.documents[currentBookmarkIndex];
-
-            if (currentBookmark.bookmarks.length === 0) {
-                if (currentBookmark === this.activeDocument) {
-                    resolve('');
-                    return;
-                } else {
-                    this.nextDocumentWithBookmarks(currentBookmark, direction)
-                        .then((nextDocument) => {
-                            resolve(nextDocument);
-                            return;
-                        })
-                        .catch((error) => {
-                            reject(error);
-                            return;
-                        });
-                }
-            } else {
-                if (fs.existsSync(currentBookmark.key)) {
-                    resolve(currentBookmark.key);
-                    return;
-                } else {
-                    this.nextDocumentWithBookmarks(currentBookmark, direction)
-                        .then((nextDocument) => {
-                            resolve(nextDocument);
-                            return;
-                        })
-                        .catch((error) => {
-                            reject(error);
-                            return;
-                        });
-                }
-            }
-
-        });
-
     }
 
     public nextBookmark(direction: JumpDirection = JumpDirection.FORWARD): Promise<BookmarkModel> {
@@ -143,5 +77,10 @@ export class BookmarkManager {
         });
     }
 
+    public clear() {
+        for (let [key, doc] of this.documents) {
+            doc.clear();
+        }
+    }
 
 }

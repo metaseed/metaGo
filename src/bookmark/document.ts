@@ -27,21 +27,29 @@ export class Document {
     }
 
     public addBookmark(bookmark: Bookmark) {
-        let key = bookmark.toString();
+        let key: string = bookmark.key;
+
         if (this.bookmarks.has(key)) {
             return;
         }
         this.bookmarks.set(key, bookmark);
-        this.history.add(this.key, bookmark.key);
+        this.history.add(this.key, key);
     }
 
-    public removeBookmark(bookmark: Bookmark) {
-        let key = bookmark.toString();
+    public removeBookmark(bookmark: Bookmark | string) {
+        let key: string;
+
+        if (typeof bookmark === 'string') {
+            key = bookmark;
+        } else {
+            key = bookmark.key;
+        }
+
         if (!this.bookmarks.has(key)) {
             return;
         }
         this.bookmarks.delete(key);
-        this.history.remove(this.key, bookmark.key);
+        this.history.remove(this.key, key);
     }
 
     public toggleBookmark(bookmark: Bookmark) {
@@ -98,6 +106,9 @@ export class Document {
         });
     }
 
+    /**
+     * clear bookmarks
+     */
     public clear() {
         this.bookmarks.clear();
         this.history.removeDoc(this.key);
