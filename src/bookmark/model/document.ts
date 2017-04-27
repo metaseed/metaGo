@@ -1,18 +1,17 @@
 import * as vscode from "vscode";
 import fs = require("fs");
 
-import { BookmarkConfig } from './config';
+import { BookmarkConfig } from '../config';
 import { Bookmark } from './bookmark';
 import { History } from './history';
-
-
+import { BookmarkLocation } from './location';
 
 export class BookmarkItem {
     constructor(public label: string,
         public description: string,
         public detail?: string,
         public commandId?: string,
-        public location?: Bookmark) { }
+        public location?: BookmarkLocation) { }
 }
 
 export class Document {

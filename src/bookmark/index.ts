@@ -2,14 +2,17 @@ import * as vscode from "vscode";
 import fs = require("fs");
 import path = require("path");
 
-import { BookmarkItem } from "./document";
-import { Bookmark } from './bookmark';
-import { BookmarkManager, JumpDirection } from './manager';
+import { BookmarkItem } from "./model/document";
+import { Bookmark } from './model/bookmark';
+import { BookmarkLocation, JumpDirection } from './model/location';
+import { BookmarkManager } from './manager';
 import { BookmarkConfig } from './config';
 import { Storage } from './storage';
 import { Decoration } from './decoration';
 import { Selection } from './selection';
 import { StickyBookmark } from './sticky';
+import { Document } from './model/document';
+
 export class BookmarkExt {
     private manager: BookmarkManager;
     private storage: Storage;
@@ -57,7 +60,7 @@ export class BookmarkExt {
             if (activeEditor && event.document === activeEditor.document) {
                 let updatedBookmark: boolean = true;
                 // call sticky function when the activeEditor is changed
-                if (this.manager.activeDocument && this.manager.activeDocument.bookmarks.length > 0) {
+                if (this.manager.activeDocument && this.manager.activeDocument.bookmarks.size > 0) {
                     updatedBookmark = this.sticky.stickyBookmarks(event);
                 }
 
@@ -108,15 +111,31 @@ export class BookmarkExt {
         }
         editor.selection = newSe;
     }
-
-    private revealLine(location: Bookmark) {
+    private gotoBookmarkInActiveDoc(bm: Bookmark) {
         let reviewType = vscode.TextEditorRevealType.InCenter;
-        if (location.line === vscode.window.activeTextEditor.selection.active.line) {
+
+        if (bm.line === vscode.window.activeTextEditor.selection.active.line) {
             reviewType = vscode.TextEditorRevealType.InCenterIfOutsideViewport;
         }
-        let newSe = new vscode.Selection(location.line, location.char, location.line, location.char);
+        let newSe = new vscode.Selection(bm.line, bm.char, bm.line, bm.char);
         vscode.window.activeTextEditor.selection = newSe;
         vscode.window.activeTextEditor.revealRange(newSe, reviewType);
+    }
+
+    private gotoBookmark(bookmarkModel: BookmarkLocation) {
+        const bm = bookmarkModel.bookmark;
+        const doc = bookmarkModel.document;
+        const uri = Document.normalize(vscode.window.activeTextEditor.document.uri.fsPath);
+        if (doc.key !== uri) {
+            let uriDocument: vscode.Uri = vscode.Uri.file(doc.key);
+            vscode.workspace.openTextDocument(uriDocument).then(doc => {
+                vscode.window.showTextDocument(doc).then(editor => {
+                    this.gotoBookmarkInActiveDoc(bm);
+                });
+            });
+        }
+
+        this.gotoBookmarkInActiveDoc(bm);
     }
 
     private removeRootPathFrom(path: string): string {
@@ -133,7 +152,8 @@ export class BookmarkExt {
 
 
     private registerCommands() {
-        vscode.commands.registerCommand("metaGo.bookmark.expandSelectionToNext", () => this.selection.expandSelectionToNextBookmark(JumpDirection.FORWARD));
+        vscode.commands.registerCommand("metaGo.bookmark.expandSelectionToNext",
+            () => this.selection.expandSelectionToNextBookmark(JumpDirection.FORWARD));
         vscode.commands.registerCommand("metaGo.bookmark.expandSelectionToPrevious", () => this.selection.expandSelectionToNextBookmark(JumpDirection.BACKWARD));
         vscode.commands.registerCommand("metaGo.bookmark.shrinkSelection", () => this.selection.shrinkSelection());
 
@@ -145,7 +165,6 @@ export class BookmarkExt {
             }
 
             this.manager.activeDocument.clear();
-
             this.storage.save();
             this.decoration.clear();
         });
@@ -156,30 +175,18 @@ export class BookmarkExt {
             this.decoration.clear();
         });
 
-        function selectLines(editor: vscode.TextEditor, lines: Bookmark[]): void {
-            const doc = editor.document;
-            editor.selections.shift();
-            let selections = new Array<vscode.Selection>();
-            let newSe;
-            lines.forEach(line => {
-                newSe = new vscode.Selection(line.line, 0, line.line, doc.lineAt(line.line).text.length);
-                selections.push(newSe);
-            });
-            editor.selections = selections;
-        }
-
         vscode.commands.registerCommand("metaGo.bookmark.selectLines", () => {
             if (!vscode.window.activeTextEditor) {
                 vscode.window.showInformationMessage("Open a file first to clear bookmarks");
                 return;
             }
 
-            if (this.manager.activeDocument.bookmarks.length === 0) {
+            if (this.manager.activeDocument.bookmarks.size === 0) {
                 vscode.window.showInformationMessage("No Bookmark found");
                 return;
             }
 
-            selectLines(vscode.window.activeTextEditor, this.manager.activeDocument.bookmarks);
+            this.selection.selectLines(vscode.window.activeTextEditor);
         });
 
         vscode.commands.registerCommand("metaGo.bookmark.toggle", () => {
@@ -198,38 +205,16 @@ export class BookmarkExt {
                 return;
             }
 
-            this.manager.activeDocument.nextBookmark(vscode.window.activeTextEditor.selection.active)
-                .then((nextLine) => {
-                    if ((nextLine === Bookmark.NO_MORE_BOOKMARKS) || (nextLine === Bookmark.NO_BOOKMARKS)) {
-                        this.manager.nextDocumentWithBookmarks(this.manager.activeDocument)
-                            .then((nextDocumentPath) => {
-                                if (!nextDocumentPath) {
-                                    return;
-                                }
-
-                                // same document?
-                                let activeDocumentPath = BookmarkManager.normalize(vscode.window.activeTextEditor.document.uri.fsPath);
-                                if (nextDocumentPath.toString() === activeDocumentPath) {
-                                    let location = this.manager.activeDocument.bookmarks[0];
-                                    this.revealLine(location);
-                                } else {
-                                    vscode.workspace.openTextDocument(nextDocumentPath.toString()).then(doc => {
-                                        vscode.window.showTextDocument(doc).then(editor => {
-                                            let location = this.manager.activeDocument.bookmarks[0];
-                                            this.revealLine(location);
-                                        });
-                                    });
-                                }
-                            })
-                            .catch((error) => {
-                                vscode.window.showInformationMessage("No more bookmarks...");
-                            });
+            this.manager.nextBookmark(JumpDirection.FORWARD)
+                .then((location) => {
+                    if (location === BookmarkLocation.NO_BOOKMARKS) {
+                        vscode.window.showInformationMessage("No bookmarks...");
                     } else {
-                        this.revealLine(nextLine);
+                        this.gotoBookmark(location);
                     }
                 })
                 .catch((error) => {
-                    console.log("activeBookmark.nextBookmark REJECT" + error);
+                    console.log("nextBookmark REJECT" + error);
                 });
         });
 
@@ -243,49 +228,21 @@ export class BookmarkExt {
                 return;
             }
 
-            this.manager.activeDocument.nextBookmark(vscode.window.activeTextEditor.selection.active, JumpDirection.BACKWARD)
+            this.manager.nextBookmark(JumpDirection.BACKWARD)
                 .then((location) => {
-                    if ((location === Bookmark.NO_MORE_BOOKMARKS) || (location === Bookmark.NO_BOOKMARKS)) {
-                        this.manager.nextDocumentWithBookmarks(this.manager.activeDocument, JumpDirection.BACKWARD)
-                            .then((nextDocument) => {
-
-                                if (!nextDocument) {
-                                    return;
-                                }
-
-                                // same document?
-                                let activeDocument = BookmarkManager.normalize(vscode.window.activeTextEditor.document.uri.fsPath);
-                                if (nextDocument.toString() === activeDocument) {
-                                    let locations = this.manager.activeDocument.bookmarks;
-                                    this.revealLine(locations.pop());
-                                } else {
-                                    vscode.workspace.openTextDocument(nextDocument.toString()).then(doc => {
-                                        vscode.window.showTextDocument(doc).then(editor => {
-                                            let locations = this.manager.activeDocument.bookmarks;
-                                            this.revealLine(locations.pop());
-                                        });
-                                    });
-                                }
-                            })
-                            .catch((error) => {
-                                vscode.window.showInformationMessage("No more this.bookmarks...");
-                            });
+                    if (location === BookmarkLocation.NO_BOOKMARKS) {
+                        vscode.window.showInformationMessage("No bookmarks...");
                     } else {
-                        this.revealLine(location);
+                        this.gotoBookmark(location);
                     }
                 })
                 .catch((error) => {
-                    console.log("activeBookmark.nextBookmark REJECT" + error);
+                    console.log("nextBookmark REJECT" + error);
                 });
         });
 
         vscode.commands.registerCommand("metaGo.bookmark.view", () => {
-            // no bookmark
-            let totalBookmarkCount: number = 0;
-            for (let element of this.manager.documents) {
-                totalBookmarkCount = totalBookmarkCount + element.bookmarks.length;
-            }
-            if (totalBookmarkCount === 0) {
+            if (this.manager.size === 0) {
                 vscode.window.showInformationMessage("No Bookmarks found");
                 return;
             }
@@ -296,7 +253,7 @@ export class BookmarkExt {
             let promises = [];
             let currentLine: number = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.selection.active.line + 1 : -1;
 
-            for (let index = 0; index < this.manager.documents.length; index++) {
+            for (let index = 0; index < this.manager.documents.size; index++) {
                 let bookmark = this.manager.documents[index];
                 let pp = bookmark.listBookmarks();
                 promises.push(pp);
@@ -404,14 +361,9 @@ export class BookmarkExt {
                             }
 
                             if (vscode.window.activeTextEditor && vscode.window.activeTextEditor.document.uri.fsPath.toLowerCase() === filePath.toLowerCase()) {
-                                this.revealLine(item.location);
+                                this.gotoBookmarkInActiveDoc(item.location);
                             } else {
-                                let uriDocument: vscode.Uri = vscode.Uri.file(filePath);
-                                vscode.workspace.openTextDocument(uriDocument).then(doc => {
-                                    vscode.window.showTextDocument(doc, undefined, true).then(editor => {
-                                        this.revealLine(item.location);
-                                    });
-                                });
+                                this.gotoBookmark(item.location)
                             }
                         }
                     };
@@ -423,7 +375,7 @@ export class BookmarkExt {
                                 let uriDocument: vscode.Uri = vscode.Uri.file(activeTextEditorPath);
                                 vscode.workspace.openTextDocument(uriDocument).then(doc => {
                                     vscode.window.showTextDocument(doc).then(editor => {
-                                        this.revealLine(new Bookmark(currentLine - 1, 0));
+                                        this.gotoBookmark(new Bookmark(currentLine - 1, 0));
                                         return;
                                     });
                                 });
@@ -439,13 +391,13 @@ export class BookmarkExt {
                             return;
                         } else {
                             if (!selection.detail) {
-                                this.revealLine(selection.location);
+                                this.gotoBookmark(selection.location);
                             } else {
                                 let newPath = vscode.workspace.rootPath + selection.detail.toString();
                                 let uriDocument: vscode.Uri = vscode.Uri.file(newPath);
                                 vscode.workspace.openTextDocument(uriDocument).then(doc => {
                                     vscode.window.showTextDocument(doc).then(editor => {
-                                        this.revealLine(selection.location);
+                                        this.gotoBookmark(selection.location);
                                     });
                                 });
                             }

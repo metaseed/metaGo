@@ -3,8 +3,8 @@ import fs = require('fs');
 import * as vscode from 'vscode';
 
 import { BookmarkConfig } from './config';
-import { Bookmark } from './bookmark';
-import { Document } from './document';
+import { Bookmark } from './model/bookmark';
+import { Document } from './model/document';
 import { BookmarkManager } from './manager';
 
 export class Storage {
@@ -79,6 +79,5 @@ export class Storage {
         newBookmarks.documents = JSON.parse(JSON.stringify(this.manager.documents)).filter(isNotEmpty);
         return newBookmarks;
     }
-
 
 }

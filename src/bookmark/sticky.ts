@@ -134,7 +134,7 @@ export class StickyBookmark {
         if (direction === "up") {
             diffLine = 1;
 
-            let index = this.manager.activeDocument.bookmarks.findIndex((l) => l.line === lineMin - 1);
+            let index = this.manager.activeDocument.bookmarks.find((l) => l.line === lineMin - 1);
             if (index > -1) {
                 diffChange = lineMax;
                 this.manager.activeDocument.bookmarks.splice(index, 1);

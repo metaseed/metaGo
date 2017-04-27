@@ -1,15 +1,10 @@
 import * as vscode from "vscode";
 import fs = require("fs");
-import { Document } from "./document";
+import { Document } from "./model/document";
 import { BookmarkConfig } from './config';
-import { Bookmark } from './bookmark';
-import { History } from './history';
-
-export class BookmarkModel {
-    constructor(document: Document, bookmark: Bookmark) { }
-}
-
-export enum JumpDirection { FORWARD, BACKWARD };
+import { Bookmark } from './model/bookmark';
+import { History } from './model/history';
+import { BookmarkLocation, JumpDirection } from './model/location';
 
 export class BookmarkManager {
     public documents = new Map<string, Document>();
@@ -45,11 +40,11 @@ export class BookmarkManager {
         this.activeDocument.toggleBookmark(new Bookmark(line, char));
     }
 
-    public nextBookmark(direction: JumpDirection = JumpDirection.FORWARD): Promise<BookmarkModel> {
-        return new Promise<BookmarkModel>((resolve, reject) => {
+    public nextBookmark(direction: JumpDirection = JumpDirection.FORWARD): Promise<BookmarkLocation> {
+        return new Promise<BookmarkLocation>((resolve, reject) => {
             const bm = direction === JumpDirection.FORWARD ? this.history.next() : this.history.previous();
             if (bm === null) {
-                resolve(Bookmark.NO_BOOKMARKS);
+                resolve(BookmarkLocation.NO_BOOKMARKS);
                 return;
             }
 
@@ -73,8 +68,16 @@ export class BookmarkManager {
             }
 
             const doc = this.documents[bm.documentKey];
-            return resolve(new BookmarkModel(doc, doc.bookmarks[bm.bookmarkKey]));
+            return resolve(new BookmarkLocation(doc, doc.bookmarks[bm.bookmarkKey]));
         });
+    }
+
+    public get size(): number {
+        let counter = 0;
+        for (let [key, doc] of this.documents) {
+            counter += doc.bookmarks.size;
+        }
+        return counter;
     }
 
     public clear() {

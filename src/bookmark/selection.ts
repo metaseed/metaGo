@@ -9,6 +9,18 @@ export class Selection {
     constructor(private manager: BookmarkManager) {
     }
 
+    public selectLines(editor: vscode.TextEditor): void {
+        const doc = editor.document;
+        editor.selections.shift();
+        let selections = new Array<vscode.Selection>();
+        let newSe;
+        lines.forEach(line => {
+            newSe = new vscode.Selection(line.line, 0, line.line, doc.lineAt(line.line).text.length);
+            selections.push(newSe);
+        });
+        editor.selections = selections;
+    }
+
     public shrinkSelection() {
         if (!vscode.window.activeTextEditor) {
             vscode.window.showInformationMessage("Open a file first to shrink bookmark selection");
