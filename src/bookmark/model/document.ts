@@ -17,7 +17,7 @@ export class BookmarkItem {
 export class Document {
     public bookmarks = new Map<string, Bookmark>();
 
-    constructor(public key: string, private history: History) { }
+    constructor(public key: string, public history: History) { }
 
     public static normalize(uri: string): string {
         // a simple workaround for what appears to be a vscode.Uri bug
@@ -25,7 +25,7 @@ export class Document {
         return uri.replace("///", "/");
     }
 
-    public addBookmark(bookmark: Bookmark) {
+    public addBookmark = (bookmark: Bookmark) => {
         let key: string = bookmark.key;
 
         if (this.bookmarks.has(key)) {
@@ -35,7 +35,7 @@ export class Document {
         this.history.add(this.key, key);
     }
 
-    public removeBookmark(bookmark: Bookmark | string) {
+    public removeBookmark = (bookmark: Bookmark | string) => {
         let key: string;
 
         if (typeof bookmark === 'string') {
@@ -51,23 +51,17 @@ export class Document {
         this.history.remove(this.key, key);
     }
 
-    public toggleBookmark(bookmark: Bookmark) {
+    public toggleBookmark = (bookmark: Bookmark) => {
         if (this.bookmarks.has(bookmark.key)) {
-            this.addBookmark(bookmark);
-        } else {
             this.removeBookmark(bookmark);
+        } else {
+            this.addBookmark(bookmark);
         }
     }
 
-    public listBookmarks(): Promise<Array<BookmarkItem>> {
+    public getBookmarkItems = (): Promise<Array<BookmarkItem>> => {
         return new Promise((resolve, reject) => {
-            if (this.bookmarks.size === 0) {
-                this.history.clear();
-                resolve([]);
-                return;
-            }
-
-            if (!fs.existsSync(this.key)) {
+            if (this.bookmarks.size === 0 || !fs.existsSync(this.key)) {
                 this.history.removeDoc(this.key);
                 resolve([]);
                 return;
@@ -86,7 +80,7 @@ export class Document {
                         items.push(new BookmarkItem(
                             lineNumber.toString(),
                             lineText,
-                            normalizedPath, null, value
+                            normalizedPath, null, new BookmarkLocation(this, value)
                         ));
                     } else {
                         invalids.push(key);
@@ -108,7 +102,7 @@ export class Document {
     /**
      * clear bookmarks
      */
-    public clear() {
+    public clear = () => {
         this.bookmarks.clear();
         this.history.removeDoc(this.key);
     }

@@ -10,7 +10,7 @@ import { BookmarkManager } from './manager';
 export class Storage {
     constructor(private config: BookmarkConfig, private context: vscode.ExtensionContext, private manager: BookmarkManager) { }
 
-    public load(): boolean {
+    public load = (): boolean => {
         if (vscode.workspace.rootPath && this.config.saveBookmarksInProject) {
             let fPath: string = path.join(vscode.workspace.rootPath, ".vscode", "bookmarks.json");
 
@@ -20,7 +20,6 @@ export class Storage {
 
             try {
                 let str = fs.readFileSync(fPath).toString();
-                str = str.replace("$ROOTPATH$", vscode.workspace.rootPath);
                 this.updateManagerData(JSON.parse(str));
                 return true;
             } catch (error) {
@@ -37,7 +36,7 @@ export class Storage {
         }
     }
 
-    public save(): void {
+    public save = async () => {
         if (this.manager.documents.size === 0) {
             return;
         }
@@ -47,37 +46,47 @@ export class Storage {
             if (!fs.existsSync(path.dirname(fPath))) {
                 fs.mkdirSync(path.dirname(fPath));
             }
-            let str = JSON.stringify(this.getManagerToSave(), null, "\t");
-            str = str.replace(vscode.workspace.rootPath, "$ROOTPATH$");
+            let str = JSON.stringify(await this.getManagerToSave(), null, "    ");
+            //let root = JSON.stringify(vscode.workspace.rootPath).replace(/"/g, '').replace(/\\/g, '\\\\')
+            //str = str.replace(new RegExp(root, 'gm'), "$ROOTPATH$");
             fs.writeFileSync(fPath, str);
         } else {
-            this.context.workspaceState.update("bookmarks", JSON.stringify(this.getManagerToSave()));
+            this.context.workspaceState.update("bookmarks", JSON.stringify(await this.getManagerToSave()));
         }
     }
 
-    private updateManagerData(jsonObject) {
+    private updateManagerData = (jsonObject) => {
         if (jsonObject === "") {
             return;
         }
 
-        let jsonBookmarks: Map<string, Document> = jsonObject.documents;
+        let jsonBookmarks = jsonObject.documents;
 
-        for (let [key, doc] of jsonBookmarks) {
-            this.manager.addDocumentIfNotExist(key);
-            for (let [bmKey, bm] of doc.bookmarks) {
-                this.manager[key].bookmarks[bmKey] = bm;
+        for (let key in jsonBookmarks) {
+            const docKey = key.replace("$ROOTPATH$", vscode.workspace.rootPath);
+            const doc = this.manager.addDocumentIfNotExist(docKey);
+            for (let bmKey in jsonBookmarks[key].bookmarks) {
+                const bm = jsonBookmarks[key].bookmarks[bmKey];
+                doc.addBookmark(new Bookmark(bm.line, bm.char));
             }
         }
+        this.manager.history.history = jsonObject.history.history;
+        this.manager.history.index = Math.min(jsonObject.history.index, this.manager.history.history.length - 1);
     }
 
-    private getManagerToSave(): BookmarkManager {
-        function isNotEmpty(book: Document): boolean {
-            return book.bookmarks.size > 0;
+    private getManagerToSave = async () => {
+        let manager = new BookmarkManager();
+        await this.manager.tidyBookmarks();
+        for (let [docKey, doc] of this.manager.documents) {
+            const key = docKey.replace(vscode.workspace.rootPath, "$ROOTPATH$");
+            const newDoc = new Document(key, undefined);
+            manager.documents[key] = newDoc;
+            for (let [bmKey, bm] of doc.bookmarks) {
+                newDoc.bookmarks.set(bmKey, new Bookmark(bm.line, bm.char));
+            }
         }
-
-        let newBookmarks: BookmarkManager = new BookmarkManager();
-        newBookmarks.documents = JSON.parse(JSON.stringify(this.manager.documents)).filter(isNotEmpty);
-        return newBookmarks;
+        manager.history = this.manager.history;
+        return manager;
     }
 
 }

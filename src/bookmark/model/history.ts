@@ -4,10 +4,10 @@ export class HistoryItem {
     constructor(public documentKey: string, public bookmarkKey: string) { }
 }
 export class History {
-    private history: Array<HistoryItem>;
-    private index: number;
+    public history: Array<HistoryItem> = new Array<HistoryItem>();
+    public index: number;
 
-    public add(docKey: string, bkKey: string): HistoryItem {
+    public add = (docKey: string, bkKey: string): HistoryItem => {
         const item = new HistoryItem(docKey, bkKey);
         const len = this.history.length;
         if (len === 0) {
@@ -19,7 +19,7 @@ export class History {
         return item;
     }
 
-    public remove(docKey: string, bkKey: string): HistoryItem {
+    public remove = (docKey: string, bkKey: string): HistoryItem => {
         let i = this.history.findIndex((e) => e.documentKey === docKey && e.bookmarkKey === bkKey);
         if (i === -1) return null;
         const len = this.history.length;
@@ -31,15 +31,15 @@ export class History {
         return rm[0];
     }
 
-    public removeDoc(docKey: string) {
+    public removeDoc = (docKey: string) => {
         this.history = this.history.filter((hi) => hi.documentKey !== docKey);
     }
 
-    public clear() {
+    public clear = () => {
         this.history.length = 0;
     }
 
-    public goto(docKey: string, bkKey: string): boolean {
+    public goto = (docKey: string, bkKey: string): boolean => {
         let i = this.history.findIndex((e) => e.documentKey === docKey && e.bookmarkKey === bkKey);
         if (i === -1) {
             return false;
@@ -48,7 +48,7 @@ export class History {
         this.index = i;
     }
 
-    public replace(docKey: string, bkKey: string, toDocKey: string, toBkKey: string) {
+    public replace = (docKey: string, bkKey: string, toDocKey: string, toBkKey: string) => {
         let i = this.history.findIndex((e) => e.documentKey === docKey && e.bookmarkKey === bkKey);
         if (i !== -1) {
             this.history[i].bookmarkKey = toDocKey;
@@ -56,7 +56,7 @@ export class History {
         }
     }
 
-    public next(): HistoryItem {
+    public next = (): HistoryItem => {
         const len = this.history.length;
         if (len === 0) return null;
 
@@ -68,7 +68,7 @@ export class History {
         return this.history[++this.index];
     }
 
-    public previous(): HistoryItem {
+    public previous = (): HistoryItem => {
         const len = this.history.length;
         if (len === 0) return null;
 

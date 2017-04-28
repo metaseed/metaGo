@@ -30,7 +30,7 @@ export class Decoration {
         vscode.window.activeTextEditor.setDecorations(this.decorationType, books);
     }
 
-    public update() {
+    public update = () => {
         let activeEditor = vscode.window.activeTextEditor;
         if (!activeEditor) {
             return;

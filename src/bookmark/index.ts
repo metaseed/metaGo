@@ -61,7 +61,7 @@ export class BookmarkExt {
                 let updatedBookmark: boolean = true;
                 // call sticky function when the activeEditor is changed
                 if (this.manager.activeDocument && this.manager.activeDocument.bookmarks.size > 0) {
-                    updatedBookmark = this.sticky.stickyBookmarks(event);
+                    //updatedBookmark = this.sticky.stickyBookmarks(event);
                 }
 
                 activeEditorCountLine = event.document.lineCount;
@@ -75,7 +75,7 @@ export class BookmarkExt {
         this.registerCommands();
     }
 
-    private expandLineRange(editor: vscode.TextEditor, toLine: number, direction: JumpDirection) {
+    private expandLineRange = (editor: vscode.TextEditor, toLine: number, direction: JumpDirection) => {
         const doc = editor.document;
         let newSe: vscode.Selection;
         let actualSelection: vscode.Selection = editor.selection;
@@ -99,7 +99,7 @@ export class BookmarkExt {
         editor.selection = newSe;
     }
 
-    private shrinkLineRange(editor: vscode.TextEditor, toLine: number, direction: JumpDirection) {
+    private shrinkLineRange = (editor: vscode.TextEditor, toLine: number, direction: JumpDirection) => {
         const doc = editor.document;
         let newSe: vscode.Selection;
 
@@ -111,7 +111,7 @@ export class BookmarkExt {
         }
         editor.selection = newSe;
     }
-    private gotoBookmarkInActiveDoc(bm: Bookmark) {
+    private gotoBookmarkInActiveDoc = (bm: Bookmark) => {
         let reviewType = vscode.TextEditorRevealType.InCenter;
 
         if (bm.line === vscode.window.activeTextEditor.selection.active.line) {
@@ -122,14 +122,14 @@ export class BookmarkExt {
         vscode.window.activeTextEditor.revealRange(newSe, reviewType);
     }
 
-    private gotoBookmark(bookmarkModel: BookmarkLocation) {
+    private gotoBookmark = (bookmarkModel: BookmarkLocation, preserveFocus: boolean = false) => {
         const bm = bookmarkModel.bookmark;
         const doc = bookmarkModel.document;
         const uri = Document.normalize(vscode.window.activeTextEditor.document.uri.fsPath);
         if (doc.key !== uri) {
             let uriDocument: vscode.Uri = vscode.Uri.file(doc.key);
             vscode.workspace.openTextDocument(uriDocument).then(doc => {
-                vscode.window.showTextDocument(doc).then(editor => {
+                vscode.window.showTextDocument(doc, undefined, preserveFocus).then(editor => {
                     this.gotoBookmarkInActiveDoc(bm);
                 });
             });
@@ -138,7 +138,7 @@ export class BookmarkExt {
         this.gotoBookmarkInActiveDoc(bm);
     }
 
-    private removeRootPathFrom(path: string): string {
+    private removeRootPathFrom = (path: string): string => {
         if (!vscode.workspace.rootPath) {
             return path;
         }
@@ -151,7 +151,7 @@ export class BookmarkExt {
     }
 
 
-    private registerCommands() {
+    private registerCommands = () => {
         vscode.commands.registerCommand("metaGo.bookmark.expandSelectionToNext",
             () => this.selection.expandSelectionToNextBookmark(JumpDirection.FORWARD));
         vscode.commands.registerCommand("metaGo.bookmark.expandSelectionToPrevious", () => this.selection.expandSelectionToNextBookmark(JumpDirection.BACKWARD));
@@ -190,9 +190,14 @@ export class BookmarkExt {
         });
 
         vscode.commands.registerCommand("metaGo.bookmark.toggle", () => {
-            this.manager.toggleBookmark();
-            this.storage.save();
-            this.decoration.update();
+            try {
+                this.manager.toggleBookmark();
+                this.storage.save();
+                this.decoration.update();
+            }
+            catch (err) {
+                console.log(err);
+            }
         });
 
         vscode.commands.registerCommand("metaGo.bookmark.jumpToNext", () => {
@@ -253,9 +258,8 @@ export class BookmarkExt {
             let promises = [];
             let currentLine: number = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.selection.active.line + 1 : -1;
 
-            for (let index = 0; index < this.manager.documents.size; index++) {
-                let bookmark = this.manager.documents[index];
-                let pp = bookmark.listBookmarks();
+            for (let [key, doc] of this.manager.documents) {
+                let pp = doc.getBookmarkItems();
                 promises.push(pp);
             }
 
@@ -360,28 +364,10 @@ export class BookmarkExt {
                                 }
                             }
 
-                            if (vscode.window.activeTextEditor && vscode.window.activeTextEditor.document.uri.fsPath.toLowerCase() === filePath.toLowerCase()) {
-                                this.gotoBookmarkInActiveDoc(item.location);
-                            } else {
-                                this.gotoBookmark(item.location)
-                            }
+                            this.gotoBookmark(item.location, true)
                         }
                     };
                     vscode.window.showQuickPick(itemsSorted, options).then((selection: BookmarkItem) => {
-                        if (typeof selection === "undefined") {
-                            if (activeTextEditorPath === "") {
-                                return;
-                            } else {
-                                let uriDocument: vscode.Uri = vscode.Uri.file(activeTextEditorPath);
-                                vscode.workspace.openTextDocument(uriDocument).then(doc => {
-                                    vscode.window.showTextDocument(doc).then(editor => {
-                                        this.gotoBookmark(new Bookmark(currentLine - 1, 0));
-                                        return;
-                                    });
-                                });
-                            }
-                        }
-
                         if (typeof selection === "undefined") {
                             return;
                         }
@@ -390,17 +376,7 @@ export class BookmarkExt {
                             vscode.commands.executeCommand(selection.commandId);
                             return;
                         } else {
-                            if (!selection.detail) {
-                                this.gotoBookmark(selection.location);
-                            } else {
-                                let newPath = vscode.workspace.rootPath + selection.detail.toString();
-                                let uriDocument: vscode.Uri = vscode.Uri.file(newPath);
-                                vscode.workspace.openTextDocument(uriDocument).then(doc => {
-                                    vscode.window.showTextDocument(doc).then(editor => {
-                                        this.gotoBookmark(selection.location);
-                                    });
-                                });
-                            }
+                            this.gotoBookmark(selection.location);
                         }
                     });
                 }

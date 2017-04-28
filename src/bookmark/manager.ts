@@ -9,21 +9,39 @@ import { BookmarkLocation, JumpDirection } from './model/location';
 export class BookmarkManager {
     public documents = new Map<string, Document>();
     public history = new History();
-    public activeDocument: Document = undefined;
+    private _activeDocument: Document = undefined;
 
-    public addDocumentIfNotExist(uri: string): Document {
-        uri = Document.normalize(uri);
-        let existing: Document = this.documents[uri];
-
-        if (typeof existing === "undefined") {
-            let doc = new Document(uri, this.history);
-            this.documents[uri] = doc;
-            return doc;
+    public get activeDocument() {
+        return this._activeDocument;
+    }
+    public set activeDocument(doc: Document) {
+        this._activeDocument = doc;
+        if (!this.documents.has(doc.key)) {
+            this.documents.set(doc.key, doc);
         }
-        return existing;
     }
 
-    public toggleBookmark() {
+    public addDocumentIfNotExist = (uri: string): Document => {
+        uri = Document.normalize(uri);
+
+        if (!this.documents.has(uri)) {
+            let doc = new Document(uri, this.history);
+            this.documents.set(uri, doc);
+            return doc;
+        }
+        return this.documents.get(uri);
+    }
+
+    public tidyBookmarks = async () => {
+        for (let [key, doc] of this.documents) {
+            await doc.getBookmarkItems();
+            if (doc.bookmarks.size === 0) {
+                this.documents.delete(key);
+            }
+        }
+    }
+
+    public toggleBookmark = () => {
         if (!vscode.window.activeTextEditor) {
             vscode.window.showInformationMessage("Open a file first to toggle bookmarks");
             return;
@@ -40,7 +58,7 @@ export class BookmarkManager {
         this.activeDocument.toggleBookmark(new Bookmark(line, char));
     }
 
-    public nextBookmark(direction: JumpDirection = JumpDirection.FORWARD): Promise<BookmarkLocation> {
+    public nextBookmark = (direction: JumpDirection = JumpDirection.FORWARD): Promise<BookmarkLocation> => {
         return new Promise<BookmarkLocation>((resolve, reject) => {
             const bm = direction === JumpDirection.FORWARD ? this.history.next() : this.history.previous();
             if (bm === null) {
@@ -54,7 +72,7 @@ export class BookmarkManager {
                 return;
             }
 
-            if (!this.documents[bm.documentKey].bookmarks.has(bm.bookmarkKey)) {
+            if (!this.documents.get(bm.documentKey).bookmarks.has(bm.bookmarkKey)) {
                 this.history.remove(bm.documentKey, bm.bookmarkKey);
                 this.nextBookmark().then((bm) => resolve(bm)).catch((e) => reject(e));
                 return;
@@ -67,20 +85,23 @@ export class BookmarkManager {
                 return;
             }
 
-            const doc = this.documents[bm.documentKey];
-            return resolve(new BookmarkLocation(doc, doc.bookmarks[bm.bookmarkKey]));
+            const doc = this.documents.get(bm.documentKey);
+            return resolve(new BookmarkLocation(doc, doc.bookmarks.get(bm.bookmarkKey)));
         });
     }
 
     public get size(): number {
         let counter = 0;
-        for (let [key, doc] of this.documents) {
-            counter += doc.bookmarks.size;
-        }
+        let func = () => {
+            for (let [key, doc] of this.documents) {
+                counter += doc.bookmarks.size;
+            }
+        };
+        func();
         return counter;
     }
 
-    public clear() {
+    public clear = () => {
         for (let [key, doc] of this.documents) {
             doc.clear();
         }
