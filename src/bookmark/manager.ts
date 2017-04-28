@@ -21,11 +21,16 @@ export class BookmarkManager {
         }
     }
 
-    public addDocumentIfNotExist = (uri: string): Document => {
+    public addDocumentIfNotExist = (uri: string, document?: Document): Document => {
         uri = Document.normalize(uri);
 
         if (!this.documents.has(uri)) {
-            let doc = new Document(uri, this.history);
+            let doc: Document;
+            if (document) {
+                doc = document;
+            } else {
+                doc = new Document(uri, this.history);
+            }
             this.documents.set(uri, doc);
             return doc;
         }

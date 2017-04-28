@@ -48,6 +48,7 @@ export class BookmarkExt {
         vscode.window.onDidChangeActiveTextEditor(editor => {
             if (editor) {
                 this.manager.activeDocument = this.manager.addDocumentIfNotExist(editor.document.uri.fsPath);
+                activeEditor = vscode.window.activeTextEditor;
                 triggerUpdateDecorations();
             }
         }, null, context.subscriptions);
@@ -59,7 +60,6 @@ export class BookmarkExt {
         vscode.workspace.onDidChangeTextDocument(event => {
             if (activeEditor && event.document === activeEditor.document) {
                 let updatedBookmark: boolean = true;
-                // call sticky function when the activeEditor is changed
                 if (this.manager.activeDocument && this.manager.activeDocument.bookmarks.size > 0) {
                     //updatedBookmark = this.sticky.stickyBookmarks(event);
                 }

@@ -6,6 +6,7 @@ import { BookmarkConfig } from './config';
 import { Bookmark } from './model/bookmark';
 import { Document } from './model/document';
 import { BookmarkManager } from './manager';
+import { History, HistoryItem } from './model/history';
 
 export class Storage {
     constructor(private config: BookmarkConfig, private context: vscode.ExtensionContext, private manager: BookmarkManager) { }
@@ -46,7 +47,8 @@ export class Storage {
             if (!fs.existsSync(path.dirname(fPath))) {
                 fs.mkdirSync(path.dirname(fPath));
             }
-            let str = JSON.stringify(await this.getManagerToSave(), null, "    ");
+            const manager = await this.getManagerToSave();
+            let str = JSON.stringify(manager, null, "    ");
             //let root = JSON.stringify(vscode.workspace.rootPath).replace(/"/g, '').replace(/\\/g, '\\\\')
             //str = str.replace(new RegExp(root, 'gm'), "$ROOTPATH$");
             fs.writeFileSync(fPath, str);
@@ -70,7 +72,11 @@ export class Storage {
                 doc.addBookmark(new Bookmark(bm.line, bm.char));
             }
         }
-        this.manager.history.history = jsonObject.history.history;
+        this.manager.history.history.length = 0;
+        jsonObject.history.history.forEach((item: HistoryItem) => {
+            const docKey = item.documentKey.replace('$ROOTPATH$', vscode.workspace.rootPath);
+            this.manager.history.history.push(new HistoryItem(docKey, item.bookmarkKey));
+        });
         this.manager.history.index = Math.min(jsonObject.history.index, this.manager.history.history.length - 1);
     }
 
@@ -78,14 +84,19 @@ export class Storage {
         let manager = new BookmarkManager();
         await this.manager.tidyBookmarks();
         for (let [docKey, doc] of this.manager.documents) {
-            const key = docKey.replace(vscode.workspace.rootPath, "$ROOTPATH$");
-            const newDoc = new Document(key, undefined);
-            manager.documents[key] = newDoc;
+            const key = docKey.replace(vscode.workspace.rootPath, '$ROOTPATH$');
+            let newDoc = new Document(key, undefined);
+
+            newDoc = manager.documents[key] = newDoc;
             for (let [bmKey, bm] of doc.bookmarks) {
-                newDoc.bookmarks.set(bmKey, new Bookmark(bm.line, bm.char));
+                newDoc.bookmarks[bmKey] = new Bookmark(bm.line, bm.char);
             }
         }
-        manager.history = this.manager.history;
+        manager.history.index = this.manager.history.index;
+        this.manager.history.history.forEach(item => {
+            const docKey = item.documentKey.replace(vscode.workspace.rootPath, '$ROOTPATH$');
+            manager.history.history.push(new HistoryItem(docKey, item.bookmarkKey));
+        });
         return manager;
     }
 

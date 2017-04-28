@@ -59,6 +59,16 @@ export class Document {
         }
     }
 
+    public getBookmarks(line: number) {
+        const invalidKeys = [];
+        for (let [key, bm] of this.bookmarks) {
+            if (bm.line === line) {
+                invalidKeys.push(key);
+            }
+        }
+        return invalidKeys;
+    }
+
     public getBookmarkItems = (): Promise<Array<BookmarkItem>> => {
         return new Promise((resolve, reject) => {
             if (this.bookmarks.size === 0 || !fs.existsSync(this.key)) {
