@@ -5,7 +5,8 @@ import { BookmarkConfig } from './config';
 import { BookmarkManager } from './manager';
 
 export class Decoration {
-    private decorationType: vscode.TextEditorDecorationType;
+    private lineDecorationType: vscode.TextEditorDecorationType;
+    private charDecorationType: vscode.TextEditorDecorationType;
 
     constructor(private config: BookmarkConfig, private context: vscode.ExtensionContext, private manager: BookmarkManager) {
         if (config.pathIcon !== "") {
@@ -18,16 +19,29 @@ export class Decoration {
         }
         config.pathIcon = config.pathIcon.replace(/\\/g, "/");
 
-        this.decorationType = vscode.window.createTextEditorDecorationType({
+        this.lineDecorationType = vscode.window.createTextEditorDecorationType({
             gutterIconPath: config.pathIcon,
             overviewRulerLane: vscode.OverviewRulerLane.Full,
             overviewRulerColor: "rgba(21, 126, 251, 0.7)"
+        });
+
+        this.charDecorationType = vscode.window.createTextEditorDecorationType({
+            borderWidth: '2px',
+            borderStyle: 'solid',
+            light: {
+                // this color will be used in light color themes
+                borderColor: 'darkblue'
+            },
+            dark: {
+                // this color will be used in dark color themes
+                borderColor: 'blue'
+            }
         });
     }
 
     public clear() {
         let books: vscode.Range[] = [];
-        vscode.window.activeTextEditor.setDecorations(this.decorationType, books);
+        vscode.window.activeTextEditor.setDecorations(this.lineDecorationType, books);
     }
 
     public update = () => {
@@ -45,15 +59,18 @@ export class Decoration {
             return;
         }
 
-        let marks: vscode.Range[] = [];
+        const lineMarks: vscode.Range[] = [];
+        const charMarks: vscode.Range[] = [];
         if (activeEditor.document.lineCount === 1 && activeEditor.document.lineAt(0).text === "") {
             this.manager.activeDocument.clear();
         } else {
             let invalids = [];
             for (let [key, bm] of this.manager.activeDocument.bookmarks) {
                 if (bm.line <= activeEditor.document.lineCount) {
-                    let decoration = new vscode.Range(bm.line, 0, bm.line, 0);
-                    marks.push(decoration);
+                    const lineDecoration = new vscode.Range(bm.line, 0, bm.line, 0);
+                    const charDecoration = new vscode.Range(bm.line, bm.char, bm.line, bm.char + 1);
+                    lineMarks.push(lineDecoration);
+                    charMarks.push(charDecoration);
                 } else {
                     invalids.push(key);
                 }
@@ -66,6 +83,7 @@ export class Decoration {
                 }
             }
         }
-        activeEditor.setDecorations(this.decorationType, marks);
+        activeEditor.setDecorations(this.lineDecorationType, lineMarks);
+        activeEditor.setDecorations(this.charDecorationType, charMarks);
     }
 }
