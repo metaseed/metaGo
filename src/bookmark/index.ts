@@ -28,7 +28,6 @@ export class BookmarkExt {
         this.sticky = new StickyBookmark(this.manager);
 
         this.storage.load();
-        let activeEditorCountLine: number;
 
         // Timeout
         let timeout = null;
@@ -41,14 +40,16 @@ export class BookmarkExt {
 
         let activeEditor = vscode.window.activeTextEditor;
         if (activeEditor) {
+            this.sticky.activeEditorCountLine = activeEditor.document.lineCount;
             this.manager.activeDocument = this.manager.addDocumentIfNotExist(activeEditor.document.uri.fsPath);
             triggerUpdateDecorations();
         }
 
         vscode.window.onDidChangeActiveTextEditor(editor => {
+            activeEditor = vscode.window.activeTextEditor;
             if (editor) {
+                this.sticky.activeEditorCountLine = editor.document.lineCount;
                 this.manager.activeDocument = this.manager.addDocumentIfNotExist(editor.document.uri.fsPath);
-                activeEditor = vscode.window.activeTextEditor;
                 triggerUpdateDecorations();
             }
         }, null, context.subscriptions);
@@ -61,10 +62,10 @@ export class BookmarkExt {
             if (activeEditor && event.document === activeEditor.document) {
                 let updatedBookmark: boolean = true;
                 if (this.manager.activeDocument && this.manager.activeDocument.bookmarks.size > 0) {
-                    //updatedBookmark = this.sticky.stickyBookmarks(event);
+                    updatedBookmark = this.sticky.stickyBookmarks(event);
                 }
 
-                activeEditorCountLine = event.document.lineCount;
+                this.sticky.activeEditorCountLine = event.document.lineCount;
                 this.decoration.update();
 
                 if (updatedBookmark) {

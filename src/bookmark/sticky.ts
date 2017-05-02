@@ -3,6 +3,7 @@ import { BookmarkManager } from './manager';
 import { Bookmark } from './model/bookmark';
 
 export class StickyBookmark {
+    public activeEditorCountLine;
 
     constructor(private manager: BookmarkManager) {
     }
@@ -10,17 +11,16 @@ export class StickyBookmark {
     public stickyBookmarks(event): boolean {
         let diffLine: number;
         let updatedBookmark: boolean = false;
-        let activeEditorCountLine = vscode.window.activeTextEditor.document.lineCount;
         let bms = this.manager.activeDocument.bookmarks;
         let doc = this.manager.activeDocument;
 
         if (this.HadOnlyOneValidContentChange(event)) {
             // add or delete line case
-            if (event.document.lineCount !== activeEditorCountLine) {
-                if (event.document.lineCount > activeEditorCountLine) {
-                    diffLine = event.document.lineCount - activeEditorCountLine;
-                } else if (event.document.lineCount < activeEditorCountLine) {
-                    diffLine = activeEditorCountLine - event.document.lineCount;
+            if (event.document.lineCount !== this.activeEditorCountLine) {
+                if (event.document.lineCount > this.activeEditorCountLine) {
+                    diffLine = event.document.lineCount - this.activeEditorCountLine;
+                } else if (event.document.lineCount < this.activeEditorCountLine) {
+                    diffLine = this.activeEditorCountLine - event.document.lineCount;
                     diffLine = 0 - diffLine;
 
                     // one line up
@@ -38,79 +38,78 @@ export class StickyBookmark {
                             }
                         }
                     }
-
-                    // for (let index in this.bookmarks.activeBookmark.bookmarks. {
-                    for (let index = 0; index < this.manager.activeDocument.bookmarks.size; index++) {
-                        let eventLine = event.contentChanges[0].range.start.line;
-                        let eventCharacter = event.contentChanges[0].range.start.character;
-
-                        // indent ?
-                        if (eventCharacter > 0) {
-                            let textInEventLine = vscode.window.activeTextEditor.document.lineAt(eventLine).text;
-                            textInEventLine = textInEventLine.replace(/\t/g, "").replace(/\s/g, "");
-                            if (textInEventLine === "") {
-                                eventCharacter = 0;
-                            }
-                        }
-
-                        // also =
-                        if (
-                            ((this.manager.activeDocument.bookmarks[index] > eventLine) && (eventCharacter > 0)) ||
-                            ((this.manager.activeDocument.bookmarks[index] >= eventLine) && (eventCharacter === 0))
-                        ) {
-                            let newLine = this.manager.activeDocument.bookmarks[index].line + diffLine;
-                            if (newLine < 0) {
-                                newLine = 0;
-                            }
-
-                            this.manager.activeDocument.bookmarks[index].line = newLine;
-                            updatedBookmark = true;
-                        }
-                    }
                 }
 
-                // paste case
-                if (!updatedBookmark && (event.contentChanges[0].text.length > 1)) {
-                    let selection = vscode.window.activeTextEditor.selection;
-                    let lineRange = [selection.start.line, selection.end.line];
-                    let lineMin = Math.min.apply(this, lineRange);
-                    let lineMax = Math.max.apply(this, lineRange);
+                for (let [key, bm] of this.manager.activeDocument.bookmarks) {
+                    let eventLine = event.contentChanges[0].range.start.line;
+                    let eventCharacter = event.contentChanges[0].range.start.character;
 
-                    if (selection.start.character > 0) {
-                        lineMin++;
-                    }
-
-                    if (selection.end.character < vscode.window.activeTextEditor.document.lineAt(selection.end).range.end.character) {
-                        lineMax--;
-                    }
-
-                    if (lineMin <= lineMax) {
-                        for (let i = lineMin; i <= lineMax; i++) {
-                            const invalidKeys = [];
-                            for (let [key, bm] of bms) {
-                                if (bm.line === i) {
-                                    invalidKeys.push(key);
-                                    updatedBookmark = true;
-                                }
-                            }
-                            invalidKeys.forEach((key) => bms.delete(key));
+                    // indent ?
+                    if (eventCharacter > 0) {
+                        let textInEventLine = vscode.window.activeTextEditor.document.lineAt(eventLine).text;
+                        textInEventLine = textInEventLine.replace(/\t/g, "").replace(/\s/g, "");
+                        if (textInEventLine === "") {
+                            eventCharacter = 0;
                         }
                     }
-                }
-            } else if (event.contentChanges.length === 2) {
-                // move line up and move line down case
-                if (vscode.window.activeTextEditor.selections.length === 1) {
-                    if (event.contentChanges[0].text === "") {
-                        updatedBookmark = this.moveStickyBookmarks("down");
-                    } else if (event.contentChanges[1].text === "") {
-                        updatedBookmark = this.moveStickyBookmarks("up");
+
+                    // also =
+                    if (((bm.line > eventLine) && (eventCharacter > 0)) ||
+                        ((bm.line >= eventLine) && (eventCharacter === 0))
+                    ) {
+                        let newLine = bm.line + diffLine;
+                        if (newLine < 0) {
+                            newLine = 0;
+                        }
+
+                        bm.line = newLine;
+                        updatedBookmark = true;
                     }
                 }
             }
 
-            return updatedBookmark;
+            // paste case
+            if (!updatedBookmark && (event.contentChanges[0].text.length > 1)) {
+                let selection = vscode.window.activeTextEditor.selection;
+                let lineRange = [selection.start.line, selection.end.line];
+                let lineMin = Math.min.apply(this, lineRange);
+                let lineMax = Math.max.apply(this, lineRange);
+
+                if (selection.start.character > 0) {
+                    lineMin++;
+                }
+
+                if (selection.end.character < vscode.window.activeTextEditor.document.lineAt(selection.end).range.end.character) {
+                    lineMax--;
+                }
+
+                if (lineMin <= lineMax) {
+                    for (let i = lineMin; i <= lineMax; i++) {
+                        const invalidKeys = [];
+                        for (let [key, bm] of bms) {
+                            if (bm.line === i) {
+                                invalidKeys.push(key);
+                                updatedBookmark = true;
+                            }
+                        }
+                        invalidKeys.forEach((key) => bms.delete(key));
+                    }
+                }
+            }
+        } else if (event.contentChanges.length === 2) {
+            // move line up and move line down case
+            if (vscode.window.activeTextEditor.selections.length === 1) {
+                if (event.contentChanges[0].text === "") {
+                    updatedBookmark = this.moveStickyBookmarks("down");
+                } else if (event.contentChanges[1].text === "") {
+                    updatedBookmark = this.moveStickyBookmarks("up");
+                }
+            }
         }
+
+        return updatedBookmark;
     }
+
 
     private moveStickyBookmarks = (direction): boolean => {
         let diffChange: number = -1;

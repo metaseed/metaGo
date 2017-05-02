@@ -60,13 +60,13 @@ export class Document {
     }
 
     public getBookmarks(line: number) {
-        const invalidKeys = [];
+        const bms = [];
         for (let [key, bm] of this.bookmarks) {
             if (bm.line === line) {
-                invalidKeys.push(key);
+                bms.push(key);
             }
         }
-        return invalidKeys;
+        return bms;
     }
 
     public getBookmarkItems = (): Promise<Array<BookmarkItem>> => {
