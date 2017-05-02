@@ -26,22 +26,19 @@ export class Decoration {
         });
 
         this.charDecorationType = vscode.window.createTextEditorDecorationType({
-            borderWidth: '2px',
-            borderStyle: 'solid',
-            light: {
-                // this color will be used in light color themes
-                borderColor: 'darkblue'
-            },
-            dark: {
-                // this color will be used in dark color themes
-                borderColor: 'blue'
+            before: {
+                height: '2px',
+                width: '12px',
+                border: '1px solid blue'
             }
         });
+
     }
 
     public clear() {
         let books: vscode.Range[] = [];
         vscode.window.activeTextEditor.setDecorations(this.lineDecorationType, books);
+        vscode.window.activeTextEditor.setDecorations(this.charDecorationType, books);
     }
 
     public update = () => {
@@ -60,7 +57,7 @@ export class Decoration {
         }
 
         const lineMarks: vscode.Range[] = [];
-        const charMarks: vscode.Range[] = [];
+        const charMarks: vscode.DecorationOptions[] = [];
         if (activeEditor.document.lineCount === 1 && activeEditor.document.lineAt(0).text === "") {
             this.manager.activeDocument.clear();
         } else {
@@ -68,9 +65,23 @@ export class Decoration {
             for (let [key, bm] of this.manager.activeDocument.bookmarks) {
                 if (bm.line <= activeEditor.document.lineCount) {
                     const lineDecoration = new vscode.Range(bm.line, 0, bm.line, 0);
-                    const charDecoration = new vscode.Range(bm.line, bm.char, bm.line, bm.char + 1);
                     lineMarks.push(lineDecoration);
-                    charMarks.push(charDecoration);
+                    const charDecorationOption = {
+                        range: new vscode.Range(bm.line, bm.char, bm.line, bm.char),
+                        renderOptions: {
+                            dark: {
+                                after: {
+                                    contentIconPath: this.buildUri()
+                                }
+                            },
+                            light: {
+                                after: {
+                                    contentIconPath: this.buildUri()
+                                }
+                            }
+                        }
+                    };
+                    charMarks.push(charDecorationOption);
                 } else {
                     invalids.push(key);
                 }
@@ -85,5 +96,16 @@ export class Decoration {
         }
         activeEditor.setDecorations(this.lineDecorationType, lineMarks);
         activeEditor.setDecorations(this.charDecorationType, charMarks);
+    }
+
+    private buildUri = () => {
+        let width = 6;
+        let height = 16;
+        let bgColor = 'blue';
+        let bgOpacity = '1';
+        let borderColor = 'lightblue';
+        let svg =
+            `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" height="${height}" width="${width}"><rect width="${width}" height="${height}" rx="0" ry="0" style="fill: ${bgColor};fill-opacity:${bgOpacity};stroke:${borderColor};stroke-opacity:${bgOpacity};"/></svg>`;
+        return vscode.Uri.parse(svg);
     }
 }
