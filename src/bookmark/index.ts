@@ -119,8 +119,8 @@ export class BookmarkExt {
             reviewType = vscode.TextEditorRevealType.InCenterIfOutsideViewport;
         }
         let textInLine = vscode.window.activeTextEditor.document.lineAt(bm.line).text;
-        if (bm.char >= textInLine.length)
-            bm.char = textInLine.length - 1;
+        if (bm.char > textInLine.length)
+            bm.char = textInLine.length;
         let newSe = new vscode.Selection(bm.line, bm.char, bm.line, bm.char);
         vscode.window.activeTextEditor.selection = newSe;
         vscode.window.activeTextEditor.revealRange(newSe, reviewType);
