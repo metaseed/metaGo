@@ -69,6 +69,12 @@ export class Document {
         return bms;
     }
 
+    public removeBookmarks(line: number): boolean {
+        const bms = this.getBookmarks(line);
+        bms.forEach(key => this.removeBookmark(key));
+        return bms.length > 0;
+    }
+
     public getBookmarkItems = (): Promise<Array<BookmarkItem>> => {
         return new Promise((resolve, reject) => {
             if (this.bookmarks.size === 0 || !fs.existsSync(this.key)) {

@@ -11,32 +11,17 @@ export class StickyBookmark {
     public stickyBookmarks(event): boolean {
         let diffLine: number;
         let updatedBookmark: boolean = false;
-        let bms = this.manager.activeDocument.bookmarks;
         let doc = this.manager.activeDocument;
+        let bms = doc.bookmarks;
 
         if (this.HadOnlyOneValidContentChange(event)) {
             // add or delete line case
             if (event.document.lineCount !== this.activeEditorCountLine) {
-                if (event.document.lineCount > this.activeEditorCountLine) {
-                    diffLine = event.document.lineCount - this.activeEditorCountLine;
-                } else if (event.document.lineCount < this.activeEditorCountLine) {
-                    diffLine = this.activeEditorCountLine - event.document.lineCount;
-                    diffLine = 0 - diffLine;
-
-                    // one line up
-                    if (event.contentChanges[0].range.end.line - event.contentChanges[0].range.start.line === 1) {
-
-                        if ((event.contentChanges[0].range.end.character === 0) &&
-                            (event.contentChanges[0].range.start.character === 0)) {
-                            // the bookmarked one
-                            doc.getBookmarks(event.contentChanges[0].range.start.line).forEach(key => bms.delete(key));
-                        }
-
-                        if (event.contentChanges[0].range.end.line - event.contentChanges[0].range.start.line > 1) {
-                            for (let i = event.contentChanges[0].range.start.line/* + 1*/; i <= event.contentChanges[0].range.end.line; i++) {
-                                doc.getBookmarks(i).forEach(key => { bms.delete(key); updatedBookmark = true });
-                            }
-                        }
+                diffLine = event.document.lineCount - this.activeEditorCountLine;
+                // remove lines
+                if (event.document.lineCount < this.activeEditorCountLine) {
+                    for (let i = event.contentChanges[0].range.start.line; i <= event.contentChanges[0].range.end.line; i++) {
+                        updatedBookmark = doc.removeBookmarks(i) || updatedBookmark;
                     }
                 }
 
@@ -53,10 +38,7 @@ export class StickyBookmark {
                         }
                     }
 
-                    // also =
-                    if (((bm.line > eventLine) && (eventCharacter > 0)) ||
-                        ((bm.line >= eventLine) && (eventCharacter === 0))
-                    ) {
+                    if (((bm.line > eventLine) && (eventCharacter > 0)) || ((bm.line >= eventLine) && (eventCharacter === 0))) {
                         let newLine = bm.line + diffLine;
                         if (newLine < 0) {
                             newLine = 0;
