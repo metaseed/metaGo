@@ -33,10 +33,12 @@ export class History {
 
     public removeDoc = (docKey: string) => {
         this.history = this.history.filter((hi) => hi.documentKey !== docKey);
+        this.index = Math.min(this.index, this.history.length);
     }
 
     public clear = () => {
         this.history.length = 0;
+        this.index = -1;
     }
 
     public goto = (docKey: string, bkKey: string): boolean => {

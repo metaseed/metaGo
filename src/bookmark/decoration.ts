@@ -35,7 +35,7 @@ export class Decoration {
             },
             dark: {
                 // this color will be used in dark color themes
-                borderColor: 'lightblue'
+                borderColor: 'mediumblue '
             }
         });
 

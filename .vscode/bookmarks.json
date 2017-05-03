@@ -1,22 +1,7 @@
 {
-	"bookmarks": [
-		{
-			"fsPath": "$ROOTPATH$\\src\\bookmark\\model\\history.ts",
-			"bookmarks": [
-				36
-			]
-		},
-		{
-			"fsPath": "$ROOTPATH$\\src\\bookmark\\index.ts",
-			"bookmarks": [
-				279
-			]
-		},
-		{
-			"fsPath": "$ROOTPATH$\\out\\src\\bookmark\\storage.js",
-			"bookmarks": [
-				97
-			]
-		}
-	]
+    "documents": {},
+    "history": {
+        "history": [],
+        "index": 0
+    }
 }

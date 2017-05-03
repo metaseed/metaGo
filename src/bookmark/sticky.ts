@@ -112,7 +112,7 @@ export class StickyBookmark {
 
 
     private moveStickyBookmarks = (direction): boolean => {
-        let diffChange: number = -1;
+        let line: number = -1;
         let char: number;
         let updatedBookmark: boolean = false;
         let diffLine;
@@ -131,16 +131,16 @@ export class StickyBookmark {
         const doc = this.manager.activeDocument;
         if (direction === "up") {
             diffLine = 1;
-            const bms = doc.getBookmarks(lineMin - 1).forEach((key) => {
-                doc.removeBookmark(key); diffChange = lineMax;
-                char = doc.bookmarks[key].char;
+            const bms = doc.getBookmarks(lineMin).forEach((key) => {
+                line = lineMax;
+                char = doc.bookmarks.get(key).char;
                 updatedBookmark = true;
             });
         } else if (direction === "down") {
             diffLine = -1;
-            const bms = doc.getBookmarks(lineMax + 1).forEach((key) => {
-                doc.removeBookmark(key); diffChange = lineMin;
-                char = doc.bookmarks[key].char;
+            const bms = doc.getBookmarks(lineMax).forEach((key) => {
+                line = lineMin;
+                char = doc.bookmarks.get(key).char;
                 updatedBookmark = true;
             });
         }
@@ -161,12 +161,6 @@ export class StickyBookmark {
                     updatedBookmark = true;
                 }
             }
-        }
-
-        if (diffChange > -1) {
-            const bk = new Bookmark(diffChange, char);
-            this.manager.activeDocument.bookmarks.set(bk.key, bk);
-            updatedBookmark = true;
         }
 
         return updatedBookmark;

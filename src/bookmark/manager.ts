@@ -55,10 +55,8 @@ export class BookmarkManager {
         let line = vscode.window.activeTextEditor.selection.active.line;
         let char = vscode.window.activeTextEditor.selection.active.character;
 
-        if (!this.activeDocument) {
-            let doc = this.addDocumentIfNotExist(vscode.window.activeTextEditor.document.uri.fsPath);
-            this.activeDocument = doc;
-        }
+        let doc = this.addDocumentIfNotExist(vscode.window.activeTextEditor.document.uri.fsPath);
+        this.activeDocument = doc;
 
         this.activeDocument.toggleBookmark(new Bookmark(line, char));
     }

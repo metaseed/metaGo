@@ -87,7 +87,7 @@ export class Storage {
             const key = docKey.replace(vscode.workspace.rootPath, '$ROOTPATH$');
             let newDoc = new Document(key, undefined);
 
-            newDoc = manager.documents[key] = newDoc;
+            manager.documents[key] = newDoc;
             for (let [bmKey, bm] of doc.bookmarks) {
                 newDoc.bookmarks[bmKey] = new Bookmark(bm.line, bm.char);
             }
