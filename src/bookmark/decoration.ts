@@ -26,10 +26,16 @@ export class Decoration {
         });
 
         this.charDecorationType = vscode.window.createTextEditorDecorationType({
-            before: {
-                height: '2px',
-                width: '12px',
-                border: '1px solid blue'
+            backgroundColor: 'rgba(255,0,0,0.3)',
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            light: {
+                // this color will be used in light color themes
+                borderColor: 'darkblue'
+            },
+            dark: {
+                // this color will be used in dark color themes
+                borderColor: 'blue'
             }
         });
 
@@ -57,7 +63,7 @@ export class Decoration {
         }
 
         const lineMarks: vscode.Range[] = [];
-        const charMarks: vscode.DecorationOptions[] = [];
+        const charMarks: vscode.Range[] = [];//vscode.DecorationOptions[] = [];
         if (activeEditor.document.lineCount === 1 && activeEditor.document.lineAt(0).text === "") {
             this.manager.activeDocument.clear();
         } else {
@@ -66,22 +72,22 @@ export class Decoration {
                 if (bm.line <= activeEditor.document.lineCount) {
                     const lineDecoration = new vscode.Range(bm.line, 0, bm.line, 0);
                     lineMarks.push(lineDecoration);
-                    const charDecorationOption = {
-                        range: new vscode.Range(bm.line, bm.char, bm.line, bm.char),
-                        renderOptions: {
-                            dark: {
-                                after: {
-                                    contentIconPath: this.buildUri()
-                                }
-                            },
-                            light: {
-                                after: {
-                                    contentIconPath: this.buildUri()
-                                }
-                            }
-                        }
-                    };
-                    charMarks.push(charDecorationOption);
+                    // const charDecorationOption = {
+                    //     range: new vscode.Range(bm.line, bm.char, bm.line, bm.char),
+                    //     // renderOptions: {
+                    //     //     dark: {
+                    //     //         after: {
+                    //     //             contentIconPath: this.buildUri()
+                    //     //         }
+                    //     //     },
+                    //     //     light: {
+                    //     //         after: {
+                    //     //             contentIconPath: this.buildUri()
+                    //     //         }
+                    //     //     }
+                    //     // }
+                    // };
+                    charMarks.push(new vscode.Range(bm.line, bm.char, bm.line, bm.char));
                 } else {
                     invalids.push(key);
                 }
@@ -100,7 +106,7 @@ export class Decoration {
 
     private buildUri = () => {
         let width = 6;
-        let height = 16;
+        let height = 18;
         let bgColor = 'blue';
         let bgOpacity = '1';
         let borderColor = 'lightblue';
