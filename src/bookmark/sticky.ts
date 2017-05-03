@@ -112,7 +112,6 @@ export class StickyBookmark {
 
 
     private moveStickyBookmarks = (direction): boolean => {
-        let line: number = -1;
         let char: number;
         let updatedBookmark: boolean = false;
         let diffLine;
@@ -132,14 +131,12 @@ export class StickyBookmark {
         if (direction === "up") {
             diffLine = 1;
             const bms = doc.getBookmarks(lineMin).forEach((key) => {
-                line = lineMax;
                 char = doc.bookmarks.get(key).char;
                 updatedBookmark = true;
             });
         } else if (direction === "down") {
             diffLine = -1;
             const bms = doc.getBookmarks(lineMax).forEach((key) => {
-                line = lineMin;
                 char = doc.bookmarks.get(key).char;
                 updatedBookmark = true;
             });
