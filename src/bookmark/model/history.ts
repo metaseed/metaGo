@@ -8,6 +8,11 @@ export class History {
     public index: number;
 
     public add = (docKey: string, bkKey: string): HistoryItem => {
+        let i = this.history.findIndex((e) => e.documentKey === docKey && e.bookmarkKey === bkKey);
+        if (i !== -1) {
+            this.index = i;
+            return;
+        }
         const item = new HistoryItem(docKey, bkKey);
         const len = this.history.length;
         if (len === 0) {
@@ -34,6 +39,10 @@ export class History {
     modify(docKey: string, bkKey: string, bkKeyNew: string) {
         let i = this.history.findIndex((e) => e.documentKey === docKey && e.bookmarkKey === bkKey);
         if (i === -1) return
+        let j = this.history.findIndex((e) => e.documentKey === docKey && e.bookmarkKey === bkKeyNew);
+        if (j !== -1) {
+            this.remove(docKey, bkKeyNew);
+        }
         this.history[i].bookmarkKey = bkKeyNew;
     }
 

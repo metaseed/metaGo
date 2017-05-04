@@ -142,9 +142,11 @@ export class StickyBookmark {
             passiveMoveDiff = 0 - passiveMoveDiff;
         }
 
+        let bmsOfSameLineAndChar = [];
         let passiveMoveBookmarks = doc.getBookmarks(passiveMoveLine);
         passiveMoveBookmarks.forEach((bm) => {
-            doc.modifyBookmark(bm, passiveMoveLine + passiveMoveDiff);
+            const b = doc.modifyBookmark(bm, passiveMoveLine + passiveMoveDiff);
+            bmsOfSameLineAndChar.push(b);
         });
 
         lineRange = [];
@@ -157,16 +159,20 @@ export class StickyBookmark {
         }
 
         for (let i of lineRange) {
-            for (let [key, bm] of doc.bookmarks) {
-                if (passiveMoveBookmarks.indexOf(bm) !== -1) continue;
-
-                const toLine = bm.line + diffLine;
+            for (let bm of doc.bookmarks.values()) {
                 if (bm.line === i) {
+                    if (passiveMoveBookmarks.indexOf(bm) !== -1) continue;
+                    const toLine = bm.line + diffLine;
                     doc.modifyBookmark(bm, toLine);
                     updatedBookmark = true;
                 }
             }
         }
+
+        bmsOfSameLineAndChar.forEach((bm) => {
+            doc.addBookmark(new Bookmark(bm.line + diffLine, bm.char));
+            updatedBookmark = true;
+        });
 
         return updatedBookmark;
     }

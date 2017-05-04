@@ -94,8 +94,16 @@ export class Document {
         this.bookmarks.delete(keyBackup);
         bookmark.line = toLine;
         if (toChar != -1) bookmark.char = toChar;
+
+        let bmReturn: Bookmark = null;
+        if (this.bookmarks.has(bookmark.key)) {
+            bmReturn = this.bookmarks.get(bookmark.key);
+            this.bookmarks.delete(bookmark.key);
+        }
+
         this.bookmarks.set(bookmark.key, bookmark);
         this.history.modify(this.key, keyBackup, bookmark.key);
+        return bmReturn;
     }
 
     public modifyBookmarkByLine(line: number, toLine: number, char: number = -1, toChar: number = -1) {
