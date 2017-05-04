@@ -13,6 +13,7 @@ export class StickyBookmark {
         let updatedBookmark: boolean = false;
         let doc = this.manager.activeDocument;
         let bms = doc.bookmarks;
+        const range = event.contentChanges[0].range;
 
         if (this.HadOnlyOneValidContentChange(event)) {
             // add or delete line case
@@ -20,14 +21,14 @@ export class StickyBookmark {
                 diffLine = event.document.lineCount - this.activeEditorCountLine;
                 // remove lines
                 if (event.document.lineCount < this.activeEditorCountLine) {
-                    for (let i = event.contentChanges[0].range.start.line; i <= event.contentChanges[0].range.end.line; i++) {
+                    for (let i = range.line; i <= range.end.line; i++) {
                         updatedBookmark = doc.removeBookmarks(i) || updatedBookmark;
                     }
                 }
 
                 for (let [key, bm] of this.manager.activeDocument.bookmarks) {
-                    let eventLine = event.contentChanges[0].range.start.line;
-                    let eventCharacter = event.contentChanges[0].range.start.character;
+                    let eventLine = range.line;
+                    let eventCharacter = range.character;
 
                     // indent ?
                     if (eventCharacter > 0) {
@@ -48,6 +49,23 @@ export class StickyBookmark {
                         updatedBookmark = true;
                     }
                 }
+            } else if (range.start.line === range.end.line && range.start.character !== range.end.character &&
+                event.contentChanges[0].text === '') { // delete before
+                const charDiff = range.end.character - range.start.character;
+                doc.getBookmarks(range.start.line).forEach((m) => {
+                    if (m.char >= range.end.character) {
+                        doc.modifyBookmark(m, range.start.line, m.char - charDiff);
+                        updatedBookmark = true;
+                    }
+                });
+            } else if (range.start.line === range.end.line && range.start.character === range.end.character &&
+                event.contentChanges[0].text !== '') { //add before
+                doc.getBookmarks(range.start.line).forEach((m) => {
+                    if (m.char >= range.end.character) {
+                        doc.modifyBookmark(m, range.start.line, m.char + event.contentChanges[0].text.length);
+                        updatedBookmark = true;
+                    }
+                });
             }
 
             // paste case
@@ -110,33 +128,39 @@ export class StickyBookmark {
             lineMax--;
         }
         const doc = this.manager.activeDocument;
+        let passiveMoveDiff = lineMax - lineMin + 1;
+        let passiveMoveLine: number;
+
         if (direction === "up") {
-            diffLine = 1;
-            const bms = doc.getBookmarks(lineMin).forEach((key) => {
-                char = doc.bookmarks.get(key).char;
-                updatedBookmark = true;
-            });
-        } else if (direction === "down") {
             diffLine = -1;
-            const bms = doc.getBookmarks(lineMax).forEach((key) => {
-                char = doc.bookmarks.get(key).char;
-                updatedBookmark = true;
-            });
+            passiveMoveLine = lineMin - 1;
+        } else if (direction === "down") {
+            diffLine = 1;
+            passiveMoveLine = lineMax + 1;
+            passiveMoveDiff = 0 - passiveMoveDiff;
         }
+
+        let passiveMoveBookmarks = doc.getBookmarks(passiveMoveLine);
+        passiveMoveBookmarks.forEach((bm) => {
+            doc.modifyBookmark(bm, passiveMoveLine + passiveMoveDiff);
+        });
 
         lineRange = [];
         for (let i = lineMin; i <= lineMax; i++) {
             lineRange.push(i);
         }
         lineRange = lineRange.sort();
-        if (diffLine < 0) {
+        if (diffLine > 0) {
             lineRange = lineRange.reverse();
         }
 
-        for (let i in lineRange) {
+        for (let i of lineRange) {
             for (let [key, bm] of doc.bookmarks) {
-                if (bm.line === lineRange[i]) {
-                    bm.line -= diffLine;
+                if (passiveMoveBookmarks.indexOf(bm) !== -1) continue;
+
+                const toLine = bm.line + diffLine;
+                if (bm.line === i) {
+                    doc.modifyBookmark(bm, toLine);
                     updatedBookmark = true;
                 }
             }
@@ -147,6 +171,7 @@ export class StickyBookmark {
 
     private HadOnlyOneValidContentChange(event): boolean {
         const length = event.contentChanges.length;
+        const range = event.contentChanges[0].range;
         // not valid
         if ((length > 2) || (length === 0)) {
             return false;
@@ -159,8 +184,8 @@ export class StickyBookmark {
             if (length === 2) {
                 // check if the first range is 'equal' and if the second is 'empty', do trim
                 let fistRangeEquals: boolean =
-                    (event.contentChanges[0].range.start.character === event.contentChanges[0].range.end.character) &&
-                    (event.contentChanges[0].range.start.line === event.contentChanges[0].range.end.line);
+                    (range.character === range.end.character) &&
+                    (range.start.line === range.end.line);
 
                 let secondRangeEmpty: boolean = (event.contentChanges[1].text === "") &&
                     (event.contentChanges[1].range.start.line === event.contentChanges[1].range.end.line) &&

@@ -81,23 +81,23 @@ export class Storage {
     }
 
     private getManagerToSave = async () => {
-        let manager = new BookmarkManager();
         await this.manager.tidyBookmarks();
+        let managerToSave = new BookmarkManager();
         for (let [docKey, doc] of this.manager.documents) {
             const key = docKey.replace(vscode.workspace.rootPath, '$ROOTPATH$');
             let newDoc = new Document(key, undefined);
 
-            manager.documents[key] = newDoc;
+            managerToSave.documents[key] = newDoc;
             for (let [bmKey, bm] of doc.bookmarks) {
                 newDoc.bookmarks[bmKey] = new Bookmark(bm.line, bm.char);
             }
         }
-        manager.history.index = this.manager.history.index;
+        managerToSave.history.index = this.manager.history.index;
         this.manager.history.history.forEach(item => {
             const docKey = item.documentKey.replace(vscode.workspace.rootPath, '$ROOTPATH$');
-            manager.history.history.push(new HistoryItem(docKey, item.bookmarkKey));
+            managerToSave.history.history.push(new HistoryItem(docKey, item.bookmarkKey));
         });
-        return manager;
+        return managerToSave;
     }
 
 }

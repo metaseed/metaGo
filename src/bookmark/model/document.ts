@@ -59,18 +59,51 @@ export class Document {
         }
     }
 
-    public getBookmarks(line: number) {
+    public getBookmarkKeys(line: number, char: number = -1) {
         const bms = [];
         for (let [key, bm] of this.bookmarks) {
-            if (bm.line === line) {
+            let charEqual = true;
+            if (char !== -1) {
+                charEqual = bm.char === char;
+            }
+            if (bm.line === line && charEqual) {
                 bms.push(key);
             }
         }
         return bms;
     }
 
+    public getBookmarks(line: number, char: number = -1) {
+        const bms = [];
+        for (let [key, bm] of this.bookmarks) {
+            let charEqual = true;
+            if (char !== -1) {
+                charEqual = bm.char === char;
+            }
+            if (bm.line === line && charEqual) {
+                bms.push(bm);
+            }
+        }
+        return bms;
+    }
+
+    public modifyBookmark(bookmark: Bookmark, toLine: number, toChar: number = -1) {
+        const keyBackup = bookmark.key;
+        if (bookmark.line === toLine && (toChar === -1 || bookmark.char === toChar)) return;
+
+        this.bookmarks.delete(keyBackup);
+        bookmark.line = toLine;
+        if (toChar != -1) bookmark.char = toChar;
+        this.bookmarks.set(bookmark.key, bookmark);
+        this.history.modify(this.key, keyBackup, bookmark.key);
+    }
+
+    public modifyBookmarkByLine(line: number, toLine: number, char: number = -1, toChar: number = -1) {
+
+    }
+
     public removeBookmarks(line: number): boolean {
-        const bms = this.getBookmarks(line);
+        const bms = this.getBookmarkKeys(line);
         bms.forEach(key => this.removeBookmark(key));
         return bms.length > 0;
     }

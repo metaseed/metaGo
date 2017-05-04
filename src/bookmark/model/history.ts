@@ -31,6 +31,12 @@ export class History {
         return rm[0];
     }
 
+    modify(docKey: string, bkKey: string, bkKeyNew: string) {
+        let i = this.history.findIndex((e) => e.documentKey === docKey && e.bookmarkKey === bkKey);
+        if (i === -1) return
+        this.history[i].bookmarkKey = bkKeyNew;
+    }
+
     public removeDoc = (docKey: string) => {
         this.history = this.history.filter((hi) => hi.documentKey !== docKey);
         this.index = Math.min(this.index, this.history.length);
