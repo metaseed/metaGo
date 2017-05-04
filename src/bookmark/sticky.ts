@@ -21,14 +21,14 @@ export class StickyBookmark {
                 diffLine = event.document.lineCount - this.activeEditorCountLine;
                 // remove lines
                 if (event.document.lineCount < this.activeEditorCountLine) {
-                    for (let i = range.line; i <= range.end.line; i++) {
+                    for (let i = range.start.line; i <= range.end.line; i++) {
                         updatedBookmark = doc.removeBookmarks(i) || updatedBookmark;
                     }
                 }
 
                 for (let [key, bm] of this.manager.activeDocument.bookmarks) {
-                    let eventLine = range.line;
-                    let eventCharacter = range.character;
+                    let eventLine = range.start.line;
+                    let eventCharacter = range.start.character;
 
                     // indent ?
                     if (eventCharacter > 0) {
@@ -50,16 +50,18 @@ export class StickyBookmark {
                     }
                 }
             } else if (range.start.line === range.end.line && range.start.character !== range.end.character &&
-                event.contentChanges[0].text === '') { // delete before
+                event.contentChanges[0].text === '') { // same line: delete before
                 const charDiff = range.end.character - range.start.character;
                 doc.getBookmarks(range.start.line).forEach((m) => {
                     if (m.char >= range.end.character) {
                         doc.modifyBookmark(m, range.start.line, m.char - charDiff);
-                        updatedBookmark = true;
+                    } else {
+                        doc.removeBookmark(m);
                     }
+                    updatedBookmark = true;
                 });
             } else if (range.start.line === range.end.line && range.start.character === range.end.character &&
-                event.contentChanges[0].text !== '') { //add before
+                event.contentChanges[0].text !== '') { //same line: add before
                 doc.getBookmarks(range.start.line).forEach((m) => {
                     if (m.char >= range.end.character) {
                         doc.modifyBookmark(m, range.start.line, m.char + event.contentChanges[0].text.length);
@@ -184,7 +186,7 @@ export class StickyBookmark {
             if (length === 2) {
                 // check if the first range is 'equal' and if the second is 'empty', do trim
                 let fistRangeEquals: boolean =
-                    (range.character === range.end.character) &&
+                    (range.start.character === range.end.character) &&
                     (range.start.line === range.end.line);
 
                 let secondRangeEmpty: boolean = (event.contentChanges[1].text === "") &&
