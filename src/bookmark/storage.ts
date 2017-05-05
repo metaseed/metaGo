@@ -13,7 +13,7 @@ export class Storage {
 
     public load = (): boolean => {
         if (vscode.workspace.rootPath && this.config.saveBookmarksInProject) {
-            let fPath: string = path.join(vscode.workspace.rootPath, ".vscode", "bookmarks.json");
+            let fPath: string = path.join(vscode.workspace.rootPath, ".vscode", "metago_bookmarks.json");
 
             if (!fs.existsSync(fPath)) {
                 return false;
@@ -28,7 +28,7 @@ export class Storage {
                 return false;
             }
         } else {
-            let savedBookmarks = this.context.workspaceState.get("bookmarks", "");
+            let savedBookmarks = this.context.workspaceState.get("metago_bookmarks", "");
 
             if (savedBookmarks !== "") {
                 this.updateManagerData(JSON.parse(savedBookmarks));
@@ -43,7 +43,7 @@ export class Storage {
         }
 
         if (vscode.workspace.rootPath && this.config.saveBookmarksInProject) {
-            let fPath: string = path.join(vscode.workspace.rootPath, ".vscode", "bookmarks.json");
+            let fPath: string = path.join(vscode.workspace.rootPath, ".vscode", "metago_bookmarks.json");
             if (!fs.existsSync(path.dirname(fPath))) {
                 fs.mkdirSync(path.dirname(fPath));
             }
@@ -53,7 +53,7 @@ export class Storage {
             //str = str.replace(new RegExp(root, 'gm'), "$ROOTPATH$");
             fs.writeFileSync(fPath, str);
         } else {
-            this.context.workspaceState.update("bookmarks", JSON.stringify(await this.getManagerToSave()));
+            this.context.workspaceState.update("metago_bookmarks", JSON.stringify(await this.getManagerToSave()));
         }
     }
 

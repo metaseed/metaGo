@@ -3,7 +3,7 @@
     "displayName": "MetaGo",
     "description": "vscode cursor move and select; jump, navigation, goto",
     "icon": "images/metago.png",
-    "version": "1.26.1",
+    "version": "2.0.0",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo",
     "license": "MIT",
@@ -279,7 +279,7 @@
                 },
                 "metaGo.bookmark.saveBookmarksInProject": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Allow bookmarks to be saved (and restored) locally in the opened Project/Folder instead of VS Code"
                 },
                 "metaGo.bookmark.gutterIconPath": {
