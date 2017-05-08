@@ -31,6 +31,7 @@ export class Document {
         if (this.bookmarks.has(key)) {
             return;
         }
+
         this.bookmarks.set(key, bookmark);
         this.history.add(this.key, key);
     }
