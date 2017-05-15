@@ -1,4 +1,4 @@
 out
 node_modules
 *.vsix
-/.vscode/bookmarks.json
+.vscode/metago_bookmarks.json
