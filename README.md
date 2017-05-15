@@ -21,7 +21,8 @@
 [![Issue Stats](http://issuestats.com/github/metaseed/metago/badge/pr?style=flat)](http://issuestats.com/github/metaseed/metago)
 
 ## Features
-MetaGo provides fast cursor movement/selection for keyboard focused users: 
+MetaGo provides fast cursor movement/selection for keyboard focused users:
+* using bookmarks to jump between files.
 * go to any character on screen with 3(most cases) or 4 times key press.
 * moving cursor up/down between blank lines.
 * select code block when moving cursor while hold shift key.
@@ -57,6 +58,15 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > at any time press <kbd>ESC</kbd> to cancel
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
+### navigate between files using bookmarks
+* <kbd>Alt</kbd>+<kdb>'</kbd> to set a bookmark at the cursor location.
+* <kbd>Alt</kbd>+<kdb>/</kbd> to list the bookmarks and show management menu.
+    1. press <kdb>cc</kbd> and <kbd>enter</kbd> to clear all the bookmarks
+    2. press <kdb>c</kbd> and <kbd>enter</kbd> to clear all the bookmarks in current document.
+    3. press <kdb>n</kbd> and <kbd>enter</kbd> to jump to the next bookmark.
+    4. press <kdb>p</kbd> and <kbd>enter</kbd> to jump to the previous bookmark.
+
+![MetaGo.Center](images/metago.bookmark.gif)
 
 ### scroll line to the screen center/top
 * <kbd>Alt</kbd>+<kbd>m</kbd> is the default shortcut to scroll current line to screen center.
