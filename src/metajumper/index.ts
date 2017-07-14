@@ -356,7 +356,7 @@ export class MetaJumper {
         let ignoreCase = this.config.jumper.targetIgnoreCase;
         if (this.config.jumper.findAllMode === 'on') {
             for (var i = 0; i < str.length; i++) {
-                if (ignoreCase) {
+                if (!ignoreCase) {
                     if (str[i] === char) {
                         let adj = this.inteliAdjBefore(str, char, i);
                         indices.push(new CharIndex(i, adj));
@@ -375,7 +375,7 @@ export class MetaJumper {
             let index = 0;
 
             for (var i = 0; i < words.length; i++) {
-                if (ignoreCase) {
+                if (!ignoreCase) {
                     if (words[i][0] === char) {
                         indices.push(new CharIndex(index));
                     }
