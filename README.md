@@ -97,54 +97,86 @@ If you have any requirements or dependencies, add a section describing those and
 
 ## Default Shortcut Settings
 
-To configure the keybinding, add the following lines to *keybindings.json* (File -> Preferences -> Keyboard Shortcuts):
+            { 
+                "command": "metaGo.input.cancel",
+                "key": "escape",
+                "when": "editorTextFocus && metaGoInput"
+            },
+            {
+                "command": "metaGo.goto",
+                "key": "alt+;",
+                "when": "editorTextFocus",
+                "description": "goto the character and set the cursor after the character"
+            },
+            {
+                "command": "metaGo.selection",
+                "key": "alt+shift+;",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.selectLineUp",
+                "key": "ctrl+shift+i",
+                "mac": "cmd+shift+i",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.selectLineDown",
+                "key": "ctrl+i",
+                "mac": "cmd+i",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.currentLineToCenter",
+                "key": "alt+m",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.currentLineToBottom",
+                "key": "alt+b",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.currentLineToTop",
+                "key": "alt+t",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.spaceBlockMoveUp",
+                "key": "alt+home",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.spaceBlockSelectUp",
+                "key": "alt+shift+home",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.spaceBlockMoveDown",
+                "key": "alt+end",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.spaceBlockSelectDown",
+                "key": "alt+shift+end",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.bookmark.toggle",
+                "key": "alt+'",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.bookmark.view",
+                "key": "alt+/",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.jumpToBracket",
+                "key": "ctrl+shift+\\",
+                "when": "editorTextFocus"
+            }
 
-        {
-            "command": "metaGo.input.cancel",
-            "key": "escape",
-            "when": "editorTextFocus && metaGoInput"
-        },
-        {
-            "command": "metaGo",
-            "key": "alt+;",
-            "when": "editorTextFocus",
-            "description": "goto the character and set the cursor after the character"
-        },
-        {
-            "command": "metaGo.selection",
-            "key": "alt+shift+;",
-            "when": "editorTextFocus"
-        },
-        {
-            "command": "metaGo.selectLineUp",
-            "key": "ctrl+shift+i",
-            "when": "editorTextFocus"
-        },
-        {
-            "command": "metaGo.centerEditor",
-            "key": "alt+m",
-            "when": "editorTextFocus"
-        },
-        {
-            "key": "alt+home",
-            "command": "metaGo.spaceBlockMoveUp",
-            "when": "editorTextFocus"
-        },
-        {
-            "key": "alt+shift+home",
-            "command": "metaGo.spaceBlockSelectUp",
-            "when": "editorTextFocus"
-        },
-        {
-            "key": "alt+end",
-            "command": "metaGo.spaceBlockMoveDown",
-            "when": "editorTextFocus"
-        },
-        {
-            "key": "alt+shift+end",
-            "command": "metaGo.spaceBlockSelectDown",
-            "when": "editorTextFocus"
-        }
+To configure the keybinding, add the following lines to *keybindings.json* (File -> Preferences -> Keyboard Shortcuts):
 ## extension Settings
                 "metaGo.decoration.backgroundColor": {
                     "type": "string",
