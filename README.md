@@ -22,18 +22,12 @@
 
 ## Features
 MetaGo provides fast cursor movement/selection for keyboard focused users:
-* using bookmarks to jump between files.
 * go to any character on screen with 3(most cases) or 4 times key press.
+* using bookmarks to jump between files.
 * moving cursor up/down between blank lines.
 * select code block when moving cursor while hold shift key.
-* scroll the active line (contains cursor) to the screen center.
+* scroll the active line (contains cursor) to the screen Top/Middle/Bottom.
 * select line up/down.
-
-### highlight features
-* code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
-* code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
-* only encode characters on viewable screen area, so metaGo is faster.
-* even though your cursor is out of your viewable screen, metaGo still works!
 
 ### go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>;</kbd> to tell I want to *go* somewhere.
@@ -47,8 +41,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > The 'word' is defined as a group of all alphanumeric or punctuation characters. 
 > MetaGo also provide commands that set cursor before/after the character after navigation, you can config the shortcut by yourself.
 
-> * type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Enter</kbd> to go to the one above;
-> * type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Space</kbd> to go to the one below;
+> * type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Enter</kbd> to directly go to the one above;
+> * type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Space</kbd> to directly go to the one below;
 
 ### select to any character on screen from cursor
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>;</kbd> to tell I want to *select* to somewhere.
@@ -58,6 +52,13 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > at any time press <kbd>ESC</kbd> to cancel
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
+
+### features highlight
+* code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
+* code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
+* only encode characters on viewable screen area, so metaGo is faster.
+* even though your cursor is out of your viewable screen, metaGo still works!
+
 ### navigate between files using bookmarks
 * <kbd>Alt</kbd>+ <kdb>\'</kbd> to set a bookmark at the cursor location.
 * <kbd>Alt</kbd>+<kdb>\/</kbd> to list the bookmarks and show management menu.

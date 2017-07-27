@@ -69,6 +69,6 @@ class FinderConfig {
     findInSelection: string = 'off';
     wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";
     range: number = 50;
-    targetIgnoreCase: boolean = false;
+    targetIgnoreCase: boolean = true;
     timeout: number = 12000;
 }
