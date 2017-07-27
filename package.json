@@ -255,7 +255,7 @@
                     "default": "off"
                 },
                 "metaGo.jumper.targetIgnoreCase": {
-                    "type": "string",
+                    "type": "boolean",
                     "default": true
                 },
                 "metaGo.jumper.timeout": {
