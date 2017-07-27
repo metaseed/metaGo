@@ -1,6 +1,6 @@
 
-[![Version](http://vsmarketplacebadge.apphb.com/version/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
-[![Installs](http://vsmarketplacebadge.apphb.com/installs/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
+[![Version](https://vsmarketplacebadge.apphb.com/version/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
 [![Ratings](https://vsmarketplacebadge.apphb.com/rating/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
 
 [![Build Status](https://travis-ci.org/metaseed/metago.svg?branch=master)](https://travis-ci.org/metaseed/metago)
@@ -15,10 +15,10 @@
 [![bitHound Dev Dependencies](https://www.bithound.io/github/metaseed/metago/badges/devDependencies.svg)](https://www.bithound.io/github/metaseed/metago/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/github/metaseed/metago/badges/code.svg)](https://www.bithound.io/github/metaseed/metago)
 
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/metaseed/metago.svg)](http://isitmaintained.com/project/metaseed/metago "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/metaseed/metago.svg)](http://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
-[![Issue Stats](http://issuestats.com/github/metaseed/metago/badge/issue?style=flat)](http://issuestats.com/github/metaseed/metago)
-[![Issue Stats](http://issuestats.com/github/metaseed/metago/badge/pr?style=flat)](http://issuestats.com/github/metaseed/metago)
+[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Average time to resolve an issue")
+[![Percentage of issues still open](https://isitmaintained.com/badge/open/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
+[![Issue Stats](https://issuestats.com/github/metaseed/metago/badge/issue?style=flat)](https://issuestats.com/github/metaseed/metago)
+[![Issue Stats](https://issuestats.com/github/metaseed/metago/badge/pr?style=flat)](https://issuestats.com/github/metaseed/metago)
 
 ## Features
 MetaGo provides fast cursor movement/selection for keyboard focused users:
