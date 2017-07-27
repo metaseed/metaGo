@@ -6,10 +6,36 @@ export class Decorator {
     private config: Config;
     private cache: { [index: string]: vscode.Uri };
     private decorations: { [index: number]: vscode.TextEditorDecorationType } = {};
+    public charDecorationType;
 
     initialize = (config: Config) => {
         this.config = config;
         this.updateCache();
+        this.charDecorationType = vscode.window.createTextEditorDecorationType({
+            backgroundColor: 'rgba(0,255,0,0.3)',
+            borderWidth: '2px',
+            borderStyle: 'solid',
+            light: {
+                // this color will be used in light color themes
+                borderColor: 'rgba(0,255,0,0.3)'
+            },
+            dark: {
+                // this color will be used in dark color themes
+                borderColor: 'rgba(0,255,0,0.3)'
+            }
+        });
+    }
+
+    addCommandIndicator = (editor: vscode.TextEditor) => {
+        let line = editor.selection.anchor.line;
+        let char = editor.selection.anchor.character;
+        let option = [new vscode.Range(line, char, line, char)];
+        editor.setDecorations(this.charDecorationType, option);
+    }
+
+    removeCommandIndicator = (editor: vscode.TextEditor) => {
+        let locations: vscode.Range[] = [];
+        vscode.window.activeTextEditor.setDecorations(this.charDecorationType, locations);
     }
 
     addDecorations = (editor: vscode.TextEditor, decorationModel: DecorationModel[]) => {

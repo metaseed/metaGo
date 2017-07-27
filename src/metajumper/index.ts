@@ -187,6 +187,7 @@ export class MetaJumper {
             let msg = this.isSelectionMode ? "metaGo: Type to Select" : "metaGo: Type To Jump"
             let messageDisposable = vscode.window.setStatusBarMessage(msg);
             const promise = new Promise<DecorationModel>((resolve, reject) => {
+                this.decorator.addCommandIndicator(editor);
                 return this.getFirstInput(editor, resolve, reject)
             })
                 .then((model: DecorationModel) => {
@@ -196,6 +197,7 @@ export class MetaJumper {
                     resolve();
                 })
                 .catch((reason?: string) => {
+                    this.decorator.removeCommandIndicator(editor);
                     if (!reason) reason = "Canceled!";
                     vscode.window.setStatusBarMessage(`metaGo: ${reason}`, 2000);
                     messageDisposable.dispose();
@@ -206,7 +208,10 @@ export class MetaJumper {
 
     private getFirstInput = (editor: vscode.TextEditor, resolve, reject): Promise<void> => {
         let firstInlineInput = new InlineInput()
-            .show(editor, (v) => v)
+            .show(editor, (v) => {
+                this.decorator.removeCommandIndicator(editor);
+                return v;
+            })
             .then((value: string) => {
                 if (!value) {
                     reject();
@@ -334,6 +339,7 @@ export class MetaJumper {
         regexp = new RegExp(/[^\w\s]/);
         return this.inteliAdjBeforeRegex(str, char, index, regexp);
     }
+
     private inteliAdjBeforeRegex(str: string, char: string, index: number, regexp: RegExp): InteliAdjustment {
 
         if (regexp.test(char)) {
@@ -356,7 +362,7 @@ export class MetaJumper {
         let ignoreCase = this.config.jumper.targetIgnoreCase;
         if (this.config.jumper.findAllMode === 'on') {
             for (var i = 0; i < str.length; i++) {
-                if (ignoreCase) {
+                if (!ignoreCase) {
                     if (str[i] === char) {
                         let adj = this.inteliAdjBefore(str, char, i);
                         indices.push(new CharIndex(i, adj));
@@ -375,7 +381,7 @@ export class MetaJumper {
             let index = 0;
 
             for (var i = 0; i < words.length; i++) {
-                if (ignoreCase) {
+                if (!ignoreCase) {
                     if (words[i][0] === char) {
                         indices.push(new CharIndex(index));
                     }
