@@ -146,79 +146,93 @@ To configure the keybinding, add the following lines to *keybindings.json* (File
             "when": "editorTextFocus"
         }
 ## extension Settings
-
-        "metaGo.decoration.backgroundColor": {
-            "type": "string",
-            "default": "Chartreuse,yellow",
-            "description": "one and two character decorator background color"
-        },
-        "metaGo.decoration.backgroundOpacity": {
-            "type": "string",
-            "default": "0.7"
-        },
-        "metaGo.decoration.borderColor": {
-            "type": "string",
-            "default": "#1e1e1e"
-        },
-        "metaGo.decoration.color": {
-            "type": "string",
-            "default": "blue"
-        },
-        "metaGo.decoration.width": {
-            "type": "number",
-            "default": 9
-        },
-        "metaGo.decoration.height": {
-            "type": "number",
-            "default": 15
-        },
-        "metaGo.decoration.fontSize": {
-            "type": "number",
-            "default": 13
-        },
-        "metaGo.decoration.x": {
-            "type": "number",
-            "default": 1
-        },
-        "metaGo.decoration.y": {
-            "type": "number",
-            "default": 12
-        },
-        "metaGo.decoration.fontWeight": {
-            "type": "string",
-            "default": "bold"
-        },
-        "metaGo.decoration.fontFamily": {
-            "type": "string",
-            "default": "Consolas"
-        },
-        "metaGo.decoration.upperCase": {
-            "type": "boolean",
-            "default": false
-        },
-        "metaGo.decoration.characters": {
-            "type": "string",
-            "default": "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z"
-        },
-        "metaGo.jumper.findInSelection": {
-            "type": "string",
-            "default": "off"
-        },
-        "metaGo.jumper.targetIgnoreCase": {
-            "type": "string",
-            "default": "false"
-        },
-        "metaGo.jumper.findAllMode": {
-            "type": "string",
-            "default": "on",
-            "description": "on: find all characters on viewable screen area; off: only search the first character of the words that are separated by chars configured in 'wordSeparatorPattern'"
-        },
-        "metaGo.jumper.wordSeparatorPattern": {
-            "type": "string",
-            "default": "[ ,-.{_(\"'<\\/[+]"
-        },
-        "metaGo.jumper.screenLineRange": {
-            "type": "number",
-            "default": 50,
-            "description": "how many lines could be showed in one screen"
-        }
+                "metaGo.decoration.backgroundColor": {
+                    "type": "string",
+                    "default": "Chartreuse,yellow",
+                    "description": "one and two character decorator background color"
+                },
+                "metaGo.decoration.backgroundOpacity": {
+                    "type": "string",
+                    "default": "0.8"
+                },
+                "metaGo.decoration.borderColor": {
+                    "type": "string",
+                    "default": "#1e1e1e"
+                },
+                "metaGo.decoration.color": {
+                    "type": "string",
+                    "default": "blue"
+                },
+                "metaGo.decoration.width": {
+                    "type": "number",
+                    "default": 9
+                },
+                "metaGo.decoration.height": {
+                    "type": "number",
+                    "default": 15
+                },
+                "metaGo.decoration.fontSize": {
+                    "type": "number",
+                    "default": 13
+                },
+                "metaGo.decoration.x": {
+                    "type": "number",
+                    "default": 1
+                },
+                "metaGo.decoration.y": {
+                    "type": "number",
+                    "default": 12
+                },
+                "metaGo.decoration.fontWeight": {
+                    "type": "string",
+                    "default": "bold"
+                },
+                "metaGo.decoration.fontFamily": {
+                    "type": "string",
+                    "default": "Consolas"
+                },
+                "metaGo.decoration.upperCase": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "metaGo.decoration.characters": {
+                    "type": "string",
+                    "default": "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z"
+                },
+                "metaGo.jumper.findInSelection": {
+                    "type": "string",
+                    "default": "off"
+                },
+                "metaGo.jumper.targetIgnoreCase": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "metaGo.jumper.timeout": {
+                    "type": "number",
+                    "default": "12",
+                    "description": "timeout value in seconds to cancel metaGo jumper commands."
+                },
+                "metaGo.jumper.findAllMode": {
+                    "type": "string",
+                    "default": "on",
+                    "description": "on: find all characters on viewable screen area; off: only search the first character of the words that are separated by chars configured in 'wordSeparatorPattern'"
+                },
+                "metaGo.jumper.wordSeparatorPattern": {
+                    "type": "string",
+                    "default": "[ ,-.{_(\"'<\\/[+]"
+                },
+                "metaGo.jumper.screenLineRange": {
+                    "type": "number",
+                    "default": 50,
+                    "description": "how many lines could be showed in one screen"
+                },
+                "metaGo.bookmark.saveBookmarksInProject": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Allow bookmarks to be saved (and restored) locally in the opened Project/Folder instead of VS Code"
+                },
+                "metaGo.bookmark.gutterIconPath": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Path to another image to be presented as Bookmark"
+                }
