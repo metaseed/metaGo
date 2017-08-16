@@ -29,7 +29,7 @@ export class InlineInput {
         InlineInput.instances.push(this);
     }
 
-    show = (editor: vscode.TextEditor, validateInput: (text: string) => string, placeHolder = ''): Promise<string> => {
+    show = (editor: vscode.TextEditor, validateInput: (text: string) => string, placeHolder = 'type the character to goto'): Promise<string> => {
         this.editor = editor;
         this.setContext(true);
 
@@ -40,6 +40,7 @@ export class InlineInput {
             const ct = new vscode.CancellationTokenSource();
             vscode.window.showInputBox({
                 placeHolder: placeHolder,
+                prompt: 'metaGo ',
                 validateInput: (s) => {
                     this.onType({ text: s });
                     ct.cancel();

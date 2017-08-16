@@ -61,6 +61,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * work with vim plugin
 
 ### navigate between files using bookmarks
+
 * <kbd>Alt</kbd>+ <kdb>\'</kbd> to set a bookmark at the cursor location.
 * <kbd>Alt</kbd>+<kdb>\/</kbd> to list the bookmarks and show management menu.
     1. press <kdb>cc</kbd> and <kbd>enter</kbd> to clear all the bookmarks
