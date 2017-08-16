@@ -427,11 +427,14 @@ export class MetaJumper {
                     if (model.children.length > 1) {
                         this.prepareForJumpTo(editor, model.children)
                             .then((model) => {
+                                this.decorator.removeDecorations(editor);
                                 resolve(model);
                             })
                             .catch(() => {
+                                this.decorator.removeDecorations(editor);
                                 reject();
                             });
+
                     }
                     else {
                         resolve(model);

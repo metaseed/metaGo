@@ -21,39 +21,41 @@ class Input {
 export class InlineInput {
     private subscriptions: vscode.Disposable[] = [];
     private input: Input;
-    static instances:InlineInput[] = [];
-    private editor:vscode.TextEditor;
+    static instances: InlineInput[] = [];
+    private editor: vscode.TextEditor;
 
     constructor() {
         this.registerTextEditorCommand('metaGo.input.cancel', this.cancel);
         InlineInput.instances.push(this);
     }
 
-    show = (editor: vscode.TextEditor, validateInput: (text: string) => string): Promise<string> => {
+    show = (editor: vscode.TextEditor, validateInput: (text: string) => string, placeHolder = ''): Promise<string> => {
         this.editor = editor;
         this.setContext(true);
-        const promise = new Promise<string>((resolve, reject) => {
+
+        try {
+            this.registerCommand('type', this.onType);
+        }
+        catch (e) {
+            const ct = new vscode.CancellationTokenSource();
+            vscode.window.showInputBox({
+                placeHolder: placeHolder,
+                validateInput: (s) => {
+                    this.onType({ text: s });
+                    ct.cancel();
+                    return null;
+                }
+            }, ct.token).then((s) => {
+                this.cancel(editor);
+            });
+        }
+
+        return new Promise<string>((resolve, reject) => {
             this.input = new Input({ validateInput: validateInput, resolve: resolve, reject: reject });
             vscode.window.onDidChangeActiveTextEditor(() => {
                 this.cancel(editor);
             });
         });
-        this.registerCommand('type', this.onType);
-        return promise;
-    }
-
-    private dispose = () => {
-        this.subscriptions.forEach((d) => d.dispose());
-        const i = InlineInput.instances.indexOf(this);
-        if(i > -1) InlineInput.instances.splice(i,1);
-    }
-
-    private registerTextEditorCommand = (commandId: string, run: (editor: vscode.TextEditor, edit: vscode.TextEditorEdit, ...args: any[]) => void): void => {
-        this.subscriptions.push(vscode.commands.registerTextEditorCommand(commandId, run));
-    }
-
-    private registerCommand = (commandId: string, run: (...args: any[]) => void): void => {
-        this.subscriptions.push(vscode.commands.registerCommand(commandId, run));
     }
 
     private onType = (event: { text: string }) => {
@@ -67,6 +69,21 @@ export class InlineInput {
         else
             vscode.commands.executeCommand('default:type', event);
     }
+
+    private dispose = () => {
+        this.subscriptions.forEach((d) => d.dispose());
+        const i = InlineInput.instances.indexOf(this);
+        if (i > -1) InlineInput.instances.splice(i, 1);
+    }
+
+    private registerTextEditorCommand = (commandId: string, run: (editor: vscode.TextEditor, edit: vscode.TextEditorEdit, ...args: any[]) => void): void => {
+        this.subscriptions.push(vscode.commands.registerTextEditorCommand(commandId, run));
+    }
+
+    private registerCommand = (commandId: string, run: (...args: any[]) => void): void => {
+        this.subscriptions.push(vscode.commands.registerCommand(commandId, run));
+    }
+
 
     private complete = (editor: vscode.TextEditor) => {
         if (this.input) {
@@ -88,7 +105,7 @@ export class InlineInput {
         this.setContext(false);
     }
 
-    public cancelInput(){
+    public cancelInput() {
         this.cancel(this.editor);
     }
 }
