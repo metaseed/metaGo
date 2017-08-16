@@ -58,6 +58,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
 * only encode characters on viewable screen area, so metaGo is faster.
 * even though your cursor is out of your viewable screen, metaGo still works!
+* work with vim plugin
 
 ### navigate between files using bookmarks
 * <kbd>Alt</kbd>+ <kdb>\'</kbd> to set a bookmark at the cursor location.
