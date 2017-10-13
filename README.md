@@ -12,7 +12,6 @@
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Average time to resolve an issue")
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
 
-
 ## Features
 MetaGo provides fast cursor movement/selection for keyboard focused users:
 * go to any character on screen with 3(most cases) or 4 times key press.
