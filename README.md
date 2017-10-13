@@ -28,7 +28,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * select code block when moving cursor while hold shift key.
 * scroll the active line (contains cursor) to the screen Top/Middle/Bottom.
 * select line up/down.
-* compatible with the vim plugins. :smile
+* compatible with the vim plugins. :smile:
 
 ### go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>;</kbd> to tell I want to *go* somewhere.
