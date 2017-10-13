@@ -2,23 +2,16 @@
 [![Version](https://vsmarketplacebadge.apphb.com/version/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
 [![Ratings](https://vsmarketplacebadge.apphb.com/rating/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
-
-[![Build Status](https://travis-ci.org/metaseed/metago.svg?branch=master)](https://travis-ci.org/metaseed/metago)
-[![Build Status](https://ci.appveyor.com/api/projects/status/github/metaseed/metago?branch=master&svg=true)](https://ci.appveyor.com/project/metaseed/metago)
 [![Dependencies Status](https://david-dm.org/metaseed/metago/status.svg)](https://david-dm.org/metaseed/metago)
 [![DevDependencies Status](https://david-dm.org/metaseed/metago/dev-status.svg)](https://david-dm.org/metaseed/metago?type=dev)
-[![codecov](https://codecov.io/gh/metaseed/metago/branch/master/graph/badge.svg)](https://codecov.io/gh/metaseed/metago)
 [![Known Vulnerabilities](https://snyk.io/test/github/metaseed/metago/badge.svg)](https://snyk.io/test/github/metaseed/metago)
-
 [![bitHound Overall Score](https://www.bithound.io/github/metaseed/metago/badges/score.svg)](https://www.bithound.io/github/metaseed/metago)
 [![bitHound Dependencies](https://www.bithound.io/github/metaseed/metago/badges/dependencies.svg)](https://www.bithound.io/github/metaseed/metago/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/metaseed/metago/badges/devDependencies.svg)](https://www.bithound.io/github/metaseed/metago/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/github/metaseed/metago/badges/code.svg)](https://www.bithound.io/github/metaseed/metago)
-
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Average time to resolve an issue")
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
-[![Issue Stats](https://issuestats.com/github/metaseed/metago/badge/issue?style=flat)](https://issuestats.com/github/metaseed/metago)
-[![Issue Stats](https://issuestats.com/github/metaseed/metago/badge/pr?style=flat)](https://issuestats.com/github/metaseed/metago)
+
 
 ## Features
 MetaGo provides fast cursor movement/selection for keyboard focused users:
