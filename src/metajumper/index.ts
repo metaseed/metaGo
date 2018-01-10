@@ -33,7 +33,7 @@ export class MetaJumper {
         // determines whether to find from center of the screen.
         this.findFromCenterScreenRange = Math.trunc(this.config.jumper.range * 2 / 5); // 0.4
         // disposables.push(vscode.commands.registerCommand('metaGo.cancel', ()=>this.cancel));
-        disposables.push(vscode.commands.registerCommand('extension.gotoAfter', () => {
+        disposables.push(vscode.commands.registerCommand('metaGo.gotoAfter', () => {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
@@ -49,7 +49,7 @@ export class MetaJumper {
 
         }));
 
-        disposables.push(vscode.commands.registerCommand('metaGo.goto', () => {
+        disposables.push(vscode.commands.registerCommand('metaGo.gotoInteli', () => {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
@@ -69,7 +69,7 @@ export class MetaJumper {
 
         }));
 
-        disposables.push(vscode.commands.registerCommand('extension.gotoBefore', () => {
+        disposables.push(vscode.commands.registerCommand('metaGo.goto', () => {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
