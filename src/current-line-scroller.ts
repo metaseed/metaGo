@@ -15,7 +15,7 @@ export class CurrentLineScroller {
             const editor = vscode.window.activeTextEditor;
             const selection = editor.selection;
             const range = new vscode.Range(selection.start, selection.end);
-            editor.revealRange(range, vscode.TextEditorRevealType.AtTop);
+            editor.revealRange(range, (vscode.TextEditorRevealType as any).AtTop);
         });
         context.subscriptions.push(disposableToTop);
 

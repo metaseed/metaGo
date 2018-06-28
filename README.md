@@ -87,7 +87,7 @@ metaGo.inteli intelligently set cursor position after navigation:
 
 ### jump to bracket
 * extend the default jumpToBracket command.
-* <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>\</kbd>jump to the begin bracket that contains the cursor. Press the shortcut again jump to the end bracket.
+* <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>\\</kbd>: jump to the begin bracket that contains the cursor. Press the shortcut *again* jump to the end bracket.
 
 ## Requirements
 

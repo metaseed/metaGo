@@ -93,6 +93,10 @@
             {
                 "command": "metaGo.bookmark.clear",
                 "title": "metaGo: bookmark: Clear"
+            },
+            {
+                "command": "metaGo.delete.softDelete",
+                "title": "metaGo: delete: softDelete"
             }
         ],
         "keybindings": [
@@ -172,6 +176,11 @@
             {
                 "command": "metaGo.jumpToBracket",
                 "key": "ctrl+shift+\\",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.delete.softDelete",
+                "key": "shift+Backspace",
                 "when": "editorTextFocus"
             }
         ],
