@@ -9,7 +9,7 @@ import { BlankLineJumper } from './blank-line-jumper';
 import { SelectLines } from './select-lines';
 import { BookmarkExt } from './bookmark';
 import { BracketJumper } from './bracket-jumper';
-import { SoftDelete } from './delete/soft-delete';
+import { SoftDelete } from './delete/smart-delete';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed

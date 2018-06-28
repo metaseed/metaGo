@@ -12,6 +12,7 @@ import {
     workspace
 } from 'vscode';
 
+// https://marketplace.visualstudio.com/items?itemName=aaronbushnell.rebound-delete
 export class SoftDelete {
     constructor(context: ExtensionContext) {
         // The command has been defined in the package.json file
