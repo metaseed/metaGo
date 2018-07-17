@@ -42,6 +42,7 @@ export class InlineInput {
                 placeHolder: placeHolder,
                 prompt: 'metaGo ',
                 validateInput: (s) => {
+                    if (!s) return '';
                     this.onType({ text: s });
                     ct.cancel();
                     return null;
