@@ -31,7 +31,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 
 > the <kbd>Alt</kbd>+<kbd>;</kbd> command will trigger the metaGo.goto command, the cursor will be placed after the target character; 
-metaGo.gotoBefore and metaGo.inteli commands are also provided.
+metaGo.gotoBefore(default: <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>;</kbd>) and metaGo.inteli commands are also provided.
 metaGo.inteli intelligently set cursor position after navigation:
 > if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
 > The 'word' is defined as a group of all alphanumeric or punctuation characters. 

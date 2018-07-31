@@ -106,6 +106,12 @@
                 "when": "editorTextFocus && metaGoInput"
             },
             {
+                "command": "metaGo.gotoBefore",
+                "key": "ctrl+alt+;",
+                "when": "editorTextFocus",
+                "description": "goto the character and set the cursor before the character"
+            },
+            {
                 "command": "metaGo.goto",
                 "key": "alt+;",
                 "when": "editorTextFocus",
