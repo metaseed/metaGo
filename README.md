@@ -22,6 +22,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * select line up/down.
 * compatible with the vim plugins. :smile:
 
+> if your like this tool, and using Windows, you may also interested in my ohter tool: [metaKeyboard](https://github.com/metaseed/metaKeyboard). :smile:
+
 ### go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>;</kbd> to tell I want to *go* somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
@@ -31,8 +33,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 
 > the <kbd>Alt</kbd>+<kbd>;</kbd> command will trigger the metaGo.goto command, the cursor will be placed after the target character; 
-metaGo.gotoBefore(default: <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>;</kbd>) and metaGo.inteli commands are also provided.
-metaGo.inteli intelligently set cursor position after navigation:
+metaGo.gotoBefore(default: <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>;</kbd>) and metaGo.gotoInteli commands are also provided.
+metaGo.gotoInteli intelligently set cursor position after navigation:
 > if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
 > The 'word' is defined as a group of all alphanumeric or punctuation characters. 
 > MetaGo also provide commands that set cursor before/after the character after navigation, you can config the shortcut by yourself.
@@ -266,3 +268,6 @@ To configure the keybinding, add the following lines to *keybindings.json* (File
                     "default": "",
                     "description": "Path to another image to be presented as Bookmark"
                 }
+
+## Release Note:
+    v2.10.1: minor changes on readme.md according to feedback in issues.
