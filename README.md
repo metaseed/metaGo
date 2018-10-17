@@ -270,4 +270,4 @@ To configure the keybinding, add the following lines to *keybindings.json* (File
                 }
 
 ## Release Note:
-    v2.10.1: minor changes on readme.md according to feedback in issues.
+    v2.11.0: minor changes on readme.md according to feedback in issues.
