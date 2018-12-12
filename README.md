@@ -22,7 +22,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * select line up/down.
 * compatible with the vim plugins. :smile:
 
-> if your like this tool, and using Windows, you may also interested in my another tool: [**metaKeyboard**](https://github.com/metaseed/metaKeyboard). :smirk:
+> if you like this tool, and using Windows, you may also be interested in my other tool: [**metaKeyboard**](https://github.com/metaseed/metaKeyboard). :smirk:
 
 ### go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>;</kbd> to tell I want to *go* somewhere.
