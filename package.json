@@ -1,323 +1,328 @@
 {
-    "name": "metago",
-    "displayName": "MetaGo",
-    "description": "vscode cursor move and select; jump, navigation, goto, acejump",
-    "icon": "images/metago.png",
-    "version": "2.11.0",
-    "publisher": "metaseed",
-    "homepage": "https://github.com/metaseed/metaGo",
-    "license": "MIT",
-    "keywords": [
-        "jumpy",
-        "goto",
-        "navigation",
-        "EasyMotion",
-        "acejump, metaGo, center screen, focus screen, space jumper, shortcut"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/metaseed/metaGo.git"
-    },
-    "bugs": {
-        "url": "https://github.com/metaseed/metaGo/issues",
-        "email": "metaseed@gmail.com"
-    },
-    "engines": {
-        "vscode": "^1.8.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "activationEvents": [
-        "*"
-    ],
-    "main": "./out/src/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "metaGo.goto",
-                "title": "metaGo: GoTo"
-            },
-            {
-                "command": "metaGo.selection",
-                "title": "metaGo: selection"
-            },
-            {
-                "command": "metaGo.gotoAfter",
-                "title": "metaGo: GoToAfter"
-            },
-            {
-                "command": "metaGo.gotoBefore",
-                "title": "metaGo: gotoBefore"
-            },
-            {
-                "command": "metaGo.selectLineUp",
-                "title": "metaGo: selectLineUp"
-            },
-            {
-                "command": "metaGo.selectLineDown",
-                "title": "metaGo: selectLineDown"
-            },
-            {
-                "command": "metaGo.currentLineToCenter",
-                "title": "metaGo: currentLineToCenter"
-            },
-            {
-                "command": "metaGo.currentLineToTop",
-                "title": "metaGo: currentLineToTop"
-            },
-            {
-                "command": "metaGo.spaceBlockMoveUp",
-                "title": "metaGo: spaceBlockMoveUp"
-            },
-            {
-                "command": "metaGo.spaceBlockSelectUp",
-                "title": "metaGo: spaceBlockSelectUp"
-            },
-            {
-                "command": "metaGo.spaceBlockMoveDown",
-                "title": "metaGo: spaceBlockMoveDown"
-            },
-            {
-                "command": "metaGo.spaceBlockSelectDown",
-                "title": "metaGo: spaceBlockSelectDown"
-            },
-            {
-                "command": "metaGo.bookmark.toggle",
-                "title": "metaGo: bookmark: Toggle"
-            },
-            {
-                "command": "metaGo.bookmark.view",
-                "title": "metaGo: bookmark: View"
-            },
-            {
-                "command": "metaGo.bookmark.clear",
-                "title": "metaGo: bookmark: Clear"
-            },
-            {
-                "command": "metaGo.delete.softDelete",
-                "title": "metaGo: delete: softDelete"
-            }
-        ],
-        "keybindings": [
-            {
-                "command": "metaGo.input.cancel",
-                "key": "escape",
-                "when": "editorTextFocus && metaGoInput"
-            },
-            {
-                "command": "metaGo.gotoBefore",
-                "key": "ctrl+alt+;",
-                "when": "editorTextFocus",
-                "description": "goto the character and set the cursor before the character"
-            },
-            {
-                "command": "metaGo.goto",
-                "key": "alt+;",
-                "when": "editorTextFocus",
-                "description": "goto the character and set the cursor after the character"
-            },
-            {
-                "command": "metaGo.selection",
-                "key": "alt+shift+;",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.selectLineUp",
-                "key": "ctrl+shift+i",
-                "mac": "cmd+shift+i",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.selectLineDown",
-                "key": "ctrl+i",
-                "mac": "cmd+i",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.currentLineToCenter",
-                "key": "alt+m",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.currentLineToBottom",
-                "key": "alt+b",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.currentLineToTop",
-                "key": "alt+t",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.spaceBlockMoveUp",
-                "key": "alt+home",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.spaceBlockSelectUp",
-                "key": "alt+shift+home",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.spaceBlockMoveDown",
-                "key": "alt+end",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.spaceBlockSelectDown",
-                "key": "alt+shift+end",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.bookmark.toggle",
-                "key": "alt+'",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.bookmark.view",
-                "key": "alt+/",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.jumpToBracket",
-                "key": "ctrl+shift+\\",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.delete.softDelete",
-                "key": "shift+Backspace",
-                "when": "editorTextFocus"
-            }
-        ],
-        "menus": {
-            "editor/context": [
-                {
-                    "command": "metaGo.bookmark.toggle",
-                    "group": "bookmarks"
-                }
-            ],
-            "editor/title": [
-                {
-                    "command": "metaGo.bookmark.view",
-                    "group": "bookmarks"
-                },
-                {
-                    "command": "metaGo.bookmark.clear",
-                    "group": "bookmarks"
-                }
-            ]
-        },
-        "configuration": {
-            "title": "metaseed metaGo",
-            "type": "object",
-            "properties": {
-                "metaGo.decoration.backgroundColor": {
-                    "type": "string",
-                    "default": "Chartreuse,yellow",
-                    "description": "one and two character decorator background color"
-                },
-                "metaGo.decoration.backgroundOpacity": {
-                    "type": "string",
-                    "default": "0.8"
-                },
-                "metaGo.decoration.borderColor": {
-                    "type": "string",
-                    "default": "#1e1e1e"
-                },
-                "metaGo.decoration.color": {
-                    "type": "string",
-                    "default": "blue"
-                },
-                "metaGo.decoration.width": {
-                    "type": "number",
-                    "default": 9
-                },
-                "metaGo.decoration.height": {
-                    "type": "number",
-                    "default": 15
-                },
-                "metaGo.decoration.fontSize": {
-                    "type": "number",
-                    "default": 13
-                },
-                "metaGo.decoration.x": {
-                    "type": "number",
-                    "default": 1
-                },
-                "metaGo.decoration.y": {
-                    "type": "number",
-                    "default": 12
-                },
-                "metaGo.decoration.fontWeight": {
-                    "type": "string",
-                    "default": "bold"
-                },
-                "metaGo.decoration.fontFamily": {
-                    "type": "string",
-                    "default": "Consolas"
-                },
-                "metaGo.decoration.upperCase": {
-                    "type": "boolean",
-                    "default": false
-                },
-                "metaGo.decoration.characters": {
-                    "type": "string",
-                    "default": "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z"
-                },
-                "metaGo.jumper.findInSelection": {
-                    "type": "string",
-                    "default": "off"
-                },
-                "metaGo.jumper.targetIgnoreCase": {
-                    "type": "boolean",
-                    "default": true
-                },
-                "metaGo.jumper.timeout": {
-                    "type": "number",
-                    "default": "12",
-                    "description": "timeout value in seconds to cancel metaGo jumper commands."
-                },
-                "metaGo.jumper.findAllMode": {
-                    "type": "string",
-                    "default": "on",
-                    "description": "on: find all characters on viewable screen area; off: only search the first character of the words that are separated by chars configured in 'wordSeparatorPattern'"
-                },
-                "metaGo.jumper.wordSeparatorPattern": {
-                    "type": "string",
-                    "default": "[ ,-.{_(\"'<\\/[+]"
-                },
-                "metaGo.jumper.screenLineRange": {
-                    "type": "number",
-                    "default": 50,
-                    "description": "how many lines could be showed in one screen"
-                },
-                "metaGo.bookmark.saveBookmarksInProject": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Allow bookmarks to be saved (and restored) locally in the opened Project/Folder instead of VS Code"
-                },
-                "metaGo.bookmark.gutterIconPath": {
-                    "type": "string",
-                    "default": "",
-                    "description": "Path to another image to be presented as Bookmark"
-                }
-            }
-        }
-    },
-    "scripts": {
-        "publish": "vsce publish minor",
-        "package": "vsce package",
-        "vscode:prepublish": "tsc -p ./",
-        "compile": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.2.2",
-        "vscode": "^1.0.0",
-        "mocha": "^2.3.3",
-        "@types/node": "^6.0.40",
-        "@types/mocha": "^2.2.32"
-    }
+	"name": "metago",
+	"displayName": "MetaGo",
+	"description": "vscode cursor move and select; jump, navigation, goto, acejump",
+	"icon": "images/metago.png",
+	"version": "2.11.0",
+	"publisher": "metaseed",
+	"homepage": "https://github.com/metaseed/metaGo",
+	"license": "MIT",
+	"keywords": [
+		"jumpy",
+		"goto",
+		"navigation",
+		"EasyMotion",
+		"acejump, metaGo, center screen, focus screen, space jumper, shortcut"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/metaseed/metaGo.git"
+	},
+	"bugs": {
+		"url": "https://github.com/metaseed/metaGo/issues",
+		"email": "metaseed@gmail.com"
+	},
+	"engines": {
+		"vscode": "^1.8.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./out/src/extension",
+	"contributes": {
+		"commands": [
+			{
+				"command": "metaGo.goto",
+				"title": "metaGo: GoTo"
+			},
+			{
+				"command": "metaGo.selection",
+				"title": "metaGo: selection"
+			},
+			{
+				"command": "metaGo.gotoAfter",
+				"title": "metaGo: GoToAfter"
+			},
+			{
+				"command": "metaGo.gotoBefore",
+				"title": "metaGo: gotoBefore"
+			},
+			{
+				"command": "metaGo.selectLineUp",
+				"title": "metaGo: selectLineUp"
+			},
+			{
+				"command": "metaGo.selectLineDown",
+				"title": "metaGo: selectLineDown"
+			},
+			{
+				"command": "metaGo.currentLineToCenter",
+				"title": "metaGo: currentLineToCenter"
+			},
+			{
+				"command": "metaGo.currentLineToTop",
+				"title": "metaGo: currentLineToTop"
+			},
+			{
+				"command": "metaGo.spaceBlockMoveUp",
+				"title": "metaGo: spaceBlockMoveUp"
+			},
+			{
+				"command": "metaGo.spaceBlockSelectUp",
+				"title": "metaGo: spaceBlockSelectUp"
+			},
+			{
+				"command": "metaGo.spaceBlockMoveDown",
+				"title": "metaGo: spaceBlockMoveDown"
+			},
+			{
+				"command": "metaGo.spaceBlockSelectDown",
+				"title": "metaGo: spaceBlockSelectDown"
+			},
+			{
+				"command": "metaGo.bookmark.toggle",
+				"title": "metaGo: bookmark: Toggle"
+			},
+			{
+				"command": "metaGo.bookmark.view",
+				"title": "metaGo: bookmark: View"
+			},
+			{
+				"command": "metaGo.bookmark.clear",
+				"title": "metaGo: bookmark: Clear"
+			},
+			{
+				"command": "metaGo.delete.softDelete",
+				"title": "metaGo: delete: softDelete"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "metaGo.input.cancel",
+				"key": "escape",
+				"when": "editorTextFocus && metaGoInput"
+			},
+			{
+				"command": "metaGo.gotoBefore",
+				"key": "ctrl+alt+;",
+				"when": "editorTextFocus",
+				"description": "goto the character and set the cursor before the character"
+			},
+			{
+				"command": "metaGo.goto",
+				"key": "alt+;",
+				"when": "editorTextFocus",
+				"description": "goto the character and set the cursor after the character"
+			},
+			{
+				"command": "metaGo.selection",
+				"key": "alt+shift+;",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.selectLineUp",
+				"key": "ctrl+shift+i",
+				"mac": "cmd+shift+i",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.selectLineDown",
+				"key": "ctrl+i",
+				"mac": "cmd+i",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.currentLineToCenter",
+				"key": "alt+m",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.currentLineToBottom",
+				"key": "alt+b",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.currentLineToTop",
+				"key": "alt+t",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.spaceBlockMoveUp",
+				"key": "alt+home",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.spaceBlockSelectUp",
+				"key": "alt+shift+home",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.spaceBlockMoveDown",
+				"key": "alt+end",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.spaceBlockSelectDown",
+				"key": "alt+shift+end",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.bookmark.toggle",
+				"key": "alt+'",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.bookmark.view",
+				"key": "alt+/",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.jumpToBracket",
+				"key": "ctrl+shift+\\",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.delete.softDelete",
+				"key": "shift+Backspace",
+				"when": "editorTextFocus"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"command": "metaGo.bookmark.toggle",
+					"group": "bookmarks"
+				}
+			],
+			"editor/title": [
+				{
+					"command": "metaGo.bookmark.view",
+					"group": "bookmarks"
+				},
+				{
+					"command": "metaGo.bookmark.clear",
+					"group": "bookmarks"
+				}
+			]
+		},
+		"configuration": {
+			"title": "metaseed metaGo",
+			"type": "object",
+			"properties": {
+				"metaGo.decoration.useTextBasedDecorations": {
+					"type": "boolean",
+					"default": false,
+					"description": "Only enable if editor decorations are not showing. Use text-based decorations in editors instead of SVG based. Supports fewer customisations but may be more robust."
+				},
+				"metaGo.decoration.backgroundColor": {
+					"type": "string",
+					"default": "chartreuse,yellow",
+					"description": "one and two character decorator background color"
+				},
+				"metaGo.decoration.backgroundOpacity": {
+					"type": "string",
+					"default": "0.8"
+				},
+				"metaGo.decoration.borderColor": {
+					"type": "string",
+					"default": "#1e1e1e"
+				},
+				"metaGo.decoration.color": {
+					"type": "string",
+					"default": "blue"
+				},
+				"metaGo.decoration.width": {
+					"type": "number",
+					"default": 9
+				},
+				"metaGo.decoration.height": {
+					"type": "number",
+					"default": 15
+				},
+				"metaGo.decoration.fontSize": {
+					"type": "number",
+					"default": 13
+				},
+				"metaGo.decoration.x": {
+					"type": "number",
+					"default": 1
+				},
+				"metaGo.decoration.y": {
+					"type": "number",
+					"default": 12
+				},
+				"metaGo.decoration.fontWeight": {
+					"type": "string",
+					"default": "bold"
+				},
+				"metaGo.decoration.fontFamily": {
+					"type": "string",
+					"default": "Consolas"
+				},
+				"metaGo.decoration.upperCase": {
+					"type": "boolean",
+					"default": false
+				},
+				"metaGo.decoration.characters": {
+					"type": "string",
+					"default": "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z"
+				},
+				"metaGo.jumper.findInSelection": {
+					"type": "string",
+					"default": "off"
+				},
+				"metaGo.jumper.targetIgnoreCase": {
+					"type": "boolean",
+					"default": true
+				},
+				"metaGo.jumper.timeout": {
+					"type": "number",
+					"default": "12",
+					"description": "timeout value in seconds to cancel metaGo jumper commands."
+				},
+				"metaGo.jumper.findAllMode": {
+					"type": "string",
+					"default": "on",
+					"description": "on: find all characters on viewable screen area; off: only search the first character of the words that are separated by chars configured in 'wordSeparatorPattern'"
+				},
+				"metaGo.jumper.wordSeparatorPattern": {
+					"type": "string",
+					"default": "[ ,-.{_(\"'<\\/[+]"
+				},
+				"metaGo.jumper.screenLineRange": {
+					"type": "number",
+					"default": 50,
+					"description": "how many lines could be showed in one screen"
+				},
+				"metaGo.bookmark.saveBookmarksInProject": {
+					"type": "boolean",
+					"default": false,
+					"description": "Allow bookmarks to be saved (and restored) locally in the opened Project/Folder instead of VS Code"
+				},
+				"metaGo.bookmark.gutterIconPath": {
+					"type": "string",
+					"default": "",
+					"description": "Path to another image to be presented as Bookmark"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"publish": "vsce publish minor",
+		"package": "vsce package",
+		"vscode:prepublish": "tsc -p ./",
+		"compile": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^2.2.2",
+		"vscode": "^1.0.0",
+		"mocha": "^2.3.3",
+		"@types/node": "^6.0.40",
+		"@types/mocha": "^2.2.32"
+	}
 }
