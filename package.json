@@ -1,11 +1,11 @@
 {
 	"name": "metagogo",
-	"displayName": "MetaGo",
+	"displayName": "MetaGoGo",
 	"description": "vscode cursor move and select; jump, navigation, goto, acejump",
 	"icon": "images/metago.png",
 	"version": "2.11.0",
 	"publisher": "metaseed",
-	"homepage": "https://github.com/metaseed/metaGo",
+	"homepage": "https://github.com/nicchristeller/metaGo",
 	"license": "MIT",
 	"keywords": [
 		"jumpy",
@@ -16,7 +16,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/metaseed/metaGo.git"
+		"url": "https://github.com/nicchristeller/metaGo.git"
 	},
 	"bugs": {
 		"url": "https://github.com/metaseed/metaGo/issues",
