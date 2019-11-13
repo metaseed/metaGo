@@ -4,7 +4,7 @@
 	"description": "vscode cursor move and select; jump, navigation, goto, acejump",
 	"icon": "images/metago.png",
 	"version": "2.11.0",
-	"publisher": "metaseed",
+	"publisher": "metagogo",
 	"homepage": "https://github.com/nicchristeller/metaGo",
 	"license": "MIT",
 	"keywords": [
