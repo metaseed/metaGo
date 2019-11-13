@@ -12,6 +12,11 @@
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Average time to resolve an issue")
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
 
+# Fork
+This is a fork of the original, that fixes decorations disappearing in VSCode version 1.40. Here until activity on the original repo resumes.
+
+---
+
 ## Features
 MetaGo provides fast cursor movement/selection for keyboard focused users:
 * go to any character on screen with 3(most cases) or 4 times key press.
@@ -27,16 +32,16 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 ### go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>;</kbd> to tell I want to *go* somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
-3. type the code characters, you will *go* to that location. 
+3. type the code characters, you will *go* to that location.
 
 > at any time press <kbd>ESC</kbd> to cancel
 
 
-> the <kbd>Alt</kbd>+<kbd>;</kbd> command will trigger the metaGo.goto command, the cursor will be placed after the target character; 
+> the <kbd>Alt</kbd>+<kbd>;</kbd> command will trigger the metaGo.goto command, the cursor will be placed after the target character;
 metaGo.gotoBefore(default: <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>;</kbd>) and metaGo.gotoInteli commands are also provided.
 metaGo.gotoInteli intelligently set cursor position after navigation:
 > if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
-> The 'word' is defined as a group of all alphanumeric or punctuation characters. 
+> The 'word' is defined as a group of all alphanumeric or punctuation characters.
 > MetaGo also provide commands that set cursor before/after the character after navigation, you can config the shortcut by yourself.
 
 > * type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Enter</kbd> to directly go to the one above;
@@ -97,7 +102,7 @@ If you have any requirements or dependencies, add a section describing those and
 
 ## Default Shortcut Settings
 
-            { 
+            {
                 "command": "metaGo.input.cancel",
                 "key": "escape",
                 "when": "editorTextFocus && metaGoInput"
