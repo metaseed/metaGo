@@ -214,7 +214,7 @@
 			"properties": {
 				"metaGo.decoration.useTextBasedDecorations": {
 					"type": "boolean",
-					"default": false,
+					"default": true,
 					"description": "Only enable if editor decorations are not showing. Use text-based decorations in editors instead of SVG based. Supports fewer customisations but may be more robust."
 				},
 				"metaGo.decoration.backgroundColor": {
