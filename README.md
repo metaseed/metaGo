@@ -276,3 +276,4 @@ To configure the keybinding, add the following lines to *keybindings.json* (File
 
 ## Release Note:
     v2.11.0: minor changes on readme.md according to feedback in issues.
+    V2.12.0: merge  pull requests to make it work in new version of vscode.

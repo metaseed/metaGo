@@ -3,7 +3,7 @@
 	"displayName": "MetaGoGo",
 	"description": "vscode cursor move and select; jump, navigation, goto, acejump",
 	"icon": "images/metago.png",
-	"version": "2.11.0",
+	"version": "2.12.0",
 	"publisher": "metagogo",
 	"homepage": "https://github.com/nicchristeller/metaGo",
 	"license": "MIT",
@@ -323,6 +323,7 @@
 		"vscode": "^1.0.0",
 		"mocha": "^2.3.3",
 		"@types/node": "^6.0.40",
+		"vsce": "^1.73.0",
 		"@types/mocha": "^2.2.32"
 	}
 }
