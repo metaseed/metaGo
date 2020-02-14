@@ -12,9 +12,6 @@
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Average time to resolve an issue")
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
 
-# Fork
-This is a fork of the original, that fixes decorations disappearing in VSCode version 1.40. Here until activity on the original repo resumes.
-
 ---
 
 ## Features
@@ -277,3 +274,7 @@ To configure the keybinding, add the following lines to *keybindings.json* (File
 ## Release Note:
     v2.11.0: minor changes on readme.md according to feedback in issues.
     V2.12.0: merge  pull requests to make it work in new version of vscode.
+
+## Special Thanks To Contributers:
+
+@metaseed
