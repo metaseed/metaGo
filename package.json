@@ -124,14 +124,14 @@
 			},
 			{
 				"command": "metaGo.selectLineUp",
-				"key": "ctrl+shift+i",
-				"mac": "cmd+shift+i",
+				"key": "ctrl+shift+l",
+				"mac": "cmd+shift+l",
 				"when": "editorTextFocus"
 			},
 			{
 				"command": "metaGo.selectLineDown",
-				"key": "ctrl+i",
-				"mac": "cmd+i",
+				"key": "ctrl+l",
+				"mac": "cmd+l",
 				"when": "editorTextFocus"
 			},
 			{
