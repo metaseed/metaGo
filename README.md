@@ -277,4 +277,4 @@ To configure the keybinding, add the following lines to *keybindings.json* (File
 
 ## Special Thanks To Contributers:
 
-@metaseed
+@nicchristeller

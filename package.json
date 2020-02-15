@@ -3,7 +3,7 @@
 	"displayName": "MetaGo",
 	"description": "vscode cursor move and select; jump, navigation, goto, acejump",
 	"icon": "images/metago.png",
-	"version": "2.16.0",
+	"version": "2.16.1",
 	"publisher": "metaseed",
 	"homepage": "https://github.com/metaseed/metaGo",
 	"license": "MIT",
@@ -319,11 +319,11 @@
 		"test": "node ./node_modules/vscode/bin/test"
 	},
 	"devDependencies": {
-		"typescript": "^2.2.2",
-		"vscode": "^1.0.0",
-		"mocha": "^2.3.3",
-		"@types/node": "^6.0.40",
+		"typescript": "^3.7.0",
+		"vscode": "^1.1.36",
+		"mocha": "^7.0.1",
+		"@types/node": "^13.7.1",
 		"vsce": "^1.73.0",
-		"@types/mocha": "^2.2.32"
+		"@types/mocha": "^7.0.1"
 	}
 }
