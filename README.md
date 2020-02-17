@@ -180,6 +180,9 @@ If you have any requirements or dependencies, add a section describing those and
 
 To configure the keybinding, add the following lines to *keybindings.json* (File -> Preferences -> Keyboard Shortcuts):
 ## extension Settings
+to modify default press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
+
+# default settings:
                 "metaGo.decoration.backgroundColor": {
                     "type": "string",
                     "default": "Chartreuse,yellow",
