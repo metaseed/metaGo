@@ -93,6 +93,10 @@ metaGo.gotoInteli intelligently set cursor position after navigation:
 * extend the default jumpToBracket command.
 * <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>\\</kbd>: jump to the begin bracket that contains the cursor. Press the shortcut *again* jump to the end bracket.
 
+### Other resources that help you understand MetaGo
+
+[Use MetaGo to Quickly Move Around Your Code in VS Code](https://scotch.io/starters/visual-studio-code/metago#toc-conclusion)
+
 ## Requirements
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.
@@ -277,8 +281,9 @@ to modify default press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
    - [ ] close issues.
 
 ## Release Note:
-    v2.11.0: minor changes on readme.md according to feedback in issues.
+    V2.13.0: 
     V2.12.0: merge  pull requests to make it work in new version of vscode.
+    v2.11.0: minor changes on readme.md according to feedback in issues.
 
 ## Special Thanks To Contributers:
 
