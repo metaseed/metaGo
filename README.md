@@ -273,6 +273,8 @@ to modify default press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
                     "default": "",
                     "description": "Path to another image to be presented as Bookmark"
                 }
+## Todo List:
+    [ ]: Finish delete feature.
 
 ## Release Note:
     v2.11.0: minor changes on readme.md according to feedback in issues.
