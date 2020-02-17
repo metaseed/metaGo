@@ -3,7 +3,7 @@
 	"displayName": "MetaGo",
 	"description": "vscode cursor move and select; jump, navigation, goto, acejump",
 	"icon": "images/metago.png",
-	"version": "2.16.4",
+	"version": "3.0.0",
 	"publisher": "metaseed",
 	"homepage": "https://github.com/metaseed/metaGo",
 	"license": "MIT",
@@ -35,12 +35,8 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "metaGo.goto",
-				"title": "metaGo: GoTo"
-			},
-			{
-				"command": "metaGo.selection",
-				"title": "metaGo: selection"
+				"command": "metaGo.gotoSmart",
+				"title": "metaGo: GoToSmart"
 			},
 			{
 				"command": "metaGo.gotoAfter",
@@ -49,6 +45,18 @@
 			{
 				"command": "metaGo.gotoBefore",
 				"title": "metaGo: gotoBefore"
+			},
+			{
+				"command": "metaGo.selectSmart",
+				"title": "metaGo: select to the cursor position smartly"
+			},
+			{
+				"command": "metaGo.selectBefore",
+				"title": "metaGo: select to the cursor position before the charactor"
+			},
+			{
+				"command": "metaGo.selectAfter",
+				"title": "metaGo: select to the cursor position after the charactor"
 			},
 			{
 				"command": "metaGo.selectLineUp",
@@ -103,20 +111,39 @@
 			},
 			{
 				"command": "metaGo.gotoBefore",
-				"key": "ctrl+alt+;",
+				"key": "alt+,",
 				"when": "editorTextFocus",
 				"description": "goto the character and set the cursor before the character"
 			},
 			{
-				"command": "metaGo.goto",
-				"key": "alt+;",
+				"command": "metaGo.gotoAfter",
+				"key": "alt+.",
 				"when": "editorTextFocus",
 				"description": "goto the character and set the cursor after the character"
 			},
 			{
-				"command": "metaGo.selection",
-				"key": "alt+shift+;",
-				"when": "editorTextFocus"
+				"command": "metaGo.gotoSmart",
+				"key": "alt+/",
+				"when": "editorTextFocus",
+				"description": "goto the character and set the cursor smartly"
+			},
+			{
+				"command": "metaGo.selectBefore",
+				"key": "alt+shift+,",
+				"when": "editorTextFocus",
+				"description": "select to the cursor position before the character"
+			},
+			{
+				"command": "metaGo.selectAfter",
+				"key": "alt+shift+.",
+				"when": "editorTextFocus",
+				"description": "select to the cursor position after the character"
+			},
+			{
+				"command": "metaGo.selectSmart",
+				"key": "alt+shift+/",
+				"when": "editorTextFocus",
+				"description": "select to the cursor position smartly"
 			},
 			{
 				"command": "metaGo.selectLineUp",
@@ -172,7 +199,17 @@
 			},
 			{
 				"command": "metaGo.bookmark.view",
-				"key": "alt+/",
+				"key": "alt+\\",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.bookmark.previous",
+				"key": "alt+[",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.bookmark.next",
+				"key": "alt+]",
 				"when": "editorTextFocus"
 			},
 			{
@@ -302,7 +339,7 @@
 		}
 	},
 	"scripts": {
-		"publish": "vsce publish minor",
+		"publish": "vsce publish",
 		"package": "vsce package",
 		"vscode:prepublish": "tsc -p ./",
 		"compile": "tsc -watch -p ./",

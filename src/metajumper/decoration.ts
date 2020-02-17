@@ -12,16 +12,14 @@ export class Decorator {
 		this.config = config;
 		this.updateCache();
 		this.charDecorationType = vscode.window.createTextEditorDecorationType({
-			backgroundColor: 'rgba(0,255,0,0.3)',
+			backgroundColor: 'rgba(255,255,0,0.4)',
 			borderWidth: '2px',
 			borderStyle: 'solid',
 			light: {
-				// this color will be used in light color themes
-				borderColor: 'rgba(0,255,0,0.3)'
+				borderColor: 'rgba(255,255,0,0.4)'
 			},
 			dark: {
-				// this color will be used in dark color themes
-				borderColor: 'rgba(0,255,0,0.3)'
+				borderColor: 'rgba(255,255,0,0.4)'
 			}
 		});
 	}

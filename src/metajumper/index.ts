@@ -13,6 +13,8 @@ class Selection {
     lastLine: number;
 }
 
+enum JumpPosition {Before, After, Smart}
+
 export class MetaJumper {
     private config: Config;
     private decorationModelBuilder: DecorationModelBuilder = new DecorationModelBuilder();
@@ -33,7 +35,7 @@ export class MetaJumper {
         // determines whether to find from center of the screen.
         this.findFromCenterScreenRange = Math.trunc(this.config.jumper.range * 2 / 5); // 0.4
         // disposables.push(vscode.commands.registerCommand('metaGo.cancel', ()=>this.cancel));
-        disposables.push(vscode.commands.registerCommand('metaGo.goto', () => {
+        disposables.push(vscode.commands.registerCommand('metaGo.gotoAfter', () => {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
@@ -49,13 +51,13 @@ export class MetaJumper {
 
         }));
 
-        disposables.push(vscode.commands.registerCommand('metaGo.gotoInteli', () => {
+        disposables.push(vscode.commands.registerCommand('metaGo.gotoSmart', () => {
             this.isSelectionMode = false;
             try {
                 this.metaJump()
                     .then((model) => {
                         this.done();
-                        Utilities.goto(model.line, model.character + 1 + model.inteliAdj);
+                        Utilities.goto(model.line, model.character + 1 + model.smartAdj);
                     })
                     .catch(
                         () => {
@@ -84,36 +86,18 @@ export class MetaJumper {
             }
         }));
 
-        disposables.push(vscode.commands.registerCommand('metaGo.selection', () => {
-            this.isSelectionMode = true;
-            let editor = vscode.window.activeTextEditor;
-            const selection = editor.selection;
-            let position = selection.active.line === selection.end.line ? selection.start : selection.end
-            let fromLine = position.line;
-            let fromChar = position.character;
-
-            try {
-                this.metaJump()
-                    .then((model) => {
-                        this.done();
-                        let toCharacter = model.character;
-                        if (model.line > fromLine) {
-                            toCharacter++;
-                        } else if (model.line === fromLine) {
-                            if (model.character > fromChar) {
-                                toCharacter++;
-                            }
-                        }
-                        Utilities.select(fromLine, fromChar, model.line, toCharacter);
-                    })
-                    .catch(() => this.cancel());
-            }
-            catch (err) {
-                this.cancel();
-                console.log("metago:" + err);
-            }
+        disposables.push(vscode.commands.registerCommand('metaGo.selectSmart', () => {
+            this.selectTo(JumpPosition.Smart);
         }));
 
+        disposables.push(vscode.commands.registerCommand('metaGo.selectBefore', () => {
+            this.selectTo(JumpPosition.Before);
+        }));
+
+        disposables.push(vscode.commands.registerCommand('metaGo.selectAfter', () => {
+            this.selectTo(JumpPosition.After);
+        }));
+        
         for (let i = 0; i < disposables.length; i++) {
             context.subscriptions.push(disposables[i]);
         }
@@ -124,6 +108,49 @@ export class MetaJumper {
 
     updateConfig = () => {
         this.decorator.initialize(this.config);
+    }
+
+    private selectTo(jumpPosition: JumpPosition ) {
+        this.isSelectionMode = true;
+        let editor = vscode.window.activeTextEditor;
+        const selection = editor.selection;
+        let position = selection.active.line === selection.end.line ? selection.start : selection.end;
+        let fromLine = position.line;
+        let fromChar = position.character;
+        try {
+            this.metaJump()
+                .then((model) => {
+                    this.done();
+                    let toCharacter = model.character;
+
+                    switch (jumpPosition) {
+                        case JumpPosition.Before:
+                            break;
+                        case JumpPosition.After:
+                            toCharacter++;
+                            break;
+                        case JumpPosition.Smart:
+                            if (model.line > fromLine) {
+                                toCharacter++;
+                            }
+                            else if (model.line === fromLine) {
+                                if (model.character > fromChar) {
+                                    toCharacter++;
+                                }
+                            }
+                            break;
+                        default:
+                            throw "unexpected JumpPosition value";
+                    }
+                    
+                    Utilities.select(fromLine, fromChar, model.line, toCharacter);
+                })
+                .catch(() => this.cancel());
+        }
+        catch (err) {
+            this.cancel();
+            console.log("metago:" + err);
+        }
     }
 
     private done() {
@@ -331,16 +358,16 @@ export class MetaJumper {
         return lineIndexes;
     }
 
-    private inteliAdjBefore(str: string, char: string, index: number): InteliAdjustment {
+    private smartAdjBefore(str: string, char: string, index: number): InteliAdjustment {
         let regexp = new RegExp('\\w');
-        if (this.inteliAdjBeforeRegex(str, char, index, regexp) === InteliAdjustment.Before) {
+        if (this.smartAdjBeforeRegex(str, char, index, regexp) === InteliAdjustment.Before) {
             return InteliAdjustment.Before;
         }
         regexp = new RegExp(/[^\w\s]/);
-        return this.inteliAdjBeforeRegex(str, char, index, regexp);
+        return this.smartAdjBeforeRegex(str, char, index, regexp);
     }
 
-    private inteliAdjBeforeRegex(str: string, char: string, index: number, regexp: RegExp): InteliAdjustment {
+    private smartAdjBeforeRegex(str: string, char: string, index: number, regexp: RegExp): InteliAdjustment {
 
         if (regexp.test(char)) {
             if (index === 0 && str.length !== 1) {
@@ -364,12 +391,12 @@ export class MetaJumper {
             for (var i = 0; i < str.length; i++) {
                 if (!ignoreCase) {
                     if (str[i] === char) {
-                        let adj = this.inteliAdjBefore(str, char, i);
+                        let adj = this.smartAdjBefore(str, char, i);
                         indices.push(new CharIndex(i, adj));
                     };
                 } else {
                     if (str[i] && str[i].toLowerCase() === char.toLowerCase()) {
-                        let adj = this.inteliAdjBefore(str, char, i);
+                        let adj = this.smartAdjBefore(str, char, i);
                         indices.push(new CharIndex(i, adj));
                     }
                 }
@@ -387,7 +414,7 @@ export class MetaJumper {
                     }
                 } else {
                     if (words[i][0] && words[i][0].toLowerCase() === char.toLowerCase()) {
-                        let adj = this.inteliAdjBefore(str, char, i);
+                        let adj = this.smartAdjBefore(str, char, i);
                         indices.push(new CharIndex(index, adj));
                     }
                 }

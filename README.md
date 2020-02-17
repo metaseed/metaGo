@@ -24,25 +24,31 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * select line up/down.
 * compatible with the vim plugins. :smile:
 
-> if you like this tool, and using Windows, you may also be interested in my other tool: [**metaKeyboard**](https://github.com/metaseed/metaKeyboard). :smirk:
+> if you like this tool, and using Windows, you may also be interested in my other tool: [**metaTool**](https://github.com/metatool/metatool). (release soon) :smirk:    
+> with metatool running with it's metakeyboard plugin, you just using the 61 keys main keyboard area to type any key you want.
+>
+> i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;<kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
+
 
 ### go to any character on screen
-1. type <kbd>Alt</kbd>+<kbd>;</kbd> to tell I want to *go* somewhere.
+1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *go* to that location.
 
 > at any time press <kbd>ESC</kbd> to cancel
 
 
-> the <kbd>Alt</kbd>+<kbd>;</kbd> command will trigger the metaGo.goto command, the cursor will be placed after the target character;
-metaGo.gotoBefore(default: <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>;</kbd>) and metaGo.gotoInteli commands are also provided.
-metaGo.gotoInteli intelligently set cursor position after navigation:
+> the <kbd>Alt</kbd>+<kbd>.</kbd> command will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
+> the <kbd>Alt</kbd>+<kbd>,</kbd> command will trigger the metaGo.gotoBefore command, the cursor will be placed before the target character;
+
+> the <kbd>Alt</kbd>+<kbd>\/</kbd> command will trigger the metaGo.gotoSmart mommand which intelligently set cursor position after navigation:
 > if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
 > The 'word' is defined as a group of all alphanumeric or punctuation characters.
 > MetaGo also provide commands that set cursor before/after the character after navigation, you can config the shortcut by yourself.
 
-> * type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Enter</kbd> to directly go to the one above;
-> * type <kbd>Alt</kbd>+<kbd>;</kbd> and then press <kbd>Space</kbd> to directly go to the one below;
+> After the decorators shows up on screen:
+> * press <kbd>Enter</kbd> to directly go to the one before the current cursor positon;
+> * press <kbd>Space</kbd> to directly go to the one after the current cursor position;
 
 ### select to any character on screen from cursor
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>;</kbd> to tell I want to *select* to somewhere.
@@ -63,11 +69,13 @@ metaGo.gotoInteli intelligently set cursor position after navigation:
 ### navigate between files using bookmarks
 
 * <kbd>Alt</kbd>+ <kdb>\'</kbd> to set a bookmark at the cursor location.
-* <kbd>Alt</kbd>+<kdb>\/</kbd> to list the bookmarks and show management menu.
+* <kbd>Alt</kbd>+ <kdb>[</kbd> goto previous bookmark.
+* <kbd>Alt</kbd>+ <kdb>]</kbd> goto next bookmark
+* <kbd>Alt</kbd>+<kdb>\\</kbd> to list the bookmarks and show management menu.
     1. press <kdb>cc</kbd> and <kbd>enter</kbd> to clear all the bookmarks
     2. press <kdb>c</kbd> and <kbd>enter</kbd> to clear all the bookmarks in current document.
-    3. press <kdb>n</kbd> and <kbd>enter</kbd> to jump to the next bookmark.
-    4. press <kdb>p</kbd> and <kbd>enter</kbd> to jump to the previous bookmark.
+    3. press <kdb>n</kbd> and <kbd>enter</kbd> to go to the next bookmark.
+    4. press <kdb>p</kbd> and <kbd>enter</kbd> to go to the previous bookmark.
 
 ![MetaGo.Center](images/metago.bookmark.gif)
 
@@ -103,84 +111,119 @@ If you have any requirements or dependencies, add a section describing those and
 
 ## Default Shortcut Settings
 
-            {
-                "command": "metaGo.input.cancel",
-                "key": "escape",
-                "when": "editorTextFocus && metaGoInput"
-            },
-            {
-                "command": "metaGo.goto",
-                "key": "alt+;",
-                "when": "editorTextFocus",
-                "description": "goto the character and set the cursor after the character"
-            },
-            {
-                "command": "metaGo.selection",
-                "key": "alt+shift+;",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.selectLineUp",
-                "key": "ctrl+shift+i",
-                "mac": "cmd+shift+i",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.selectLineDown",
-                "key": "ctrl+i",
-                "mac": "cmd+i",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.currentLineToCenter",
-                "key": "alt+m",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.currentLineToBottom",
-                "key": "alt+b",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.currentLineToTop",
-                "key": "alt+t",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.spaceBlockMoveUp",
-                "key": "alt+home",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.spaceBlockSelectUp",
-                "key": "alt+shift+home",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.spaceBlockMoveDown",
-                "key": "alt+end",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.spaceBlockSelectDown",
-                "key": "alt+shift+end",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.bookmark.toggle",
-                "key": "alt+'",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.bookmark.view",
-                "key": "alt+/",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.jumpToBracket",
-                "key": "ctrl+shift+\\",
-                "when": "editorTextFocus"
-            }
+           {
+				"command": "metaGo.input.cancel",
+				"key": "escape",
+				"when": "editorTextFocus && metaGoInput"
+			},
+			{
+				"command": "metaGo.gotoBefore",
+				"key": "alt+,",
+				"when": "editorTextFocus",
+				"description": "goto the character and set the cursor before the character"
+			},
+			{
+				"command": "metaGo.gotoAfter",
+				"key": "alt+.",
+				"when": "editorTextFocus",
+				"description": "goto the character and set the cursor after the character"
+			},
+			{
+				"command": "metaGo.gotoSmart",
+				"key": "alt+/",
+				"when": "editorTextFocus",
+				"description": "goto the character and set the cursor smartly"
+			},
+			{
+				"command": "metaGo.selectBefore",
+				"key": "alt+shift+,",
+				"when": "editorTextFocus",
+				"description": "select to the cursor position before the character"
+			},
+			{
+				"command": "metaGo.selectAfter",
+				"key": "alt+shift+.",
+				"when": "editorTextFocus",
+				"description": "select to the cursor position after the character"
+			},
+			{
+				"command": "metaGo.selectSmart",
+				"key": "alt+shift+/",
+				"when": "editorTextFocus",
+				"description": "select to the cursor position smartly"
+			},
+			{
+				"command": "metaGo.selectLineUp",
+				"key": "ctrl+shift+l",
+				"mac": "cmd+shift+l",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.selectLineDown",
+				"key": "ctrl+l",
+				"mac": "cmd+l",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.currentLineToCenter",
+				"key": "alt+m",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.currentLineToBottom",
+				"key": "alt+b",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.currentLineToTop",
+				"key": "alt+t",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.spaceBlockMoveUp",
+				"key": "alt+home",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.spaceBlockSelectUp",
+				"key": "alt+shift+home",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.spaceBlockMoveDown",
+				"key": "alt+end",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.spaceBlockSelectDown",
+				"key": "alt+shift+end",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.bookmark.toggle",
+				"key": "alt+'",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.bookmark.view",
+				"key": "alt+\\",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.bookmark.previous",
+				"key": "alt+[",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.bookmark.next",
+				"key": "alt+]",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.jumpToBracket",
+				"key": "ctrl+shift+\\",
+				"when": "editorTextFocus"
+			}
 
 To configure the keybinding, add the following lines to *keybindings.json* (File -> Preferences -> Keyboard Shortcuts):
 ## extension Settings
@@ -277,13 +320,6 @@ to modify default press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
                     "default": "",
                     "description": "Path to another image to be presented as Bookmark"
                 }
-## Todo List:
-   - [ ] close issues.
-
-## Release Note:
-    V2.13.0: 
-    V2.12.0: merge  pull requests to make it work in new version of vscode.
-    v2.11.0: minor changes on readme.md according to feedback in issues.
 
 ## Special Thanks To Contributers:
 

@@ -204,7 +204,7 @@ export class BookmarkExt {
             }
         });
 
-        vscode.commands.registerCommand("metaGo.bookmark.jumpToNext", () => {
+        vscode.commands.registerCommand("metaGo.bookmark.next", () => {
             if (!vscode.window.activeTextEditor) {
                 vscode.window.showInformationMessage("Open a file first to jump to bookmarks");
                 return;
@@ -227,7 +227,7 @@ export class BookmarkExt {
                 });
         });
 
-        vscode.commands.registerCommand("metaGo.bookmark.jumpToPrevious", () => {
+        vscode.commands.registerCommand("metaGo.bookmark.previous", () => {
             if (!vscode.window.activeTextEditor) {
                 vscode.window.showInformationMessage("Open a file first to jump to this.bookmarks");
                 return;
@@ -338,13 +338,13 @@ export class BookmarkExt {
                     items.splice(0, 0,
                         new BookmarkItem('p',
                             'jump to previous bookmark',
-                            null, 'metaGo.bookmark.jumpToPrevious'
+                            null, 'metaGo.bookmark.previous'
                         )
                     );
                     items.splice(0, 0,
                         new BookmarkItem('n',
                             'jump to next bookmark',
-                            null, 'metaGo.bookmark.jumpToNext'
+                            null, 'metaGo.bookmark.next'
                         )
                     );
 

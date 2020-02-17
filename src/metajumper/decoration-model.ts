@@ -33,7 +33,7 @@ export class DecorationModel {
     line: number;
     //character index in line
     character: number;
-    inteliAdj: InteliAdjustment;
+    smartAdj: InteliAdjustment;
 
     indexInModels: number;
     root?: DecorationModel;
@@ -42,7 +42,7 @@ export class DecorationModel {
 
 class LineCharIndex {
     static END = new LineCharIndex();
-    constructor(public line: number = -1, public char: number = -1, public indexInModels: number = -1, public inteliAdj: InteliAdjustment = InteliAdjustment.Default) { }
+    constructor(public line: number = -1, public char: number = -1, public indexInModels: number = -1, public smartAdj: InteliAdjustment = InteliAdjustment.Default) { }
 }
 
 class LineCharIndexState {
@@ -143,7 +143,7 @@ export class DecorationModelBuilder {
             model.line = lineCharIndex.line;
             model.character = lineCharIndex.char;
             model.indexInModels = lineCharIndex.indexInModels;
-            model.inteliAdj = lineCharIndex.inteliAdj;
+            model.smartAdj = lineCharIndex.smartAdj;
             models.push(model);
             if (lci.lineChanged)
                 lineIndexesState.toggleDirection();
@@ -168,7 +168,7 @@ export class DecorationModelBuilder {
                 model.index = i;
                 model.line = lineCharIndex.line;
                 model.character = lineCharIndex.char;
-                model.inteliAdj = lineCharIndex.inteliAdj;
+                model.smartAdj = lineCharIndex.smartAdj;
                 model.indexInModels = lineCharIndex.indexInModels;
                 models.push(model);
 

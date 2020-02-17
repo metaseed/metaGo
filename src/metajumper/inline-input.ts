@@ -91,7 +91,7 @@ export class InlineInput {
         if (this.input) {
             this.input.resolve(this.input.text);
         }
-        this.dispose();
+        this.dispose(); 
         this.setContext(false);
     }
 
