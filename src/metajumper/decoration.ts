@@ -2,10 +2,12 @@ import * as vscode from 'vscode';
 import { DecorationModel } from './decoration-model';
 import { Config } from '../config';
 
+type Decorations = [vscode.TextEditorDecorationType, vscode.DecorationOptions[]][];
+
 export class Decorator {
 	private config: Config;
 	private cache: { [index: string]: vscode.ThemableDecorationAttachmentRenderOptions };
-	private decorations: { [index: number]: vscode.TextEditorDecorationType } = {};
+	private decorationTypeCache: { [chars: number]: vscode.TextEditorDecorationType } = {};
 	public charDecorationType;
 
 	initialize = (config: Config) => {
@@ -40,8 +42,8 @@ export class Decorator {
 		let decorationType = this.createTextEditorDecorationType(1);
 		let decorationType2 = this.createTextEditorDecorationType(2);
 
-		let options = [];
-		let options2 = [];
+		let options: vscode.DecorationOptions[] = [];
+		let options2: vscode.DecorationOptions[] = [];
 		decorationModel.forEach((model) => {
 			let code = model.code;
 			let len = code.length;
@@ -59,28 +61,41 @@ export class Decorator {
 
 		editor.setDecorations(decorationType, options);
 		editor.setDecorations(decorationType2, options2);
+		return [[decorationType, options],[decorationType2, options2]]
 	}
 
-	removeDecorations = (editor: vscode.TextEditor) => {
-		for (var dec in this.decorations) {
-			if (this.decorations[dec] === null) continue;
-			editor.setDecorations(this.decorations[dec], []);
-			this.decorations[dec].dispose();
-			this.decorations[dec] = null;
+	hide = (editor: vscode.TextEditor, decorations: Decorations) => {
+		for (var dec of decorations) {
+			editor.setDecorations(dec[0], []);
 		}
 	}
 
-	private createTextEditorDecorationType = (charsToOffset: number) => {
-		let decorationType = this.decorations[charsToOffset];
+	show = (editor: vscode.TextEditor, decorations: Decorations) => {
+		for (var dec of decorations) {
+			editor.setDecorations(dec[0], dec[1]);
+		}
+	}
+
+	removeDecorations = (editor: vscode.TextEditor) => {
+		for (var dec in this.decorationTypeCache) {
+			if (this.decorationTypeCache[dec] === null) continue;
+			editor.setDecorations(this.decorationTypeCache[dec], []);
+			this.decorationTypeCache[dec].dispose();
+			this.decorationTypeCache[dec] = null;
+		}
+	}
+
+	private createTextEditorDecorationType = (chars: number) => {
+		let decorationType = this.decorationTypeCache[chars];
 		if (decorationType) return decorationType;
 		decorationType = vscode.window.createTextEditorDecorationType({
 			after: {
-				margin: `0 0 0 ${charsToOffset * (-this.config.decoration.width)}px`,
+				margin: `0 0 0 ${chars * (-this.config.decoration.width)}px`,
 				height: `${this.config.decoration.height}px`,
-				width: `${charsToOffset * this.config.decoration.width}px`
+				width: `${chars * this.config.decoration.width}px`
 			}
 		});
-		this.decorations[charsToOffset] = decorationType;
+		this.decorationTypeCache[chars] = decorationType;
 		return decorationType;
 	}
 

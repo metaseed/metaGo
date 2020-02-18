@@ -424,7 +424,7 @@ export class MetaJumper {
             this.decorator.addDecorations(editor, models);
             let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
             let messageDisposable = vscode.window.setStatusBarMessage(msg);
-            new InlineInput().input(editor, (v) => v)
+            new InlineInput().input(editor, v => v)
                 .then((value: string) => {
                     this.decorator.removeDecorations(editor);
                     if (!value) return;
