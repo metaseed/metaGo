@@ -72,7 +72,7 @@ class FinderConfig {
 	findAllMode: string = 'on';
 	findInSelection: string = 'off';
 	wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";
-	range: number = 50;
+	range: number = 90;
 	targetIgnoreCase: boolean = true;
 	timeout: number = 12000;
 }
