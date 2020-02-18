@@ -421,10 +421,20 @@ export class MetaJumper {
 
     private prepareForJumpTo = (editor: vscode.TextEditor, models: DecorationModel[]) => {
         return new Promise<DecorationModel>((resolve, reject) => {
-            this.decorator.addDecorations(editor, models);
+            var decs = this.decorator.addDecorations(editor, models);
             let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
             let messageDisposable = vscode.window.setStatusBarMessage(msg);
-            new InlineInput().input(editor, v => v)
+            new InlineInput().onKey('.', editor, v => v, 'type the character to goto',
+                k => { // down
+                    console.log('down')
+                    this.decorator.hide(editor, decs)
+                }, k => { // up
+                    console.log('up')
+                    this.decorator.show(editor, decs);
+                }, k => {
+                    console.log('cancel')
+                 }
+            )
                 .then((value: string) => {
                     this.decorator.removeDecorations(editor);
                     if (!value) return;
@@ -435,13 +445,14 @@ export class MetaJumper {
                             this.currentFindIndex = 0;
                             resolve(model);
                         }
-                    } else if (value === ' ') {
-                        let model = models.find(model => model.indexInModels === 1);
-                        if (model) {
-                            this.currentFindIndex = 1;
-                            resolve(model);
-                        }
                     }
+                    //  else if (value === ' ') {
+                    //     let model = models.find(model => model.indexInModels === 1);
+                    //     if (model) {
+                    //         this.currentFindIndex = 1;
+                    //         resolve(model);
+                    //     }
+                    // }
 
                     let model = models.find(model => model.code[0] && model.code[0].toLowerCase() === value.toLowerCase());
 
