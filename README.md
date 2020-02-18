@@ -37,7 +37,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > if you like this tool, and using Windows, you may also be interested in my other tool: [**metaTool**](https://github.com/metatool/metatool). (release soon) :smirk:    
 > with metatool running with it's metakeyboard plugin, you just using the 61 keys main keyboard area to type any key you want.
 >
-> i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;<kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
+> i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;</kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
 
 
 ### go to any character on screen
