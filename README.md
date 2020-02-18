@@ -14,6 +14,20 @@
 
 ---
 
+<br>
+<a href="https://join.slack.com/t/metaseedworkspace/shared_invite/enQtOTU5ODM1MTI2MDcwLWM5N2QzY2MzMTVjMjVlZDVjZTVmMDFjNmViNmE4MzE3NGM4Mzk5M2UwNDAwYjQ4ZGM5Y2U2YjdlMGM5MjJiNDQ">
+<img src="https://i.imgur.com/1QWdtcX.png" alt="Drawing" style="width: 150px;"/>
+</a>
+<br>
+<br>
+
+
+
+With this new V3 released, we are going to add more features, peek features in dev:
+* jumper commands for all opened editors
+* hold <kbd>Space</kbd> to hide jumper decorators on screen.
+* and more... contact with us on [SLACK☕](https://join.slack.com/t/metaseedworkspace/shared_invite/enQtOTU5ODM1MTI2MDcwLWM5N2QzY2MzMTVjMjVlZDVjZTVmMDFjNmViNmE4MzE3NGM4Mzk5M2UwNDAwYjQ4ZGM5Y2U2YjdlMGM5MjJiNDQ)
+
 ## Features
 MetaGo provides fast cursor movement/selection for keyboard focused users:
 * go to any character on screen with 3(most cases) or 4 times key press.
