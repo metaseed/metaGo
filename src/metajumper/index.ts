@@ -13,7 +13,7 @@ class Selection {
     lastLine: number;
 }
 
-enum JumpPosition {Before, After, Smart}
+enum JumpPosition { Before, After, Smart }
 
 export class MetaJumper {
     private config: Config;
@@ -36,54 +36,16 @@ export class MetaJumper {
         this.findFromCenterScreenRange = Math.trunc(this.config.jumper.range * 2 / 5); // 0.4
         // disposables.push(vscode.commands.registerCommand('metaGo.cancel', ()=>this.cancel));
         disposables.push(vscode.commands.registerCommand('metaGo.gotoAfter', () => {
-            this.isSelectionMode = false;
-            try {
-                this.metaJump()
-                    .then((model) => {
-                        this.done();
-                        Utilities.goto(model.line, model.character + 1);
-                    }).catch(() => this.cancel());
-            }
-            catch (err) {
-                this.cancel();
-                console.log("metago:" + err);
-            }
-
+            this.jumpTo(JumpPosition.After);
         }));
 
         disposables.push(vscode.commands.registerCommand('metaGo.gotoSmart', () => {
-            this.isSelectionMode = false;
-            try {
-                this.metaJump()
-                    .then((model) => {
-                        this.done();
-                        Utilities.goto(model.line, model.character + 1 + model.smartAdj);
-                    })
-                    .catch(
-                        () => {
-                            this.cancel();
-                        });
-            }
-            catch (err) {
-                this.cancel();
-                console.log("metago:" + err.message + err.stack);
-            }
+            this.jumpTo(JumpPosition.Smart)
 
         }));
 
         disposables.push(vscode.commands.registerCommand('metaGo.gotoBefore', () => {
-            this.isSelectionMode = false;
-            try {
-                this.metaJump()
-                    .then((model) => {
-                        this.done();
-                        Utilities.goto(model.line, model.character);
-                    }).catch(() => this.cancel());
-            }
-            catch (err) {
-                this.cancel();
-                console.log("metago:" + err);
-            }
+            this.jumpTo(JumpPosition.Before);
         }));
 
         disposables.push(vscode.commands.registerCommand('metaGo.selectSmart', () => {
@@ -97,7 +59,7 @@ export class MetaJumper {
         disposables.push(vscode.commands.registerCommand('metaGo.selectAfter', () => {
             this.selectTo(JumpPosition.After);
         }));
-        
+
         for (let i = 0; i < disposables.length; i++) {
             context.subscriptions.push(disposables[i]);
         }
@@ -110,7 +72,39 @@ export class MetaJumper {
         this.decorator.initialize(this.config);
     }
 
-    private selectTo(jumpPosition: JumpPosition ) {
+    private jumpTo(jumpPosition: JumpPosition) {
+        this.isSelectionMode = false;
+        try {
+            this.metaJump()
+                .then((model) => {
+                    this.done();
+
+                    switch (jumpPosition) {
+                        case JumpPosition.Before:
+                            Utilities.goto(model.line, model.character);
+                            break;
+
+                        case JumpPosition.After:
+                            Utilities.goto(model.line, model.character + 1);
+                            break;
+
+                        case JumpPosition.Smart:
+                            Utilities.goto(model.line, model.character + 1 + model.smartAdj);
+                            break;
+
+                        default:
+                            throw "unexpected JumpPosition value";
+                    }
+
+                }).catch(() => this.cancel());
+        }
+        catch (err) {
+            this.cancel();
+            console.log("metago:" + err);
+        }
+    }
+
+    private selectTo(jumpPosition: JumpPosition) {
         this.isSelectionMode = true;
         let editor = vscode.window.activeTextEditor;
         const selection = editor.selection;
@@ -142,7 +136,7 @@ export class MetaJumper {
                         default:
                             throw "unexpected JumpPosition value";
                     }
-                    
+
                     Utilities.select(fromLine, fromChar, model.line, toCharacter);
                 })
                 .catch(() => this.cancel());
