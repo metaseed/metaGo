@@ -5,10 +5,6 @@
 [![Dependencies Status](https://david-dm.org/metaseed/metago/status.svg)](https://david-dm.org/metaseed/metago)
 [![DevDependencies Status](https://david-dm.org/metaseed/metago/dev-status.svg)](https://david-dm.org/metaseed/metago?type=dev)
 [![Known Vulnerabilities](https://snyk.io/test/github/metaseed/metago/badge.svg)](https://snyk.io/test/github/metaseed/metago)
-[![bitHound Overall Score](https://www.bithound.io/github/metaseed/metago/badges/score.svg)](https://www.bithound.io/github/metaseed/metago)
-[![bitHound Dependencies](https://www.bithound.io/github/metaseed/metago/badges/dependencies.svg)](https://www.bithound.io/github/metaseed/metago/master/dependencies/npm)
-[![bitHound Dev Dependencies](https://www.bithound.io/github/metaseed/metago/badges/devDependencies.svg)](https://www.bithound.io/github/metaseed/metago/master/dependencies/npm)
-[![bitHound Code](https://www.bithound.io/github/metaseed/metago/badges/code.svg)](https://www.bithound.io/github/metaseed/metago)
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Average time to resolve an issue")
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
 
