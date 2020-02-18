@@ -229,7 +229,7 @@ export class MetaJumper {
 
     private getFirstInput = (editor: vscode.TextEditor, resolve, reject): Promise<void> => {
         let firstInlineInput = new InlineInput()
-            .show(editor, (v) => {
+            .input(editor, (v) => {
                 this.decorator.removeCommandIndicator(editor);
                 return v;
             })
@@ -424,7 +424,7 @@ export class MetaJumper {
             this.decorator.addDecorations(editor, models);
             let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
             let messageDisposable = vscode.window.setStatusBarMessage(msg);
-            new InlineInput().show(editor, (v) => v)
+            new InlineInput().input(editor, (v) => v)
                 .then((value: string) => {
                     this.decorator.removeDecorations(editor);
                     if (!value) return;

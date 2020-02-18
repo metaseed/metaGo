@@ -20,7 +20,7 @@ class Input {
 
 export class InlineInput {
     private subscriptions: vscode.Disposable[] = [];
-    private input: Input;
+    private inputModel: Input;
     static instances: InlineInput[] = [];
     private editor: vscode.TextEditor;
 
@@ -29,7 +29,7 @@ export class InlineInput {
         InlineInput.instances.push(this);
     }
 
-    show = (editor: vscode.TextEditor, validateInput: (text: string) => string, placeHolder = 'type the character to goto'): Promise<string> => {
+    input = (editor: vscode.TextEditor, validateInput: (text: string) => string, placeHolder = 'type the character to goto'): Promise<string> => {
         this.editor = editor;
         this.setContext(true);
 
@@ -53,7 +53,7 @@ export class InlineInput {
         }
 
         return new Promise<string>((resolve, reject) => {
-            this.input = new Input({ validateInput: validateInput, resolve: resolve, reject: reject });
+            this.inputModel = new Input({ validateInput: validateInput, resolve: resolve, reject: reject });
             vscode.window.onDidChangeActiveTextEditor(() => {
                 this.cancel(editor);
             });
@@ -63,9 +63,9 @@ export class InlineInput {
     private onType = (event: { text: string }) => {
         const editor = vscode.window.activeTextEditor;
 
-        if (this.input) {
-            this.input.text += event.text;
-            this.input.validateInput(this.input.text);
+        if (this.inputModel) {
+            this.inputModel.text += event.text;
+            this.inputModel.validateInput(this.inputModel.text);
             this.complete(editor);
         }
         else
@@ -88,8 +88,8 @@ export class InlineInput {
 
 
     private complete = (editor: vscode.TextEditor) => {
-        if (this.input) {
-            this.input.resolve(this.input.text);
+        if (this.inputModel) {
+            this.inputModel.resolve(this.inputModel.text);
         }
         this.dispose(); 
         this.setContext(false);
@@ -100,8 +100,8 @@ export class InlineInput {
     }
 
     private cancel = (editor: vscode.TextEditor) => {
-        if (this.input) {
-            this.input.reject("canceled");
+        if (this.inputModel) {
+            this.inputModel.reject("canceled");
         }
         this.dispose();
         this.setContext(false);
