@@ -19,7 +19,7 @@
 
 
 
-With this new V3 released, we are going to add more features, peek features in dev:
+With this new V3 released, we are going to add more features ([Changelog](./CHANGLELOG.md)), peek features in dev:
 * jumper commands for all opened editors
 * hold <kbd>Space</kbd> to hide jumper decorators on screen.
 * and more... contact with us on [SLACK☕](https://join.slack.com/t/metaseedworkspace/shared_invite/enQtOTU5ODM1MTI2MDcwLWM5N2QzY2MzMTVjMjVlZDVjZTVmMDFjNmViNmE4MzE3NGM4Mzk5M2UwNDAwYjQ4ZGM5Y2U2YjdlMGM5MjJiNDQ)
