@@ -52,10 +52,11 @@ quotes from users:
 
 > and MORE from you... 
 
-With this new V3 released, we are going to add more features ([Changelog](./CHANGELOG.md)), peek features in dev:
-* jumper commands for all opened editors
-* hold <kbd>Space</kbd> to hide jumper decorators on screen.
-* and more... contact with us on [SLACK☕](https://join.slack.com/t/metaseedworkspace/shared_invite/enQtOTU5ODM1MTI2MDcwLWM5N2QzY2MzMTVjMjVlZDVjZTVmMDFjNmViNmE4MzE3NGM4Mzk5M2UwNDAwYjQ4ZGM5Y2U2YjdlMGM5MjJiNDQ)
+With this new V3 released, we are going to add more features, peek features in dev:
+* hold <kbd>/</kbd> to hide jumper decorators on screen.(Done😉)
+* jumper commands for all opened editors, not just the active editor.
+* and more... at [changelog](https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md)
+* if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or contact with us on [SLACK☕](https://join.slack.com/t/metaseedworkspace/shared_invite/enQtOTU5ODM1MTI2MDcwLWM5N2QzY2MzMTVjMjVlZDVjZTVmMDFjNmViNmE4MzE3NGM4Mzk5M2UwNDAwYjQ4ZGM5Y2U2YjdlMGM5MjJiNDQ)
 
 ## Features
 MetaGo provides fast cursor movement/selection for keyboard focused users:
@@ -84,7 +85,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > the <kbd>Alt</kbd>+<kbd>.</kbd> command will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
 > the <kbd>Alt</kbd>+<kbd>,</kbd> command will trigger the metaGo.gotoBefore command, the cursor will be placed before the target character;
 
-> the <kbd>Alt</kbd>+<kbd>\/</kbd> command will trigger the metaGo.gotoSmart mommand which intelligently set cursor position after navigation:
+> the <kbd>Alt</kbd>+<kbd>/</kbd> command will trigger the metaGo.gotoSmart mommand which intelligently set cursor position after navigation:
 > if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
 > The 'word' is defined as a group of all alphanumeric or punctuation characters.
 > MetaGo also provide commands that set cursor before/after the character after navigation, you can config the shortcut by yourself.

@@ -300,7 +300,7 @@
 				},
 				"metaGo.decoration.hide.trigerKey": {
 					"type": "string",
-					"default": ".",
+					"default": "\/",
 					"description": "keyboard key, hold to hide decorators on screen, release to show again. Do NOT use andy key in 'metaGo.decoration.characters'"
 				},
 				"metaGo.decoration.hide.triggerKeyDownRepeatInitialDelay": {

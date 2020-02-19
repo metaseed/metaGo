@@ -6,13 +6,13 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
    - [ ] close issues.
 
 ## [In Development]
-
+* jumper could goto any opened editors not just the active editor.
 
 ## Released
-### V3.0.0 - Feb 18, 2019
+### V3.0.0 - Feb 19, 2019
 #### Added
 * add/change commands: metaGo.gotoBefore, metaGo.gotoAfter, metaGo.gotoSmart; metaGo.selectBefore, metaGo.selectAfter, metaGo.selectSmart; 
-* add metaGo.
+* add feature of holding <kbd>/</kbd>(could be modified in config) to hide decorators and release it to show again.
 #### Removed
 * removed delete related command, and no future implementation scheduled, because of unrelated to cursor jumping
 

@@ -170,23 +170,23 @@ export class MetaJumper {
             editor.selection = new vscode.Selection(new vscode.Position(fromLine, fromChar), new vscode.Position(fromLine, fromChar));
         };
     }
+    private jumpTimeoutId = null;
 
     private metaJump() {
         let editor = vscode.window.activeTextEditor;
         let fromLine = editor.selection.active.line;
         let fromChar = editor.selection.active.character;
-        let jumpTimeoutId = null;
 
         if (!this.isJumping) {
             this.isJumping = true;
-            jumpTimeoutId = setTimeout(() => { jumpTimeoutId = null; this.cancel(); }, this.config.jumper.timeout);
+            this.jumpTimeoutId = setTimeout(() => { this.jumpTimeoutId = null; this.cancel(); }, this.config.jumper.timeout);
             return new Promise<DecorationModel>((resolve, reject) => {
                 return this.jump((editor, model: any) => { resolve(model); })
                     .then(() => {
-                        if (jumpTimeoutId) clearTimeout(jumpTimeoutId);
+                        if (this.jumpTimeoutId) clearTimeout(this.jumpTimeoutId);
                     })
                     .catch(() => {
-                        if (jumpTimeoutId) clearTimeout(jumpTimeoutId);
+                        if (this.jumpTimeoutId) clearTimeout(this.jumpTimeoutId);
                         reject();
                     });
             });
@@ -424,16 +424,15 @@ export class MetaJumper {
             var decs = this.decorator.addDecorations(editor, models);
             let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
             let messageDisposable = vscode.window.setStatusBarMessage(msg);
-            new InlineInput(this.config).onKey('.', editor, v => v, 'type the character to goto',
+            new InlineInput(this.config).onKey(this.config.decoration.hide.trigerKey, editor, v => v, 'type the character to goto',
                 k => { // down
-                    console.log('down')
+                    if(this.jumpTimeoutId != null) clearTimeout(this.jumpTimeoutId);
                     this.decorator.hide(editor, decs)
                 }, k => { // up
-                    console.log('up')
+                    this.jumpTimeoutId = setTimeout(() => { this.jumpTimeoutId = null; this.cancel(); }, this.config.jumper.timeout);
                     this.decorator.show(editor, decs);
                 }, k => {
-                    console.log('cancel')
-                 }
+                }
             )
                 .then((value: string) => {
                     this.decorator.removeDecorations(editor);
@@ -446,13 +445,13 @@ export class MetaJumper {
                             resolve(model);
                         }
                     }
-                    //  else if (value === ' ') {
-                    //     let model = models.find(model => model.indexInModels === 1);
-                    //     if (model) {
-                    //         this.currentFindIndex = 1;
-                    //         resolve(model);
-                    //     }
-                    // }
+                    else if (value === ' ') {
+                        let model = models.find(model => model.indexInModels === 1);
+                        if (model) {
+                            this.currentFindIndex = 1;
+                            resolve(model);
+                        }
+                    }
 
                     let model = models.find(model => model.code[0] && model.code[0].toLowerCase() === value.toLowerCase());
 

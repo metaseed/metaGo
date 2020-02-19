@@ -52,7 +52,7 @@ export class Config {
 }
 
 class DecoratorHide {
-	trigerKey: string='.';
+	trigerKey: string='/';
 	triggerKeyDownRepeatInitialDelay: number=550;
 	triggerKeyDownRepeatInterval:number=60;
 }
