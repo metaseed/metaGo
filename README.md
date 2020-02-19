@@ -28,7 +28,7 @@ Metago as an open source free tool, currently is mentained and developed by me i
       <br>
     </td>
     <td>
-	  <a href="./donate/index.md">
+	  <a href="https://github.com/metaseed/metaGo/blob/master/donate/index.md">
           <img src="./donate/scan.png" style="height: 66px;"/>
       </a>
     </td>
