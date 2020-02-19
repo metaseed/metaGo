@@ -71,8 +71,10 @@ export class InlineInput {
         this.inputModel.autoCompleteAferOneInput = false;
         let jumpTimeoutId = null;
         let keyDownCalled = false;
-        let initialDelay = this._config.decoration.hide.triggerKeyDownRepeatInitialDelay??550;
-        let interval = this._config.decoration.hide.triggerKeyDownRepeatInterval??50;
+        let KeyDown = false;
+        let initialDelay = this._config.decoration.hide.triggerKeyDownRepeatInitialDelay;
+        let interval = this._config.decoration.hide.triggerKeyDownRepeatInterval;
+        let firstTimeDowned = false;
 
         let resolve: (text: string) => void;
         let reject: (reason: any) => void;
@@ -92,7 +94,8 @@ export class InlineInput {
             if (last === key) {    
                 if (jumpTimeoutId) clearTimeout(jumpTimeoutId);
                 if (!keyDownCalled) { keyDownCalled = true; keyDown(k); }
-                jumpTimeoutId = setTimeout(() => { keyDownCalled = false; jumpTimeoutId = null; keyUp(k); }, initialDelay);
+                jumpTimeoutId = setTimeout(() => { keyDownCalled = false; jumpTimeoutId = null; firstTimeDowned = false; keyUp(k); }, firstTimeDowned?interval:initialDelay);
+                if(!firstTimeDowned) firstTimeDowned = true;
             } else {
                 if (jumpTimeoutId) clearTimeout(jumpTimeoutId);
                 cancel(last);

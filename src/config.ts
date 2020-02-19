@@ -32,9 +32,9 @@ export class Config {
 
 			this.jumper.characters = config.get<string>("decoration.characters", "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z").split(/[\s,]+/);
 
-			this.decoration.hide.trigerKey = config.get<string>('metaGo.decoration.hide.trigerKey');
-			this.decoration.hide.triggerKeyDownRepeatInitialDelay = config.get<number>('metaGo.decoration.hide.triggerKeyDownRepeatInitialDelay');
-			this.decoration.hide.triggerKeyDownRepeatInterval = config.get<number>('metaGo.decoration.hide.triggerKeyDownRepeatInterval');
+			this.decoration.hide.trigerKey = config.get<string>('decoration.hide.trigerKey');
+			this.decoration.hide.triggerKeyDownRepeatInitialDelay = config.get<number>('decoration.hide.triggerKeyDownRepeatInitialDelay');
+			this.decoration.hide.triggerKeyDownRepeatInterval = config.get<number>('decoration.hide.triggerKeyDownRepeatInterval');
 
 			this.jumper.findAllMode = config.get<string>("jumper.findAllMode", this.jumper.findAllMode);
 			this.jumper.findInSelection = config.get<string>("jumper.findInSelection", this.jumper.findInSelection);
@@ -52,9 +52,9 @@ export class Config {
 }
 
 class DecoratorHide {
-	trigerKey: string;
-	triggerKeyDownRepeatInitialDelay: number;
-	triggerKeyDownRepeatInterval:number;
+	trigerKey: string='.';
+	triggerKeyDownRepeatInitialDelay: number=550;
+	triggerKeyDownRepeatInterval:number=60;
 }
 
 class DecoratorConfig {

@@ -305,12 +305,12 @@
 				},
 				"metaGo.decoration.hide.triggerKeyDownRepeatInitialDelay": {
 					"type": "number",
-					"default": "550",
+					"default": "560",
 					"description": "unit: ms, increase this number if your hide trigger key not work"
 				},
 				"metaGo.decoration.hide.triggerKeyDownRepeatInterval": {
 					"type": "number",
-					"default": "50",
+					"default": "60",
 					"description": "unit: ms, increase this number if your hide trigger key not work"
 				},
 				"metaGo.jumper.findInSelection": {
