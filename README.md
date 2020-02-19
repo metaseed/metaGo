@@ -71,7 +71,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * select line up/down.
 * compatible with the vim plugins. 😊
 
-> if you like this tool, and using Windows, you may also be interested in my other tool: [**metaTool**](https://github.com/metatool/metatool). (release soon) :smirk:    
+> if you like this tool, and using Windows, you may also be interested in my other tool: [**metaTool**](https://github.com/metatool/metatool). (release soon) 😉    
 > with metatool running with it's metakeyboard plugin, you just using the 61 keys main keyboard area to type any key you want.
 >
 > i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;</kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
@@ -157,7 +157,7 @@ If you have any requirements or dependencies, add a section describing those and
 
 ## Default Shortcut Settings
 
-           {
+            {
 				"command": "metaGo.input.cancel",
 				"key": "escape",
 				"when": "editorTextFocus && metaGoInput"
@@ -366,7 +366,8 @@ to modify default press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
                     "default": "",
                     "description": "Path to another image to be presented as Bookmark"
                 }
+## Credits
 
-## Special Thanks To Contributers:
-
-@nicchristeller
+### Special Thanks To Contributers:
+Thank you to all the people who have already contributed to MetaGo!
+<a href="https://github.com/metaseed/metago/graphs/contributors">🤞</a>
