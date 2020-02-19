@@ -9,6 +9,11 @@
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
 
 ---
+Metago tries its best to be the coolest keyboard(mouseless) focused navigation tool in vscode.    
+Metago tries to make your keyboard to you as meaningful as a kitchen knife to a masterchef.    
+<br>
+Metago as an open source free tool, currently is mentained and developed by me in my spare time, if you think it's useful to you or even indispensable like some of our users, please support me, just buy me a drink☕ would be a great inspiration for me, which means there is someone really like it. 😊
+
 <table align="center" width="60%" border="0">
   <tr>
     <td>
@@ -30,11 +35,7 @@
   </tr>
 </table>
 <br>
-
 <br>
-<br>
-
-Metago tries to be the best keyboard(mouseless) focused navigation tool in vscode.
 
 quotes from users:
 > [Wicked fast cursor movement/selection for a focus on keyboard usage. This changed how I use VS Code forever. Seriously.](https://spectrum.chat/frontend/general/favourite-vs-code-extensions~9ad33139-aa3a-4f8e-a640-d08ba08736b0)
@@ -62,7 +63,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * select code block when moving cursor while hold shift key.
 * scroll the active line (contains cursor) to the screen Top/Middle/Bottom.
 * select line up/down.
-* compatible with the vim plugins. :smile:
+* compatible with the vim plugins. 😊
 
 > if you like this tool, and using Windows, you may also be interested in my other tool: [**metaTool**](https://github.com/metatool/metatool). (release soon) :smirk:    
 > with metatool running with it's metakeyboard plugin, you just using the 61 keys main keyboard area to type any key you want.
