@@ -421,7 +421,7 @@ export class MetaJumper {
 
     private prepareForJumpTo = (editor: vscode.TextEditor, models: DecorationModel[]) => {
         return new Promise<DecorationModel>((resolve, reject) => {
-            var decs = this.decorator.addDecorations(editor, models);
+            var decs = this.decorator.add(editor, models);
             let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
             let messageDisposable = vscode.window.setStatusBarMessage(msg);
             new InlineInput(this.config).onKey(this.config.decoration.hide.trigerKey, editor, v => v, 'type the character to goto',
@@ -435,7 +435,7 @@ export class MetaJumper {
                 }
             )
                 .then((value: string) => {
-                    this.decorator.removeDecorations(editor);
+                    this.decorator.remove(editor);
                     if (!value) return;
 
                     if (value === '\n') {
@@ -458,11 +458,11 @@ export class MetaJumper {
                     if (model.children.length > 1) {
                         this.prepareForJumpTo(editor, model.children)
                             .then((model) => {
-                                this.decorator.removeDecorations(editor);
+                                this.decorator.remove(editor);
                                 resolve(model);
                             })
                             .catch(() => {
-                                this.decorator.removeDecorations(editor);
+                                this.decorator.remove(editor);
                                 reject();
                             });
 
@@ -472,7 +472,7 @@ export class MetaJumper {
                         this.currentFindIndex = model.indexInModels;
                     }
                 }).catch(() => {
-                    this.decorator.removeDecorations(editor);
+                    this.decorator.remove(editor);
                     messageDisposable.dispose();
                     reject();
                 });

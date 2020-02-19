@@ -38,7 +38,7 @@ export class Decorator {
 		vscode.window.activeTextEditor.setDecorations(this.charDecorationType, locations);
 	}
 
-	addDecorations = (editor: vscode.TextEditor, decorationModel: DecorationModel[]): Decorations => {
+	add = (editor: vscode.TextEditor, decorationModel: DecorationModel[]): Decorations => {
 		let decorationType = this.createTextEditorDecorationType(1);
 		let decorationType2 = this.createTextEditorDecorationType(2);
 
@@ -76,7 +76,7 @@ export class Decorator {
 		}
 	}
 
-	removeDecorations = (editor: vscode.TextEditor) => {
+	remove = (editor: vscode.TextEditor) => {
 		for (var dec in this.decorationTypeCache) {
 			if (this.decorationTypeCache[dec] === null) continue;
 			editor.setDecorations(this.decorationTypeCache[dec], []);
