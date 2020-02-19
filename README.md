@@ -9,7 +9,7 @@
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
 
 ---
-First of all, Metago is a tool made for myself, it comes from the voice in my heart💖as a programmer.
+First of all, Metago is a tool made for myself, it comes from the voice in my heart💖as a programmer.    
 Metago tries its best to be the coolest😎 keyboard(mouseless) focused navigation tool in vscode.    
 Metago tries to make your keyboard⌨ to you as meaningful as a kitchen knife to a masterchef👩‍🍳.    
 <br>
