@@ -71,7 +71,6 @@ export class InlineInput {
         this.inputModel.autoCompleteAferOneInput = false;
         let jumpTimeoutId = null;
         let keyDownCalled = false;
-        let KeyDown = false;
         let initialDelay = this._config.decoration.hide.triggerKeyDownRepeatInitialDelay;
         let interval = this._config.decoration.hide.triggerKeyDownRepeatInterval;
         let firstTimeDowned = false;

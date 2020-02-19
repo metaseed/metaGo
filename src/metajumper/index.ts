@@ -173,10 +173,6 @@ export class MetaJumper {
     private jumpTimeoutId = null;
 
     private metaJump() {
-        let editor = vscode.window.activeTextEditor;
-        let fromLine = editor.selection.active.line;
-        let fromChar = editor.selection.active.character;
-
         if (!this.isJumping) {
             this.isJumping = true;
             this.jumpTimeoutId = setTimeout(() => { this.jumpTimeoutId = null; this.cancel(); }, this.config.jumper.timeout);
@@ -261,7 +257,7 @@ export class MetaJumper {
                 if (value && value.length > 1)
                     value = value.substring(0, 1);
 
-                this.getSelection(editor)
+                this.getJumpRange(editor)
                     .then((selection) => {
                         let lineCharIndexes = this.find(editor, selection.before, selection.after, value);
                         if (lineCharIndexes.count <= 0) {
@@ -279,7 +275,7 @@ export class MetaJumper {
                             resolve(this.decorationModels[0]);
                         }
                         else {
-                            this.prepareForJumpTo(editor, this.decorationModels).then((model) => {
+                            this.getExactLocation(editor, this.decorationModels).then((model) => {
                                 resolve(model);
                             }).catch((e) => {
                                 reject(e);
@@ -296,8 +292,8 @@ export class MetaJumper {
         return firstInlineInput;
     }
 
-    private async getSelection(editor: vscode.TextEditor): Promise<{ before: Selection, after: Selection }> {
-        let selection: Selection = new Selection();
+    private async getJumpRange(editor: vscode.TextEditor): Promise<{ before: Selection, after: Selection }> {
+        let selection = new Selection();
 
         if (!editor.selection.isEmpty && this.config.jumper.findInSelection === 'on') {
             selection.text = editor.document.getText(editor.selection);
@@ -419,63 +415,68 @@ export class MetaJumper {
         return indices;
     }
 
-    private prepareForJumpTo = (editor: vscode.TextEditor, models: DecorationModel[]) => {
+    private getExactLocation = (editor: vscode.TextEditor, models: DecorationModel[]) => {
         return new Promise<DecorationModel>((resolve, reject) => {
+            // show location candidates
             var decs = this.decorator.add(editor, models);
+
             let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
-            let messageDisposable = vscode.window.setStatusBarMessage(msg);
+            let messageDisposable = vscode.window.setStatusBarMessage(msg, this.config.jumper.timeout);
+
+            // wait for first code key
             new InlineInput(this.config).onKey(this.config.decoration.hide.trigerKey, editor, v => v, 'type the character to goto',
                 k => { // down
-                    if(this.jumpTimeoutId != null) clearTimeout(this.jumpTimeoutId);
+                    if (this.jumpTimeoutId != null) clearTimeout(this.jumpTimeoutId);
                     this.decorator.hide(editor, decs)
                 }, k => { // up
                     this.jumpTimeoutId = setTimeout(() => { this.jumpTimeoutId = null; this.cancel(); }, this.config.jumper.timeout);
                     this.decorator.show(editor, decs);
                 }, k => {
                 }
-            )
-                .then((value: string) => {
-                    this.decorator.remove(editor);
-                    if (!value) return;
+            ).then((value: string) => {
+                this.decorator.remove(editor);
+                if (!value) return;
 
-                    if (value === '\n') {
-                        let model = models.find(model => model.indexInModels === 0);
-                        if (model) {
-                            this.currentFindIndex = 0;
-                            resolve(model);
-                        }
-                    }
-                    else if (value === ' ') {
-                        let model = models.find(model => model.indexInModels === 1);
-                        if (model) {
-                            this.currentFindIndex = 1;
-                            resolve(model);
-                        }
-                    }
-
-                    let model = models.find(model => model.code[0] && model.code[0].toLowerCase() === value.toLowerCase());
-
-                    if (model.children.length > 1) {
-                        this.prepareForJumpTo(editor, model.children)
-                            .then((model) => {
-                                this.decorator.remove(editor);
-                                resolve(model);
-                            })
-                            .catch(() => {
-                                this.decorator.remove(editor);
-                                reject();
-                            });
-
-                    }
-                    else {
+                if (value === '\n') {
+                    let model = models.find(model => model.indexInModels === 0);
+                    if (model) {
+                        this.currentFindIndex = 0;
                         resolve(model);
-                        this.currentFindIndex = model.indexInModels;
                     }
-                }).catch(() => {
-                    this.decorator.remove(editor);
+                }
+                else if (value === ' ') {
+                    let model = models.find(model => model.indexInModels === 1);
+                    if (model) {
+                        this.currentFindIndex = 1;
+                        resolve(model);
+                    }
+                }
+                
+                // filter location candidates
+                let model = models.find(model => model.code[0] && model.code[0].toLowerCase() === value.toLowerCase());
+
+                if (model.children.length > 1) {
+                    this.getExactLocation(editor, model.children)
+                        .then((model) => {
+                            this.decorator.remove(editor);
+                            resolve(model);
+                        })
+                        .catch(() => {
+                            this.decorator.remove(editor);
+                            reject();
+                        });
+
+                }
+                else {
+                    resolve(model);
                     messageDisposable.dispose();
-                    reject();
-                });
+                    this.currentFindIndex = model.indexInModels;
+                }
+            }).catch(() => {
+                this.decorator.remove(editor);
+                messageDisposable.dispose();
+                reject();
+            });
         });
     }
 }

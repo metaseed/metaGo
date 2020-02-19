@@ -78,7 +78,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 
 ### go to any character on screen
-1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere.
+1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere. (Triger)
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character. (hold the <kbd>/</kbd> to hide them, release to show again)
 3. type the code characters, you will *go* to that location.
 
