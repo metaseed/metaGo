@@ -369,5 +369,5 @@ to modify default press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
 ## Credits
 
 ### Contributers:
-Thank you to all the people who have already contributed to MetaGo!
-<a href="https://github.com/metaseed/metago/graphs/contributors">🤞</a>
+
+<a href="https://github.com/metaseed/metago/graphs/contributors">Thank you to all the people who have already contributed to MetaGo!🤞</a>
