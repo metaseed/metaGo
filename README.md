@@ -9,7 +9,21 @@
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
 
 ---
-
+<table align="center" width="60%" border="0">
+  <tr>
+    <td>
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=P9GXHBAAHPBMN&item_name=metago+dev&currency_code=USD&source=url">
+          <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"/>
+      </a>
+      <br>
+    </td>
+      <td>
+	  <a href="./donate/index.md">
+          <img src="./donate/scan.png" style="height: 66px;"/>
+      </a>
+      </td>
+  </tr>
+</table>
 <br>
 <a href="https://join.slack.com/t/metaseedworkspace/shared_invite/enQtOTU5ODM1MTI2MDcwLWM5N2QzY2MzMTVjMjVlZDVjZTVmMDFjNmViNmE4MzE3NGM4Mzk5M2UwNDAwYjQ4ZGM5Y2U2YjdlMGM5MjJiNDQ">
 <img src="https://i.imgur.com/1QWdtcX.png" alt="Drawing" style="width: 150px;"/>
