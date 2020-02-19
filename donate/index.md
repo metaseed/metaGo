@@ -13,13 +13,13 @@
       <br>
     </td>
       <td>
-          <img src="./paypal.png" style="height: 288px;"/>
+          <img src="./paypal.png"/>
       </td>
       <td>
-          <img src="./wechat.png" style="height: 288px;"/>
+          <img src="./wechat.png"/>
       </td>
       <td>
-          <img src="./alipay.png" style="height: 288px;"/>
+          <img src="./alipay.png"/>
       </td>
   </tr>
 </table>
