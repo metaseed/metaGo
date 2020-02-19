@@ -7,12 +7,13 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/metaseed/metago/badge.svg)](https://snyk.io/test/github/metaseed/metago)
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Average time to resolve an issue")
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
-<script async defer src="https://buttons.github.io/buttons.js"></script>
 ---
 First of all, Metago is a tool made for myself, it comes from the voice in my heart💖as a programmer.    
 Metago tries its best to be the coolest😎 keyboard(mouseless) focused navigation tool in vscode.    
 Metago tries to make your keyboard⌨ to you as meaningful as a kitchen knife to a masterchef👩‍🍳.
-<a class="github-button" href="https://github.com/metaseed/metago" data-icon="octicon-star" aria-label="Star metaseed/metago on GitHub">Star</a>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=metaseed&repo=metago&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+
 <br>
 Metago as an open source free tool, currently is mentained and developed by me in my spare time🌙⏳, if you think it's useful to you or even indispensable like some of our users, please support me, just buy me a drink☕ would be a great inspiration for me, which means there is someone really like it. 😊
 
