@@ -89,9 +89,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > The 'word' is defined as a group of all alphanumeric or punctuation characters.
 > MetaGo also provide commands that set cursor before/after the character after navigation, you can config the shortcut by yourself.
 
-> After the decorators shows up on screen:
-> * press <kbd>Enter</kbd> to directly go to the one before the current cursor positon;
-> * press <kbd>Space</kbd> to directly go to the one after the current cursor position;
+> * after the trigger(<kbd>Alt</kbd>+<kbd>.</kbd> or <kbd>Alt</kbd>+<kbd>,</kbd> or  <kbd>Alt</kbd>+<kbd>\/</kbd>)press <kbd>Enter</kbd> to directly go to the one before the current cursor positon;
+> * after the trigger, press <kbd>Space</kbd> to directly go to the one after the current cursor position;
 
 ### select to any character on screen from cursor
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>;</kbd> to tell I want to *select* to somewhere.
