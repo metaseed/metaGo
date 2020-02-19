@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { Config } from '../config';
 
 class Input {
     text: string;
@@ -19,8 +20,10 @@ export class InlineInput {
     private inputModel = new Input();
     static instances: InlineInput[] = [];
     private editor: vscode.TextEditor;
+    _config: Config;
 
-    constructor() {
+    constructor(config: Config) {
+        this._config = config;
         this.registerTextEditorCommand('metaGo.input.cancel', this.cancel);
         InlineInput.instances.push(this);
     }
@@ -68,6 +71,8 @@ export class InlineInput {
         this.inputModel.autoCompleteAferOneInput = false;
         let jumpTimeoutId = null;
         let keyDownCalled = false;
+        let initialDelay = this._config.decoration.hide.triggerKeyDownRepeatInitialDelay??550;
+        let interval = this._config.decoration.hide.triggerKeyDownRepeatInterval??50;
 
         let resolve: (text: string) => void;
         let reject: (reason: any) => void;
@@ -87,7 +92,7 @@ export class InlineInput {
             if (last === key) {    
                 if (jumpTimeoutId) clearTimeout(jumpTimeoutId);
                 if (!keyDownCalled) { keyDownCalled = true; keyDown(k); }
-                jumpTimeoutId = setTimeout(() => { jumpTimeoutId = null; keyUp(k); }, 450);
+                jumpTimeoutId = setTimeout(() => { keyDownCalled = false; jumpTimeoutId = null; keyUp(k); }, initialDelay);
             } else {
                 if (jumpTimeoutId) clearTimeout(jumpTimeoutId);
                 cancel(last);

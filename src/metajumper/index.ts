@@ -228,7 +228,7 @@ export class MetaJumper {
     }
 
     private getFirstInput = (editor: vscode.TextEditor, resolve, reject): Promise<void> => {
-        let firstInlineInput = new InlineInput()
+        let firstInlineInput = new InlineInput(this.config)
             .input(editor, (v) => {
                 this.decorator.removeCommandIndicator(editor);
                 return v;
@@ -424,7 +424,7 @@ export class MetaJumper {
             var decs = this.decorator.addDecorations(editor, models);
             let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
             let messageDisposable = vscode.window.setStatusBarMessage(msg);
-            new InlineInput().onKey('.', editor, v => v, 'type the character to goto',
+            new InlineInput(this.config).onKey('.', editor, v => v, 'type the character to goto',
                 k => { // down
                     console.log('down')
                     this.decorator.hide(editor, decs)

@@ -29,7 +29,12 @@ export class Config {
 			this.decoration.fontWeight = config.get<string>("decoration.fontWeight", this.decoration.fontWeight);
 			this.decoration.fontFamily = config.get<string>("decoration.fontFamily", this.decoration.fontFamily);
 			this.decoration.upperCase = config.get<boolean>("decoration.upperCase", this.decoration.upperCase);
+
 			this.jumper.characters = config.get<string>("decoration.characters", "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z").split(/[\s,]+/);
+
+			this.decoration.hide.trigerKey = config.get<string>('metaGo.decoration.hide.trigerKey');
+			this.decoration.hide.triggerKeyDownRepeatInitialDelay = config.get<number>('metaGo.decoration.hide.triggerKeyDownRepeatInitialDelay');
+			this.decoration.hide.triggerKeyDownRepeatInterval = config.get<number>('metaGo.decoration.hide.triggerKeyDownRepeatInterval');
 
 			this.jumper.findAllMode = config.get<string>("jumper.findAllMode", this.jumper.findAllMode);
 			this.jumper.findInSelection = config.get<string>("jumper.findInSelection", this.jumper.findInSelection);
@@ -44,6 +49,12 @@ export class Config {
 		}
 	}
 
+}
+
+class DecoratorHide {
+	trigerKey: string;
+	triggerKeyDownRepeatInitialDelay: number;
+	triggerKeyDownRepeatInterval:number;
 }
 
 class DecoratorConfig {
@@ -65,6 +76,9 @@ class DecoratorConfig {
 	fontFamily: string = "Consolas";
 
 	upperCase: boolean = false;
+
+	hide = new DecoratorHide();
+
 }
 
 class FinderConfig {
