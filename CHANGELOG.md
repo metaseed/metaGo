@@ -4,7 +4,7 @@ All notable changes to the "metago" extension will be documented in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 ## Todo List:
    - [ ] close issues.
-
+   - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
 ## [In Development]
 * jumper could goto any opened editors not just the active editor.
 

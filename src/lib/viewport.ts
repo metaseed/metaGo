@@ -3,6 +3,8 @@ import * as vscode from "vscode";
 export class ViewPort {
     private _linesInViewPort: number;
 
+    // https://code.visualstudio.com/api/references/commands
+    // search
     async moveCursorToCenter(select: boolean) {
         await vscode.commands.executeCommand("cursorMove", {
             to: 'viewPortCenter',
@@ -22,15 +24,14 @@ export class ViewPort {
             return vscode.commands.executeCommand("cursorMove", {
                 to: 'viewPortBottom',
                 select: false
-            })
-                .then(() => {
-                    let bottomLine = editor.selection.active.line;
-                    let margin = bottomLine - topLine;
-                    // back
-                    editor.selection = new vscode.Selection(new vscode.Position(fromLine, fromChar), new vscode.Position(fromLine, fromChar));
-                    this._linesInViewPort = margin;
-                    return margin;
-                });
+            }).then(() => {
+                let bottomLine = editor.selection.active.line;
+                let margin = bottomLine - topLine;
+                // back
+                editor.selection = new vscode.Selection(new vscode.Position(fromLine, fromChar), new vscode.Position(fromLine, fromChar));
+                this._linesInViewPort = margin;
+                return margin;
+            });
 
         });
 
