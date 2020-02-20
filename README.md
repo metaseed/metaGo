@@ -139,8 +139,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 ![MetaGo.blankLine](images/metago.blankLine.gif)
 
 ### select line up/down
-* <kbd>Ctrl</kbd>+<kbd>i</kbd> to select line up.
-* <kbd>Ctrl</kbd>+<kbd>shift</kbd>+i to select line down.
+* <kbd>Ctrl</kbd>+<kbd>l</kbd> to select line up.
+* <kbd>Ctrl</kbd>+<kbd>shift</kbd>+<kbd>l</kbd> to select line down.
 
 ### jump to bracket
 * extend the default jumpToBracket command.
