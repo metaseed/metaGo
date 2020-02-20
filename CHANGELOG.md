@@ -15,6 +15,8 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Changed
 * replace Promise with async/await in Metajump
 * updated readme
+* metajump decoration support any code length
+
 ---
 
 ## Released
