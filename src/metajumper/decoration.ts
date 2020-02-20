@@ -6,19 +6,19 @@ type Decorations = [vscode.TextEditorDecorationType, vscode.DecorationOptions[]]
 
 export class Decorator {
 	private config: Config;
-	private cache: { [index: string]: vscode.ThemableDecorationAttachmentRenderOptions };
+	private renderOptionsCache: { [index: string]: vscode.ThemableDecorationAttachmentRenderOptions };
 	private decorationTypeCache: { [chars: number]: vscode.TextEditorDecorationType } = {};
-	public charDecorationType;
+	public commandIndicatorDecorationType;
 
 	initialize = (config: Config) => {
 		this.config = config;
 		this.updateCache();
-		this.charDecorationType = vscode.window.createTextEditorDecorationType({
+		this.commandIndicatorDecorationType = vscode.window.createTextEditorDecorationType({
 			backgroundColor: 'rgba(255,255,0,0.4)',
 			borderWidth: '2px',
 			borderStyle: 'solid',
 			light: {
-				borderColor: 'rgba(255,255,0,0.4)'
+				borderColor: 'rgba(255,255,0,0.8)'
 			},
 			dark: {
 				borderColor: 'rgba(255,255,0,0.4)'
@@ -30,38 +30,30 @@ export class Decorator {
 		let line = editor.selection.anchor.line;
 		let char = editor.selection.anchor.character;
 		let option = [new vscode.Range(line, char, line, char)];
-		editor.setDecorations(this.charDecorationType, option);
+		editor.setDecorations(this.commandIndicatorDecorationType, option);
 	}
 
 	removeCommandIndicator = (editor: vscode.TextEditor) => {
 		let locations: vscode.Range[] = [];
-		vscode.window.activeTextEditor.setDecorations(this.charDecorationType, locations);
+		vscode.window.activeTextEditor.setDecorations(this.commandIndicatorDecorationType, locations);
 	}
 
 	create = (editor: vscode.TextEditor, decorationModel: DecorationModel[]): Decorations => {
-		let decorationType = this.createTextEditorDecorationType(1);
-		let decorationType2 = this.createTextEditorDecorationType(2);
-
-		let options: vscode.DecorationOptions[] = [];
-		let options2: vscode.DecorationOptions[] = [];
+		let decorations: Decorations = [];
 		decorationModel.forEach((model) => {
 			let code = model.code;
 			let len = code.length;
 
-			let option: any;
-			if (len === 1) {
-				option = this.createDecorationOptions(null, model.line, model.character + 1, model.character + 1, code);
-				options.push(option);
+			if (!decorations[len]) {
+				let decorationType = this.createTextEditorDecorationType(len);
+				decorations[len] = [decorationType, []];
 			}
-			else {
-				option = this.createDecorationOptions(null, model.line, model.character + 1, model.character + len, code);
-				options2.push(option);
-			}
-		});
+			let option = this.createDecorationOptions(null, model.line, model.character + 1, model.character + len, code);
+			decorations[len][1].push(option);
+		})
 
-		editor.setDecorations(decorationType, options);
-		editor.setDecorations(decorationType2, options2);
-		return [[decorationType, options],[decorationType2, options2]]
+		decorations.forEach(([type, option]) => editor.setDecorations(type, option));
+		return decorations;
 	}
 
 	hide = (editor: vscode.TextEditor, decorations: Decorations) => {
@@ -77,11 +69,11 @@ export class Decorator {
 	}
 
 	remove = (editor: vscode.TextEditor) => {
-		for (var dec in this.decorationTypeCache) {
-			if (this.decorationTypeCache[dec] === null) continue;
-			editor.setDecorations(this.decorationTypeCache[dec], []);
-			this.decorationTypeCache[dec].dispose();
-			this.decorationTypeCache[dec] = null;
+		for (var codeLen in this.decorationTypeCache) {
+			if (this.decorationTypeCache[codeLen] === null) continue;
+			editor.setDecorations(this.decorationTypeCache[codeLen], []);
+			this.decorationTypeCache[codeLen].dispose();
+			this.decorationTypeCache[codeLen] = null;
 		}
 	}
 
@@ -115,16 +107,16 @@ export class Decorator {
 	}
 
 	private getAfterRenderOptions = (code: string) => {
-		if (this.cache[code] !== undefined)
-			return this.cache[code];
-		this.cache[code] = this.buildAfterRenderOptions(code);
-		return this.cache[code];
+		if (this.renderOptionsCache[code] !== undefined)
+			return this.renderOptionsCache[code];
+		this.renderOptionsCache[code] = this.buildAfterRenderOptions(code);
+		return this.renderOptionsCache[code];
 	}
 
 	private updateCache = () => {
-		this.cache = {};
+		this.renderOptionsCache = {};
 		this.config.jumper.characters
-			.forEach(code => this.cache[code] = this.buildAfterRenderOptions(code))
+			.forEach(code => this.renderOptionsCache[code] = this.buildAfterRenderOptions(code))
 	}
 
 	private buildAfterRenderOptions = (code: string) => {
@@ -152,8 +144,8 @@ export class Decorator {
 			backgroundColor: bgColor,
 			fontWeight: cf.fontWeight,
 			color: cf.color,
-			width:`${width}px`,
-			height:`${cf.height}px`,
+			width: `${width}px`,
+			height: `${cf.height}px`,
 			// border:`${cf.borderColor}`
 		};
 	}

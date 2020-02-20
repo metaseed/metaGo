@@ -236,7 +236,7 @@ export class MetaJumper {
 
                 var models = this.decorationModels;
                 model = models[0]; // only one, length == 1
-                while(models.length > 1){
+                while (models.length > 1) {
                     model = await this.getExactLocation(editor, models);
                     models = model.children;
                 }
@@ -434,7 +434,7 @@ export class MetaJumper {
         } catch (e) {
             this.decorator.remove(editor);
             throw e;
-        }finally{
+        } finally {
             messageDisposable.dispose();
 
         }
