@@ -146,12 +146,15 @@ export class Decorator {
 		let colors = cf.bgColor.split(',');
 		let bgColor = colors[(code.length - 1) % colors.length];
 		bgColor = knownColors[bgColor] || bgColor;
-
+		let width = code.length * cf.width;
 		return {
 			contentText: key,
 			backgroundColor: bgColor,
 			fontWeight: cf.fontWeight,
 			color: cf.color,
+			width:`${width}px`,
+			height:`${cf.height}px`,
+			// border:`${cf.borderColor}`
 		};
 	}
 
