@@ -18,4 +18,5 @@ export class Utilities {
         return selection.active.line === selection.end.line ? selection.start : selection.end
     }
 
+    public static wait = m => new Promise(r => setTimeout(r, m))
 }

@@ -72,31 +72,29 @@ export class MetaJumper {
         this.decorator.initialize(this.config);
     }
 
-    private jumpTo(jumpPosition: JumpPosition) {
+    private async jumpTo(jumpPosition: JumpPosition) {
         this.isSelectionMode = false;
+
         try {
-            this.metaJump()
-                .then((model) => {
-                    this.done();
+            var model = await this.metaJumpTo()
+            this.done();
 
-                    switch (jumpPosition) {
-                        case JumpPosition.Before:
-                            Utilities.goto(model.line, model.character);
-                            break;
+            switch (jumpPosition) {
+                case JumpPosition.Before:
+                    Utilities.goto(model.line, model.character);
+                    break;
 
-                        case JumpPosition.After:
-                            Utilities.goto(model.line, model.character + 1);
-                            break;
+                case JumpPosition.After:
+                    Utilities.goto(model.line, model.character + 1);
+                    break;
 
-                        case JumpPosition.Smart:
-                            Utilities.goto(model.line, model.character + 1 + model.smartAdj);
-                            break;
+                case JumpPosition.Smart:
+                    Utilities.goto(model.line, model.character + 1 + model.smartAdj);
+                    break;
 
-                        default:
-                            throw "unexpected JumpPosition value";
-                    }
-
-                }).catch(() => this.cancel());
+                default:
+                    throw "unexpected JumpPosition value";
+            }
         }
         catch (err) {
             this.cancel();
@@ -104,7 +102,7 @@ export class MetaJumper {
         }
     }
 
-    private selectTo(jumpPosition: JumpPosition) {
+    private async selectTo(jumpPosition: JumpPosition) {
         this.isSelectionMode = true;
         let editor = vscode.window.activeTextEditor;
         const selection = editor.selection;
@@ -112,34 +110,31 @@ export class MetaJumper {
         let fromLine = position.line;
         let fromChar = position.character;
         try {
-            this.metaJump()
-                .then((model) => {
-                    this.done();
-                    let toCharacter = model.character;
+            var model = await this.metaJumpTo()
+            this.done();
+            let toCharacter = model.character;
 
-                    switch (jumpPosition) {
-                        case JumpPosition.Before:
-                            break;
-                        case JumpPosition.After:
-                            toCharacter++;
-                            break;
-                        case JumpPosition.Smart:
-                            if (model.line > fromLine) {
-                                toCharacter++;
-                            }
-                            else if (model.line === fromLine) {
-                                if (model.character > fromChar) {
-                                    toCharacter++;
-                                }
-                            }
-                            break;
-                        default:
-                            throw "unexpected JumpPosition value";
+            switch (jumpPosition) {
+                case JumpPosition.Before:
+                    break;
+                case JumpPosition.After:
+                    toCharacter++;
+                    break;
+                case JumpPosition.Smart:
+                    if (model.line > fromLine) {
+                        toCharacter++;
                     }
+                    else if (model.line === fromLine) {
+                        if (model.character > fromChar) {
+                            toCharacter++;
+                        }
+                    }
+                    break;
+                default:
+                    throw "unexpected JumpPosition value";
+            }
 
-                    Utilities.select(fromLine, fromChar, model.line, toCharacter);
-                })
-                .catch(() => this.cancel());
+            Utilities.select(fromLine, fromChar, model.line, toCharacter);
         }
         catch (err) {
             this.cancel();
@@ -172,111 +167,95 @@ export class MetaJumper {
     }
     private jumpTimeoutId = null;
 
-    private metaJump() {
+    private async metaJumpTo() {
         if (!this.isJumping) {
             this.isJumping = true;
+
             this.jumpTimeoutId = setTimeout(() => { this.jumpTimeoutId = null; this.cancel(); }, this.config.jumper.timeout);
-            return new Promise<DecorationModel>((resolve, reject) => {
-                return this.jump((editor, model: any) => { resolve(model); })
-                    .then(() => {
-                        if (this.jumpTimeoutId) clearTimeout(this.jumpTimeoutId);
-                    })
-                    .catch(() => {
-                        if (this.jumpTimeoutId) clearTimeout(this.jumpTimeoutId);
-                        reject();
-                    });
-            });
+            try {
+                var [, model] = await this.jump();
+                return model;
+            }
+            finally {
+                if (this.jumpTimeoutId) {
+                    clearTimeout(this.jumpTimeoutId);
+                    this.jumpTimeoutId = null;
+                }
+            }
         } else {
-            return new Promise<DecorationModel>((resolve, reject) => {
-                reject('metago: reinvoke goto command');
-            });
+            throw new Error('metago: reinvoke goto command');
         }
     }
-    private jump = (jumped: (editor: vscode.TextEditor, model: DecorationModel) => void): Promise<void> => {
-        return new Promise<void>((resolve, reject) => {
-            let editor = vscode.window.activeTextEditor;
 
-            if (!editor) {
-                reject();
-                return;
+    private async jump(): Promise<[vscode.TextEditor, DecorationModel]> {
+        let editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            throw new Error('no active editor');
+        }
+
+        let msg = this.isSelectionMode ? "metaGo: Type to Select" : "metaGo: Type To Jump"
+        let messageDisposable = vscode.window.setStatusBarMessage(msg);
+
+        try {
+            this.decorator.addCommandIndicator(editor);
+
+            var value = await this.getFirstInput(editor);
+            if (!value) {
+                throw new Error('no locction char input')
+            }
+            if (value && value.length > 1)
+                value = value.substring(0, 1);
+
+            var model: DecorationModel = null;
+            if (value === ' ' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
+                let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex + 1));
+                if (model) {
+                    this.currentFindIndex++;
+                } else {
+                    throw new Error('not find');
+                }
+            } else if (value === '\n' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
+                let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex - 1));
+                if (model) {
+                    this.currentFindIndex--;
+                } else {
+                    throw new Error('not find');
+                }
+            } else {
+                var selection = await this.getJumpRange(editor);
+                let lineCharIndexes = this.find(editor, selection.before, selection.after, value);
+                if (lineCharIndexes.count <= 0) {
+                    throw new Error("metaGo: no matches");
+                }
+
+                this.decorationModels = this.decorationModelBuilder.buildDecorationModel(lineCharIndexes);
+
+                if (this.decorationModels.length === 0) {
+                    throw new Error("metaGo: encoding error")
+                }
+
+                var models = this.decorationModels;
+                model = models[0]; // only one, length == 1
+                while(models.length > 1){
+                    model = await this.getExactLocation(editor, models);
+                    models = model.children;
+                }
             }
 
-            let msg = this.isSelectionMode ? "metaGo: Type to Select" : "metaGo: Type To Jump"
-            let messageDisposable = vscode.window.setStatusBarMessage(msg);
-            const promise = new Promise<DecorationModel>((resolve, reject) => {
-                this.decorator.addCommandIndicator(editor);
-                return this.getFirstInput(editor).then((value: string) => {
-                    if (!value) {
-                        reject();
-                        return;
-                    };
+            let msg = this.isSelectionMode ? 'metaGo: Selected!' : 'metaGo: Jumped!';
+            vscode.window.setStatusBarMessage(msg, 2000);
+            return [editor, model];
 
-                    if (value === ' ' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
-                        let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex + 1));
-                        if (model) {
-                            resolve(model);
-                            this.currentFindIndex++;
-                            return;
-                        }
-                        reject();
-                        return;
-                    } else if (value === '\n' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
-                        let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex - 1));
-                        if (model) {
-                            resolve(model);
-                            this.currentFindIndex--;
-                        }
-                        reject();
-                        return;
-                    }
-
-                    if (value && value.length > 1)
-                        value = value.substring(0, 1);
-
-                    this.getJumpRange(editor).then((selection) => {
-                        let lineCharIndexes = this.find(editor, selection.before, selection.after, value);
-                        if (lineCharIndexes.count <= 0) {
-                            reject("metaGo: no matches");
-                            return;
-                        }
-
-                        this.decorationModels = this.decorationModelBuilder.buildDecorationModel(lineCharIndexes);
-
-                        if (this.decorationModels.length === 0) {
-                            reject("metaGo: encoding error");
-                            return;
-                        }
-
-                        if (this.decorationModels.length === 1) {
-                            resolve(this.decorationModels[0]);
-                        } else {
-                            this.getExactLocation(editor, this.decorationModels).then((model) => {
-                                resolve(model);
-                            }).catch((e) => {
-                                reject(e);
-                            });
-                        }
-                    }).catch((e) => reject(e));
-                }).catch((e) => {
-                    reject(e);
-                });
-
-            }).then((model: DecorationModel) => {
-                jumped(editor, model);
-                let msg = this.isSelectionMode ? 'metaGo: Selected!' : 'metaGo: Jumped!';
-                vscode.window.setStatusBarMessage(msg, 2000);
-                resolve();
-            }).catch((reason?: string) => {
-                this.decorator.removeCommandIndicator(editor);
-                if (!reason) reason = "Canceled!";
-                vscode.window.setStatusBarMessage(`metaGo: ${reason}`, 2000);
-                messageDisposable.dispose();
-                reject();
-            });
-        });
+        } catch (reason) {
+            if (!reason) reason = new Error("Canceled!");
+            this.decorator.removeCommandIndicator(editor);
+            vscode.window.setStatusBarMessage(`metaGo: ${reason}`, 2000);
+            messageDisposable.dispose();
+            throw reason;
+        };
     }
 
-    private getFirstInput = (editor: vscode.TextEditor): Promise<string> => {
+    private getFirstInput = (editor: vscode.TextEditor) => {
         let result = new InlineInput(this.config)
             .input(editor, (v) => {
                 this.decorator.removeCommandIndicator(editor);
@@ -408,16 +387,16 @@ export class MetaJumper {
         return indices;
     }
 
-    private getExactLocation = (editor: vscode.TextEditor, models: DecorationModel[]) => {
-        return new Promise<DecorationModel>((resolve, reject) => {
-            // show location candidates
-            var decs = this.decorator.add(editor, models);
+    private getExactLocation = async (editor: vscode.TextEditor, models: DecorationModel[]) => {
+        // show location candidates
+        var decs = this.decorator.create(editor, models);
 
-            let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
-            let messageDisposable = vscode.window.setStatusBarMessage(msg, this.config.jumper.timeout);
+        let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
+        let messageDisposable = vscode.window.setStatusBarMessage(msg, this.config.jumper.timeout);
 
+        try {
             // wait for first code key
-            new InlineInput(this.config).onKey(this.config.decoration.hide.trigerKey, editor, v => v, 'type the character to goto',
+            var value = await new InlineInput(this.config).onKey(this.config.decoration.hide.trigerKey, editor, v => v, 'type the character to goto',
                 k => { // down
                     if (this.jumpTimeoutId != null) clearTimeout(this.jumpTimeoutId);
                     this.decorator.hide(editor, decs)
@@ -426,50 +405,38 @@ export class MetaJumper {
                     this.decorator.show(editor, decs);
                 }, k => {
                 }
-            ).then((value: string) => {
-                this.decorator.remove(editor);
-                if (!value) return;
+            );
 
-                if (value === '\n') {
-                    let model = models.find(model => model.indexInModels === 0);
-                    if (model) {
-                        this.currentFindIndex = 0;
-                        resolve(model);
-                    }
-                }
-                else if (value === ' ') {
-                    let model = models.find(model => model.indexInModels === 1);
-                    if (model) {
-                        this.currentFindIndex = 1;
-                        resolve(model);
-                    }
-                }
+            this.decorator.remove(editor);
+            if (!value) throw new Error('no key code input')
 
-                // filter location candidates
-                let model = models.find(model => model.code[0] && model.code[0].toLowerCase() === value.toLowerCase());
-
-                if (model.children.length > 1) {
-                    this.getExactLocation(editor, model.children)
-                        .then((model) => {
-                            this.decorator.remove(editor);
-                            resolve(model);
-                        })
-                        .catch(() => {
-                            this.decorator.remove(editor);
-                            reject();
-                        });
-
+            if (value === '\n') {
+                let model = models.find(model => model.indexInModels === 0);
+                if (model) {
+                    this.currentFindIndex = 0;
+                    return model
                 }
-                else {
-                    resolve(model);
-                    messageDisposable.dispose();
-                    this.currentFindIndex = model.indexInModels;
+            }
+            else if (value === ' ') {
+                let model = models.find(model => model.indexInModels === 1);
+                if (model) {
+                    this.currentFindIndex = 1;
+                    return model
                 }
-            }).catch(() => {
-                this.decorator.remove(editor);
-                messageDisposable.dispose();
-                reject();
-            });
-        });
+            }
+
+            // filter location candidates
+            let model = models.find(model => model.code[0] && model.code[0].toLowerCase() === value.toLowerCase());
+            this.currentFindIndex = model.indexInModels;
+            return model
+
+        } catch (e) {
+            this.decorator.remove(editor);
+            throw e;
+        }finally{
+            messageDisposable.dispose();
+
+        }
+
     }
 }
