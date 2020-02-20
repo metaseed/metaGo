@@ -76,7 +76,7 @@ export class MetaJumper {
         this.isSelectionMode = false;
 
         try {
-            var model = await this.metaJumpTo()
+            var model = await this.getLocationWithTimeout()
             this.done();
 
             switch (jumpPosition) {
@@ -110,7 +110,7 @@ export class MetaJumper {
         let fromLine = position.line;
         let fromChar = position.character;
         try {
-            var model = await this.metaJumpTo()
+            var model = await this.getLocationWithTimeout()
             this.done();
             let toCharacter = model.character;
 
@@ -167,13 +167,13 @@ export class MetaJumper {
     }
     private jumpTimeoutId = null;
 
-    private async metaJumpTo() {
+    private async getLocationWithTimeout() {
         if (!this.isJumping) {
             this.isJumping = true;
 
             this.jumpTimeoutId = setTimeout(() => { this.jumpTimeoutId = null; this.cancel(); }, this.config.jumper.timeout);
             try {
-                var [, model] = await this.jump();
+                var [, model] = await this.getLocation();
                 return model;
             }
             finally {
@@ -187,14 +187,14 @@ export class MetaJumper {
         }
     }
 
-    private async jump(): Promise<[vscode.TextEditor, DecorationModel]> {
+    private async getLocation(): Promise<[vscode.TextEditor, DecorationModel]> {
         let editor = vscode.window.activeTextEditor;
         if (!editor) {
             throw new Error('no active editor');
         }
 
         let msg = this.isSelectionMode ? "metaGo: Type to Select" : "metaGo: Type To Jump"
-        let messageDisposable = vscode.window.setStatusBarMessage(msg);
+        let messageDisposable = vscode.window.setStatusBarMessage(msg, this.config.jumper.timeout);
 
         try {
             this.decorator.addCommandIndicator(editor);
@@ -212,14 +212,14 @@ export class MetaJumper {
                 if (model) {
                     this.currentFindIndex++;
                 } else {
-                    throw new Error('not find');
+                    throw new Error('metaGo: no next find');
                 }
             } else if (value === '\n' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
                 let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex - 1));
                 if (model) {
                     this.currentFindIndex--;
                 } else {
-                    throw new Error('not find');
+                    throw new Error('metaGo: no previous find');
                 }
             } else {
                 var selection = await this.getJumpRange(editor);
@@ -250,9 +250,10 @@ export class MetaJumper {
             if (!reason) reason = new Error("Canceled!");
             this.decorator.removeCommandIndicator(editor);
             vscode.window.setStatusBarMessage(`metaGo: ${reason}`, 2000);
-            messageDisposable.dispose();
             throw reason;
-        };
+        } finally {
+            messageDisposable.dispose();
+        }
     }
 
     private getFirstInput = (editor: vscode.TextEditor) => {
