@@ -199,9 +199,9 @@ export class MetaJumper {
         try {
             this.decorator.addCommandIndicator(editor);
 
-            var value = await this.getFirstInput(editor);
+            var value = await this.getLocationChar(editor);
             if (!value) {
-                throw new Error('no locction char input')
+                throw new Error('no location char input')
             }
             if (value && value.length > 1)
                 value = value.substring(0, 1);
@@ -256,7 +256,7 @@ export class MetaJumper {
         }
     }
 
-    private getFirstInput = (editor: vscode.TextEditor) => {
+    private getLocationChar = (editor: vscode.TextEditor) => {
         let result = new InlineInput(this.config)
             .input(editor, (v) => {
                 this.decorator.removeCommandIndicator(editor);
