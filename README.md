@@ -61,7 +61,7 @@ With this new V3 released, we are going to add more features, peek features in d
 * and more... at [changelog](https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md)
 * if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or contact with us on [SLACK☕](https://join.slack.com/t/metaseedworkspace/shared_invite/enQtOTU5ODM1MTI2MDcwLWM5N2QzY2MzMTVjMjVlZDVjZTVmMDFjNmViNmE4MzE3NGM4Mzk5M2UwNDAwYjQ4ZGM5Y2U2YjdlMGM5MjJiNDQ)
 
-## Features
+## Features Summary
 MetaGo provides fast cursor movement/selection for keyboard focused users:
 * go to any character on screen with 3(most cases) or 4 times key press.
 * using bookmarks to jump between files.
@@ -77,9 +77,9 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;</kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
 
 
-### go to any character on screen
+### Metajump: go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere. (Triger)
-2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character. (hold the <kbd>/</kbd> to hide them, release to show again)
+2. type the character(stands for location) on screen, metaGo will show you some codes(candidate locations) encoded with character. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
 3. type the code characters, you will *go* to that location.
 
 > at any time press <kbd>ESC</kbd> to cancel
@@ -91,13 +91,12 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > the <kbd>Alt</kbd>+<kbd>/</kbd> command will trigger the metaGo.gotoSmart mommand which intelligently set cursor position after navigation:
 > if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
 > The 'word' is defined as a group of all alphanumeric or punctuation characters.
-> MetaGo also provide commands that set cursor before/after the character after navigation, you can config the shortcut by yourself.
 
 > * after the trigger(<kbd>Alt</kbd>+<kbd>.</kbd> or <kbd>Alt</kbd>+<kbd>,</kbd> or  <kbd>Alt</kbd>+<kbd>\/</kbd>)press <kbd>Enter</kbd> to directly go to the one before the current cursor positon;
 > * after the trigger, press <kbd>Space</kbd> to directly go to the one after the current cursor position;
 
 ### select to any character on screen from cursor
-1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>;</kbd> to tell I want to *select* to somewhere.
+1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>/</kbd> to tell I want to *select* to somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *select* to that location.
 4. repeat 1-3 to adjust your current selection.
