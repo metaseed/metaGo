@@ -4,6 +4,7 @@ All notable changes to the "metago" extension will be documented in this file.
 ## Todo List:
    - [ ] close issues.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
+   - [ ] add muti location char support
 
 ---     
 ## In Development
