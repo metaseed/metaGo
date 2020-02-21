@@ -81,15 +81,15 @@ export class MetaJumper {
 
             switch (jumpPosition) {
                 case JumpPosition.Before:
-                    Utilities.goto(model.line, model.character);
+                    Utilities.goto(model.lineIndex, model.charIndex);
                     break;
 
                 case JumpPosition.After:
-                    Utilities.goto(model.line, model.character + 1);
+                    Utilities.goto(model.lineIndex, model.charIndex + 1);
                     break;
 
                 case JumpPosition.Smart:
-                    Utilities.goto(model.line, model.character + 1 + model.smartAdj);
+                    Utilities.goto(model.lineIndex, model.charIndex + 1 + model.smartAdj);
                     break;
 
                 default:
@@ -112,7 +112,7 @@ export class MetaJumper {
         try {
             var model = await this.getLocationWithTimeout()
             this.done();
-            let toCharacter = model.character;
+            let toCharacter = model.charIndex;
 
             switch (jumpPosition) {
                 case JumpPosition.Before:
@@ -121,11 +121,11 @@ export class MetaJumper {
                     toCharacter++;
                     break;
                 case JumpPosition.Smart:
-                    if (model.line > fromLine) {
+                    if (model.lineIndex > fromLine) {
                         toCharacter++;
                     }
-                    else if (model.line === fromLine) {
-                        if (model.character > fromChar) {
+                    else if (model.lineIndex === fromLine) {
+                        if (model.charIndex > fromChar) {
                             toCharacter++;
                         }
                     }
@@ -134,7 +134,7 @@ export class MetaJumper {
                     throw "unexpected JumpPosition value";
             }
 
-            Utilities.select(fromLine, fromChar, model.line, toCharacter);
+            Utilities.select(fromLine, fromChar, model.lineIndex, toCharacter);
         }
         catch (err) {
             this.cancel();
@@ -199,22 +199,22 @@ export class MetaJumper {
         try {
             this.decorator.addCommandIndicator(editor);
 
-            var value = await this.getLocationChar(editor);
-            if (!value) {
+            var locationChars = await this.getLocationChar(editor);
+            if (!locationChars) {
                 throw new Error('no location char input')
             }
-            if (value && value.length > 1)
-                value = value.substring(0, 1);
+            if (locationChars && locationChars.length > 1)
+                locationChars = locationChars.substring(0, 1);
 
             var model: DecorationModel = null;
-            if (value === ' ' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
+            if (locationChars === ' ' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
                 let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex + 1));
                 if (model) {
                     this.currentFindIndex++;
                 } else {
                     throw new Error('metaGo: no next find');
                 }
-            } else if (value === '\n' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
+            } else if (locationChars === '\n' && this.currentFindIndex !== Number.NaN && this.decorationModels) {
                 let model = this.decorationModels.find((model) => model.indexInModels === (this.currentFindIndex - 1));
                 if (model) {
                     this.currentFindIndex--;
@@ -223,7 +223,7 @@ export class MetaJumper {
                 }
             } else {
                 var selection = await this.getJumpRange(editor);
-                let lineCharIndexes = this.find(editor, selection.before, selection.after, value);
+                let lineCharIndexes = this.find(editor, selection.before, selection.after, locationChars);
                 if (lineCharIndexes.count <= 0) {
                     throw new Error("metaGo: no matches");
                 }
@@ -235,11 +235,12 @@ export class MetaJumper {
                 }
 
                 var models = this.decorationModels;
-                model = models[0]; // only one, length == 1
                 while (models.length > 1) {
-                    model = await this.getExactLocation(editor, models);
-                    models = model.children;
+                    models = await this.getExactLocation(editor, models);
                 }
+                model = models[0]; // only one, length == 1
+                this.currentFindIndex = model.indexInModels;
+
             }
 
             let msg = this.isSelectionMode ? 'metaGo: Selected!' : 'metaGo: Jumped!';
@@ -297,8 +298,8 @@ export class MetaJumper {
         }
     }
 
-    private find = (editor: vscode.TextEditor, selectionBefore: Selection, selectionAfter: Selection, value: string): ILineCharIndexes => {
-        let lineIndexes: ILineCharIndexes = {
+    private find = (editor: vscode.TextEditor, selectionBefore: Selection, selectionAfter: Selection, locationChars: string): ILineCharIndexes => {
+        let lineCharIndexes: ILineCharIndexes = {
             count: 0,
             focusLine: 0,
             indexes: {}
@@ -306,19 +307,19 @@ export class MetaJumper {
 
         for (let i = selectionBefore.startLine; i < selectionBefore.lastLine; i++) {
             let line = editor.document.lineAt(i);
-            let indexes = this.indexesOf(line.text, value);
-            lineIndexes.count += indexes.length;
-            lineIndexes.indexes[i] = indexes;
+            let indexes = this.indexesOf(line.text, locationChars);
+            lineCharIndexes.count += indexes.length;
+            lineCharIndexes.indexes[i] = indexes;
         }
-        lineIndexes.focusLine = editor.selection.active.line;
+        lineCharIndexes.focusLine = editor.selection.active.line;
 
         for (let i = selectionAfter.startLine; i < selectionAfter.lastLine; i++) {
             let line = editor.document.lineAt(i);
-            let indexes = this.indexesOf(line.text, value);
-            lineIndexes.count += indexes.length;
-            lineIndexes.indexes[i] = indexes;
+            let indexes = this.indexesOf(line.text, locationChars);
+            lineCharIndexes.count += indexes.length;
+            lineCharIndexes.indexes[i] = indexes;
         }
-        return lineIndexes;
+        return lineCharIndexes;
     }
 
     private smartAdjBefore(str: string, char: string, index: number): InteliAdjustment {
@@ -415,21 +416,26 @@ export class MetaJumper {
                 let model = models.find(model => model.indexInModels === 0);
                 if (model) {
                     this.currentFindIndex = 0;
-                    return model
+                    return [model]
                 }
             }
             else if (value === ' ') {
                 let model = models.find(model => model.indexInModels === 1);
                 if (model) {
                     this.currentFindIndex = 1;
-                    return model
+                    return [model]
                 }
             }
 
             // filter location candidates
-            let model = models.find(model => model.code[0] && model.code[0].toLowerCase() === value.toLowerCase());
-            this.currentFindIndex = model.indexInModels;
-            return model
+            models = models.filter(model => {
+                if(model.code[0] && model.code[0].toLowerCase() === value.toLowerCase()){
+                    model.code = model.code.substring(1)
+                    return true;
+                }
+                return false;
+            })
+            return models
 
         } catch (e) {
             this.decorator.remove(editor);

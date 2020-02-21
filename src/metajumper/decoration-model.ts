@@ -7,7 +7,7 @@ export class CharIndex {
 }
 export interface IIndexes {
     // key is line number, value stores character indexes in line
-    [key: number]: CharIndex[];
+    [lineNumber: number]: CharIndex[];
 }
 
 export enum InteliAdjustment {
@@ -24,15 +24,13 @@ export enum Direction {
 }
 
 export class DecorationModel {
-    // index in character set array
     index: number;
-    //string displayed in decoration
+    // code string displayed in decoration
     code: string;
-
     // line index
-    line: number;
+    lineIndex: number;
     //character index in line
-    character: number;
+    charIndex: number;
     smartAdj: InteliAdjustment;
 
     indexInModels: number;
@@ -80,7 +78,7 @@ class LineCharIndexState {
         if (!charIndexes) return { lineCharIndex: LineCharIndex.END, lineChanged: false };//to end;
 
         if (lineCharIndex.char >= 0) {
-            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, this.upIndexCounter--,  charIndexes[lineCharIndex.char].inteliAdj);
+            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, this.upIndexCounter--, charIndexes[lineCharIndex.char].inteliAdj);
             lineCharIndex.char--
             return { lineCharIndex: r, lineChanged: false };
         } else {
@@ -112,74 +110,86 @@ class LineCharIndexState {
 
 export class DecorationModelBuilder {
     private config: Config;
-
     initialize = (config: Config) => {
         this.config = config
     }
 
     buildDecorationModel = (lineIndexes: ILineCharIndexes): DecorationModel[] => {
+        let encoder = new Encoder(this.config.jumper.characters, lineIndexes.count);
         let models: DecorationModel[] = [];
-        let line = lineIndexes.focusLine;
+        let focusLine = lineIndexes.focusLine;
         let lineIndexesState = new LineCharIndexState(
             lineIndexes, Direction.up,
-            new LineCharIndex(line, lineIndexes.indexes[line].length - 1),
-            new LineCharIndex(line + 1, 0)
+            new LineCharIndex(focusLine, lineIndexes.indexes[focusLine].length - 1),
+            new LineCharIndex(focusLine + 1, 0)
         );
 
-        let twoCharsMax = Math.pow(this.config.jumper.characters.length, 2);
-        let leadChars = lineIndexes.count > twoCharsMax ? twoCharsMax : lineIndexes.count
-        leadChars = Math.trunc(leadChars / this.config.jumper.characters.length); // just process two letter codes
-
-        // one char codes
-        for (let i = leadChars; i < this.config.jumper.characters.length; i++) {
+        for (let i = 0; i < lineIndexes.count; i++) {
             let lci = lineIndexesState.findNextAutoWrap();
             let lineCharIndex = lci.lineCharIndex;
             if (lineCharIndex === LineCharIndex.END)
                 return models;
 
+            let code = encoder.getCode(i);
             let model = new DecorationModel();
-            model.code = this.config.jumper.characters[i];
+            model.code = code;
             model.index = i;
-            model.line = lineCharIndex.line;
-            model.character = lineCharIndex.char;
-            model.indexInModels = lineCharIndex.indexInModels;
+            model.lineIndex = lineCharIndex.line;
+            model.charIndex = lineCharIndex.char;
             model.smartAdj = lineCharIndex.smartAdj;
+            model.indexInModels = lineCharIndex.indexInModels;
             models.push(model);
             if (lci.lineChanged)
                 lineIndexesState.toggleDirection();
         }
-
-        // two char codes
-        for (let i = 0; i < leadChars; i++) {
-            lineIndexesState.toggleDirection();
-            let root: DecorationModel;
-            for (let k = 0; k < this.config.jumper.characters.length; k++) {
-                let lineCharIndex = lineIndexesState.findNextAutoWrap().lineCharIndex;
-
-                if (lineCharIndex === LineCharIndex.END)
-                    return models;
-
-                let model = new DecorationModel();
-                if (k === 0) {
-                    root = model;
-                }
-
-                model.code = this.config.jumper.characters[i] + this.config.jumper.characters[k];
-                model.index = i;
-                model.line = lineCharIndex.line;
-                model.character = lineCharIndex.char;
-                model.smartAdj = lineCharIndex.smartAdj;
-                model.indexInModels = lineCharIndex.indexInModels;
-                models.push(model);
-
-                let childModel = Object.assign({}, model);
-                childModel.root = root;
-                childModel.children = [];
-                childModel.code = this.config.jumper.characters[k];
-                root.children.push(childModel);
-            }
-        }
         return models;
+    }
+}
+
+// rules:
+// dimension prority: x>y>z;
+// if x is full, then add y dimension at first(next)...
+// if all units used in high dimension, pick first(next) one in this dimension, and add it's demision then, fill the added demision to the end.
+// 
+
+export class Encoder {
+    private dimensions: number;
+    private usedInLowDim: number;
+    private notUsedInLowDim: number;
+
+    constructor(public letters: string[], public codeCount: number) {
+        var letterCount = letters.length;
+        if (codeCount < letterCount) {
+            this.dimensions = 1; // fix bug: log(1)/log(26) = 0
+            this.usedInLowDim = 0;
+            this.notUsedInLowDim = 0;
+        } else {
+            this.dimensions = Math.ceil(Math.log(codeCount) / Math.log(letterCount));
+            var lowDimCount = Math.pow(letterCount, this.dimensions - 1);
+            this.usedInLowDim = Math.ceil((codeCount - lowDimCount) / (this.dimensions - 1)); 
+            this.notUsedInLowDim = lowDimCount - this.usedInLowDim;
+        }
+
+    }
+
+    private getKeyOfDimension(index: number, dimensions: number): string {
+        var ii = index;
+        var len = this.letters.length;
+        var code = ''
+        do {
+            var i = ii % len;
+            code = this.letters[i] + code;
+            ii = Math.floor(ii / len);
+        } while (ii > 0);
+
+        return code.padStart(dimensions, this.letters[0]);
+    }
+    public getCode(index: number): string {
+        if (index < this.notUsedInLowDim) {
+            return this.getKeyOfDimension(index + this.usedInLowDim, this.dimensions - 1);
+        }
+
+        return this.getKeyOfDimension(index - this.notUsedInLowDim, this.dimensions);
     }
 
 }
