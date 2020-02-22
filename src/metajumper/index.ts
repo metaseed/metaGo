@@ -78,18 +78,18 @@ export class MetaJumper {
         try {
             var model = await this.getLocationWithTimeout()
             this.done();
-
+            let editor = vscode.window.activeTextEditor;
             switch (jumpPosition) {
                 case JumpPosition.Before:
-                    Utilities.goto(model.lineIndex, model.charIndex);
+                    Utilities.goto(editor, model.lineIndex, model.charIndex);
                     break;
 
                 case JumpPosition.After:
-                    Utilities.goto(model.lineIndex, model.charIndex + 1);
+                    Utilities.goto(editor, model.lineIndex, model.charIndex + 1);
                     break;
 
                 case JumpPosition.Smart:
-                    Utilities.goto(model.lineIndex, model.charIndex + 1 + model.smartAdj);
+                    Utilities.goto(editor, model.lineIndex, model.charIndex + 1 + model.smartAdj);
                     break;
 
                 default:
@@ -134,7 +134,7 @@ export class MetaJumper {
                     throw "unexpected JumpPosition value";
             }
 
-            Utilities.select(fromLine, fromChar, model.lineIndex, toCharacter);
+            Utilities.select(editor, fromLine, fromChar, model.lineIndex, toCharacter);
         }
         catch (err) {
             this.cancel();
@@ -230,11 +230,10 @@ export class MetaJumper {
 
                 this.decorationModels = this.decorationModelBuilder.buildDecorationModel(lineCharIndexes);
 
-                if (this.decorationModels.length === 0) {
+                var models = this.decorationModels;
+                if (models.length === 0) {
                     throw new Error("metaGo: encoding error")
                 }
-
-                var models = this.decorationModels;
                 while (models.length > 1) {
                     models = await this.getExactLocation(editor, models);
                 }
