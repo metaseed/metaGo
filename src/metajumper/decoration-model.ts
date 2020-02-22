@@ -34,7 +34,6 @@ export class DecorationModel {
     smartAdj: InteliAdjustment;
 
     indexInModels: number;
-    root?: DecorationModel;
     children: DecorationModel[] = [];
 }
 
@@ -150,8 +149,6 @@ export class DecorationModelBuilder {
 // dimension prority: x>y>z;
 // if x is full, then add y dimension at first(next)...
 // if all units used in high dimension, pick first(next) one in this dimension, and add it's demision then, fill the added demision to the end.
-// 
-
 export class Encoder {
     private dimensions: number;
     private usedInLowDim: number;
