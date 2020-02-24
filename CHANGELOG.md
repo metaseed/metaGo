@@ -9,7 +9,7 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ---     
 ## In Development
-### V3.1.0
+### V3.2.0
 #### Added
 * location-chars support: type a sequence of location-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the location chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
 
