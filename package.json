@@ -47,6 +47,18 @@
 				"title": "metaGo: gotoBefore"
 			},
 			{
+				"command": "metaGo.gotoSmartActive",
+				"title": "metaGo: GoToSmart only in active editor"
+			},
+			{
+				"command": "metaGo.gotoAfterActive",
+				"title": "metaGo: GoToAfter only in active editor"
+			},
+			{
+				"command": "metaGo.gotoBeforeActive",
+				"title": "metaGo: gotoBefore only in active editor"
+			},
+			{
 				"command": "metaGo.selectSmart",
 				"title": "metaGo: select to the cursor position smartly"
 			},

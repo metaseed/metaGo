@@ -2,7 +2,7 @@ import { Config } from '../config';
 import * as vscode from 'vscode';
 
 export class CharIndex {
-    constructor(public charIndex, public inteliAdj = InteliAdjustment.Default) {
+    constructor(public charIndex, public inteliAdj = SmartAdjustment.Default) {
     }
 }
 export interface IIndexes {
@@ -10,7 +10,7 @@ export interface IIndexes {
     [lineNumber: number]: CharIndex[];
 }
 
-export enum InteliAdjustment {
+export enum SmartAdjustment {
     Before = -1, Default = 0 // default is after
 }
 export interface ILineCharIndexes {
@@ -24,22 +24,19 @@ export enum Direction {
 }
 
 export class DecorationModel {
-    index: number;
     // code string displayed in decoration
     code: string;
     // line index
     lineIndex: number;
     //character index in line
     charIndex: number;
-    smartAdj: InteliAdjustment;
-
+    smartAdj: SmartAdjustment;
     indexInModels: number;
-    children: DecorationModel[] = [];
 }
 
 class LineCharIndex {
     static END = new LineCharIndex();
-    constructor(public line: number = -1, public char: number = -1, public indexInModels: number = -1, public smartAdj: InteliAdjustment = InteliAdjustment.Default) { }
+    constructor(public line: number = -1, public char: number = -1, public indexInModels: number = -1, public smartAdj: SmartAdjustment = SmartAdjustment.Default) { }
 }
 
 class LineCharIndexState {
@@ -113,34 +110,43 @@ export class DecorationModelBuilder {
         this.config = config
     }
 
-    buildDecorationModel = (lineIndexes: ILineCharIndexes): DecorationModel[] => {
-        let encoder = new Encoder(this.config.jumper.characters, lineIndexes.count);
-        let models: DecorationModel[] = [];
-        let focusLine = lineIndexes.focusLine;
-        let lineIndexesState = new LineCharIndexState(
-            lineIndexes, Direction.up,
-            new LineCharIndex(focusLine, lineIndexes.indexes[focusLine].length - 1),
-            new LineCharIndex(focusLine + 1, 0)
-        );
+    buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>,  locationCount:number): Map<vscode.TextEditor, DecorationModel[]> => {
+        let encoder = new Encoder(this.config.jumper.characters, locationCount);
+        let models = new Map<vscode.TextEditor, DecorationModel[]>();
+        let codeOffset = 0;
 
-        for (let i = 0; i < lineIndexes.count; i++) {
-            let lci = lineIndexesState.findNextAutoWrap();
-            let lineCharIndex = lci.lineCharIndex;
-            if (lineCharIndex === LineCharIndex.END)
-                return models;
+        for (let [editor, lineIndexes] of editorToLineCharIndexesMap) {
+            if (lineIndexes.count === 0) continue;
 
-            let code = encoder.getCode(i);
-            let model = new DecorationModel();
-            model.code = code;
-            model.index = i;
-            model.lineIndex = lineCharIndex.line;
-            model.charIndex = lineCharIndex.char;
-            model.smartAdj = lineCharIndex.smartAdj;
-            model.indexInModels = lineCharIndex.indexInModels;
-            models.push(model);
-            if (lci.lineChanged)
-                lineIndexesState.toggleDirection();
+            let focusLine = lineIndexes.focusLine;
+            let lineIndexesState = new LineCharIndexState(
+                lineIndexes, Direction.up,
+                new LineCharIndex(focusLine, lineIndexes.indexes[focusLine].length - 1),
+                new LineCharIndex(focusLine + 1, 0)
+            );
+
+            let dModels: DecorationModel[] = []
+            for (let i = 0; i < lineIndexes.count; i++) {
+                let lci = lineIndexesState.findNextAutoWrap();
+                let lineCharIndex = lci.lineCharIndex;
+                if (lineCharIndex === LineCharIndex.END)
+                    break;
+
+                let code = encoder.getCode(i + codeOffset);
+                let model = new DecorationModel();
+                model.code = code;
+                model.lineIndex = lineCharIndex.line;
+                model.charIndex = lineCharIndex.char;
+                model.smartAdj = lineCharIndex.smartAdj;
+                model.indexInModels = lineCharIndex.indexInModels;
+                dModels.push(model)
+                if (lci.lineChanged)
+                    lineIndexesState.toggleDirection();
+            }
+            models.set(editor, dModels);
+            codeOffset += lineIndexes.count
         }
+
         return models;
     }
 }
@@ -163,7 +169,7 @@ export class Encoder {
         } else {
             this.dimensions = Math.ceil(Math.log(codeCount) / Math.log(letterCount));
             var lowDimCount = Math.pow(letterCount, this.dimensions - 1);
-            this.usedInLowDim = Math.ceil((codeCount - lowDimCount) / (this.dimensions - 1)); 
+            this.usedInLowDim = Math.ceil((codeCount - lowDimCount) / (this.dimensions - 1));
             this.notUsedInLowDim = lowDimCount - this.usedInLowDim;
         }
 

@@ -63,7 +63,7 @@ With this new V3 released, we are going to add more features, peek features in d
 
 ## Features Summary
 MetaGo provides fast cursor movement/selection for keyboard focused users:
-* go to any character on screen with 3(most cases) or 4 times key press.
+* go to any character on screen (any opened editors) with 3(most cases) or 4 times key press.
 * using bookmarks to jump between files.
 * moving cursor up/down between blank lines.
 * select code block when moving cursor while hold shift key.
@@ -92,8 +92,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
 > The 'word' is defined as a group of all alphanumeric or punctuation characters.
 
-> * after the trigger(<kbd>Alt</kbd>+<kbd>.</kbd> or <kbd>Alt</kbd>+<kbd>,</kbd> or  <kbd>Alt</kbd>+<kbd>\/</kbd>)press <kbd>Enter</kbd> to directly go to the one before the current cursor positon;
-> * after the trigger, press <kbd>Space</kbd> to directly go to the one after the current cursor position;
+> Note: <kbd>Enter</kbd> is also usable as location charactor, it means the end of lines
+> commands that only navagite in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
 
 ### select to any character on screen from cursor
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>/</kbd> to tell I want to *select* to somewhere.

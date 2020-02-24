@@ -38,6 +38,7 @@ export class BracketJumper {
         if (tillIndex === -1) {
             tillIndex = line.text.length;
         }
+        let editor = vscode.window.activeTextEditor;
         for (let i = tillIndex - 1; i >= line.firstNonWhitespaceCharacterIndex; --i) {
             let char = line.text[i];
             let index = -1;
@@ -46,7 +47,7 @@ export class BracketJumper {
             } else if (this.bracketPairs.some((c, i) => { index = i; return c.start === char })) {
                 if (this.bracketPairs[index].counter === 0) {
                     let lineN = line.lineNumber;
-                    Utilities.goto(lineN, i);
+                    Utilities.goto(editor, lineN, i);
                     let position = new vscode.Position(lineN, i);
                     let range = new vscode.Range(position, position);
                     vscode.window.activeTextEditor.revealRange(range);

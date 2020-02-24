@@ -2,17 +2,21 @@
 All notable changes to the "metago" extension will be documented in this file.
 
 ## Todo List:
-   - [ ] close issues.
+   - [x] close issues.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
-   - [ ] add muti location char support
+   - [ ] add muti-location-char support
+   - [ ] jump commands could be triggered event editor not focused, has any open editor
 
 ---     
 ## In Development
 ### V3.1.0
 #### Added
 * jumper could goto any opened editors not just the active editor.
+* metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive commands only for active editor.
+* support <kbd>Enter</kbd>, <kbd>Space</kbd> as location chars.
 #### Removed
-
+~~after the trigger(<kbd>Alt</kbd>+<kbd>.</kbd> or <kbd>Alt</kbd>+<kbd>,</kbd> or  <kbd>Alt</kbd>+<kbd>\/</kbd>)press <kbd>Enter</kbd> to directly go to the one before the current cursor positon;~~    
+~~after the trigger, press <kbd>Space</kbd> to directly go to the one after the current cursor position;~~
 #### Changed
 * replace Promise with async/await in Metajump
 * updated readme

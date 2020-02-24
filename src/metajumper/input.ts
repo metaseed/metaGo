@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { Config } from '../config';
 
-class Input {
+class InputModel {
     text: string;
     validateInput: (text: string) => string;
     resolve: (text: string) => void;
@@ -15,17 +15,17 @@ class Input {
     }
 }
 
-export class InlineInput {
+export class Input {
     private subscriptions: vscode.Disposable[] = [];
-    private inputModel = new Input();
-    static instances: InlineInput[] = [];
+    private inputModel = new InputModel();
+    static instances: Input[] = [];
     private editor: vscode.TextEditor;
     _config: Config;
 
     constructor(config: Config) {
         this._config = config;
         this.registerTextEditorCommand('metaGo.input.cancel', this.cancel);
-        InlineInput.instances.push(this);
+        Input.instances.push(this);
     }
 
     input = (editor: vscode.TextEditor, validateInput: (text: string) => string = v => v, placeHolder = 'type the character to goto'): Promise<string> => {
@@ -33,6 +33,7 @@ export class InlineInput {
         this.setContext(true);
         this.inputModel.validateInput = validateInput;
 
+        let firstTime = true;
         try {
             this.registerCommand('type', this.onType);
             this.inputModel.useInputBox = true;
@@ -45,12 +46,15 @@ export class InlineInput {
                 placeHolder: placeHolder,
                 prompt: 'metaGo ',
                 validateInput: (s) => {
-                    if (!s) return '';
+                    if(!s) return '';
                     this.onType({ text: s });
                     return null;
                 }
             }, ct.token).then((s) => {
+                if(s === undefined) //esc
                 this.cancel(editor);
+                else if(s === '') // enter
+                this.onType({ text: '\n' });
             });
         }
 
@@ -122,8 +126,8 @@ export class InlineInput {
         this.inputModel.autoCompleteAferOneInput = true;
 
         this.subscriptions.forEach((d) => d.dispose());
-        const i = InlineInput.instances.indexOf(this);
-        if (i > -1) InlineInput.instances.splice(i, 1);
+        const i = Input.instances.indexOf(this);
+        if (i > -1) Input.instances.splice(i, 1);
 
     }
 

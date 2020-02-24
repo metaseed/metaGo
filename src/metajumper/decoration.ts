@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { DecorationModel } from './decoration-model';
 import { Config } from '../config';
 
-type Decorations = [vscode.TextEditorDecorationType, vscode.DecorationOptions[]][];
+export type Decorations = [vscode.TextEditorDecorationType, vscode.DecorationOptions[]][];
 
 export class Decorator {
 	private config: Config;
@@ -38,9 +38,18 @@ export class Decorator {
 		vscode.window.activeTextEditor.setDecorations(this.commandIndicatorDecorationType, locations);
 	}
 
+	createAll(editorToModelMap: Map<vscode.TextEditor, DecorationModel[]>): Map<vscode.TextEditor, Decorations> {
+		let editorToDecorationsMap = new Map<vscode.TextEditor, Decorations>();
+		editorToModelMap.forEach((model, editor)=>{
+			var decorations = this.create(editor, model);
+			editorToDecorationsMap.set(editor, decorations);
+		})
+		return editorToDecorationsMap;
+	}
+
 	create = (editor: vscode.TextEditor, decorationModel: DecorationModel[]): Decorations => {
 		let decorations: Decorations = [];
-		decorationModel.forEach((model) => {
+		decorationModel.forEach(model => {
 			let code = model.code;
 			let len = code.length;
 
@@ -53,7 +62,11 @@ export class Decorator {
 		})
 
 		decorations.forEach(([type, option]) => editor.setDecorations(type, option));
-		return decorations;
+		return decorations.filter(e=>e);
+	}
+
+	hideAll(editorToModelMap: Map<vscode.TextEditor, Decorations>){
+		editorToModelMap.forEach((model,editor)=> this.hide(editor,model));
 	}
 
 	hide = (editor: vscode.TextEditor, decorations: Decorations) => {
@@ -62,10 +75,18 @@ export class Decorator {
 		}
 	}
 
+	showAll(editorToModelMap: Map<vscode.TextEditor, Decorations>){
+		editorToModelMap.forEach((model,editor)=> this.show(editor,model));
+	}
+
 	show = (editor: vscode.TextEditor, decorations: Decorations) => {
 		for (var dec of decorations) {
 			editor.setDecorations(dec[0], dec[1]);
 		}
+	}
+
+	removeAll(editorToModelMap: Map<vscode.TextEditor, Decorations>){
+		editorToModelMap.forEach((_,editor)=> this.remove(editor));
 	}
 
 	remove = (editor: vscode.TextEditor) => {
