@@ -9,7 +9,11 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ---     
 ## In Development
-### V3.1.0
+
+---
+
+## Released
+### V3.1.0 - Feb 24, 2020
 #### Added
 * jumper could goto any opened editors not just the active editor.
 * metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive commands only for active editor.
@@ -22,10 +26,7 @@ All notable changes to the "metago" extension will be documented in this file.
 * updated readme
 * metajump decoration support any code length
 
----
-
-## Released
-### V3.0.0 - Feb 19, 2019
+### V3.0.0 - Feb 19, 2020
 #### Added
 * add/change commands: metaGo.gotoBefore, metaGo.gotoAfter, metaGo.gotoSmart; metaGo.selectBefore, metaGo.selectAfter, metaGo.selectSmart; 
 * add feature of holding <kbd>/</kbd>(could be modified in config) to hide decorators and release it to show again.
