@@ -322,7 +322,7 @@
 				},
 				"metaGo.decoration.hide.triggerKeyDownRepeatInterval": {
 					"type": "number",
-					"default": "60",
+					"default": "80",
 					"description": "unit: ms, increase this number if your hide trigger key not work"
 				},
 				"metaGo.jumper.findInSelection": {
