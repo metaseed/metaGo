@@ -40,7 +40,7 @@ export class Decorator {
 
 	createAll(editorToModelMap: Map<vscode.TextEditor, DecorationModel[]>): Map<vscode.TextEditor, Decorations> {
 		let editorToDecorationsMap = new Map<vscode.TextEditor, Decorations>();
-		editorToModelMap.forEach((model, editor)=>{
+		editorToModelMap.forEach((model, editor) => {
 			var decorations = this.create(editor, model);
 			editorToDecorationsMap.set(editor, decorations);
 		})
@@ -52,21 +52,27 @@ export class Decorator {
 		decorationModel.forEach(model => {
 			let code = model.code;
 			let len = code.length;
+			let charIndex = model.charIndex;
+			// no enough space to display the decorator codes
+			if (charIndex + 1 < len) {
+				len = charIndex + 1;
+				code = code.substring(0, len)
+			}
 
 			if (!decorations[len]) {
 				let decorationType = this.createTextEditorDecorationType(len);
 				decorations[len] = [decorationType, []];
 			}
-			let option = this.createDecorationOptions(null, model.lineIndex, model.charIndex + 1, model.charIndex + len, code);
+			let option = this.createDecorationOptions(null, model.lineIndex, charIndex + 1, code);
 			decorations[len][1].push(option);
 		})
 
 		decorations.forEach(([type, option]) => editor.setDecorations(type, option));
-		return decorations.filter(e=>e);
+		return decorations.filter(e => e);
 	}
 
-	hideAll(editorToModelMap: Map<vscode.TextEditor, Decorations>){
-		editorToModelMap.forEach((model,editor)=> this.hide(editor,model));
+	hideAll(editorToModelMap: Map<vscode.TextEditor, Decorations>) {
+		editorToModelMap.forEach((model, editor) => this.hide(editor, model));
 	}
 
 	hide = (editor: vscode.TextEditor, decorations: Decorations) => {
@@ -75,8 +81,8 @@ export class Decorator {
 		}
 	}
 
-	showAll(editorToModelMap: Map<vscode.TextEditor, Decorations>){
-		editorToModelMap.forEach((model,editor)=> this.show(editor,model));
+	showAll(editorToModelMap: Map<vscode.TextEditor, Decorations>) {
+		editorToModelMap.forEach((model, editor) => this.show(editor, model));
 	}
 
 	show = (editor: vscode.TextEditor, decorations: Decorations) => {
@@ -85,8 +91,8 @@ export class Decorator {
 		}
 	}
 
-	removeAll(editorToModelMap: Map<vscode.TextEditor, Decorations>){
-		editorToModelMap.forEach((_,editor)=> this.remove(editor));
+	removeAll(editorToModelMap: Map<vscode.TextEditor, Decorations>) {
+		editorToModelMap.forEach((_, editor) => this.remove(editor));
 	}
 
 	remove = (editor: vscode.TextEditor) => {
@@ -112,10 +118,10 @@ export class Decorator {
 		return decorationType;
 	}
 
-	private createDecorationOptions = (context: vscode.ExtensionContext, line: number, startCharacter: number, endCharacter: number, code: string): vscode.DecorationOptions => {
+	private createDecorationOptions = (context: vscode.ExtensionContext, line: number, decoratorPosition: number, code: string): vscode.DecorationOptions => {
 		const renderOptions = this.getAfterRenderOptions(code);
 		return {
-			range: new vscode.Range(line, startCharacter, line, endCharacter),
+			range: new vscode.Range(line, decoratorPosition, line, decoratorPosition),
 			renderOptions: {
 				dark: {
 					after: renderOptions,
@@ -171,12 +177,11 @@ export class Decorator {
 		};
 	}
 
-	private svgStyleColor(color: string){
-
-		if(color.startsWith('#')) {
-			let r = parseInt(color.substring(1,2), 16);
-			let g = parseInt(color.substring(3,5), 16);
-			let b = parseInt(color.substring(5,7), 16);
+	private svgStyleColor(color: string) {
+		if (color.startsWith('#')) {
+			let r = parseInt(color.substring(1, 2), 16);
+			let g = parseInt(color.substring(3, 5), 16);
+			let b = parseInt(color.substring(5, 7), 16);
 			return `rgb(${r},${g},${b})`
 		}
 		return color;
@@ -192,7 +197,7 @@ export class Decorator {
 		let bgColor = colors[(code.length - 1) % colors.length];
 		bgColor = this.svgStyleColor(bgColor);
 		let borderColor = this.svgStyleColor(cf.borderColor);
-	
+
 		let svg =
 			`data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${cf.height}" height="${cf.height}" width="${width}"><rect width="${width}" height="${cf.height}" rx="2" ry="2" style="fill:${bgColor};fill-opacity:${cf.bgOpacity};stroke:${borderColor};stroke-opacity:${cf.bgOpacity};"/><text font-family="${cf.fontFamily}" font-weight="${cf.fontWeight}" font-size="${cf.fontSize}px" style="fill:${ftColor}" x="${cf.x}" y="${cf.y}">${key}</text></svg>`;
 		return {

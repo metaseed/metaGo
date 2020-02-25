@@ -16,7 +16,9 @@ All notable changes to the "metago" extension will be documented in this file.
 
 #### Removed
 #### Changed
-   - fix: svg decorator could not be shown
+#### Fix
+   - Jumper: svg decorator could not be shown
+   - Jumper: if the loocation index+1 is less then codes length, decorator codes hide partially
 ---
 
 ## Released
