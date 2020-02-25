@@ -191,7 +191,7 @@ export class Decorator {
 		ftColor = this.svgStyleColor(ftColor)
 		let bgColor = colors[(code.length - 1) % colors.length];
 		bgColor = this.svgStyleColor(bgColor);
-		let borderColor = this.svgStyleColor(cf.bgColor);
+		let borderColor = this.svgStyleColor(cf.borderColor);
 	
 		let svg =
 			`data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${cf.height}" height="${cf.height}" width="${width}"><rect width="${width}" height="${cf.height}" rx="2" ry="2" style="fill:${bgColor};fill-opacity:${cf.bgOpacity};stroke:${borderColor};stroke-opacity:${cf.bgOpacity};"/><text font-family="${cf.fontFamily}" font-weight="${cf.fontWeight}" font-size="${cf.fontSize}px" style="fill:${ftColor}" x="${cf.x}" y="${cf.y}">${key}</text></svg>`;
