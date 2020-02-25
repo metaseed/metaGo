@@ -145,6 +145,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * extend the default jumpToBracket command.
 * <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>\\</kbd>: jump to the begin bracket that contains the cursor. Press the shortcut *again* jump to the end bracket.
 
+> it's very easy to triger metago command: type `F1, xx...`. `xx` is a prefix for search metago commands
+
 ### Other resources that help you understand MetaGo
 
 [Use MetaGo to Quickly Move Around Your Code in VS Code](https://scotch.io/starters/visual-studio-code/metago#toc-conclusion)
