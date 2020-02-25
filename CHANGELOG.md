@@ -2,19 +2,22 @@
 All notable changes to the "metago" extension will be documented in this file.
 
 ## Todo List:
-   - [x] close issues.
+   - [x] close issues. 
+   - [ ] support real viewport range, not use config
+   - [ ] jumper support folder
    - [ ] add location-chars support
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] jump commands could be triggered event editor not focused, has any open editor
    - [ ] backspace as command to delete last input char
-   - [ ] jumper support folder
+
 
 ---     
 ## In Development
 ### V3.2.0
 #### Added
+* support real viewport range, not use config
 * location-chars support: type a sequence of location-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the location chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
-
+* easy to triger metago command: type `F1, xx...`. `xx` as a prefix for search metagoCommands
 #### Removed
 #### Changed
    - upgrade vscode engine to the latest one, released in Sep 2019, need 1.22.0 at least to support editor.visibleRanges

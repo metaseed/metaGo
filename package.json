@@ -33,83 +33,83 @@
 		"commands": [
 			{
 				"command": "metaGo.gotoSmart",
-				"title": "metaGo: GoToSmart"
+				"title": "xx: metaGo.goToSmart"
 			},
 			{
 				"command": "metaGo.gotoAfter",
-				"title": "metaGo: GoToAfter"
+				"title": "xx: metaGo.goToAfter"
 			},
 			{
 				"command": "metaGo.gotoBefore",
-				"title": "metaGo: gotoBefore"
+				"title": "xx: metaGo.gotoBefore"
 			},
 			{
 				"command": "metaGo.gotoSmartActive",
-				"title": "metaGo: GoToSmart only in active editor"
+				"title": "xx: metaGo.GoToSmart only in active editor"
 			},
 			{
 				"command": "metaGo.gotoAfterActive",
-				"title": "metaGo: GoToAfter only in active editor"
+				"title": "xx: metaGo.GoToAfter only in active editor"
 			},
 			{
 				"command": "metaGo.gotoBeforeActive",
-				"title": "metaGo: gotoBefore only in active editor"
+				"title": "xx: metaGo.gotoBefore only in active editor"
 			},
 			{
 				"command": "metaGo.selectSmart",
-				"title": "metaGo: select to the cursor position smartly"
+				"title": "xx: metaGo.select to the cursor position smartly"
 			},
 			{
 				"command": "metaGo.selectBefore",
-				"title": "metaGo: select to the cursor position before the charactor"
+				"title": "xx: metaGo.select to the cursor position before the charactor"
 			},
 			{
 				"command": "metaGo.selectAfter",
-				"title": "metaGo: select to the cursor position after the charactor"
+				"title": "xx: metaGo.select to the cursor position after the charactor"
 			},
 			{
 				"command": "metaGo.selectLineUp",
-				"title": "metaGo: selectLineUp"
+				"title": "xx: metaGo.selectLineUp"
 			},
 			{
 				"command": "metaGo.selectLineDown",
-				"title": "metaGo: selectLineDown"
+				"title": "xx: metaGo.selectLineDown"
 			},
 			{
 				"command": "metaGo.currentLineToCenter",
-				"title": "metaGo: currentLineToCenter"
+				"title": "xx: metaGo.currentLineToCenter"
 			},
 			{
 				"command": "metaGo.currentLineToTop",
-				"title": "metaGo: currentLineToTop"
+				"title": "xx: metaGo.currentLineToTop"
 			},
 			{
 				"command": "metaGo.spaceBlockMoveUp",
-				"title": "metaGo: spaceBlockMoveUp"
+				"title": "xx: metaGo.spaceBlockMoveUp"
 			},
 			{
 				"command": "metaGo.spaceBlockSelectUp",
-				"title": "metaGo: spaceBlockSelectUp"
+				"title": "xx: metaGo.spaceBlockSelectUp"
 			},
 			{
 				"command": "metaGo.spaceBlockMoveDown",
-				"title": "metaGo: spaceBlockMoveDown"
+				"title": "xx: metaGo.spaceBlockMoveDown"
 			},
 			{
 				"command": "metaGo.spaceBlockSelectDown",
-				"title": "metaGo: spaceBlockSelectDown"
+				"title": "xx: metaGo.spaceBlockSelectDown"
 			},
 			{
 				"command": "metaGo.bookmark.toggle",
-				"title": "metaGo: bookmark: Toggle"
+				"title": "xx: metaGo.bookmark: Toggle"
 			},
 			{
 				"command": "metaGo.bookmark.view",
-				"title": "metaGo: bookmark: View"
+				"title": "xx: metaGo.bookmark: View"
 			},
 			{
 				"command": "metaGo.bookmark.clear",
-				"title": "metaGo: bookmark: Clear"
+				"title": "xx: metaGo.bookmark: Clear"
 			}
 		],
 		"keybindings": [
