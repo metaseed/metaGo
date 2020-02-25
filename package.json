@@ -280,11 +280,11 @@
 				},
 				"metaGo.decoration.height": {
 					"type": "number",
-					"default": 15
+					"default": 14
 				},
 				"metaGo.decoration.fontSize": {
 					"type": "number",
-					"default": 13
+					"default": 14
 				},
 				"metaGo.decoration.x": {
 					"type": "number",
