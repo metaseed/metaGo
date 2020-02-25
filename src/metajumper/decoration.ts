@@ -171,14 +171,30 @@ export class Decorator {
 		};
 	}
 
+	private svgStyleColor(color: string){
+
+		if(color.startsWith('#')) {
+			let r = parseInt(color.substring(1,2), 16);
+			let g = parseInt(color.substring(3,5), 16);
+			let b = parseInt(color.substring(5,7), 16);
+			return `rgb(${r},${g},${b})`
+		}
+		return color;
+	}
+
 	private buildAfterRenderOptionsSvg = (code: string) => {
 		let cf = this.config.decoration;
 		let key = this.config.decoration.upperCase ? code.toUpperCase() : code.toLowerCase();
 		let width = code.length * cf.width;
 		let colors = cf.bgColor.split(',');
+		let ftColor = cf.color;
+		ftColor = this.svgStyleColor(ftColor)
 		let bgColor = colors[(code.length - 1) % colors.length];
+		bgColor = this.svgStyleColor(bgColor);
+		let borderColor = this.svgStyleColor(cf.bgColor);
+	
 		let svg =
-			`data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${cf.height}" height="${cf.height}" width="${width}"><rect width="${width}" height="${cf.height}" rx="2" ry="3" style="fill: ${bgColor};fill-opacity:${cf.bgOpacity};stroke:${cf.borderColor};stroke-opacity:${cf.bgOpacity};"/><text font-family="${cf.fontFamily}" font-weight="${cf.fontWeight}" font-size="${cf.fontSize}px" style="fill:${cf.color}" x="${cf.x}" y="${cf.y}">${key}</text></svg>`;
+			`data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${cf.height}" height="${cf.height}" width="${width}"><rect width="${width}" height="${cf.height}" rx="2" ry="2" style="fill:${bgColor};fill-opacity:${cf.bgOpacity};stroke:${borderColor};stroke-opacity:${cf.bgOpacity};"/><text font-family="${cf.fontFamily}" font-weight="${cf.fontWeight}" font-size="${cf.fontSize}px" style="fill:${ftColor}" x="${cf.x}" y="${cf.y}">${key}</text></svg>`;
 		return {
 			contentIconPath: vscode.Uri.parse(svg)
 		};

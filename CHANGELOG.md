@@ -6,6 +6,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] add location-chars support
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] jump commands could be triggered event editor not focused, has any open editor
+   - [ ] backspace as command to delete last input char
 
 ---     
 ## In Development
@@ -15,6 +16,7 @@ All notable changes to the "metago" extension will be documented in this file.
 
 #### Removed
 #### Changed
+   - fix: svg decorator could not be shown
 ---
 
 ## Released
