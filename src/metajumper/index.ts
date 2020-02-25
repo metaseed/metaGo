@@ -292,7 +292,6 @@ export class MetaJumper {
 
     private async getJumpRange(editor: vscode.TextEditor): Promise<{ before: Selection, after: Selection }> {
         let selection = new Selection();
-
         if (!editor.selection.isEmpty && this.config.jumper.findInSelection === 'on') {
             selection.text = editor.document.getText(editor.selection);
 
@@ -309,6 +308,7 @@ export class MetaJumper {
         }
         else {
             await this.getPosition();
+            let viewRange = editor.visibleRanges;
             selection.startLine = Math.max(editor.selection.active.line - this.config.jumper.range, 0);
             selection.lastLine = editor.selection.active.line + 1; //current line included in before
             selection.text = editor.document.getText(new vscode.Range(selection.startLine, 0, selection.lastLine, 0));

@@ -7,6 +7,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] jump commands could be triggered event editor not focused, has any open editor
    - [ ] backspace as command to delete last input char
+   - [ ] jumper support folder
 
 ---     
 ## In Development
@@ -16,6 +17,7 @@ All notable changes to the "metago" extension will be documented in this file.
 
 #### Removed
 #### Changed
+   - upgrade vscode engine to the latest one, released in Sep 2019, need 1.22.0 at least to support editor.visibleRanges
 #### Fix
    - Jumper: svg decorator could not be shown
    - Jumper: if the loocation index+1 is less then codes length, decorator codes hide partially
