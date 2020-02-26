@@ -1,5 +1,8 @@
 import * as vscode from 'vscode';
 import { ViewPort } from './lib/viewport';
+
+// todo: test revealLine command: 
+// https://code.visualstudio.com/api/references/commands
 export class CurrentLineScroller {
     private _viewPort = new ViewPort();
     constructor(context: vscode.ExtensionContext) {
@@ -15,23 +18,25 @@ export class CurrentLineScroller {
             const editor = vscode.window.activeTextEditor;
             const selection = editor.selection;
             const range = new vscode.Range(selection.start, selection.end);
-            editor.revealRange(range, (vscode.TextEditorRevealType as any).AtTop);
+            editor.revealRange(range, vscode.TextEditorRevealType.AtTop);
         });
         context.subscriptions.push(disposableToTop);
 
-        let disposableToBottom = vscode.commands.registerCommand('metaGo.currentLineToBottom', () => {
+        let disposableToBottom = vscode.commands.registerCommand('metaGo.currentLineToBottom', async () => {
             const editor = vscode.window.activeTextEditor;
             const selection = editor.selection;
-            let currentLine = editor.selection.active.line;
-            this._viewPort.getViewPortBoundary()
-                .then((boundary) => {
-                    let line = currentLine - Math.trunc(boundary / 2);
-                    line = Math.max(0, line);
-                    let p = new vscode.Position(line, 0)
-                    const range = new vscode.Range(p, p);
-
-                    editor.revealRange(range, vscode.TextEditorRevealType.InCenter);
-                });
+            let currentLine = selection.active.line;
+            await vscode.commands.executeCommand("revealLine", {
+                at: 'bottom', // we also have top and center
+                lineNumber: currentLine
+            });
+            // bellow is another way to caculate the bottom(note: not support fold):(not used because we have internal command revealLine.bottom)
+            // let boundary = await this._viewPort.getViewPortBoundary(editor);// not support folder
+            // let line = currentLine - Math.trunc(boundary / 2);
+            // line = Math.max(0, line);
+            // let p = new vscode.Position(line, 0)
+            // const range = new vscode.Range(p, p);
+            // editor.revealRange(range, vscode.TextEditorRevealType.InCenter);
         });
         context.subscriptions.push(disposableToBottom);
 

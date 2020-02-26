@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
     let config = new Config();
     config.loadConfig();
     // Event to update active configuration items when changed without restarting vscode
-    vscode.workspace.onDidChangeConfiguration((e: void) => {
+    vscode.workspace.onDidChangeConfiguration(e => {
         config.loadConfig();
         metaJumper.updateConfig();
     });

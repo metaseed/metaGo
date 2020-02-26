@@ -1,40 +1,23 @@
 import * as vscode from "vscode";
+import { Cursor } from "./cursor";
 
 export class ViewPort {
     private _linesInViewPort: number;
 
-    // https://code.visualstudio.com/api/references/commands
-    // search
-    async moveCursorToCenter(select: boolean) {
-        await vscode.commands.executeCommand("cursorMove", {
-            to: 'viewPortCenter',
-            select: select
-        });
-    }
+    getVisiableRanges = (editor: vscode.TextEditor) => editor.visibleRanges;
 
-    getViewPortBoundary = () => {
-        let editor = vscode.window.activeTextEditor;
+    // not support fold
+    getViewPortBoundary = async (editor: vscode.TextEditor) => {
         let fromLine = editor.selection.active.line;
         let fromChar = editor.selection.active.character;
-        return vscode.commands.executeCommand("cursorMove", {
-            to: 'viewPortTop',
-            select: false
-        }).then(() => {
-            let topLine = editor.selection.active.line;
-            return vscode.commands.executeCommand("cursorMove", {
-                to: 'viewPortBottom',
-                select: false
-            }).then(() => {
-                let bottomLine = editor.selection.active.line;
-                let margin = bottomLine - topLine;
-                // back
-                editor.selection = new vscode.Selection(new vscode.Position(fromLine, fromChar), new vscode.Position(fromLine, fromChar));
-                this._linesInViewPort = margin;
-                return margin;
-            });
-
-        });
-
+        await Cursor.toTop();
+        let topLine = editor.selection.active.line;
+        let bottom = await Cursor.toBottom();
+        let bottomLine = editor.selection.active.line;
+        let margin = bottomLine - topLine;
+        // back
+        editor.selection = new vscode.Selection(new vscode.Position(fromLine, fromChar), new vscode.Position(fromLine, fromChar));
+        return margin;
     }
     // private viewPortCenter():number{
     //  when getCenterLineInViewPort exposed to extension we should switch

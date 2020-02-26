@@ -1,22 +1,14 @@
 import { Config } from '../config';
 import * as vscode from 'vscode';
 
-export class CharIndex {
-    constructor(public charIndex, public inteliAdj = SmartAdjustment.Default) {
-    }
-}
-export interface IIndexes {
-    // key is line number, value stores character indexes in line
-    [lineNumber: number]: CharIndex[];
-}
-
 export enum SmartAdjustment {
     Before = -1, Default = 0 // default is after
 }
 export interface ILineCharIndexes {
-    count: number;
-    indexes: IIndexes;
-    focusLine: number;
+    indexes: LineCharIndex[];
+    lowIndexNearFocus: number;
+    highIndexNearFocus: number;
+    focus: vscode.Position;
 }
 
 export enum Direction {
@@ -34,31 +26,36 @@ export class DecorationModel {
     indexInModels: number;
 }
 
-class LineCharIndex {
+export class LineCharIndex {
+    public indexInModels: number = -1;
     static END = new LineCharIndex();
-    constructor(public line: number = -1, public char: number = -1, public indexInModels: number = -1, public smartAdj: SmartAdjustment = SmartAdjustment.Default) { }
+    constructor(public line: number = -1, public char: number = -1, public smartAdj: SmartAdjustment = SmartAdjustment.Default) { 
+
+    }
 }
 
 class LineCharIndexState {
-    upIndexCounter = 0;
-    downIndexCounter = 1;
+    upIndexCounter: number;
+    downIndexCounter: number;
 
-    constructor(private lineIndexes: ILineCharIndexes, private direction = Direction.up, private up: LineCharIndex, private down: LineCharIndex) { }
+    constructor(private lineIndexes: ILineCharIndexes, private direction = Direction.up) { this.upIndexCounter = lineIndexes.lowIndexNearFocus; this.downIndexCounter = lineIndexes.highIndexNearFocus }
 
-    findNextAutoWrap(): { lineCharIndex: LineCharIndex, lineChanged: boolean } {
-        let lineCharIndex = this.findNext();
-        if (lineCharIndex.lineCharIndex === LineCharIndex.END) {
+    findNextAutoWrap() {
+        let r = this.findNext();
+        if (r.lineCharIndex === LineCharIndex.END) {
             this.toggleDirection();
-            lineCharIndex = this.findNext();
+            r = this.findNext();
         }
-        return lineCharIndex;
+        if (r.lineChanging)
+            this.toggleDirection();
+        return r.lineCharIndex;
     }
 
-    toggleDirection() {
+    private toggleDirection() {
         this.direction = this.direction === Direction.up ? Direction.down : Direction.up;
     }
 
-    private findNext(): { lineCharIndex: LineCharIndex, lineChanged: boolean } {
+    private findNext(): { lineCharIndex: LineCharIndex, lineChanging: boolean } {
         if (this.direction === Direction.up) {
             return this.findUp();
         } else {
@@ -66,41 +63,19 @@ class LineCharIndexState {
         }
     }
 
-    private findUp(): { lineCharIndex: LineCharIndex, lineChanged: boolean } {
-        let lineCharIndex = this.up;
-        let line = lineCharIndex.line;
-        let charIndexes = this.lineIndexes.indexes[line];
+    private findUp(): { lineCharIndex: LineCharIndex, lineChanging: boolean } {
+        if (this.upIndexCounter == -1) return { lineCharIndex: LineCharIndex.END, lineChanging: false };
 
-        if (!charIndexes) return { lineCharIndex: LineCharIndex.END, lineChanged: false };//to end;
-
-        if (lineCharIndex.char >= 0) {
-            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, this.upIndexCounter--, charIndexes[lineCharIndex.char].inteliAdj);
-            lineCharIndex.char--
-            return { lineCharIndex: r, lineChanged: false };
-        } else {
-            lineCharIndex.line -= 1;
-            charIndexes = this.lineIndexes.indexes[lineCharIndex.line]
-            if (!charIndexes) return { lineCharIndex: LineCharIndex.END, lineChanged: false };//to end;
-            lineCharIndex.char = charIndexes.length - 1;
-            return { lineCharIndex: this.findNext().lineCharIndex, lineChanged: true };
-        }
+        let lineChanging = this.upIndexCounter > 0 && this.lineIndexes.indexes[this.upIndexCounter].line !== this.lineIndexes.indexes[this.upIndexCounter - 1].line
+        return { lineCharIndex: this.lineIndexes.indexes[this.upIndexCounter--], lineChanging }
     }
-    private findDown(): { lineCharIndex: LineCharIndex, lineChanged: boolean } {
-        let lineCharIndex = this.down;
-        let line = lineCharIndex.line;
-        let charIndexes = this.lineIndexes.indexes[line];
 
-        if (!charIndexes) return { lineCharIndex: LineCharIndex.END, lineChanged: false };//to end;
+    private findDown(): { lineCharIndex: LineCharIndex, lineChanging: boolean } {
+        let len = this.lineIndexes.indexes.length;
+        if (this.downIndexCounter == -1 || this.downIndexCounter === len) return { lineCharIndex: LineCharIndex.END, lineChanging: false };
 
-        if (lineCharIndex.char < charIndexes.length) {
-            let r = new LineCharIndex(line, charIndexes[lineCharIndex.char].charIndex, this.downIndexCounter++, charIndexes[lineCharIndex.char].inteliAdj);
-            lineCharIndex.char++
-            return { lineCharIndex: r, lineChanged: false };
-        } else {
-            lineCharIndex.line += 1;
-            lineCharIndex.char = 0
-            return { lineCharIndex: this.findNext().lineCharIndex, lineChanged: true };
-        }
+        let lineChanging = this.downIndexCounter < len-1 && this.lineIndexes.indexes[this.downIndexCounter].line !== this.lineIndexes.indexes[this.downIndexCounter + 1].line
+        return { lineCharIndex: this.lineIndexes.indexes[this.downIndexCounter++], lineChanging }
     }
 }
 
@@ -110,25 +85,21 @@ export class DecorationModelBuilder {
         this.config = config
     }
 
-    buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>,  locationCount:number): Map<vscode.TextEditor, DecorationModel[]> => {
+    buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, locationCount: number): Map<vscode.TextEditor, DecorationModel[]> => {
         let encoder = new Encoder(this.config.jumper.characters, locationCount);
         let models = new Map<vscode.TextEditor, DecorationModel[]>();
         let codeOffset = 0;
 
         for (let [editor, lineIndexes] of editorToLineCharIndexesMap) {
-            if (lineIndexes.count === 0) continue;
+            let count = lineIndexes.indexes.length;
+            if ( count === 0) continue;
 
-            let focusLine = lineIndexes.focusLine;
-            let lineIndexesState = new LineCharIndexState(
-                lineIndexes, Direction.up,
-                new LineCharIndex(focusLine, lineIndexes.indexes[focusLine].length - 1),
-                new LineCharIndex(focusLine + 1, 0)
-            );
+            let focusLine = lineIndexes.focus.line;
+            let lineIndexesState = new LineCharIndexState(lineIndexes, Direction.up);
 
             let dModels: DecorationModel[] = []
-            for (let i = 0; i < lineIndexes.count; i++) {
-                let lci = lineIndexesState.findNextAutoWrap();
-                let lineCharIndex = lci.lineCharIndex;
+            for (let i = 0; i < count; i++) {
+                let lineCharIndex = lineIndexesState.findNextAutoWrap();
                 if (lineCharIndex === LineCharIndex.END)
                     break;
 
@@ -140,11 +111,9 @@ export class DecorationModelBuilder {
                 model.smartAdj = lineCharIndex.smartAdj;
                 model.indexInModels = lineCharIndex.indexInModels;
                 dModels.push(model)
-                if (lci.lineChanged)
-                    lineIndexesState.toggleDirection();
             }
             models.set(editor, dModels);
-            codeOffset += lineIndexes.count
+            codeOffset += count
         }
 
         return models;

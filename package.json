@@ -344,11 +344,6 @@
 					"type": "string",
 					"default": "[ ,-.{_(\"'<\\/[+]"
 				},
-				"metaGo.jumper.screenLineRange": {
-					"type": "number",
-					"default": 72,
-					"description": "how many lines could be showed in one screen"
-				},
 				"metaGo.bookmark.saveBookmarksInProject": {
 					"type": "boolean",
 					"default": false,

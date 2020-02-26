@@ -107,6 +107,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
 * code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
 * only encode characters on viewable screen area, so metaGo is faster.
+* support fold regions
 * even though your cursor is out of your viewable screen, metaGo still works!
 * work with vim plugin
 

@@ -1,10 +1,12 @@
 import { Config } from "../config";
 import { Utilities } from '../lib';
 import { Input } from "./input";
-import { ILineCharIndexes, IIndexes, DecorationModel, DecorationModelBuilder, SmartAdjustment, Direction, CharIndex } from "./decoration-model";
+import { ILineCharIndexes, DecorationModel, DecorationModelBuilder, SmartAdjustment, LineCharIndex } from "./decoration-model";
 import { Decorator } from "./decoration";
 import { ViewPort } from '../lib/viewport';
 import * as vscode from "vscode";
+import { Cursor } from "../lib/cursor";
+import { stringify } from "querystring";
 
 class Selection {
     static Empty = new Selection();
@@ -20,9 +22,6 @@ export class MetaJumper {
     private decorationModelBuilder: DecorationModelBuilder = new DecorationModelBuilder();
     private decorator: Decorator = new Decorator();
     private isJumping: boolean = false;
-    private viewPort: ViewPort;
-    private findFromCenterScreenRange;
-    private halfViewPortRange: number;
     private currentFindIndex = -1;
     private editorToDecorationModels = new Map<vscode.TextEditor, DecorationModel[]>()
     private isSelectionMode: boolean;
@@ -30,10 +29,6 @@ export class MetaJumper {
     constructor(context: vscode.ExtensionContext, config: Config) {
         let disposables: vscode.Disposable[] = [];
         this.config = config;
-        this.viewPort = new ViewPort();
-        this.halfViewPortRange = Math.trunc(this.config.jumper.range / 2); // 0.5
-        // determines whether to find from center of the screen.
-        this.findFromCenterScreenRange = Math.trunc(this.config.jumper.range * 2 / 5); // 0.4
         // disposables.push(vscode.commands.registerCommand('metaGo.cancel', ()=>this.cancel));
         disposables.push(vscode.commands.registerCommand('metaGo.gotoAfter', () => {
             this.jumpTo(JumpPosition.After);
@@ -110,7 +105,7 @@ export class MetaJumper {
         }
         catch (err) {
             this.cancel();
-            console.log("metago:" + err);
+            console.log("metago:" + err.message + err.stack);
         }
     }
 
@@ -164,19 +159,7 @@ export class MetaJumper {
         }
         this.isJumping = false;
     }
-    private async getPosition() {
-        let editor = vscode.window.activeTextEditor;
-        let fromLine = editor.selection.active.line;
-        let fromChar = editor.selection.active.character;
 
-        await this.viewPort.moveCursorToCenter(false)
-        let toLine = editor.selection.active.line;
-        let cursorMoveBoundary = this.findFromCenterScreenRange;
-        if (Math.abs(toLine - fromLine) < cursorMoveBoundary) {
-            // back
-            editor.selection = new vscode.Selection(new vscode.Position(fromLine, fromChar), new vscode.Position(fromLine, fromChar));
-        };
-    }
     private jumpTimeoutId = null;
 
     private async getLocationWithTimeout(mutiEditor: boolean) {
@@ -241,13 +224,13 @@ export class MetaJumper {
             let editors = mutiEditor ? [inputEditor, ...vscode.window.visibleTextEditors.filter(e => e !== inputEditor)] : [inputEditor]
             for (let editor of editors) {
                 var jumpRange = await this.getJumpRange(editor);
-                let lineCharIndexes = this.find(editor, jumpRange.before, jumpRange.after, locationChars);
-                if (lineCharIndexes.count > 0)
+                let lineCharIndexes = this.find(editor, jumpRange, locationChars);
+                if (lineCharIndexes.indexes.length > 0)
                     editorToLineCharIndexesMap.set(editor, lineCharIndexes);
             }
 
             let locationCount = 0;
-            editorToLineCharIndexesMap.forEach(lineCharIndex => locationCount += lineCharIndex.count)
+            editorToLineCharIndexesMap.forEach(lineCharIndex => locationCount += lineCharIndex.indexes.length)
             if (locationCount <= 0) {
                 throw new Error("metaGo: no location match for input char");
             }
@@ -290,58 +273,66 @@ export class MetaJumper {
         return result;
     }
 
-    private async getJumpRange(editor: vscode.TextEditor): Promise<{ before: Selection, after: Selection }> {
-        let selection = new Selection();
-        if (!editor.selection.isEmpty && this.config.jumper.findInSelection === 'on') {
-            selection.text = editor.document.getText(editor.selection);
+    private async getJumpRange(editor: vscode.TextEditor): Promise<vscode.Range[]> {
+        if (this.config.jumper.findInSelection === 'on') {
+            let selections: vscode.Selection[] = editor.selections;
+            selections = selections.filter(s => !s.isEmpty)
+            if (selections.length != 0) // editor.selection.isEmpty
+                return selections;
 
-            if (editor.selection.anchor.line > editor.selection.active.line) {
-                selection.startLine = editor.selection.active.line;
-                selection.lastLine = editor.selection.anchor.line;
-            }
-            else {
-                selection.startLine = editor.selection.anchor.line;
-                selection.lastLine = editor.selection.active.line;
-            }
-            selection.lastLine++;
-            return { before: selection, after: Selection.Empty };
         }
-        else {
-            await this.getPosition();
-            let viewRange = editor.visibleRanges;
-            selection.startLine = Math.max(editor.selection.active.line - this.config.jumper.range, 0);
-            selection.lastLine = editor.selection.active.line + 1; //current line included in before
-            selection.text = editor.document.getText(new vscode.Range(selection.startLine, 0, selection.lastLine, 0));
+        return editor.visibleRanges;
 
-            let selectionAfter = new Selection();
-            selectionAfter.startLine = editor.selection.active.line + 1;
-            selectionAfter.lastLine = Math.min(editor.selection.active.line + this.config.jumper.range, editor.document.lineCount);
-            selectionAfter.text = editor.document.getText(new vscode.Range(selectionAfter.startLine, 0, selectionAfter.lastLine, 0));
-
-            return { before: selection, after: selectionAfter };
-        }
     }
 
-    private find = (editor: vscode.TextEditor, selectionBefore: Selection, selectionAfter: Selection, locationChars: string): ILineCharIndexes => {
+    private find = (editor: vscode.TextEditor, ranges: vscode.Range[], locationChars: string): ILineCharIndexes => {
         let editorLineCharIndexes: ILineCharIndexes = {
-            count: 0,
-            focusLine: 0,
-            indexes: {}
+            focus: editor.selection.active,
+            lowIndexNearFocus: -1,
+            highIndexNearFocus: -1,
+            indexes: []
         };
 
-        for (let i = selectionBefore.startLine; i < selectionBefore.lastLine; i++) {
-            let line = editor.document.lineAt(i);
-            let indexes = this.indexesOf(line.text, locationChars);
-            editorLineCharIndexes.count += indexes.length;
-            editorLineCharIndexes.indexes[i] = indexes;
-        }
-        editorLineCharIndexes.focusLine = editor.selection.active.line;
+        for (const range of ranges) {
+            if (range.isEmpty) continue;
 
-        for (let i = selectionAfter.startLine; i < selectionAfter.lastLine; i++) {
-            let line = editor.document.lineAt(i);
-            let indexes = this.indexesOf(line.text, locationChars);
-            editorLineCharIndexes.count += indexes.length;
-            editorLineCharIndexes.indexes[i] = indexes;
+            let start = range.start;
+            let end = range.end;
+            for (let lineIndex = start.line; lineIndex <= end.line; lineIndex++) {
+                let text: string;
+                if (range.isSingleLine) {
+                    text = editor.document.getText(range)
+                } else {
+                    let line = editor.document.lineAt(lineIndex);
+                    text = line.text
+                    if (lineIndex === start.line && start.character !== 0) {
+                        text = text.substring(range.start.character);
+                    } else if (lineIndex === end.line && end.character !== line.range.end.character) {
+                        text = text.substring(0, end.character);
+                    }
+                }
+
+                let indexes = this.indexesOf(lineIndex, text, locationChars);
+                for (const ind of indexes) {
+                    let len = editorLineCharIndexes.indexes.length;
+                    ind.indexInModels = len;
+
+                    if (lineIndex < editorLineCharIndexes.focus.line ) {//up
+                        editorLineCharIndexes.lowIndexNearFocus = len;
+                    } else if(lineIndex == editorLineCharIndexes.focus.line){
+                        if(ind.char <= editorLineCharIndexes.focus.character){// left
+                            editorLineCharIndexes.lowIndexNearFocus = len;
+                        }else{//right
+                            editorLineCharIndexes.highIndexNearFocus = len;
+                        }
+                    }else {//down
+                        if (editorLineCharIndexes.highIndexNearFocus === -1)
+                            editorLineCharIndexes.highIndexNearFocus = len;
+                    }
+
+                    editorLineCharIndexes.indexes.push(ind);
+                }
+            }
         }
         return editorLineCharIndexes;
     }
@@ -368,7 +359,7 @@ export class MetaJumper {
         return SmartAdjustment.Default;
     }
 
-    private indexesOf = (str: string, char: string): CharIndex[] => {
+    private indexesOf = (lineIndex: number, str: string, char: string): LineCharIndex[] => {
         if (char && char.length === 0) {
             return [];
         }
@@ -376,7 +367,7 @@ export class MetaJumper {
         let indices = [];
 
         if (char === '\n') {
-            indices.push(new CharIndex(str.length))
+            indices.push(new LineCharIndex(lineIndex, str.length))
             return indices;
         }
 
@@ -386,12 +377,12 @@ export class MetaJumper {
                 if (!ignoreCase) {
                     if (str[i] === char) {
                         let adj = this.smartAdjBefore(str, char, i);
-                        indices.push(new CharIndex(i, adj));
+                        indices.push(new LineCharIndex(lineIndex, i, adj));
                     };
                 } else {
                     if (str[i] && str[i].toLowerCase() === char.toLowerCase()) {
                         let adj = this.smartAdjBefore(str, char, i);
-                        indices.push(new CharIndex(i, adj));
+                        indices.push(new LineCharIndex(lineIndex, i, adj));
                     }
                 }
             }
@@ -404,12 +395,12 @@ export class MetaJumper {
             for (var i = 0; i < words.length; i++) {
                 if (!ignoreCase) {
                     if (words[i][0] === char) {
-                        indices.push(new CharIndex(index));
+                        indices.push(new LineCharIndex(lineIndex, index));
                     }
                 } else {
                     if (words[i][0] && words[i][0].toLowerCase() === char.toLowerCase()) {
                         let adj = this.smartAdjBefore(str, char, i);
-                        indices.push(new CharIndex(index, adj));
+                        indices.push(new LineCharIndex(lineIndex, index, adj));
                     }
                 }
                 // increment by word and white space
