@@ -317,15 +317,16 @@ export class MetaJumper {
                     let len = editorLineCharIndexes.indexes.length;
                     ind.indexInModels = len;
 
-                    if (lineIndex < editorLineCharIndexes.focus.line ) {//up
+                    if (lineIndex < editorLineCharIndexes.focus.line) {//up
                         editorLineCharIndexes.lowIndexNearFocus = len;
-                    } else if(lineIndex == editorLineCharIndexes.focus.line){
-                        if(ind.char <= editorLineCharIndexes.focus.character){// left
+                    } else if (lineIndex == editorLineCharIndexes.focus.line) {
+                        if (ind.char <= editorLineCharIndexes.focus.character) {// left
                             editorLineCharIndexes.lowIndexNearFocus = len;
-                        }else{//right
-                            editorLineCharIndexes.highIndexNearFocus = len;
+                        } else {//right
+                            if (editorLineCharIndexes.highIndexNearFocus === -1)
+                                editorLineCharIndexes.highIndexNearFocus = len;
                         }
-                    }else {//down
+                    } else {//down
                         if (editorLineCharIndexes.highIndexNearFocus === -1)
                             editorLineCharIndexes.highIndexNearFocus = len;
                     }

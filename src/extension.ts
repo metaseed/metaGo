@@ -20,7 +20,12 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidChangeConfiguration(e => {
         config.loadConfig();
         metaJumper.updateConfig();
+        
     });
+    // let editorConfig =vscode.workspace.getConfiguration("editor")
+    // let fontSize =editorConfig.inspect("fontSize")
+    // let fontfamily =editorConfig.inspect("fontFamily")
+    // let lineHight = editorConfig.inspect("lineHeight")
 
     let metaJumper = new MetaJumper(context, config);
     let centerEditor = new CurrentLineScroller(context);

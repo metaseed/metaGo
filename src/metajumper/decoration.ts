@@ -63,7 +63,7 @@ export class Decorator {
 				let decorationType = this.createTextEditorDecorationType(len);
 				decorations[len] = [decorationType, []];
 			}
-			let option = this.createDecorationOptions(null, model.lineIndex, charIndex + 1, code);
+			let option = this.createDecorationOptions(null, model.lineIndex, charIndex + len/*len: codeToDecoratorLeftAlign; 1: rightAlign */, code);
 			decorations[len][1].push(option);
 		})
 
