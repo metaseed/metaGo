@@ -39,7 +39,6 @@ export class Config {
 			this.jumper.findAllMode = config.get<string>("jumper.findAllMode", this.jumper.findAllMode);
 			this.jumper.findInSelection = config.get<string>("jumper.findInSelection", this.jumper.findInSelection);
 			this.jumper.wordSeparatorPattern = config.get<string>("jumper.wordSeparatorPattern", this.jumper.wordSeparatorPattern);
-			this.jumper.targetIgnoreCase = config.get<boolean>("jumper.targetIgnoreCase", this.jumper.targetIgnoreCase);
 			let timeout = config.get<number>("jumper.timeout", this.jumper.timeout);
 			this.jumper.timeout = isNaN(timeout) ? 12000 : timeout * 1000;
 		}
@@ -85,6 +84,5 @@ class FinderConfig {
 	findAllMode: string = 'on';
 	findInSelection: string = 'off';
 	wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";
-	targetIgnoreCase: boolean = true;
 	timeout: number = 12000;
 }

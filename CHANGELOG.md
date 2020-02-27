@@ -27,6 +27,7 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Removed
 * remove editor viewport range lines in config, use new api to get editor viewport range
 * remove function to get anchor from selection, use new vscode api of Selection
+* remove 'jumper.targetIgnoreCase' in config, replace it with: if the location char is Uper case it is case sensitive, otherwise it's case insensitive.
 #### Changed
    - upgrade vscode engine to the latest one, released in Sep 2019, need 1.22.0 at least to support editor.visibleRanges
 #### Fix

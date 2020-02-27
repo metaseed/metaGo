@@ -329,7 +329,7 @@ export class MetaJumper {
                 }
             }
         }
-        
+
         if(editorLineCharIndexes.lowIndexNearFocus !== editorLineCharIndexes.indexes.length -1)
             editorLineCharIndexes.highIndexNearFocus = editorLineCharIndexes.lowIndexNearFocus +1;
 
@@ -370,7 +370,7 @@ export class MetaJumper {
             return indices;
         }
 
-        let ignoreCase = this.config.jumper.targetIgnoreCase;
+        let ignoreCase = char.toLocaleLowerCase() === char; // no UperCase
         if (this.config.jumper.findAllMode === 'on') {
             for (var i = 0; i < str.length; i++) {
                 if (!ignoreCase) {

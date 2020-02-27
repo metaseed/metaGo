@@ -326,10 +326,6 @@
 					"type": "string",
 					"default": "off"
 				},
-				"metaGo.jumper.targetIgnoreCase": {
-					"type": "boolean",
-					"default": true
-				},
 				"metaGo.jumper.timeout": {
 					"type": "number",
 					"default": "12",
