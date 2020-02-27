@@ -139,6 +139,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 ![MetaGo.blankLine](images/metago.blankLine.gif)
 
 ### select line up/down
+the defaul select line down command not works well, if you press `ctrl+l, shift+up` to select line up, it will not select the current line but start from the line above.
+we create our own:
 * <kbd>Ctrl</kbd>+<kbd>l</kbd> to select line up.
 * <kbd>Ctrl</kbd>+<kbd>shift</kbd>+<kbd>l</kbd> to select line down.
 
