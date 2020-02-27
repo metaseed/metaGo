@@ -6,7 +6,7 @@ import { ViewPort } from './lib/viewport';
 export class CurrentLineScroller {
     private _viewPort = new ViewPort();
     constructor(context: vscode.ExtensionContext) {
-        let disposable = vscode.commands.registerCommand('metaGo.currentLineToCenter', () => {
+        let disposable = vscode.commands.registerCommand('metaGo.scrollCurrentLineToMiddle', () => {
             const editor = vscode.window.activeTextEditor;
             const selection = editor.selection;
             const range = new vscode.Range(selection.start, selection.end);
@@ -14,7 +14,7 @@ export class CurrentLineScroller {
         });
         context.subscriptions.push(disposable);
 
-        let disposableToTop = vscode.commands.registerCommand('metaGo.currentLineToTop', () => {
+        let disposableToTop = vscode.commands.registerCommand('metaGo.scrollCurrentLineToTop', () => {
             const editor = vscode.window.activeTextEditor;
             const selection = editor.selection;
             const range = new vscode.Range(selection.start, selection.end);
@@ -22,7 +22,7 @@ export class CurrentLineScroller {
         });
         context.subscriptions.push(disposableToTop);
 
-        let disposableToBottom = vscode.commands.registerCommand('metaGo.currentLineToBottom', async () => {
+        let disposableToBottom = vscode.commands.registerCommand('metaGo.scrollCurrentLineToBottom', async () => {
             const editor = vscode.window.activeTextEditor;
             const selection = editor.selection;
             let currentLine = selection.active.line;

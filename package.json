@@ -33,83 +33,87 @@
 		"commands": [
 			{
 				"command": "metaGo.gotoSmart",
-				"title": "xx: metaGo.goToSmart"
+				"title": "xx: metaGo.goto Smart"
 			},
 			{
 				"command": "metaGo.gotoAfter",
-				"title": "xx: metaGo.goToAfter"
+				"title": "xx: metaGo.goto After"
 			},
 			{
 				"command": "metaGo.gotoBefore",
-				"title": "xx: metaGo.gotoBefore"
+				"title": "xx: metaGo.goto Before"
 			},
 			{
 				"command": "metaGo.gotoSmartActive",
-				"title": "xx: metaGo.GoToSmart only in active editor"
+				"title": "xx: metaGo.Goto Smart only in Active editor"
 			},
 			{
 				"command": "metaGo.gotoAfterActive",
-				"title": "xx: metaGo.GoToAfter only in active editor"
+				"title": "xx: metaGo.Goto After only in Active editor"
 			},
 			{
 				"command": "metaGo.gotoBeforeActive",
-				"title": "xx: metaGo.gotoBefore only in active editor"
+				"title": "xx: metaGo.goto Before only in Active editor"
 			},
 			{
 				"command": "metaGo.selectSmart",
-				"title": "xx: metaGo.select to the cursor position smartly"
+				"title": "xx: metaGo.Select to the cursor position Smartly"
 			},
 			{
 				"command": "metaGo.selectBefore",
-				"title": "xx: metaGo.select to the cursor position before the charactor"
+				"title": "xx: metaGo.Select to position Before the charactor"
 			},
 			{
 				"command": "metaGo.selectAfter",
-				"title": "xx: metaGo.select to the cursor position after the charactor"
+				"title": "xx: metaGo.Select to position After the charactor"
 			},
 			{
 				"command": "metaGo.selectLineUp",
-				"title": "xx: metaGo.selectLineUp"
+				"title": "xx: metaGo.Select Line Up"
 			},
 			{
 				"command": "metaGo.selectLineDown",
-				"title": "xx: metaGo.selectLineDown"
+				"title": "xx: metaGo.Select Line Down"
 			},
 			{
-				"command": "metaGo.currentLineToCenter",
-				"title": "xx: metaGo.currentLineToCenter"
+				"command": "metaGo.scrollCurrentLineToMiddle",
+				"title": "xx: metaGo.cscroll urrent Line To Middle"
 			},
 			{
-				"command": "metaGo.currentLineToTop",
-				"title": "xx: metaGo.currentLineToTop"
+				"command": "metaGo.scrollCurrentLineToTop",
+				"title": "xx: metaGo.scroll current Line To Top"
 			},
 			{
-				"command": "metaGo.spaceBlockMoveUp",
-				"title": "xx: metaGo.spaceBlockMoveUp"
+				"command": "metaGo.scrollCurrentLineToBottom",
+				"title": "xx: metaGo.scroll current Line To Bottom"
 			},
 			{
-				"command": "metaGo.spaceBlockSelectUp",
-				"title": "xx: metaGo.spaceBlockSelectUp"
+				"command": "metaGo.gotoEmptyLineUp",
+				"title": "xx: metaGo.select Empty Line Move Up"
 			},
 			{
-				"command": "metaGo.spaceBlockMoveDown",
-				"title": "xx: metaGo.spaceBlockMoveDown"
+				"command": "metaGo.selectEmptyLineUp",
+				"title": "xx: metaGo.select Empty Line Up"
 			},
 			{
-				"command": "metaGo.spaceBlockSelectDown",
-				"title": "xx: metaGo.spaceBlockSelectDown"
+				"command": "metaGo.gotoEmptyLineDown",
+				"title": "xx: metaGo.Goto Empty Line Down"
+			},
+			{
+				"command": "metaGo.selectEmptyLineDown",
+				"title": "xx: metaGo.Select Empty Line Down"
 			},
 			{
 				"command": "metaGo.bookmark.toggle",
-				"title": "xx: metaGo.bookmark: Toggle"
+				"title": "xx: metaGo.Bookmark Toggle"
 			},
 			{
 				"command": "metaGo.bookmark.view",
-				"title": "xx: metaGo.bookmark: View"
+				"title": "xx: metaGo.Bookmark View"
 			},
 			{
 				"command": "metaGo.bookmark.clear",
-				"title": "xx: metaGo.bookmark: Clear"
+				"title": "xx: metaGo.Bookmark Clear"
 			}
 		],
 		"keybindings": [
@@ -167,37 +171,37 @@
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.currentLineToCenter",
+				"command": "metaGo.scrollCurrentLineToMiddle",
 				"key": "alt+m",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.currentLineToBottom",
+				"command": "metaGo.scrollCurrentLineToBottom",
 				"key": "alt+b",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.currentLineToTop",
+				"command": "metaGo.scrollCurrentLineToTop",
 				"key": "alt+t",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.spaceBlockMoveUp",
+				"command": "metaGo.gotoEmptyLineUp",
 				"key": "alt+home",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.spaceBlockSelectUp",
+				"command": "metaGo.selectEmptyLineUp",
 				"key": "alt+shift+home",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.spaceBlockMoveDown",
+				"command": "metaGo.gotoEmptyLineDown",
 				"key": "alt+end",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.spaceBlockSelectDown",
+				"command": "metaGo.selectEmptyLineDown",
 				"key": "alt+shift+end",
 				"when": "editorTextFocus"
 			},
@@ -251,7 +255,7 @@
 			"properties": {
 				"metaGo.decoration.useTextBasedDecorations": {
 					"type": "boolean",
-					"default": false,
+					"default": true,
 					"description": "Only enable if editor decorations are not showing. Use text-based decorations in editors instead of SVG based. Supports fewer customisations but may be more robust."
 				},
 

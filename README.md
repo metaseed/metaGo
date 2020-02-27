@@ -214,37 +214,37 @@ If you have any requirements or dependencies, add a section describing those and
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.currentLineToCenter",
+				"command": "metaGo.scrollCurrentLineToMiddle",
 				"key": "alt+m",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.currentLineToBottom",
+				"command": "metaGo.scrollCurrentLineToBottom",
 				"key": "alt+b",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.currentLineToTop",
+				"command": "metaGo.scrollCurrentLineToTop",
 				"key": "alt+t",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.spaceBlockMoveUp",
+				"command": "metaGo.gotoEmptyLineUp",
 				"key": "alt+home",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.spaceBlockSelectUp",
+				"command": "metaGo.selectEmptyLineUp",
 				"key": "alt+shift+home",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.spaceBlockMoveDown",
+				"command": "metaGo.gotoEmptyLineDown",
 				"key": "alt+end",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.spaceBlockSelectDown",
+				"command": "metaGo.selectEmptyLineDown",
 				"key": "alt+shift+end",
 				"when": "editorTextFocus"
 			},
