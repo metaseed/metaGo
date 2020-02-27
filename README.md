@@ -57,6 +57,7 @@ quotes from users:
 With this new V3 released, we are going to add more features, peek features in dev:
 * hold <kbd>/</kbd> to hide jumper decorators on screen.(Done😉)
 * jumper commands for all opened editors, not just the active editor.(Done!)
+* support haveing fold regions.(V3.2 Done!)
 * and more... at [changelog](https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md)
 * if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or contact with us on [SLACK☕](https://join.slack.com/t/metaseedworkspace/shared_invite/enQtOTU5ODM1MTI2MDcwLWM5N2QzY2MzMTVjMjVlZDVjZTVmMDFjNmViNmE4MzE3NGM4Mzk5M2UwNDAwYjQ4ZGM5Y2U2YjdlMGM5MjJiNDQ)
 
@@ -107,7 +108,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
 * code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
 * only encode characters on viewable screen area, so metaGo is faster.
-* support fold regions
+* support having fold regions
 * even though your cursor is out of your viewable screen, metaGo still works!
 * work with vim plugin
 

@@ -18,11 +18,17 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ---     
 ## In Development
-### V3.2.0
+### V3.3.0
+#### Added
+#### Removed
+#### Changed
+#### Fixed
+
+---
+### V3.2.0 - Feb 28, 2020
 #### Added
 * support real viewport range, not use config
 * easy to triger metago command: type `F1, xx...`. `xx` as a prefix for search metagoCommands
-* support real viewport range, not use config
 * jumper support fold region
 #### Removed
 * remove editor viewport range lines in config, use new api to get editor viewport range
@@ -30,12 +36,11 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Changed
    - remove 'jumper.targetIgnoreCase' in config, replace it with: if the location char is Uper case it is case sensitive, otherwise it's case insensitive.
    - upgrade vscode engine to the latest one, released in Sep 2019, need 1.22.0 at least to support editor.visibleRanges
-   - rename commands name with verb-none pattern, easy to search in command list: F1, xxsd -> select line down
+   - rename commands name with verb-none pattern, easy to search in command list: F1, xsd -> select line down
 #### Fix
    - Jumper: svg decorator could not be shown
    - Jumper: if the the line of location char is less than codes length, decorator codes hide partially
    - Jumper: suppor show decorators for `\n` of empty line, we could jump to evely line end.
----
 
 ## Released
 ### V3.1.0 - Feb 24, 2020
