@@ -19,7 +19,6 @@ All notable changes to the "metago" extension will be documented in this file.
 ### V3.2.0
 #### Added
 * support real viewport range, not use config
-
 * easy to triger metago command: type `F1, xx...`. `xx` as a prefix for search metagoCommands
 * support real viewport range, not use config
 * jumper support fold region

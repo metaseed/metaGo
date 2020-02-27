@@ -322,19 +322,17 @@ export class MetaJumper {
                     } else if (lineIndex == editorLineCharIndexes.focus.line) {
                         if (ind.char <= editorLineCharIndexes.focus.character) {// left
                             editorLineCharIndexes.lowIndexNearFocus = len;
-                        } else {//right
-                            if (editorLineCharIndexes.highIndexNearFocus === -1)
-                                editorLineCharIndexes.highIndexNearFocus = len;
                         }
-                    } else {//down
-                        if (editorLineCharIndexes.highIndexNearFocus === -1)
-                            editorLineCharIndexes.highIndexNearFocus = len;
                     }
 
                     editorLineCharIndexes.indexes.push(ind);
                 }
             }
         }
+        
+        if(editorLineCharIndexes.lowIndexNearFocus !== editorLineCharIndexes.indexes.length -1)
+            editorLineCharIndexes.highIndexNearFocus = editorLineCharIndexes.lowIndexNearFocus +1;
+
         return editorLineCharIndexes;
     }
 
