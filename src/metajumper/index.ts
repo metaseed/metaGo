@@ -239,7 +239,7 @@ export class MetaJumper {
             this.editorToDecorationModels = editorToModelsMap;
             // here, we have editorToModelsMap.size > 1 || models.length > 1
             do {
-                editorToModelsMap = await this.getExactLocation(editorToModelsMap);
+                editorToModelsMap = await this.getExactLocation(editorToModelsMap, locationChars);
 
                 if (editorToModelsMap.size == 0) throw new Error("metaGo: no match in codes for input char");
 
@@ -330,8 +330,8 @@ export class MetaJumper {
             }
         }
 
-        if(editorLineCharIndexes.lowIndexNearFocus !== editorLineCharIndexes.indexes.length -1)
-            editorLineCharIndexes.highIndexNearFocus = editorLineCharIndexes.lowIndexNearFocus +1;
+        if (editorLineCharIndexes.lowIndexNearFocus !== editorLineCharIndexes.indexes.length - 1)
+            editorLineCharIndexes.highIndexNearFocus = editorLineCharIndexes.lowIndexNearFocus + 1;
 
         return editorLineCharIndexes;
     }
@@ -409,9 +409,9 @@ export class MetaJumper {
         return indices;
     }
 
-    private getExactLocation = async (editorToModelsMap: Map<vscode.TextEditor, DecorationModel[]>) => {
+    private getExactLocation = async (editorToModelsMap: Map<vscode.TextEditor, DecorationModel[]>, locationChars: string) => {
         // show location candidates
-        var decs = this.decorator.createAll(editorToModelsMap);
+        var decs = this.decorator.createAll(editorToModelsMap, locationChars);
 
         let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
         let messageDisposable = vscode.window.setStatusBarMessage(msg, this.config.jumper.timeout);

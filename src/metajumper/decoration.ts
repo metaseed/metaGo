@@ -39,27 +39,29 @@ export class Decorator {
 		vscode.window.activeTextEditor.setDecorations(this.commandIndicatorDecorationType, locations);
 	}
 
-	createAll(editorToModelMap: Map<vscode.TextEditor, DecorationModel[]>): Map<vscode.TextEditor, Decorations> {
+	createAll(editorToModelMap: Map<vscode.TextEditor, DecorationModel[]>, locationChars: string): Map<vscode.TextEditor, Decorations> {
 		let editorToDecorationsMap = new Map<vscode.TextEditor, Decorations>();
 		editorToModelMap.forEach((model, editor) => {
-			var decorations = this.create(editor, model);
+			var decorations = this.create(editor, model, locationChars);
 			editorToDecorationsMap.set(editor, decorations);
 		})
 		return editorToDecorationsMap;
 	}
 
-	create = (editor: vscode.TextEditor, decorationModel: DecorationModel[]): Decorations => {
+	create = (editor: vscode.TextEditor, decorationModel: DecorationModel[], locationChars: string): Decorations => {
 		let decorations: Decorations = [];
 		decorationModel.forEach(model => {
 			let code = model.code;
 			let len = code.length;
 			let charIndex = model.charIndex;
-			// no enough space to display the decorator codes
-			if (charIndex + 1 < len) {
-				len = charIndex + 1;
-				code = code.substring(0, len)
+			if (locationChars === '\n') len = 0;
+			else {
+				// no enough space to display the decorator codes
+				if (charIndex + 1 < len) {
+					len = charIndex + 1;
+					code = code.substring(0, len)
+				}
 			}
-
 			if (!decorations[len]) {
 				let decorationType = this.createTextEditorDecorationType(len);
 				decorations[len] = [decorationType, []];
@@ -105,16 +107,16 @@ export class Decorator {
 		}
 	}
 
-	private createTextEditorDecorationType = (chars: number) => {
-		let decorationType = this.decorationTypeCache[chars];
+	private createTextEditorDecorationType = (len: number) => {
+		let decorationType = this.decorationTypeCache[len];
 		if (decorationType) return decorationType;
 		let cf = this.config.decoration;
 		decorationType = vscode.window.createTextEditorDecorationType({
 			after: {
-				margin: `0 0 0 ${chars * (-cf.width)}px`
+				margin: `0 0 0 ${len * (-cf.width)}px`
 			}
 		});
-		this.decorationTypeCache[chars] = decorationType;
+		this.decorationTypeCache[len] = decorationType;
 		return decorationType;
 	}
 

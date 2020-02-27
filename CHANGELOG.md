@@ -33,6 +33,7 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Fix
    - Jumper: svg decorator could not be shown
    - Jumper: if the the line of location char is less than codes length, decorator codes hide partially
+   - Jumper: suppor show decorators for `\n` of empty line, we could jump to evely line end.
 ---
 
 ## Released
