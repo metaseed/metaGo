@@ -61,6 +61,5 @@ All notable changes to the "metago" extension will be documented in this file.
 * updated readme
 
 
-
 ### V2.12.0: merge  pull requests to make it work in new version of vscode.
 ### v2.11.0: minor changes on readme.md according to feedback in issues.
