@@ -8,7 +8,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] sequential-location-chars support: 
       * type a sequence of location-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the location chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
       * ripple search support, type location-chars to triger far from center
-   - [ ] Line selection up/down command: 
+   - [ ] Line selection up/down command: ?
       ctrl+l,k -> select down; ctrl+l,i -> select up
    - [ ] add location-chars support
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
@@ -27,12 +27,12 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Removed
 * remove editor viewport range lines in config, use new api to get editor viewport range
 * remove function to get anchor from selection, use new vscode api of Selection
-* remove 'jumper.targetIgnoreCase' in config, replace it with: if the location char is Uper case it is case sensitive, otherwise it's case insensitive.
 #### Changed
+   - remove 'jumper.targetIgnoreCase' in config, replace it with: if the location char is Uper case it is case sensitive, otherwise it's case insensitive.
    - upgrade vscode engine to the latest one, released in Sep 2019, need 1.22.0 at least to support editor.visibleRanges
 #### Fix
    - Jumper: svg decorator could not be shown
-   - Jumper: if the loocation index+1 is less then codes length, decorator codes hide partially
+   - Jumper: if the the line of location char is less than codes length, decorator codes hide partially
 ---
 
 ## Released
