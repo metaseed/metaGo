@@ -77,15 +77,15 @@
 			},
 			{
 				"command": "metaGo.scrollCurrentLineToMiddle",
-				"title": "xx: metaGo.cscroll urrent Line To Middle"
+				"title": "xx: metaGo.cscroll urrent Line Middle"
 			},
 			{
 				"command": "metaGo.scrollCurrentLineToTop",
-				"title": "xx: metaGo.scroll current Line To Top"
+				"title": "xx: metaGo.scroll current Line Top"
 			},
 			{
 				"command": "metaGo.scrollCurrentLineToBottom",
-				"title": "xx: metaGo.scroll current Line To Bottom"
+				"title": "xx: metaGo.scroll current Line Bottom"
 			},
 			{
 				"command": "metaGo.gotoEmptyLineUp",

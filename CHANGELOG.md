@@ -30,6 +30,7 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Changed
    - remove 'jumper.targetIgnoreCase' in config, replace it with: if the location char is Uper case it is case sensitive, otherwise it's case insensitive.
    - upgrade vscode engine to the latest one, released in Sep 2019, need 1.22.0 at least to support editor.visibleRanges
+   - rename commands name with verb-none pattern, easy to search in command list: F1, xxsd -> select line down
 #### Fix
    - Jumper: svg decorator could not be shown
    - Jumper: if the the line of location char is less than codes length, decorator codes hide partially
