@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { DecorationModel } from './decoration-model';
 import { Config } from '../config';
+import { Colors } from '../lib/color-name';
 
 export type Decorations = [vscode.TextEditorDecorationType, vscode.DecorationOptions[]][];
 
@@ -107,11 +108,10 @@ export class Decorator {
 	private createTextEditorDecorationType = (chars: number) => {
 		let decorationType = this.decorationTypeCache[chars];
 		if (decorationType) return decorationType;
+		let cf = this.config.decoration;
 		decorationType = vscode.window.createTextEditorDecorationType({
 			after: {
-				margin: `0 0 0 ${chars * (-this.config.decoration.width)}px`,
-				height: `${this.config.decoration.height}px`,
-				width: `${chars * this.config.decoration.width}px`
+				margin: `0 0 0 ${chars * (-cf.width)}px`
 			}
 		});
 		this.decorationTypeCache[chars] = decorationType;
@@ -156,24 +156,18 @@ export class Decorator {
 	private buildAfterRenderOptionsText = (code: string) => {
 		let cf = this.config.decoration;
 		let key = cf.upperCase ? code.toUpperCase() : code.toLowerCase();
-
-		const knownColors = {
-			chartreuse: `rgba(127,255,0,${cf.bgOpacity})`,
-			yellow: `rgba(255,255,0,${cf.bgOpacity})`,
-		};
-
 		let colors = cf.bgColor.split(',');
 		let bgColor = colors[(code.length - 1) % colors.length];
-		bgColor = knownColors[bgColor] || bgColor;
+		let c = Colors[bgColor];
+		bgColor = c ? `rgba(${c[0]},${c[1]},${c[2]},${cf.bgOpacity})` : bgColor;
 		let width = code.length * cf.width;
 		return {
 			contentText: key,
 			backgroundColor: bgColor,
 			fontWeight: cf.fontWeight,
 			color: cf.color,
-			width: `${width}px`,
-			height: `${cf.height}px`,
-			// border:`${cf.borderColor}`
+			width: `${width}px`, //fix hori flash
+			//border:`1px solid ${cf.borderColor}`// cause vertical flash 1px
 		};
 	}
 

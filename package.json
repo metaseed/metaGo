@@ -254,6 +254,46 @@
 					"default": false,
 					"description": "Only enable if editor decorations are not showing. Use text-based decorations in editors instead of SVG based. Supports fewer customisations but may be more robust."
 				},
+
+				"metaGo.decoration.width": {
+					"type": "number",
+					"default": 9
+				},
+				"metaGo.decoration.height": {
+					"type": "number",
+					"default": 14,
+					"description": "only for svg based decoration"
+				},
+				"metaGo.decoration.fontSize": {
+					"type": "number",
+					"default": 14,
+					"description": "only for svg based decoration"
+				},
+				"metaGo.decoration.x": {
+					"type": "number",
+					"default": 1,
+					"description": "only for svg based decoration"
+				},
+				"metaGo.decoration.y": {
+					"type": "number",
+					"default": 12,
+					"description": "only for svg based decoration"
+				},
+				"metaGo.decoration.borderColor": {
+					"type": "string",
+					"default": "#1e1e1e",
+					"description": "only for svg based decoration"
+				},
+				"metaGo.decoration.fontFamily": {
+					"type": "string",
+					"default": "Consolas",
+					"description": "only for svg based decoration"
+				},
+
+				"metaGo.decoration.fontWeight": {
+					"type": "string",
+					"default": "bold"
+				},
 				"metaGo.decoration.backgroundColor": {
 					"type": "string",
 					"default": "chartreuse,yellow",
@@ -263,41 +303,10 @@
 					"type": "string",
 					"default": "0.8"
 				},
-				"metaGo.decoration.borderColor": {
-					"type": "string",
-					"default": "#1e1e1e"
-				},
+
 				"metaGo.decoration.color": {
 					"type": "string",
 					"default": "blue"
-				},
-				"metaGo.decoration.width": {
-					"type": "number",
-					"default": 9
-				},
-				"metaGo.decoration.height": {
-					"type": "number",
-					"default": 14
-				},
-				"metaGo.decoration.fontSize": {
-					"type": "number",
-					"default": 14
-				},
-				"metaGo.decoration.x": {
-					"type": "number",
-					"default": 1
-				},
-				"metaGo.decoration.y": {
-					"type": "number",
-					"default": 12
-				},
-				"metaGo.decoration.fontWeight": {
-					"type": "string",
-					"default": "bold"
-				},
-				"metaGo.decoration.fontFamily": {
-					"type": "string",
-					"default": "Consolas"
 				},
 				"metaGo.decoration.upperCase": {
 					"type": "boolean",
