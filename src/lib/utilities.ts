@@ -13,10 +13,7 @@ export class Utilities {
         editor.revealRange(range, vscode.TextEditorRevealType.InCenterIfOutsideViewport);
         this.focusColumn(editor.viewColumn)
     }
-
-    public static anchorPosition(selection: vscode.Selection) {
-        return selection.active.line === selection.end.line ? selection.start : selection.end
-    }
+    
     private static focusColumn(i: number): void {
         let exec = vscode.commands.executeCommand
         if (i === 1) exec('workbench.action.focusFirstEditorGroup')

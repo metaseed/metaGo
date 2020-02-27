@@ -7,7 +7,7 @@ export class SelectLines {
             const editor = vscode.window.activeTextEditor;
             const line = editor.selection.active.line - 1;
             const selection = editor.selection;
-            let anchor = Utilities.anchorPosition(selection);
+            let anchor = selection.anchor;
             if (selection.isEmpty)
                 anchor = new vscode.Position(anchor.line + 1, 0);
             const toLine = line >= 0 ? line : 0;
@@ -24,7 +24,7 @@ export class SelectLines {
             const editor = vscode.window.activeTextEditor;
             const line = editor.selection.active.line + 1;
             const selection = editor.selection;
-            let anchor = Utilities.anchorPosition(selection);
+            let anchor = selection.anchor;
             if (selection.isEmpty)
                 anchor = new vscode.Position(anchor.line, 0);
             const boundary = editor.document.lineCount;

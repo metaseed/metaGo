@@ -19,7 +19,7 @@ export class BlankLineJumper {
             this.markSelection(
                 editor,
                 this.nextPosition(editor.document, editor.selection.active, true),
-                Utilities.anchorPosition(editor.selection)
+                editor.selection.anchor
             );
         }));
 
@@ -28,7 +28,7 @@ export class BlankLineJumper {
             this.markSelection(
                 editor,
                 this.nextPosition(editor.document, editor.selection.active, false),
-                Utilities.anchorPosition(editor.selection)
+               editor.selection.anchor
             );
         }));
     }

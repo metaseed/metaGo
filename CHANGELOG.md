@@ -22,6 +22,7 @@ All notable changes to the "metago" extension will be documented in this file.
 * jumper support fold region
 #### Removed
 * remove editor viewport range lines in config, use new api to get editor viewport range
+* remove function to get anchor from selection, use new vscode api of Selection
 #### Changed
    - upgrade vscode engine to the latest one, released in Sep 2019, need 1.22.0 at least to support editor.visibleRanges
 #### Fix
