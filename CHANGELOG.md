@@ -5,7 +5,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] close issues. 
    - [x] support real viewport range, not use config
    - [x] jumper support fold region    
-   ~~- [ ] backspace as command to delete last input char: not possible in inline input to catch `BS` key~~    
+   - [ ] backspace as command to delete last input char: could done by registered as texteditor command
    - [ ] sequential-location-chars support: 
       * type a sequence of location-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the location chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
       * ripple search support, type location-chars to triger far from center
@@ -14,6 +14,8 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] jump commands could be triggered event editor not focused, has any open editor
    - [ ] Create command for move to previous/next member
+   - [ ] Color settings support referencing [Theme Color Id](https://code.visualstudio.com/api/references/theme-color)
+   - [ ] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
 
 
 ---     

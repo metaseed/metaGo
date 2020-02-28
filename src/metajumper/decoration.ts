@@ -53,7 +53,7 @@ export class Decorator {
 		decorationModel.forEach(model => {
 			let code = model.code;
 			let len = code.length;
-			let charIndex = model.charIndex;
+			let charIndex = model.char;
 			if (locationChars === '\n') len = 0;
 			else {
 				// no enough space to display the decorator codes
@@ -66,7 +66,7 @@ export class Decorator {
 				let decorationType = this.createTextEditorDecorationType(len);
 				decorations[len] = [decorationType, []];
 			}
-			let option = this.createDecorationOptions(null, model.lineIndex, charIndex + 1/*len: codeToDecoratorLeftAlign; 1: rightAlign */, code);
+			let option = this.createDecorationOptions(null, model.line, charIndex + 1/*len: codeToDecoratorLeftAlign; 1: rightAlign */, code);
 			decorations[len][1].push(option);
 		})
 

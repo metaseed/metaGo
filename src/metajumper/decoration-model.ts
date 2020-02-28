@@ -19,9 +19,9 @@ export class DecorationModel {
     // code string displayed in decoration
     code: string;
     // line index
-    lineIndex: number;
+    line: number;
     //character index in line
-    charIndex: number;
+    char: number;
     smartAdj: SmartAdjustment;
     indexInModels: number;
 }
@@ -106,8 +106,8 @@ export class DecorationModelBuilder {
                 let code = encoder.getCode(i + codeOffset);
                 let model = new DecorationModel();
                 model.code = code;
-                model.lineIndex = lineCharIndex.line;
-                model.charIndex = lineCharIndex.char;
+                model.line = lineCharIndex.line;
+                model.char = lineCharIndex.char;
                 model.smartAdj = lineCharIndex.smartAdj;
                 model.indexInModels = lineCharIndex.indexInModels;
                 dModels.push(model)

@@ -8,6 +8,6 @@
 
 > for 2,3... target chars: if the target is at the line end, use <dbd>Enter</kbd> to make it as three target chars.
 
-show decorators only for current level, encorder charactors get by revmove charactors follows last target char of higher level, note follow chars in current level is usable.
+show decorators only for current level, encorder charactors get by revmove charactors follows last target char of higher level, note follow chars in current level is usable if there is only one: code and fallowing char is the same.
 
 when high level decorators shows low levels always show.

@@ -88,15 +88,15 @@ export class MetaJumper {
             this.done();
             switch (jumpPosition) {
                 case JumpPosition.Before:
-                    Utilities.goto(editor, model.lineIndex, model.charIndex);
+                    Utilities.goto(editor, model.line, model.char);
                     break;
 
                 case JumpPosition.After:
-                    Utilities.goto(editor, model.lineIndex, model.charIndex + 1);
+                    Utilities.goto(editor, model.line, model.char + 1);
                     break;
 
                 case JumpPosition.Smart:
-                    Utilities.goto(editor, model.lineIndex, model.charIndex + 1 + model.smartAdj);
+                    Utilities.goto(editor, model.line, model.char + 1 + model.smartAdj);
                     break;
 
                 default:
@@ -119,7 +119,7 @@ export class MetaJumper {
         try {
             var [ed, model] = await this.getLocationWithTimeout(false)
             this.done();
-            let toCharacter = model.charIndex;
+            let toCharacter = model.char;
 
             switch (jumpPosition) {
                 case JumpPosition.Before:
@@ -128,11 +128,11 @@ export class MetaJumper {
                     toCharacter++;
                     break;
                 case JumpPosition.Smart:
-                    if (model.lineIndex > fromLine) {
+                    if (model.line > fromLine) {
                         toCharacter++;
                     }
-                    else if (model.lineIndex === fromLine) {
-                        if (model.charIndex > fromChar) {
+                    else if (model.line === fromLine) {
+                        if (model.char > fromChar) {
                             toCharacter++;
                         }
                     }
@@ -141,7 +141,7 @@ export class MetaJumper {
                     throw "unexpected JumpPosition value";
             }
 
-            Utilities.select(editor, fromLine, fromChar, model.lineIndex, toCharacter);
+            Utilities.select(editor, fromLine, fromChar, model.line, toCharacter);
         }
         catch (err) {
             this.cancel();
@@ -229,13 +229,13 @@ export class MetaJumper {
                     editorToLineCharIndexesMap.set(editor, lineCharIndexes);
             }
 
-            let locationCount = 0;
-            editorToLineCharIndexesMap.forEach(lineCharIndex => locationCount += lineCharIndex.indexes.length)
-            if (locationCount <= 0) {
-                throw new Error("metaGo: no location match for input char");
+            let targetCount = 0;
+            editorToLineCharIndexesMap.forEach(lineCharIndex => targetCount += lineCharIndex.indexes.length)
+            if (targetCount <= 0) {
+                throw new Error("metaGo: no target location match for input char");
             }
 
-            let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, locationCount);
+            let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, targetCount);
             this.editorToDecorationModels = editorToModelsMap;
             // here, we have editorToModelsMap.size > 1 || models.length > 1
             do {
@@ -286,8 +286,9 @@ export class MetaJumper {
     }
 
     private find = (editor: vscode.TextEditor, ranges: vscode.Range[], locationChars: string): ILineCharIndexes => {
+        let {document, selection} = editor;
         let editorLineCharIndexes: ILineCharIndexes = {
-            focus: editor.selection.active,
+            focus: selection.active,
             lowIndexNearFocus: -1,
             highIndexNearFocus: -1,
             indexes: []
@@ -301,9 +302,9 @@ export class MetaJumper {
             for (let lineIndex = start.line; lineIndex <= end.line; lineIndex++) {
                 let text: string;
                 if (range.isSingleLine) {
-                    text = editor.document.getText(range)
+                    text = document.getText(range)
                 } else {
-                    let line = editor.document.lineAt(lineIndex);
+                    let line = document.lineAt(lineIndex);
                     text = line.text
                     if (lineIndex === start.line && start.character !== 0) {
                         text = text.substring(range.start.character);
