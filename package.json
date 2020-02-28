@@ -382,7 +382,7 @@
 		"@types/vscode": "^1.39.0",
 		"mocha": "^7.0.1",
 		"@types/node": "^13.7.1",
-		"vsce": "^1.73.0",
+		"vsce": "^1.74.0",
 		"@types/mocha": "^7.0.1",
 		"source-map-support": "^0.5.12"
 	}

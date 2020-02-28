@@ -13,6 +13,7 @@ All notable changes to the "metago" extension will be documented in this file.
       ctrl+l,k -> select down; ctrl+l,i -> select up
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] jump commands could be triggered event editor not focused, has any open editor
+   - [ ] Create command for move to previous/next member
 
 
 ---     
