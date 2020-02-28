@@ -224,7 +224,7 @@ export class MetaJumper {
             let editors = mutiEditor ? [inputEditor, ...vscode.window.visibleTextEditors.filter(e => e !== inputEditor)] : [inputEditor]
             for (let editor of editors) {
                 var jumpRange = await this.getJumpRange(editor);
-                let lineCharIndexes = this.find(editor, jumpRange, locationChars);
+                let {lineCharIndexes, followingChars} = this.find(editor, jumpRange, locationChars);
                 if (lineCharIndexes.indexes.length > 0)
                     editorToLineCharIndexesMap.set(editor, lineCharIndexes);
             }
@@ -285,14 +285,16 @@ export class MetaJumper {
 
     }
 
-    private find = (editor: vscode.TextEditor, ranges: vscode.Range[], locationChars: string): ILineCharIndexes => {
-        let {document, selection} = editor;
-        let editorLineCharIndexes: ILineCharIndexes = {
+    private find = (editor: vscode.TextEditor, ranges: vscode.Range[], targetChars: string) => {
+        let { document, selection } = editor;
+        let lineCharIndexes: ILineCharIndexes = {
             focus: selection.active,
             lowIndexNearFocus: -1,
             highIndexNearFocus: -1,
             indexes: []
         };
+
+        let followingChars = new Set<string>();
 
         for (const range of ranges) {
             if (range.isEmpty) continue;
@@ -313,28 +315,29 @@ export class MetaJumper {
                     }
                 }
 
-                let indexes = this.indexesOf(lineIndex, text, locationChars);
+                let { indexes, followingChars:followingCharsInLine } = this.indexesOf(lineIndex, text, targetChars);
                 for (const ind of indexes) {
-                    let len = editorLineCharIndexes.indexes.length;
+                    let len = lineCharIndexes.indexes.length;
                     ind.indexInModels = len;
+                    lineCharIndexes.indexes.push(ind);
 
-                    if (lineIndex < editorLineCharIndexes.focus.line) {//up
-                        editorLineCharIndexes.lowIndexNearFocus = len;
-                    } else if (lineIndex == editorLineCharIndexes.focus.line) {
-                        if (ind.char <= editorLineCharIndexes.focus.character) {// left
-                            editorLineCharIndexes.lowIndexNearFocus = len;
+                    if (lineIndex < lineCharIndexes.focus.line) {//up
+                        lineCharIndexes.lowIndexNearFocus = len;
+                    } else if (lineIndex == lineCharIndexes.focus.line) {
+                        if (ind.char <= lineCharIndexes.focus.character) {// left
+                            lineCharIndexes.lowIndexNearFocus = len;
                         }
                     }
 
-                    editorLineCharIndexes.indexes.push(ind);
                 }
+                followingCharsInLine.forEach(char=>followingChars.add(char))
             }
         }
 
-        if (editorLineCharIndexes.lowIndexNearFocus !== editorLineCharIndexes.indexes.length - 1)
-            editorLineCharIndexes.highIndexNearFocus = editorLineCharIndexes.lowIndexNearFocus + 1;
+        if (lineCharIndexes.lowIndexNearFocus !== lineCharIndexes.indexes.length - 1)
+            lineCharIndexes.highIndexNearFocus = lineCharIndexes.lowIndexNearFocus + 1;
 
-        return editorLineCharIndexes;
+        return {lineCharIndexes, followingChars}
     }
 
     private smartAdjBefore(str: string, char: string, index: number): SmartAdjustment {
@@ -359,60 +362,54 @@ export class MetaJumper {
         return SmartAdjustment.Default;
     }
 
-    private indexesOf = (lineIndex: number, str: string, char: string): LineCharIndex[] => {
+    private indexesOf = (line: number, textInline: string, char: string) => {
+        let indexes: LineCharIndex[] = [];
+        let followingChars = new Set<string>();
         if (char && char.length === 0) {
-            return [];
+            return { indexes, followingChars }
         }
 
-        let indices = [];
-
         if (char === '\n') {
-            indices.push(new LineCharIndex(lineIndex, str.length))
-            return indices;
+            indexes.push(new LineCharIndex(line, textInline.length))
+            return { indexes, followingChars };
         }
 
         let ignoreCase = char.toLocaleLowerCase() === char; // no UperCase
         if (this.config.jumper.findAllMode === 'on') {
-            for (var i = 0; i < str.length; i++) {
-                if (!ignoreCase) {
-                    if (str[i] === char) {
-                        let adj = this.smartAdjBefore(str, char, i);
-                        indices.push(new LineCharIndex(lineIndex, i, adj));
-                    };
-                } else {
-                    if (str[i] && str[i].toLowerCase() === char.toLowerCase()) {
-                        let adj = this.smartAdjBefore(str, char, i);
-                        indices.push(new LineCharIndex(lineIndex, i, adj));
-                    }
+            for (var i = 0; i < textInline.length; i++) {
+                let found = ignoreCase ? textInline[i] && textInline[i].toLowerCase() === char.toLowerCase() : textInline[i] === char;
+                if (found) {
+                    let adj = this.smartAdjBefore(textInline, char, i);
+                    indexes.push(new LineCharIndex(line, i, adj));
+                    let followingChar = textInline[i+1];
+                    if(followingChar) followingChars.add(followingChar);
                 }
+
             }
         } else {
             //splitted by spaces
-            let words = str.split(new RegExp(this.config.jumper.wordSeparatorPattern));
+            let words = textInline.split(new RegExp(this.config.jumper.wordSeparatorPattern));
             //current line index
             let index = 0;
 
             for (var i = 0; i < words.length; i++) {
-                if (!ignoreCase) {
-                    if (words[i][0] === char) {
-                        indices.push(new LineCharIndex(lineIndex, index));
-                    }
-                } else {
-                    if (words[i][0] && words[i][0].toLowerCase() === char.toLowerCase()) {
-                        let adj = this.smartAdjBefore(str, char, i);
-                        indices.push(new LineCharIndex(lineIndex, index, adj));
-                    }
+                let found = ignoreCase ? words[i][0] && words[i][0].toLowerCase() === char.toLowerCase() : words[i][0] === char;
+                if (found) {
+                    let adj = this.smartAdjBefore(textInline, char, i);
+                    indexes.push(new LineCharIndex(line, index, adj));
+                    let followingChar = textInline[i+1];
+                    if(followingChar) followingChars.add(followingChar);
                 }
                 // increment by word and white space
                 index += words[i].length + 1;
             }
         }
-        return indices;
+        return { indexes, followingChars };
     }
 
-    private getExactLocation = async (editorToModelsMap: Map<vscode.TextEditor, DecorationModel[]>, locationChars: string) => {
+    private getExactLocation = async (editorToModelsMap: Map<vscode.TextEditor, DecorationModel[]>, targetChars: string) => {
         // show location candidates
-        var decs = this.decorator.createAll(editorToModelsMap, locationChars);
+        var decs = this.decorator.createAll(editorToModelsMap, targetChars);
 
         let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
         let messageDisposable = vscode.window.setStatusBarMessage(msg, this.config.jumper.timeout);
