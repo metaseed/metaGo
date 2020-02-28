@@ -258,7 +258,6 @@
 					"default": true,
 					"description": "Only enable if editor decorations are not showing. Use text-based decorations in editors instead of SVG based. Supports fewer customisations but may be more robust."
 				},
-
 				"metaGo.decoration.width": {
 					"type": "number",
 					"default": 9
@@ -293,7 +292,6 @@
 					"default": "Consolas",
 					"description": "only for svg based decoration"
 				},
-
 				"metaGo.decoration.fontWeight": {
 					"type": "string",
 					"default": "bold"
@@ -307,7 +305,6 @@
 					"type": "string",
 					"default": "0.8"
 				},
-
 				"metaGo.decoration.color": {
 					"type": "string",
 					"default": "blue"
@@ -382,7 +379,7 @@
 	"devDependencies": {
 		"eslint": "^6.8.0",
 		"typescript": "^3.7.0",
-		"@types/vscode": "^1.42.0",
+		"@types/vscode": "^1.39.0",
 		"mocha": "^7.0.1",
 		"@types/node": "^13.7.1",
 		"vsce": "^1.73.0",
