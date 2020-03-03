@@ -8,10 +8,13 @@
 	"homepage": "https://github.com/metaseed/metaGo",
 	"license": "MIT",
 	"keywords": [
+		"keyboard",
+		"jump",
 		"jumpy",
 		"goto",
 		"navigation",
 		"EasyMotion",
+		"bookmark",
 		"acejump, metaGo, center screen, focus screen, space jumper, shortcut"
 	],
 	"repository": {

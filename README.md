@@ -4,8 +4,7 @@
 [![Dependencies Status](https://david-dm.org/metaseed/metago/status.svg)](https://david-dm.org/metaseed/metago)
 [![DevDependencies Status](https://david-dm.org/metaseed/metago/dev-status.svg)](https://david-dm.org/metaseed/metago?type=dev)
 [![Known Vulnerabilities](https://snyk.io/test/github/metaseed/metago/badge.svg)](https://snyk.io/test/github/metaseed/metago)
-[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Average time to resolve an issue")
-[![Percentage of issues still open](https://isitmaintained.com/badge/open/metaseed/metago.svg)](https://isitmaintained.com/project/metaseed/metago "Percentage of issues still open")
+
 ---
 
  **Attension: In V3 we changed Metajump command names and the command default trigger keys**

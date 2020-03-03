@@ -10,7 +10,7 @@ All notable changes to the "metago" extension will be documented in this file.
       * type a sequence of location-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the location chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
       * ripple search support, type location-chars to triger far from center
    - [ ] Line selection up/down command: ?
-      ctrl+l,k -> select down; ctrl+l,i -> select up
+      make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] jump commands could be triggered event editor not focused, has any open editor
    - [ ] Create command for move to previous/next member
