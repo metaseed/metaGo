@@ -27,7 +27,11 @@ export class LineCharIndex {
 export class DecorationModel extends LineCharIndex {
     // code string displayed in decoration
     code: string;
-    indexInModels: number;
+
+    constructor(lineCharIndex: LineCharIndex) {
+        super(lineCharIndex.line, lineCharIndex.char, lineCharIndex.smartAdj);
+        this.indexInModels = lineCharIndex.indexInModels;
+    }
 }
 
 class LineCharIndexState {
@@ -100,12 +104,8 @@ export class DecorationModelBuilder {
                     break;
 
                 let code = encoder.getCode(i + codeOffset);
-                let model = new DecorationModel();
+                let model = new DecorationModel(lineCharIndex);
                 model.code = code;
-                model.line = lineCharIndex.line;
-                model.char = lineCharIndex.char;
-                model.smartAdj = lineCharIndex.smartAdj;
-                model.indexInModels = lineCharIndex.indexInModels;
                 dModels.push(model)
             }
             models.set(editor, dModels);
