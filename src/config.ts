@@ -28,10 +28,9 @@ export class Config {
 			this.decoration.fontSize = config.get<number>("decoration.fontSize", this.decoration.fontSize);
 			this.decoration.fontWeight = config.get<string>("decoration.fontWeight", this.decoration.fontWeight);
 			this.decoration.fontFamily = config.get<string>("decoration.fontFamily", this.decoration.fontFamily);
-			this.decoration.upperCase = config.get<boolean>("decoration.upperCase", this.decoration.upperCase);
 
 			this.jumper.characters = config.get<string>("decoration.characters", "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z").split(/[\s,]+/);
-
+			this.jumper.additionalSingleCharCodeCharacters = config.get<string>("decoration.additionalSingleCharCodeCharacters", "J,D,F,L,A,H,G,I,N,R,E,M,B,Q,T,Y").split(/[\s,]+/);
 			this.decoration.hide.trigerKey = config.get<string>('decoration.hide.trigerKey');
 			this.decoration.hide.triggerKeyDownRepeatInitialDelay = config.get<number>('decoration.hide.triggerKeyDownRepeatInitialDelay');
 			this.decoration.hide.triggerKeyDownRepeatInterval = config.get<number>('decoration.hide.triggerKeyDownRepeatInterval');
@@ -72,15 +71,13 @@ class DecoratorConfig {
 	fontSize: number = 14;
 	fontWeight: string = "normal";
 	fontFamily: string = "Consolas";
-
-	upperCase: boolean = false;
-
 	hide = new DecoratorHide();
 
 }
 
 class FinderConfig {
-	characters: string[] = ["k", "j", "d", "f", "l", "s", "a", "h", "g", "i", "o", "n", "u", "r", "v", "c", "w", "e", "x", "m", "b", "p", "q", "t", "y", "z"];
+	characters: string[];
+	additionalSingleCharCodeCharacters: string[];
 	findAllMode: string = 'on';
 	findInSelection: string = 'off';
 	wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";

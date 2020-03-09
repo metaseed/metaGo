@@ -312,13 +312,14 @@
 					"type": "string",
 					"default": "blue"
 				},
-				"metaGo.decoration.upperCase": {
-					"type": "boolean",
-					"default": false
-				},
 				"metaGo.decoration.characters": {
 					"type": "string",
 					"default": "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z"
+				},
+				"metaGo.decoration.additionalSingleCharCodeCharacters": {
+					"type": "string",
+					"default": "J,D,F,L,A,H,G,I,N,R,E,M,B,Q,T,Y",
+					"description": "only appears as one char decoration codes"
 				},
 				"metaGo.decoration.hide.trigerKey": {
 					"type": "string",

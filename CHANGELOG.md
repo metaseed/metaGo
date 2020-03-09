@@ -22,7 +22,10 @@ All notable changes to the "metago" extension will be documented in this file.
 ## In Development
 ### V3.3.0
 #### Added
+* feat: add encode feature that support additional letters that only appears in signal char length code.
 #### Removed
+* removed config: metaGo.decoration.upperCase: use as it is.
+* add config: metaGo.decoration.additionalSingleCharCodeCharacters: only appears as one char decoration codes 
 #### Changed
 #### Fixed
 

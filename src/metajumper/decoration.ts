@@ -157,7 +157,7 @@ export class Decorator {
 
 	private buildAfterRenderOptionsText = (code: string) => {
 		let cf = this.config.decoration;
-		let key = cf.upperCase ? code.toUpperCase() : code.toLowerCase();
+		let key = code;
 		let colors = cf.bgColor.split(',');
 		let bgColor = colors[(code.length - 1) % colors.length];
 		let c = Colors[bgColor];
@@ -185,7 +185,7 @@ export class Decorator {
 
 	private buildAfterRenderOptionsSvg = (code: string) => {
 		let cf = this.config.decoration;
-		let key = this.config.decoration.upperCase ? code.toUpperCase() : code.toLowerCase();
+		let key = code;
 		let width = code.length * cf.width;
 		let colors = cf.bgColor.split(',');
 		let ftColor = cf.color;

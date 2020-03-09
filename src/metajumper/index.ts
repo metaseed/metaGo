@@ -449,7 +449,7 @@ export class MetaJumper {
             editorToModelsMap.forEach((models, editor) => {
                 // filter location candidates
                 models = models.filter(model => {
-                    if (model.code[0] && model.code[0].toLowerCase() === value.toLowerCase()) {
+                    if (model.code[0] && model.code[0] === value) {
                         model.code = model.code.substring(1)
                         return true;
                     }

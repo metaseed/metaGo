@@ -15,23 +15,19 @@ export enum Direction {
     up = -1, down = 1
 }
 
-export class DecorationModel {
-    // code string displayed in decoration
-    code: string;
-    // line index
-    line: number;
-    //character index in line
-    char: number;
-    smartAdj: SmartAdjustment;
-    indexInModels: number;
-}
 
 export class LineCharIndex {
     public indexInModels: number = -1;
     static END = new LineCharIndex();
-    constructor(public line: number = -1, public char: number = -1, public smartAdj: SmartAdjustment = SmartAdjustment.Default) { 
+    constructor(public line: number = -1, public char: number = -1, public smartAdj: SmartAdjustment = SmartAdjustment.Default) {
 
     }
+}
+
+export class DecorationModel extends LineCharIndex {
+    // code string displayed in decoration
+    code: string;
+    indexInModels: number;
 }
 
 class LineCharIndexState {
@@ -74,7 +70,7 @@ class LineCharIndexState {
         let len = this.lineIndexes.indexes.length;
         if (this.downIndexCounter == -1 || this.downIndexCounter === len) return { lineCharIndex: LineCharIndex.END, lineChanging: false };
 
-        let lineChanging = this.downIndexCounter < len-1 && this.lineIndexes.indexes[this.downIndexCounter].line !== this.lineIndexes.indexes[this.downIndexCounter + 1].line
+        let lineChanging = this.downIndexCounter < len - 1 && this.lineIndexes.indexes[this.downIndexCounter].line !== this.lineIndexes.indexes[this.downIndexCounter + 1].line
         return { lineCharIndex: this.lineIndexes.indexes[this.downIndexCounter++], lineChanging }
     }
 }
@@ -86,13 +82,13 @@ export class DecorationModelBuilder {
     }
 
     buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, locationCount: number): Map<vscode.TextEditor, DecorationModel[]> => {
-        let encoder = new Encoder(this.config.jumper.characters, locationCount);
+        let encoder = new Encoder(locationCount, this.config.jumper.characters, this.config.jumper.additionalSingleCharCodeCharacters);
         let models = new Map<vscode.TextEditor, DecorationModel[]>();
         let codeOffset = 0;
 
         for (let [editor, lineIndexes] of editorToLineCharIndexesMap) {
             let count = lineIndexes.indexes.length;
-            if ( count === 0) continue;
+            if (count === 0) continue;
 
             let focusLine = lineIndexes.focus.line;
             let lineIndexesState = new LineCharIndexState(lineIndexes, Direction.up);
@@ -129,22 +125,25 @@ export class Encoder {
     private usedInLowDim: number;
     private notUsedInLowDim: number;
 
-    constructor(public letters: string[], public codeCount: number) {
-        var letterCount = letters.length;
-        if (codeCount < letterCount) {
+    constructor(public codeCount: number, public letters: string[], public additionalFirstDimOnlyLetters: string[] = []) {
+        let letterCount = letters.length;
+        let codeCountRemain = codeCount - additionalFirstDimOnlyLetters.length;
+
+        if (codeCountRemain < letterCount) {
             this.dimensions = 1; // fix bug: log(1)/log(26) = 0
             this.usedInLowDim = 0;
             this.notUsedInLowDim = 0;
         } else {
-            this.dimensions = Math.ceil(Math.log(codeCount) / Math.log(letterCount));
+            this.dimensions = Math.ceil(Math.log(codeCountRemain) / Math.log(letterCount));
             var lowDimCount = Math.pow(letterCount, this.dimensions - 1);
-            this.usedInLowDim = Math.ceil((codeCount - lowDimCount) / (this.dimensions - 1));
+            this.usedInLowDim = Math.ceil((codeCountRemain - lowDimCount) / (this.letters.length - 1));
             this.notUsedInLowDim = lowDimCount - this.usedInLowDim;
+
         }
 
     }
 
-    private getKeyOfDimension(index: number, dimensions: number): string {
+    private getCodeOfDimension(index: number, dimensions: number): string {
         var ii = index;
         var len = this.letters.length;
         var code = ''
@@ -156,12 +155,31 @@ export class Encoder {
 
         return code.padStart(dimensions, this.letters[0]);
     }
-    public getCode(index: number): string {
-        if (index < this.notUsedInLowDim) {
-            return this.getKeyOfDimension(index + this.usedInLowDim, this.dimensions - 1);
-        }
 
-        return this.getKeyOfDimension(index - this.notUsedInLowDim, this.dimensions);
+    public getCode(index: number): string {
+        let singleCodeLetters = this.additionalFirstDimOnlyLetters.length;
+        if (this.dimensions === 1) { // a, b, ... then A, B, C
+            if (index < this.letters.length)
+                return this.getCodeOfDimension(index, this.dimensions);
+            return this.additionalFirstDimOnlyLetters[index - this.letters.length];
+
+        } else if (this.dimensions === 2) { // 
+            if (index < this.notUsedInLowDim) {
+                return this.getCodeOfDimension(index + this.usedInLowDim, this.dimensions - 1);
+            } else if (index < this.notUsedInLowDim + singleCodeLetters) {
+                return this.additionalFirstDimOnlyLetters[index - this.notUsedInLowDim];
+            }
+
+            return this.getCodeOfDimension(index - (this.notUsedInLowDim + singleCodeLetters), this.dimensions);
+        } else {
+            if (index < singleCodeLetters)
+                return this.additionalFirstDimOnlyLetters[index];
+            else if (index < this.notUsedInLowDim + singleCodeLetters) {
+                return this.getCodeOfDimension(index - singleCodeLetters + this.usedInLowDim, this.dimensions - 1);
+            }
+
+            this.getCodeOfDimension(index - singleCodeLetters - this.notUsedInLowDim, this.dimensions);
+        }
     }
 
 }
