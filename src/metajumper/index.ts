@@ -204,22 +204,7 @@ export class MetaJumper {
             var editor: vscode.TextEditor = null;
             var models: DecorationModel[] = null;
             var model: DecorationModel = null;
-            // if (locationChars === ' ' && this.currentFindIndex !== Number.NaN && this.editorToDecorationModels) {
-            //     let model = this.editorToDecorationModels.find(model => model.indexInModels === (this.currentFindIndex + 1));
-            //     if (model) {
-            //         this.currentFindIndex++;
-            //     } else {
-            //         throw new Error('metaGo: no next find');
-            //     }
-            // } else if (locationChars === '\n' && this.currentFindIndex !== Number.NaN && this.editorToDecorationModels) {
-            //     let model = this.editorToDecorationModels.find(model => model.indexInModels === (this.currentFindIndex - 1));
-            //     if (model) {
-            //         this.currentFindIndex--;
-            //     } else {
-            //         throw new Error('metaGo: no previous find');
-            //     }
-            // } else
-            //{
+
             let editorToLineCharIndexesMap = new Map<vscode.TextEditor, ILineCharIndexes>()
             let editors = mutiEditor ? [inputEditor, ...vscode.window.visibleTextEditors.filter(e => e !== inputEditor)] : [inputEditor]
             for (let editor of editors) {
@@ -248,7 +233,6 @@ export class MetaJumper {
 
             model = models[0];
             this.currentFindIndex = model.indexInModels;
-            //}
 
             let msg = this.isSelectionMode ? 'metaGo: Selected!' : 'metaGo: Jumped!';
             vscode.window.setStatusBarMessage(msg, 2000);
@@ -370,7 +354,7 @@ export class MetaJumper {
         }
 
         if (char === '\n') {
-            indexes.push(new LineCharIndex(line, textInline.length))
+            indexes.push(new LineCharIndex(line, textInline.length, textInline))
             return { indexes, followingChars };
         }
 
@@ -380,7 +364,7 @@ export class MetaJumper {
                 let found = ignoreCase ? textInline[i] && textInline[i].toLowerCase() === char.toLowerCase() : textInline[i] === char;
                 if (found) {
                     let adj = this.smartAdjBefore(textInline, char, i);
-                    indexes.push(new LineCharIndex(line, i, adj));
+                    indexes.push(new LineCharIndex(line, i,textInline, adj));
                     let followingChar = textInline[i+1];
                     if(followingChar) followingChars.add(followingChar);
                 }
@@ -396,7 +380,7 @@ export class MetaJumper {
                 let found = ignoreCase ? words[i][0] && words[i][0].toLowerCase() === char.toLowerCase() : words[i][0] === char;
                 if (found) {
                     let adj = this.smartAdjBefore(textInline, char, i);
-                    indexes.push(new LineCharIndex(line, index, adj));
+                    indexes.push(new LineCharIndex(line, index, textInline, adj));
                     let followingChar = textInline[i+1];
                     if(followingChar) followingChars.add(followingChar);
                 }

@@ -17,9 +17,9 @@ export enum Direction {
 
 
 export class LineCharIndex {
-    public indexInModels: number = -1;
+    public indexInModels = -1;
     static END = new LineCharIndex();
-    constructor(public line: number = -1, public char: number = -1, public smartAdj: SmartAdjustment = SmartAdjustment.Default) {
+    constructor(public line = -1, public char = -1, public text = "", public smartAdj = SmartAdjustment.Default) {
 
     }
 }
@@ -29,7 +29,7 @@ export class DecorationModel extends LineCharIndex {
     code: string;
 
     constructor(lineCharIndex: LineCharIndex) {
-        super(lineCharIndex.line, lineCharIndex.char, lineCharIndex.smartAdj);
+        super(lineCharIndex.line, lineCharIndex.char, lineCharIndex.text, lineCharIndex.smartAdj);
         this.indexInModels = lineCharIndex.indexInModels;
     }
 }
@@ -85,8 +85,10 @@ export class DecorationModelBuilder {
         this.config = config
     }
 
-    buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, locationCount: number): Map<vscode.TextEditor, DecorationModel[]> => {
-        let encoder = new Encoder(locationCount, this.config.jumper.characters, this.config.jumper.additionalSingleCharCodeCharacters);
+    buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, locationCount: number, lettersExcluded:Set<string> = null): Map<vscode.TextEditor, DecorationModel[]> => {
+        let chars = lettersExcluded===null? this.config.jumper.characters: this.config.jumper.characters.filter(c=>!lettersExcluded.has(c));
+        let signalCharLetters = lettersExcluded===null? this.config.jumper.additionalSingleCharCodeCharacters: this.config.jumper.additionalSingleCharCodeCharacters.filter(c=>!lettersExcluded.has(c));
+        let encoder = new Encoder(locationCount,chars, signalCharLetters);
         let models = new Map<vscode.TextEditor, DecorationModel[]>();
         let codeOffset = 0;
 
