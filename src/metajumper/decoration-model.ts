@@ -182,7 +182,7 @@ export class Encoder {
                 return this.getCodeOfDimension(index - singleCodeLetters + this.usedInLowDim, this.dimensions - 1);
             }
 
-            this.getCodeOfDimension(index - singleCodeLetters - this.notUsedInLowDim, this.dimensions);
+            return this.getCodeOfDimension(index - singleCodeLetters - this.notUsedInLowDim, this.dimensions);
         }
     }
 
