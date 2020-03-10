@@ -22,8 +22,6 @@ export class MetaJumper {
     private decorationModelBuilder: DecorationModelBuilder = new DecorationModelBuilder();
     private decorator: Decorator = new Decorator();
     private isJumping: boolean = false;
-    private currentFindIndex = -1;
-    private editorToDecorationModels = new Map<vscode.TextEditor, DecorationModel[]>()
     private isSelectionMode: boolean;
 
     constructor(context: vscode.ExtensionContext, config: Config) {
@@ -182,7 +180,7 @@ export class MetaJumper {
         }
     }
 
-    private async getLocation(mutiEditor: boolean): Promise<[vscode.TextEditor, DecorationModel]> {
+    private async getLocation(mutiEditor: boolean, enableSequentialTargetChars = true): Promise<[vscode.TextEditor, DecorationModel]> {
         let inputEditor = vscode.window.activeTextEditor ?? vscode.window.visibleTextEditors[0];
         if (!inputEditor) {
             throw new Error('no visible editor');
@@ -194,12 +192,12 @@ export class MetaJumper {
         try {
             this.decorator.addCommandIndicator(inputEditor);
 
-            var locationChars = await this.getLocationChar(inputEditor);
-            if (!locationChars) {
+            var targetChars = await this.getTargetChar(inputEditor);
+            if (!targetChars) {
                 throw new Error('no location char input')
             }
-            if (locationChars && locationChars.length > 1)
-                locationChars = locationChars.substring(0, 1);
+            if (targetChars && targetChars.length > 1)
+                targetChars = targetChars.substring(0, 1);
 
             var editor: vscode.TextEditor = null;
             var models: DecorationModel[] = null;
@@ -207,33 +205,47 @@ export class MetaJumper {
 
             let editorToLineCharIndexesMap = new Map<vscode.TextEditor, ILineCharIndexes>()
             let editors = mutiEditor ? [inputEditor, ...vscode.window.visibleTextEditors.filter(e => e !== inputEditor)] : [inputEditor]
+            let lettersExclude = new Set<string>();
+
             for (let editor of editors) {
                 var jumpRange = await this.getJumpRange(editor);
-                let {lineCharIndexes, followingChars} = this.find(editor, jumpRange, locationChars);
+                let { lineCharIndexes, followingChars } = this.find(editor, jumpRange, targetChars);
+                if (enableSequentialTargetChars) followingChars.forEach(v => lettersExclude.add(v));
                 if (lineCharIndexes.indexes.length > 0)
                     editorToLineCharIndexesMap.set(editor, lineCharIndexes);
             }
 
-            let targetCount = 0;
-            editorToLineCharIndexesMap.forEach(lineCharIndex => targetCount += lineCharIndex.indexes.length)
-            if (targetCount <= 0) {
-                throw new Error("metaGo: no target location match for input char");
-            }
-
-            let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, targetCount);
-            this.editorToDecorationModels = editorToModelsMap;
+            let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, lettersExclude);
             // here, we have editorToModelsMap.size > 1 || models.length > 1
             do {
-                editorToModelsMap = await this.getExactLocation(editorToModelsMap, locationChars);
+                let { map, letter } = await this.getExactLocation(editorToModelsMap, targetChars, enableSequentialTargetChars);
 
-                if (editorToModelsMap.size == 0) throw new Error("metaGo: no match in codes for input char");
+                if (map.size === 0) {
+                    let error = "metaGo: no match in codes for input char";
+                    if (!enableSequentialTargetChars)
+                        throw new Error(error);
+                    // find
+                    targetChars += letter;
+                    let lineCharMap = new Map<vscode.TextEditor, ILineCharIndexes>();
+                    let excludeLetters = new Set<string>();
+                    editorToModelsMap.forEach((m,e)=>{
+                        let { lineCharIndexes, followingChars } = this.findInModel(e, m, targetChars);
+                        if (enableSequentialTargetChars) followingChars.forEach(v => excludeLetters.add(v));
+                        if (lineCharIndexes.indexes.length > 0)
+                        lineCharMap.set(e, lineCharIndexes);
+                    })
+                    if (lineCharMap.size === 0)
+                        throw new Error(error);
+                    // build model
+                    editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(lineCharMap, excludeLetters)
+                } else {
+                    editorToModelsMap = map;
+                }
 
                 [editor, models] = editorToModelsMap.entries().next().value; // first entry
             } while (editorToModelsMap.size > 1 || models.length > 1);
 
             model = models[0];
-            this.currentFindIndex = model.indexInModels;
-
             let msg = this.isSelectionMode ? 'metaGo: Selected!' : 'metaGo: Jumped!';
             vscode.window.setStatusBarMessage(msg, 2000);
             return [editor, model];
@@ -248,7 +260,7 @@ export class MetaJumper {
         }
     }
 
-    private getLocationChar = (editor: vscode.TextEditor) => {
+    private getTargetChar = (editor: vscode.TextEditor) => {
         let result = new Input(this.config)
             .input(editor, (v) => {
                 this.decorator.removeCommandIndicator(editor);
@@ -269,10 +281,34 @@ export class MetaJumper {
 
     }
 
+    private findInModel(editor: vscode.TextEditor, models: DecorationModel[], targetChars: string) {
+        let { selection } = editor;
+        let lineCharIndexes: ILineCharIndexes = {
+            lowIndexNearFocus: -1,
+            highIndexNearFocus: -1,
+            indexes: []
+        };
+        let ignoreCase = targetChars.toLocaleLowerCase() === targetChars;
+        let followingChars = new Set<string>()
+
+        let ms = models.filter((m) => {
+            let str = m.text.substring(m.char, m.char + targetChars.length);
+            let r = ignoreCase ? str.toLocaleLowerCase() === targetChars.toLocaleLowerCase() : str === targetChars;
+            let next = m.text[m.char + targetChars.length];
+            if (r && next){
+                followingChars.add(next);
+            }
+            return r;
+        });
+        lineCharIndexes.indexes = ms;
+        this.updateIndexes(selection, lineCharIndexes);
+
+        return { lineCharIndexes, followingChars };
+    }
+
     private find = (editor: vscode.TextEditor, ranges: vscode.Range[], targetChars: string) => {
         let { document, selection } = editor;
         let lineCharIndexes: ILineCharIndexes = {
-            focus: selection.active,
             lowIndexNearFocus: -1,
             highIndexNearFocus: -1,
             indexes: []
@@ -299,29 +335,32 @@ export class MetaJumper {
                     }
                 }
 
-                let { indexes, followingChars:followingCharsInLine } = this.indexesOf(lineIndex, text, targetChars);
+                let { indexes, followingChars: followingCharsInLine } = this.indexesOf(lineIndex, text, targetChars);
                 for (const ind of indexes) {
-                    let len = lineCharIndexes.indexes.length;
-                    ind.indexInModels = len;
                     lineCharIndexes.indexes.push(ind);
-
-                    if (lineIndex < lineCharIndexes.focus.line) {//up
-                        lineCharIndexes.lowIndexNearFocus = len;
-                    } else if (lineIndex == lineCharIndexes.focus.line) {
-                        if (ind.char <= lineCharIndexes.focus.character) {// left
-                            lineCharIndexes.lowIndexNearFocus = len;
-                        }
-                    }
-
                 }
-                followingCharsInLine.forEach(char=>followingChars.add(char))
+                followingCharsInLine.forEach(char => followingChars.add(char))
             }
         }
 
+        this.updateIndexes(selection, lineCharIndexes);
+        return { lineCharIndexes, followingChars }
+    }
+
+    private updateIndexes(selection: vscode.Selection, lineCharIndexes: ILineCharIndexes) {
+        lineCharIndexes.indexes.forEach((m, i) => {
+            let lineIndex = m.line;
+            if (lineIndex < selection.active.line) { //up
+                lineCharIndexes.lowIndexNearFocus = i;
+            }
+            else if (lineIndex == selection.active.line) {
+                if (m.char <= selection.active.character) { // left
+                    lineCharIndexes.lowIndexNearFocus = i;
+                }
+            }
+        });
         if (lineCharIndexes.lowIndexNearFocus !== lineCharIndexes.indexes.length - 1)
             lineCharIndexes.highIndexNearFocus = lineCharIndexes.lowIndexNearFocus + 1;
-
-        return {lineCharIndexes, followingChars}
     }
 
     private smartAdjBefore(str: string, char: string, index: number): SmartAdjustment {
@@ -364,9 +403,9 @@ export class MetaJumper {
                 let found = ignoreCase ? textInline[i] && textInline[i].toLowerCase() === char.toLowerCase() : textInline[i] === char;
                 if (found) {
                     let adj = this.smartAdjBefore(textInline, char, i);
-                    indexes.push(new LineCharIndex(line, i,textInline, adj));
-                    let followingChar = textInline[i+1];
-                    if(followingChar) followingChars.add(followingChar);
+                    indexes.push(new LineCharIndex(line, i, textInline, adj));
+                    let followingChar = textInline[i + 1];
+                    if (followingChar) followingChars.add(followingChar);
                 }
 
             }
@@ -381,8 +420,8 @@ export class MetaJumper {
                 if (found) {
                     let adj = this.smartAdjBefore(textInline, char, i);
                     indexes.push(new LineCharIndex(line, index, textInline, adj));
-                    let followingChar = textInline[i+1];
-                    if(followingChar) followingChars.add(followingChar);
+                    let followingChar = textInline[i + 1];
+                    if (followingChar) followingChars.add(followingChar);
                 }
                 // increment by word and white space
                 index += words[i].length + 1;
@@ -391,7 +430,7 @@ export class MetaJumper {
         return { indexes, followingChars };
     }
 
-    private getExactLocation = async (editorToModelsMap: Map<vscode.TextEditor, DecorationModel[]>, targetChars: string) => {
+    private getExactLocation = async (editorToModelsMap: Map<vscode.TextEditor, DecorationModel[]>, targetChars: string, sequentialTargetChars: boolean) => {
         // show location candidates
         var decs = this.decorator.createAll(editorToModelsMap, targetChars);
 
@@ -401,7 +440,7 @@ export class MetaJumper {
         try {
             let editor = vscode.window.activeTextEditor ?? vscode.window.visibleTextEditors[0];
             // wait for first code key
-            var value = await new Input(this.config).onKey(this.config.decoration.hide.trigerKey, editor, v => v, 'type the character to goto',
+            var letter = await new Input(this.config).onKey(this.config.decoration.hide.trigerKey, editor, v => v, 'type the character to goto',
                 k => { // down
                     if (this.jumpTimeoutId != null) clearTimeout(this.jumpTimeoutId);
                     this.decorator.hideAll(decs)
@@ -413,44 +452,29 @@ export class MetaJumper {
             );
 
             this.decorator.removeAll(decs);
-            if (!value) throw new Error('no key code input')
+            if (!letter) throw new Error('no key code input')
 
-            // if (value === '\n') {
-            //     let model = models.find(model => model.indexInModels === 0);
-            //     if (model) {
-            //         this.currentFindIndex = 0;
-            //         return [model]
-            //     }
-            // }
-            // else if (value === ' ') {
-            //     let model = models.find(model => model.indexInModels === 1);
-            //     if (model) {
-            //         this.currentFindIndex = 1;
-            //         return [model]
-            //     }
-            // }
-
+            let map = new Map<vscode.TextEditor, DecorationModel[]>();
             editorToModelsMap.forEach((models, editor) => {
                 // filter location candidates
-                models = models.filter(model => {
-                    if (model.code[0] && model.code[0] === value) {
+                let md = models.filter(model => {
+                    if (model.code[0] && model.code[0] === letter) {
                         model.code = model.code.substring(1)
                         return true;
                     }
                     return false;
                 })
 
-                if (models.length == 0) editorToModelsMap.delete(editor)
-                else editorToModelsMap.set(editor, models)
-            })
-            return editorToModelsMap
+                if (md.length !== 0)
+                    map.set(editor, md)
+            });
+            return { map, letter };
 
         } catch (e) {
             this.decorator.removeAll(decs);
             throw e;
         } finally {
             messageDisposable.dispose();
-
         }
 
     }

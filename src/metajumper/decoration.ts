@@ -39,22 +39,22 @@ export class Decorator {
 		vscode.window.activeTextEditor.setDecorations(this.commandIndicatorDecorationType, locations);
 	}
 
-	createAll(editorToModelMap: Map<vscode.TextEditor, DecorationModel[]>, locationChars: string): Map<vscode.TextEditor, Decorations> {
+	createAll(editorToModelMap: Map<vscode.TextEditor, DecorationModel[]>, targetChars: string): Map<vscode.TextEditor, Decorations> {
 		let editorToDecorationsMap = new Map<vscode.TextEditor, Decorations>();
 		editorToModelMap.forEach((model, editor) => {
-			var decorations = this.create(editor, model, locationChars);
+			var decorations = this.create(editor, model, targetChars);
 			editorToDecorationsMap.set(editor, decorations);
 		})
 		return editorToDecorationsMap;
 	}
 
-	create = (editor: vscode.TextEditor, decorationModel: DecorationModel[], locationChars: string): Decorations => {
+	create = (editor: vscode.TextEditor, decorationModel: DecorationModel[], targetChars: string): Decorations => {
 		let decorations: Decorations = [];
 		decorationModel.forEach(model => {
 			let code = model.code;
 			let len = code.length;
 			let charIndex = model.char;
-			if (locationChars === '\n') len = 0;
+			if (targetChars[0] === '\n') len = 0;
 			else {
 				// no enough space to display the decorator codes
 				if (charIndex + 1 < len) {
@@ -66,7 +66,7 @@ export class Decorator {
 				let decorationType = this.createTextEditorDecorationType(len);
 				decorations[len] = [decorationType, []];
 			}
-			let option = this.createDecorationOptions(null, model.line, charIndex + 1/*len: codeToDecoratorLeftAlign; 1: rightAlign */, code);
+			let option = this.createDecorationOptions(model.line, charIndex + 1/*len: codeToDecoratorLeftAlign; 1: rightAlign */,charIndex + 1, code);
 			decorations[len][1].push(option);
 		})
 
@@ -120,10 +120,10 @@ export class Decorator {
 		return decorationType;
 	}
 
-	private createDecorationOptions = (context: vscode.ExtensionContext, line: number, decoratorPosition: number, code: string): vscode.DecorationOptions => {
+	private createDecorationOptions = ( line: number, decoratorPositionStart: number,decoratorPositionEnd: number, code: string): vscode.DecorationOptions => {
 		const renderOptions = this.getAfterRenderOptions(code);
 		return {
-			range: new vscode.Range(line, decoratorPosition, line, decoratorPosition),
+			range: new vscode.Range(line, decoratorPositionStart, line, decoratorPositionEnd),
 			renderOptions: {
 				dark: {
 					after: renderOptions,

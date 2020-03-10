@@ -8,7 +8,6 @@ export interface ILineCharIndexes {
     indexes: LineCharIndex[];
     lowIndexNearFocus: number;
     highIndexNearFocus: number;
-    focus: vscode.Position;
 }
 
 export enum Direction {
@@ -17,7 +16,6 @@ export enum Direction {
 
 
 export class LineCharIndex {
-    public indexInModels = -1;
     static END = new LineCharIndex();
     constructor(public line = -1, public char = -1, public text = "", public smartAdj = SmartAdjustment.Default) {
 
@@ -30,7 +28,6 @@ export class DecorationModel extends LineCharIndex {
 
     constructor(lineCharIndex: LineCharIndex) {
         super(lineCharIndex.line, lineCharIndex.char, lineCharIndex.text, lineCharIndex.smartAdj);
-        this.indexInModels = lineCharIndex.indexInModels;
     }
 }
 
@@ -85,10 +82,16 @@ export class DecorationModelBuilder {
         this.config = config
     }
 
-    buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, locationCount: number, lettersExcluded:Set<string> = null): Map<vscode.TextEditor, DecorationModel[]> => {
-        let chars = lettersExcluded===null? this.config.jumper.characters: this.config.jumper.characters.filter(c=>!lettersExcluded.has(c));
-        let signalCharLetters = lettersExcluded===null? this.config.jumper.additionalSingleCharCodeCharacters: this.config.jumper.additionalSingleCharCodeCharacters.filter(c=>!lettersExcluded.has(c));
-        let encoder = new Encoder(locationCount,chars, signalCharLetters);
+    buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, lettersExcluded: Set<string> = null): Map<vscode.TextEditor, DecorationModel[]> => {
+        let targetCount = 0;
+        editorToLineCharIndexesMap.forEach(lineCharIndex => targetCount += lineCharIndex.indexes.length)
+        if (targetCount <= 0) {
+            throw new Error("metaGo: no target location match for input char");
+        }
+
+        let chars = lettersExcluded === null ? this.config.jumper.characters : this.config.jumper.characters.filter(c => !lettersExcluded.has(c));
+        let signalCharLetters = lettersExcluded === null ? this.config.jumper.additionalSingleCharCodeCharacters : this.config.jumper.additionalSingleCharCodeCharacters.filter(c => !lettersExcluded.has(c));
+        let encoder = new Encoder(targetCount, chars, signalCharLetters);
         let models = new Map<vscode.TextEditor, DecorationModel[]>();
         let codeOffset = 0;
 
@@ -96,7 +99,6 @@ export class DecorationModelBuilder {
             let count = lineIndexes.indexes.length;
             if (count === 0) continue;
 
-            let focusLine = lineIndexes.focus.line;
             let lineIndexesState = new LineCharIndexState(lineIndexes, Direction.up);
 
             let dModels: DecorationModel[] = []
