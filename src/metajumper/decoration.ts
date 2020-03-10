@@ -54,7 +54,8 @@ export class Decorator {
 			let code = model.code;
 			let len = code.length;
 			let charIndex = model.char;
-			if (targetChars[0] === '\n') len = 0;
+			if (targetChars[0] === '\n')
+				len = 0;
 			else {
 				// no enough space to display the decorator codes
 				if (charIndex + 1 < len) {
@@ -66,7 +67,7 @@ export class Decorator {
 				let decorationType = this.createTextEditorDecorationType(len);
 				decorations[len] = [decorationType, []];
 			}
-			let option = this.createDecorationOptions(model.line, charIndex + 1/*len: codeToDecoratorLeftAlign; 1: rightAlign */,charIndex + 1, code);
+			let option = this.createDecorationOptions(model.line, charIndex + 1/*len: codeToDecoratorLeftAlign; 1: rightAlign */, code);
 			decorations[len][1].push(option);
 		})
 
@@ -112,6 +113,7 @@ export class Decorator {
 		if (decorationType) return decorationType;
 		let cf = this.config.decoration;
 		decorationType = vscode.window.createTextEditorDecorationType({
+			backgroundColor: 'lightblue',
 			after: {
 				margin: `0 0 0 ${len * (-cf.width)}px`
 			}
@@ -120,10 +122,10 @@ export class Decorator {
 		return decorationType;
 	}
 
-	private createDecorationOptions = ( line: number, decoratorPositionStart: number,decoratorPositionEnd: number, code: string): vscode.DecorationOptions => {
+	private createDecorationOptions = (line: number, decoratorPosition: number, code: string): vscode.DecorationOptions => {
 		const renderOptions = this.getAfterRenderOptions(code);
 		return {
-			range: new vscode.Range(line, decoratorPositionStart, line, decoratorPositionEnd),
+			range: new vscode.Range(line, decoratorPosition, line, decoratorPosition),
 			renderOptions: {
 				dark: {
 					after: renderOptions,
