@@ -15,11 +15,15 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] jump commands could be triggered event editor not focused, has any open editor
    - [ ] Create command for move to previous/next member
    - [ ] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
-
-
----     
 ## In Development
-### V3.3.0
+### V3.4.0
+#### Added
+#### Removed
+#### Changed
+#### Fixed
+---     
+
+### V3.3.0 - Mar 10, 2020
 #### Added
 * feat: sequential-target-chars support: type a sequence of target-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the target chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
 * feat: add encode feature that support additional letters that only appears in signal char length code.
