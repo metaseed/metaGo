@@ -5,16 +5,15 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] close issues. 
    - [x] support real viewport range, not use config
    - [x] jumper support fold region    
+   - [x] Color settings support referencing [Theme Color Id](https://code.visualstudio.com/api/references/theme-color)
+   - [x] sequential-target-chars support: type a sequence of target-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the target chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
    - [ ] backspace as command to delete last input char: could done by registered as texteditor command
-   - [ ] sequential-location-chars support: 
-      * type a sequence of location-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the location chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
-      * ripple search support, type location-chars to triger far from center
+   - [ ] ripple search support, type location-chars to triger far from center
    - [ ] Line selection up/down command: ?
       make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] jump commands could be triggered event editor not focused, has any open editor
    - [ ] Create command for move to previous/next member
-   - [ ] Color settings support referencing [Theme Color Id](https://code.visualstudio.com/api/references/theme-color)
    - [ ] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
 
 
@@ -22,7 +21,9 @@ All notable changes to the "metago" extension will be documented in this file.
 ## In Development
 ### V3.3.0
 #### Added
+* feat: sequential-target-chars support: type a sequence of target-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the target chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
 * feat: add encode feature that support additional letters that only appears in signal char length code.
+* feat: Color settings support referencing [Theme Color Id](https://code.visualstudio.com/api/references/theme-color), note: when use svg we not support them color
 #### Removed
 * removed config: metaGo.decoration.upperCase: use as it is.
 * add config: metaGo.decoration.additionalSingleCharCodeCharacters: only appears as one char decoration codes 
@@ -52,7 +53,7 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Added
 * jumper could goto any opened editors not just the active editor.
 * metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive commands only for active editor.
-* support <kbd>Enter</kbd>, <kbd>Space</kbd> as location chars.
+* support <kbd>Enter</kbd>, <kbd>Space</kbd> as target chars.
 #### Removed
 ~~after the trigger(<kbd>Alt</kbd>+<kbd>.</kbd> or <kbd>Alt</kbd>+<kbd>,</kbd> or  <kbd>Alt</kbd>+<kbd>\/</kbd>)press <kbd>Enter</kbd> to directly go to the one before the current cursor positon;~~    
 ~~after the trigger, press <kbd>Space</kbd> to directly go to the one after the current cursor position;~~

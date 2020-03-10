@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { DecorationModel } from './decoration-model';
 import { Config } from '../config';
-import { Colors } from '../lib/color-name';
+import { color } from '../lib/color';
 
 export type Decorations = [vscode.TextEditorDecorationType, vscode.DecorationOptions[]][];
 
@@ -10,6 +10,7 @@ export class Decorator {
 	private renderOptionsCache: { [index: string]: vscode.ThemableDecorationAttachmentRenderOptions };
 	private decorationTypeCache: { [chars: number]: vscode.TextEditorDecorationType } = {};
 	public commandIndicatorDecorationType;
+	private selectionDecorationType: vscode.TextEditorDecorationType;
 
 	initialize = (config: Config) => {
 		this.config = config;
@@ -25,6 +26,10 @@ export class Decorator {
 				borderColor: 'rgba(255,255,0,0.4)'
 			}
 		});
+
+		this.selectionDecorationType = vscode.window.createTextEditorDecorationType({
+			backgroundColor: color(config.decoration.matchBackground)
+		})
 	}
 
 	addCommandIndicator = (editor: vscode.TextEditor) => {
@@ -50,6 +55,7 @@ export class Decorator {
 
 	create = (editor: vscode.TextEditor, decorationModel: DecorationModel[], targetChars: string): Decorations => {
 		let decorations: Decorations = [];
+		let selectionDecoratoins: vscode.DecorationOptions[] = [];
 		decorationModel.forEach(model => {
 			let code = model.code;
 			let len = code.length;
@@ -69,8 +75,10 @@ export class Decorator {
 			}
 			let option = this.createDecorationOptions(model.line, charIndex + 1/*len: codeToDecoratorLeftAlign; 1: rightAlign */, code);
 			decorations[len][1].push(option);
-		})
 
+			selectionDecoratoins.push({ range: new vscode.Range(new vscode.Position(model.line, charIndex), new vscode.Position(model.line, charIndex + targetChars.length)) })
+		})
+		editor.setDecorations(this.selectionDecorationType, selectionDecoratoins);
 		decorations.forEach(([type, option]) => editor.setDecorations(type, option));
 		return decorations.filter(e => e);
 	}
@@ -106,6 +114,7 @@ export class Decorator {
 			this.decorationTypeCache[codeLen].dispose();
 			this.decorationTypeCache[codeLen] = null;
 		}
+		editor.setDecorations(this.selectionDecorationType, [])
 	}
 
 	private createTextEditorDecorationType = (len: number) => {
@@ -113,9 +122,8 @@ export class Decorator {
 		if (decorationType) return decorationType;
 		let cf = this.config.decoration;
 		decorationType = vscode.window.createTextEditorDecorationType({
-			backgroundColor: 'lightblue',
 			after: {
-				margin: `0 0 0 ${len * (-cf.width)}px`
+				margin: `0 0 0 ${len * (-cf.width)}px`,
 			}
 		});
 		this.decorationTypeCache[len] = decorationType;
@@ -162,14 +170,13 @@ export class Decorator {
 		let key = code;
 		let colors = cf.bgColor.split(',');
 		let bgColor = colors[(code.length - 1) % colors.length];
-		let c = Colors[bgColor];
-		bgColor = c ? `rgba(${c[0]},${c[1]},${c[2]},${cf.bgOpacity})` : bgColor;
+		let bg = color(bgColor);
 		let width = code.length * cf.width;
 		return {
 			contentText: key,
-			backgroundColor: bgColor,
+			backgroundColor: bg,
 			fontWeight: cf.fontWeight,
-			color: cf.color,
+			color: color(cf.color),
 			width: `${width}px`, //fix hori flash
 			//border:`1px solid ${cf.borderColor}`// cause vertical flash 1px
 		};

@@ -304,6 +304,11 @@
 					"default": "chartreuse,yellow",
 					"description": "one and two character decorator background color"
 				},
+				"metaGo.decoration.matchBackground": {
+					"type": "string",
+					"default": "editor.wordHighlightBackground",
+					"description": "in sequential-target-chars jump, background color of matched types"
+				},
 				"metaGo.decoration.backgroundOpacity": {
 					"type": "string",
 					"default": "0.8"

@@ -1,5 +1,5 @@
 //http://dev.w3.org/csswg/css-color/#named-colors.
-export const Colors: {[name:string]:[number, number, number]}={
+const Colors: {[name:string]:[number, number, number]}={
 	"aliceblue": [240, 248, 255],
 	"antiquewhite": [250, 235, 215],
 	"aqua": [0, 255, 255],
@@ -149,3 +149,33 @@ export const Colors: {[name:string]:[number, number, number]}={
 	"yellow": [255, 255, 0],
 	"yellowgreen": [154, 205, 50]
 };
+
+import { ThemeColor } from 'vscode';
+function svgStyleColor(color) {
+	if (color.startsWith('#')) {
+		let r = parseInt(color.substring(1, 2), 16);
+		let g = parseInt(color.substring(3, 5), 16);
+		let b = parseInt(color.substring(5, 7), 16);
+		return `rgb(${r},${g},${b})`
+	}
+	return color;
+}
+export function color(inputColor: string, opacity: number=1): string | ThemeColor {
+	if (/[a-z]+\.[a-z]+/i.test(inputColor) ||
+		['contrastActiveBorder', 'contrastBorder', 'focusBorder', 'foreground', 'descriptionForeground', 'errorForeground'].includes(inputColor)
+	) {
+		return new ThemeColor(inputColor);
+	} else {
+		let c = Colors[inputColor];
+		if(c) return `rgba(${c[0]},${c[1]},${c[2]},${opacity})`;
+		if (inputColor.startsWith('#')) {
+			let r = parseInt(inputColor.substring(1, 2), 16);
+			let g = parseInt(inputColor.substring(3, 5), 16);
+			let b = parseInt(inputColor.substring(5, 7), 16);
+			let a = parseInt(inputColor.substring(7, 9), 16);
+			return `rgba(${r},${g},${b},${a??opacity})`
+		}
+		return inputColor;
+	}
+}
+

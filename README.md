@@ -78,8 +78,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 ### Metajump: go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere. (Triger)
-2. type the character(stands for location) on screen, metaGo will show you some codes(candidate locations) encoded with character. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
-3. type the code characters, you will *go* to that location.
+2. type the characters(stands for the target location) on screen, metaGo will show you some codes(candidate target locations) encoded with character. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
+3. you could continue type characters following the location, or type the code decoration characters, then you will *go* to that location.
 
 > at any time press <kbd>ESC</kbd> to cancel
 
