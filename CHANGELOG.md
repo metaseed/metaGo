@@ -7,12 +7,14 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] jumper support fold region    
    - [x] Color settings support referencing [Theme Color Id](https://code.visualstudio.com/api/references/theme-color)
    - [x] sequential-target-chars support: type a sequence of target-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the target chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
+   - [ ] add following char decorator in sequential-target.
+   - [ ] jump commands could be triggered event editor not focused, has any open editor
    - [ ] backspace as command to delete last input char: could done by registered as texteditor command
+   - [ ] fix enter key at end of sequential-target jump
    - [ ] ripple search support, type location-chars to triger far from center
    - [ ] Line selection up/down command: ?
       make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
-   - [ ] jump commands could be triggered event editor not focused, has any open editor
    - [ ] Create command for move to previous/next member
    - [ ] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
 ## In Development
