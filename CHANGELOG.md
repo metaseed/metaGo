@@ -18,11 +18,13 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] Create command for move to previous/next member
    - [ ] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
 ## In Development
-### V3.4.0
+### V3.3.1
 #### Added
+* in sequential-target-chars jump, background color of the char follows target char
 #### Removed
-#### Changed
+#### Changd
 #### Fixed
+* background color of matched target chars
 ---     
 
 ### V3.3.0 - Mar 10, 2020
