@@ -11,6 +11,7 @@ export class Decorator {
 	private decorationTypeCache: { [chars: number]: vscode.TextEditorDecorationType } = {};
 	public commandIndicatorDecorationType;
 	private selectionDecorationType: vscode.TextEditorDecorationType;
+	private targetFollowCharDecorationType: vscode.TextEditorDecorationType;
 
 	initialize = (config: Config) => {
 		this.config = config;
@@ -30,6 +31,10 @@ export class Decorator {
 		this.selectionDecorationType = vscode.window.createTextEditorDecorationType({
 			backgroundColor: color(config.decoration.matchBackground)
 		})
+		this.targetFollowCharDecorationType = vscode.window.createTextEditorDecorationType({
+			backgroundColor: color(config.decoration.targetFollowCharBackground)
+		})
+		
 	}
 
 	addCommandIndicator = (editor: vscode.TextEditor) => {
@@ -56,6 +61,7 @@ export class Decorator {
 	create = (editor: vscode.TextEditor, decorationModel: DecorationModel[], targetChars: string): Decorations => {
 		let decorations: Decorations = [];
 		let selectionDecoratoins: vscode.DecorationOptions[] = [];
+		let targetFollowCharDecorations: vscode.DecorationOptions[] = [];
 		decorationModel.forEach(model => {
 			let code = model.code;
 			let len = code.length;
@@ -77,8 +83,10 @@ export class Decorator {
 			decorations[len][1].push(option);
 
 			selectionDecoratoins.push({ range: new vscode.Range(new vscode.Position(model.line, charIndex), new vscode.Position(model.line, charIndex + targetChars.length)) })
+			targetFollowCharDecorations.push({ range: new vscode.Range(new vscode.Position(model.line, charIndex + targetChars.length), new vscode.Position(model.line, charIndex + targetChars.length + 1)) })
 		})
 		editor.setDecorations(this.selectionDecorationType, selectionDecoratoins);
+		editor.setDecorations(this.targetFollowCharDecorationType, targetFollowCharDecorations);
 		decorations.forEach(([type, option]) => editor.setDecorations(type, option));
 		return decorations.filter(e => e);
 	}
@@ -115,6 +123,7 @@ export class Decorator {
 			this.decorationTypeCache[codeLen] = null;
 		}
 		editor.setDecorations(this.selectionDecorationType, [])
+		editor.setDecorations(this.targetFollowCharDecorationType, [])
 	}
 
 	private createTextEditorDecorationType = (len: number) => {
@@ -184,7 +193,7 @@ export class Decorator {
 
 	private svgStyleColor(color: string) {
 		if (color.startsWith('#')) {
-			let r = parseInt(color.substring(1, 2), 16);
+			let r = parseInt(color.substring(1, 3), 16);
 			let g = parseInt(color.substring(3, 5), 16);
 			let b = parseInt(color.substring(5, 7), 16);
 			return `rgb(${r},${g},${b})`

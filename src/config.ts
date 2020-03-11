@@ -18,8 +18,9 @@ export class Config {
 
 			this.decoration.color = config.get<string>("decoration.color", this.decoration.color);
 			this.decoration.borderColor = config.get<string>("decoration.borderColor", this.decoration.borderColor);
-			this.decoration.borderColor = config.get<string>("decoration.matchBackground", this.decoration.matchBackground);
-
+			this.decoration.matchBackground = config.get<string>("decoration.matchBackground", this.decoration.matchBackground);
+			this.decoration.targetFollowCharBackground = config.get<string>("decoration.targetFollowCharBackground", this.decoration.targetFollowCharBackground);
+			
 			this.decoration.width = config.get<number>("decoration.width", this.decoration.width);
 			this.decoration.height = config.get<number>("decoration.height", this.decoration.height);
 
@@ -71,6 +72,7 @@ class DecoratorConfig {
 
 	fontSize: number = 14;
 	matchBackground = "editor.wordHighlightBackground";
+	targetFollowCharBackground = "#4169E1"
 	fontWeight: string = "normal";
 	fontFamily: string = "Consolas";
 	hide = new DecoratorHide();

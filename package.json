@@ -307,7 +307,12 @@
 				"metaGo.decoration.matchBackground": {
 					"type": "string",
 					"default": "editor.wordHighlightBackground",
-					"description": "in sequential-target-chars jump, background color of matched types"
+					"description": "in sequential-target-chars jump, background color of matched chars"
+				},
+				"metaGo.decoration.targetFollowCharBackground": {
+					"type": "string",
+					"default": "#4169E1",
+					"description": "in sequential-target-chars jump, background color of the char follows target char"
 				},
 				"metaGo.decoration.backgroundOpacity": {
 					"type": "string",
