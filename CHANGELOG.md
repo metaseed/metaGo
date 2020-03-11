@@ -21,6 +21,7 @@ All notable changes to the "metago" extension will be documented in this file.
 ### V3.3.1
 #### Added
 * in sequential-target-chars jump, background color of the char follows target char
+* new gif logo
 #### Removed
 #### Changd
 #### Fixed
