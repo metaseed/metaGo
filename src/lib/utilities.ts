@@ -1,7 +1,9 @@
 import * as vscode from 'vscode';
 
 export class Utilities {
-    public static goto(editor: vscode.TextEditor, line: number, character: number) {
+    public static goto(editor: vscode.TextEditor, line: number = -1, character: number = -1) {
+        line = line === -1 ? editor.selection.active.line: line;
+        character = character === -1 ? editor.selection.active.character: character;
         this.select(editor, line, character, line, character);
     }
 

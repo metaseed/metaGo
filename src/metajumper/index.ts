@@ -181,11 +181,16 @@ export class MetaJumper {
     }
 
     private async getLocation(mutiEditor: boolean, enableSequentialTargetChars = true): Promise<[vscode.TextEditor, DecorationModel]> {
-        let inputEditor = vscode.window.activeTextEditor ?? vscode.window.visibleTextEditors[0];
-        if (!inputEditor) {
-            throw new Error('no visible editor');
-        }
-
+        let inputEditor = vscode.window.activeTextEditor;
+        if(!inputEditor){
+            inputEditor = vscode.window.visibleTextEditors[0];
+            if (!inputEditor) {
+                throw new Error('no visible editor');
+            }
+            Utilities.goto(inputEditor);
+        } 
+        await vscode.commands.executeCommand("workbench.action.focusActiveEditorGroup");
+        
         let msg = this.isSelectionMode ? "metaGo: Type to Select" : "metaGo: Type To Jump"
         let messageDisposable = vscode.window.setStatusBarMessage(msg, this.config.jumper.timeout);
 

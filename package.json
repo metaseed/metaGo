@@ -128,19 +128,16 @@
 			{
 				"command": "metaGo.gotoBefore",
 				"key": "alt+,",
-				"when": "editorTextFocus",
 				"description": "goto the character and set the cursor before the character"
 			},
 			{
 				"command": "metaGo.gotoAfter",
 				"key": "alt+.",
-				"when": "editorTextFocus",
 				"description": "goto the character and set the cursor after the character"
 			},
 			{
 				"command": "metaGo.gotoSmart",
 				"key": "alt+/",
-				"when": "editorTextFocus",
 				"description": "goto the character and set the cursor smartly"
 			},
 			{

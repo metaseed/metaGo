@@ -7,8 +7,8 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] jumper support fold region    
    - [x] Color settings support referencing [Theme Color Id](https://code.visualstudio.com/api/references/theme-color)
    - [x] sequential-target-chars support: type a sequence of target-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the target chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
-   - [ ] add following char decorator in sequential-target.
-   - [ ] jump commands could be triggered event editor not focused, has any open editor
+   - [*] add following char decorator in sequential-target.
+   - [*] jump commands could be triggered event editor not focused, has any open editor
    - [ ] backspace as command to delete last input char: could done by registered as texteditor command
    - [ ] fix enter key at end of sequential-target jump
    - [ ] ripple search support, type location-chars to triger far from center
@@ -22,8 +22,10 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Added
 * in sequential-target-chars jump, background color of the char follows target char
 * new gif logo
+* jump commands could be triggered event editor not focused, and has any open editor. i.e when in "Explorer" treeview.
 #### Removed
 #### Changd
+* update metago.jump gif in readme.md
 #### Fixed
 * background color of matched target chars
 ---     
