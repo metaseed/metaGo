@@ -10,7 +10,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] add following char decorator in sequential-target.
    - [x] jump commands could be triggered event editor not focused, has any open editor
    - [x] left boder on jump code decorator support
-   - [ ] fix enter key at end of sequential-target jump
+   - [x] fix enter key at end of sequential-target jump
    - [ ] backspace as command to delete last input char: could done by registered as texteditor command
    - [ ] ripple search support, type location-chars to triger far from center
    - [ ] Line selection up/down command: ?
@@ -30,6 +30,7 @@ All notable changes to the "metago" extension will be documented in this file.
 * update metago.jump gif in readme.md
 #### Fixed
 * background color of matched target chars
+* fix enter key at end of sequential-target jump
 ---     
 
 ### V3.3.0 - Mar 10, 2020

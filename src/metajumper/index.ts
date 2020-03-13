@@ -190,7 +190,7 @@ export class MetaJumper {
             Utilities.goto(inputEditor);
         } 
         await vscode.commands.executeCommand("workbench.action.focusActiveEditorGroup");
-        
+
         let msg = this.isSelectionMode ? "metaGo: Type to Select" : "metaGo: Type To Jump"
         let messageDisposable = vscode.window.setStatusBarMessage(msg, this.config.jumper.timeout);
 
@@ -298,6 +298,7 @@ export class MetaJumper {
 
         let ms = models.filter((m) => {
             let str = m.text.substring(m.char, m.char + targetChars.length);
+            str = str.padEnd(targetChars.length, '\n');
             let r = ignoreCase ? str.toLocaleLowerCase() === targetChars.toLocaleLowerCase() : str === targetChars;
             let next = m.text[m.char + targetChars.length];
             if (r && next){
