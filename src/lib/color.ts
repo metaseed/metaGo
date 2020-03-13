@@ -165,7 +165,7 @@ export function color(inputColor: string, opacity: number=255): string | ThemeCo
 			let g = parseInt(inputColor.substring(3, 5), 16);
 			let b = parseInt(inputColor.substring(5, 7), 16);
 			let a = parseInt(inputColor.substring(7, 9), 16);
-			return `rgba(${r},${g},${b},${Number.isNaN(a)?opacity:a})`
+			return `rgba(${r},${g},${b},${(Number.isNaN(a)?opacity:a)/255})`
 		}
 		return inputColor;
 	}
