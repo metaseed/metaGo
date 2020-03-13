@@ -187,7 +187,8 @@ export class Decorator {
 			fontWeight: cf.fontWeight,
 			color: color(cf.color),
 			width: `${width}px`, //fix hori flash
-			//border:`1px solid ${cf.borderColor}`// cause vertical flash 1px
+			borderStyle: "none none none solid",
+			border:`1px ${cf.borderColor}`// cause vertical flash 1px
 		};
 	}
 
