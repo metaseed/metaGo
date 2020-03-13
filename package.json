@@ -35,8 +35,19 @@
 	"contributes": {
 		"commands": [
 			{
+				"command": "metaGo.input.cancel",
+				"title": "xx: metaJump cancel",
+				"category": "metaGo.metaJump"
+			},
+			{
+				"command": "metaGo.metaJump.backspace",
+				"title": "xx: metaJump step-cancel",
+				"category": "metaGo.metaJump"
+			},
+			{
 				"command": "metaGo.gotoSmart",
-				"title": "xx: metaGo.goto Smart"
+				"title": "xx: metaGo.goto Smart",
+				"category": "metaGo.metaJump"
 			},
 			{
 				"command": "metaGo.gotoAfter",
@@ -124,6 +135,11 @@
 				"command": "metaGo.input.cancel",
 				"key": "escape",
 				"when": "editorTextFocus && metaGoInput"
+			},
+			{
+				"command": "metaGo.metaJump.backspace",
+				"key": "backspace",
+				"when": "editorTextFocus && metaGoJumping"
 			},
 			{
 				"command": "metaGo.gotoBefore",

@@ -24,7 +24,7 @@ All notable changes to the "metago" extension will be documented in this file.
 * in sequential-target-chars jump, background color of the char follows target char
 * new gif logo
 * jump commands could be triggered event editor not focused, and has any open editor. i.e when in "Explorer" treeview.
-* left boder on jump code decorator, easier for discrimating concatenated decorators
+* left boder on jump code decorator, easier for discrimating concatenated/overllaped decorators
 #### Removed
 #### Changd
 * update metago.jump gif in readme.md

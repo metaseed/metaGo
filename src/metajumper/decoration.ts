@@ -34,7 +34,7 @@ export class Decorator {
 		this.targetFollowCharDecorationType = vscode.window.createTextEditorDecorationType({
 			backgroundColor: color(config.decoration.targetFollowCharBackground)
 		})
-		
+
 	}
 
 	addCommandIndicator = (editor: vscode.TextEditor) => {
@@ -49,16 +49,16 @@ export class Decorator {
 		vscode.window.activeTextEditor.setDecorations(this.commandIndicatorDecorationType, locations);
 	}
 
-	createAll(editorToModelMap: Map<vscode.TextEditor, DecorationModel[]>, targetChars: string): Map<vscode.TextEditor, Decorations> {
+	createAll(editorToModelMap: Map<vscode.TextEditor, DecorationModel[]>, targetChars: string, enableSequentialTargetChars: boolean): Map<vscode.TextEditor, Decorations> {
 		let editorToDecorationsMap = new Map<vscode.TextEditor, Decorations>();
 		editorToModelMap.forEach((model, editor) => {
-			var decorations = this.create(editor, model, targetChars);
+			var decorations = this.create(editor, model, targetChars, enableSequentialTargetChars);
 			editorToDecorationsMap.set(editor, decorations);
 		})
 		return editorToDecorationsMap;
 	}
 
-	create = (editor: vscode.TextEditor, decorationModel: DecorationModel[], targetChars: string): Decorations => {
+	create = (editor: vscode.TextEditor, decorationModel: DecorationModel[], targetChars: string, enableSequentialTargetChars: boolean): Decorations => {
 		let decorations: Decorations = [];
 		let selectionDecoratoins: vscode.DecorationOptions[] = [];
 		let targetFollowCharDecorations: vscode.DecorationOptions[] = [];
@@ -85,8 +85,10 @@ export class Decorator {
 			selectionDecoratoins.push({ range: new vscode.Range(new vscode.Position(model.line, charIndex), new vscode.Position(model.line, charIndex + targetChars.length)) })
 			targetFollowCharDecorations.push({ range: new vscode.Range(new vscode.Position(model.line, charIndex + targetChars.length), new vscode.Position(model.line, charIndex + targetChars.length + 1)) })
 		})
-		editor.setDecorations(this.selectionDecorationType, selectionDecoratoins);
-		editor.setDecorations(this.targetFollowCharDecorationType, targetFollowCharDecorations);
+		if (enableSequentialTargetChars) {
+			editor.setDecorations(this.selectionDecorationType, selectionDecoratoins);
+			editor.setDecorations(this.targetFollowCharDecorationType, targetFollowCharDecorations);
+		}
 		decorations.forEach(([type, option]) => editor.setDecorations(type, option));
 		return decorations.filter(e => e);
 	}
@@ -111,19 +113,21 @@ export class Decorator {
 		}
 	}
 
-	removeAll(editorToModelMap: Map<vscode.TextEditor, Decorations>) {
-		editorToModelMap.forEach((_, editor) => this.remove(editor));
+	removeAll(editorToModelMap: Map<vscode.TextEditor, Decorations>, enableSequentialTargetChars: boolean) {
+		editorToModelMap.forEach((_, editor) => this.remove(editor, enableSequentialTargetChars));
 	}
 
-	remove = (editor: vscode.TextEditor) => {
+	remove = (editor: vscode.TextEditor, enableSequentialTargetChars: boolean) => {
 		for (var codeLen in this.decorationTypeCache) {
 			if (this.decorationTypeCache[codeLen] === null) continue;
 			editor.setDecorations(this.decorationTypeCache[codeLen], []);
 			this.decorationTypeCache[codeLen].dispose();
 			this.decorationTypeCache[codeLen] = null;
 		}
-		editor.setDecorations(this.selectionDecorationType, [])
-		editor.setDecorations(this.targetFollowCharDecorationType, [])
+		if (enableSequentialTargetChars) {
+			editor.setDecorations(this.selectionDecorationType, [])
+			editor.setDecorations(this.targetFollowCharDecorationType, [])
+		}
 	}
 
 	private createTextEditorDecorationType = (len: number) => {
@@ -188,7 +192,7 @@ export class Decorator {
 			color: color(cf.color),
 			width: `${width}px`, //fix hori flash
 			borderStyle: "none none none solid",
-			border:`1px ${cf.borderColor}`// cause vertical flash 1px
+			border: `1px ${cf.borderColor}`// cause vertical flash 1px
 		};
 	}
 
