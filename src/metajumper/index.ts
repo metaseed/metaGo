@@ -29,7 +29,7 @@ export class MetaJumper {
     constructor(context: vscode.ExtensionContext, config: Config) {
         let disposables: vscode.Disposable[] = [];
         this.config = config;
-        disposables.push(vscode.commands.registerCommand('metaGo.metaJump.backspace', () => this.stepCancel));
+        disposables.push(vscode.commands.registerCommand('metaGo.metaJump.backspace', () => this.stepCancel()));
 
         disposables.push(vscode.commands.registerCommand('metaGo.gotoAfter', () => {
             this.doJump('metaGo.gotoAfter');
@@ -77,7 +77,9 @@ export class MetaJumper {
         this.decorator.initialize(this.config);
     }
 
-    doJump = (command: string) => {
+    doJump = (command: string, fromStart = true) => {
+        if(fromStart) this.targetChars = '';
+
         this.currentCommand = command;
         switch (command) {
             case 'metaGo.gotoAfter':
@@ -118,7 +120,7 @@ export class MetaJumper {
             let target = this.targetChars.substr(0, this.targetChars.length - 1);
             this.cancel();
             this.targetChars = target;
-            this.doJump(this.currentCommand)
+            this.doJump(this.currentCommand, false)
         }
     }
 
@@ -197,11 +199,9 @@ export class MetaJumper {
 
     private done() {
         this.isJumping = false;
-        this.targetChars = ""
     }
 
     private cancel() {
-        this.targetChars = ""
         while (Input.instances.length > 0) {
             Input.instances[0].cancelInput();
         }
@@ -344,6 +344,15 @@ export class MetaJumper {
 
     }
 
+    private isInText(text: string,char: number, targetChars: string) {
+        let targetCharsLow = targetChars.toLocaleLowerCase();
+        let ignoreCase =  targetCharsLow === targetChars; // no UperCase
+        let str = text.substring(char, char + targetChars.length);
+        str = str.padEnd(targetChars.length, '\n');
+        let r = ignoreCase ? str.toLocaleLowerCase() === targetCharsLow : str === targetChars;
+        return r;
+    }
+
     private findInModel(editor: vscode.TextEditor, models: DecorationModel[], targetChars: string) {
         let { selection } = editor;
         let lineCharIndexes: ILineCharIndexes = {
@@ -351,13 +360,11 @@ export class MetaJumper {
             highIndexNearFocus: -1,
             indexes: []
         };
-        let ignoreCase = targetChars.toLocaleLowerCase() === targetChars;
+
         let followingChars = new Set<string>()
 
         let ms = models.filter((m) => {
-            let str = m.text.substring(m.char, m.char + targetChars.length);
-            str = str.padEnd(targetChars.length, '\n');
-            let r = ignoreCase ? str.toLocaleLowerCase() === targetChars.toLocaleLowerCase() : str === targetChars;
+            let r = this.isInText(m.text, m.char, targetChars)
             let next = m.text[m.char + targetChars.length];
             if (r && next) {
                 followingChars.add(next);
@@ -449,24 +456,23 @@ export class MetaJumper {
         return SmartAdjustment.Default;
     }
 
-    private indexesOf = (line: number, textInline: string, char: string) => {
+    private indexesOf = (line: number, textInline: string, targetChars: string) => {
         let indexes: LineCharIndex[] = [];
         let followingChars = new Set<string>();
-        if (char && char.length === 0) {
+        if (targetChars && targetChars.length === 0) {
             return { indexes, followingChars }
         }
 
-        if (char === '\n') {
+        if (targetChars[0] === '\n') {
             indexes.push(new LineCharIndex(line, textInline.length, textInline))
             return { indexes, followingChars };
         }
 
-        let ignoreCase = char.toLocaleLowerCase() === char; // no UperCase
         if (this.config.jumper.findAllMode === 'on') {
             for (var i = 0; i < textInline.length; i++) {
-                let found = ignoreCase ? textInline[i] && textInline[i].toLowerCase() === char.toLowerCase() : textInline[i] === char;
+                let found = this.isInText(textInline, i, targetChars)
                 if (found) {
-                    let adj = this.smartAdjBefore(textInline, char, i);
+                    let adj = this.smartAdjBefore(textInline, targetChars, i);
                     indexes.push(new LineCharIndex(line, i, textInline, adj));
                     let followingChar = textInline[i + 1];
                     if (followingChar) followingChars.add(followingChar);
@@ -480,9 +486,9 @@ export class MetaJumper {
             let index = 0;
 
             for (var i = 0; i < words.length; i++) {
-                let found = ignoreCase ? words[i][0] && words[i][0].toLowerCase() === char.toLowerCase() : words[i][0] === char;
+                let found = this.isInText(words[i], 0, targetChars)
                 if (found) {
-                    let adj = this.smartAdjBefore(textInline, char, i);
+                    let adj = this.smartAdjBefore(textInline, targetChars, i);
                     indexes.push(new LineCharIndex(line, index, textInline, adj));
                     let followingChar = textInline[i + 1];
                     if (followingChar) followingChars.add(followingChar);
