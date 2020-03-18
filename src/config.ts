@@ -59,7 +59,7 @@ class DecoratorHide {
 class DecoratorConfig {
 	useTextBasedDecorations: boolean = false;
 
-	bgOpacity: string = '0.88';
+	bgOpacity: string = '0.8';
 	bgColor: string = "lime,yellow";
 	color: string = "black";
 	borderColor: string = "black";

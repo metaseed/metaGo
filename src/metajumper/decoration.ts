@@ -183,7 +183,7 @@ export class Decorator {
 		let key = code;
 		let colors = cf.bgColor.split(',');
 		let bgColor = colors[(code.length - 1) % colors.length];
-		let bg = color(bgColor);
+		let bg = color(bgColor, +cf.bgOpacity);
 		let width = code.length * cf.width;
 		return {
 			contentText: key,

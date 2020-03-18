@@ -21,6 +21,7 @@ All notable changes to the "metago" extension will be documented in this file.
 ## In Development
 ### 
 #### Added
+* text decorator support background color transparent: opacity
 #### Removed
 #### Changd
 #### Fixed

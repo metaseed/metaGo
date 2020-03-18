@@ -1,5 +1,5 @@
 //http://dev.w3.org/csswg/css-color/#named-colors.
-const Colors: {[name:string]:[number, number, number]}={
+const Colors: { [name: string]: [number, number, number] } = {
 	"aliceblue": [240, 248, 255],
 	"antiquewhite": [250, 235, 215],
 	"aqua": [0, 255, 255],
@@ -152,20 +152,22 @@ const Colors: {[name:string]:[number, number, number]}={
 
 import { ThemeColor } from 'vscode';
 
-export function color(inputColor: string, opacity: number=255): string | ThemeColor {
+export function color(inputColor: string, opacity: number = 255): string | ThemeColor {
 	if (/[a-z]+\.[a-z]+/i.test(inputColor) ||
 		['contrastActiveBorder', 'contrastBorder', 'focusBorder', 'foreground', 'descriptionForeground', 'errorForeground'].includes(inputColor)
 	) {
 		return new ThemeColor(inputColor);
 	} else {
 		let c = Colors[inputColor];
-		if(c) return `rgba(${c[0]},${c[1]},${c[2]},${opacity})`;
+		if (c) return `rgba(${c[0]},${c[1]},${c[2]},${opacity})`;
 		if (inputColor.startsWith('#')) {
 			let r = parseInt(inputColor.substring(1, 3), 16);
 			let g = parseInt(inputColor.substring(3, 5), 16);
 			let b = parseInt(inputColor.substring(5, 7), 16);
 			let a = parseInt(inputColor.substring(7, 9), 16);
-			return `rgba(${r},${g},${b},${(Number.isNaN(a)?opacity:a)/255})`
+			let ov = Number.isNaN(a) ? opacity : a;
+			let o = (ov > 1) ? (ov / 255) : ov;
+			return `rgba(${r},${g},${b},${o})`
 		}
 		return inputColor;
 	}
