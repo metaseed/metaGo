@@ -298,11 +298,6 @@
 					"default": 12,
 					"description": "only for svg based decoration"
 				},
-				"metaGo.decoration.borderColor": {
-					"type": "string",
-					"default": "#1e1e1e",
-					"description": "only for svg based decoration"
-				},
 				"metaGo.decoration.fontFamily": {
 					"type": "string",
 					"default": "Consolas",
@@ -312,10 +307,14 @@
 					"type": "string",
 					"default": "bold"
 				},
+				"metaGo.decoration.borderColor": {
+					"type": "string",
+					"default": "#1e1e1e"
+				},
 				"metaGo.decoration.backgroundColor": {
 					"type": "string",
 					"default": "chartreuse,yellow",
-					"description": "one and two character decorator background color"
+					"description": "code decorator background color"
 				},
 				"metaGo.decoration.matchBackground": {
 					"type": "string",
