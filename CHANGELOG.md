@@ -11,7 +11,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] jump commands could be triggered event editor not focused, has any open editor
    - [x] left boder on jump code decorator support
    - [x] fix enter key at end of sequential-target jump
-   - [ ] backspace as command to delete last input char: could done by registered as texteditor command
+   - [x] backspace as command to delete last input char: could done by registered as texteditor command
    - [ ] ripple search support, type location-chars to triger far from center
    - [ ] Line selection up/down command: ?
       make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand
@@ -25,9 +25,11 @@ All notable changes to the "metago" extension will be documented in this file.
 * new gif logo
 * jump commands could be triggered event editor not focused, and has any open editor. i.e when in "Explorer" treeview.
 * left boder on jump code decorator, easier for discrimating concatenated/overllaped decorators
+* `Backspace` as command to delete last input char, it's a step cancel command, `Esc` is a whole cancel command.
 #### Removed
 #### Changd
 * update metago.jump gif in readme.md
+* the target location chars case sensitive method is changed from 'if has upper case' to 'the last char is upper case"
 #### Fixed
 * background color of matched target chars
 * fix enter key at end of sequential-target jump

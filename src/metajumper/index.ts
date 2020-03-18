@@ -1,6 +1,6 @@
 import { Config } from "../config";
 import { Utilities } from '../lib';
-import { Input } from "./input";
+import { Input, CANCEL_MSG } from "./input";
 import { ILineCharIndexes, DecorationModel, DecorationModelBuilder, SmartAdjustment, LineCharIndex } from "./decoration-model";
 import { Decorator } from "./decoration";
 import { ViewPort } from '../lib/viewport';
@@ -78,7 +78,7 @@ export class MetaJumper {
     }
 
     doJump = (command: string, fromStart = true) => {
-        if(fromStart) this.targetChars = '';
+        if (fromStart) this.targetChars = '';
 
         this.currentCommand = command;
         switch (command) {
@@ -153,6 +153,10 @@ export class MetaJumper {
         }
         catch (err) {
             this.cancel();
+            if (typeof err === 'string') {
+                console.log(err);
+                return
+            }
             console.log("metago:" + err.message + err.stack);
         }
     }
@@ -215,13 +219,20 @@ export class MetaJumper {
             this.isJumping = true;
 
             this.jumpTimeoutId = setTimeout(() => { this.jumpTimeoutId = null; this.cancel(); }, this.config.jumper.timeout);
+            let canceled = false;
             try {
                 vscode.commands.executeCommand('setContext', "metaGoJumping", true);
                 var model = await this.getLocation(mutiEditor);
                 return model;
             }
+            catch(e) {
+                if(e === CANCEL_MSG) {
+                    canceled = true;
+                }
+            }
             finally {
-                vscode.commands.executeCommand('setContext', "metaGoJumping", false);
+                if(!canceled)
+                    vscode.commands.executeCommand('setContext', "metaGoJumping", false);
 
                 if (this.jumpTimeoutId) {
                     clearTimeout(this.jumpTimeoutId);
@@ -344,12 +355,15 @@ export class MetaJumper {
 
     }
 
-    private isInText(text: string,char: number, targetChars: string) {
-        let targetCharsLow = targetChars.toLocaleLowerCase();
-        let ignoreCase =  targetCharsLow === targetChars; // no UperCase
+    private isInText(text: string, char: number, targetChars: string) {
+        var targetLowCase = targetChars.toLocaleLowerCase();
+        let lastIndex = targetChars.length - 1;
+        var last = targetChars[lastIndex];
+        let lastLowCase = targetLowCase[ lastIndex];
+        let ignoreCase = lastLowCase === last; // no UperCase
         let str = text.substring(char, char + targetChars.length);
         str = str.padEnd(targetChars.length, '\n');
-        let r = ignoreCase ? str.toLocaleLowerCase() === targetCharsLow : str === targetChars;
+        let r = (str.toLocaleLowerCase() === targetLowCase) && (ignoreCase ?  true: str[lastIndex] === last);
         return r;
     }
 
@@ -472,9 +486,9 @@ export class MetaJumper {
             for (var i = 0; i < textInline.length; i++) {
                 let found = this.isInText(textInline, i, targetChars)
                 if (found) {
-                    let adj = this.smartAdjBefore(textInline, targetChars, i);
+                    let adj = this.smartAdjBefore(textInline, targetChars[0], i);
                     indexes.push(new LineCharIndex(line, i, textInline, adj));
-                    let followingChar = textInline[i + 1];
+                    let followingChar = textInline[i + targetChars.length];
                     if (followingChar) followingChars.add(followingChar);
                 }
 
@@ -488,9 +502,9 @@ export class MetaJumper {
             for (var i = 0; i < words.length; i++) {
                 let found = this.isInText(words[i], 0, targetChars)
                 if (found) {
-                    let adj = this.smartAdjBefore(textInline, targetChars, i);
+                    let adj = this.smartAdjBefore(textInline, targetChars[0], i);
                     indexes.push(new LineCharIndex(line, index, textInline, adj));
-                    let followingChar = textInline[i + 1];
+                    let followingChar = textInline[i + targetChars.length];
                     if (followingChar) followingChars.add(followingChar);
                 }
                 // increment by word and white space

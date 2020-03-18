@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { Config } from '../config';
-
+export const CANCEL_MSG = 'input canceled'
 class InputModel {
     text: string;
     validateInput: (text: string) => string;
@@ -152,7 +152,7 @@ export class Input {
     }
 
     private cancel = (editor: vscode.TextEditor) => {
-        this.inputModel.reject("canceled");
+        this.inputModel.reject(CANCEL_MSG);
         this.dispose();
         this.setContext(false);
     }
