@@ -12,12 +12,12 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] left boder on jump code decorator support
    - [x] fix enter key at end of sequential-target jump
    - [x] backspace as command to delete last input char: could done by registered as texteditor command
+   - [ ] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
    - [ ] ripple search support, type location-chars to triger far from center
    - [ ] Line selection up/down command: ?
       make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
-   - [ ] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
 ## In Development
 ### 
 #### Added
