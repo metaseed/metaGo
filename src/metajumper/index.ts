@@ -116,6 +116,7 @@ export class MetaJumper {
         let len = this.targetChars.length
         if (len === 0) {
             this.cancel()
+            vscode.commands.executeCommand('setContext', "metaGoJumping", false);
         } else {
             let target = this.targetChars.substr(0, this.targetChars.length - 1);
             this.cancel();
