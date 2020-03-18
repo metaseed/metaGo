@@ -70,18 +70,18 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * select line up/down.
 * compatible with the vim plugins. 😊
 
+
 > if you like this tool, and using Windows, you may also be interested in my other tool: [**metaTool**](https://github.com/metatool/metatool). (release soon) 😉    
 > with metatool running with it's metakeyboard plugin, you just using the 61 keys main keyboard area to type any key you want.
 >
 > i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;</kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
 
-
 ### Metajump: go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere. (Triger)
 2. type the characters(stands for the target location) on screen, metaGo will show you some codes(candidate target locations) encoded with character. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
-3. you could continue type characters following the location, or type the code decoration characters, then you will *go* to that location.
+3. you could continue type characters following the target location, or type the code decoration characters, then you will *go* to that location.
 
-> at any time press <kbd>ESC</kbd> to cancel
+> at any time press <kbd>ESC</kbd> to cancel, <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> trigers 'step cancel')
 
 
 > the <kbd>Alt</kbd>+<kbd>.</kbd> command will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
@@ -103,13 +103,14 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
 
-### features highlight
+#### features highlight
 * code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
 * code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
 * only encode characters on viewable screen area, so metaGo is faster.
-* support having fold regions
 * even though your cursor is out of your viewable screen, metaGo still works!
 * work with vim plugin
+* support having fold regions
+* support all opened editors
 
 ### navigate between files using bookmarks
 
