@@ -185,6 +185,7 @@ export class Decorator {
 		let bgColor = colors[(code.length - 1) % colors.length];
 		let bg = color(bgColor, +cf.bgOpacity);
 		let width = code.length * cf.width;
+		let borderColor = color(cf.borderColor, +cf.bgOpacity);
 		return {
 			contentText: key,
 			backgroundColor: bg,
@@ -192,7 +193,7 @@ export class Decorator {
 			color: color(cf.color),
 			width: `${width}px`, //fix hori flash
 			borderStyle: "none none none solid",
-			border: `1px ${cf.borderColor}`// cause vertical flash 1px
+			border: `1px ${borderColor}`// cause vertical flash 1px
 		};
 	}
 

@@ -276,7 +276,7 @@
 				},
 				"metaGo.decoration.width": {
 					"type": "number",
-					"default": 9
+					"default": 8
 				},
 				"metaGo.decoration.height": {
 					"type": "number",
