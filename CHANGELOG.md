@@ -26,7 +26,9 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Changd
 * decoration background opacity as border opacity
 * adjust defaut decorator width to 8, otherwise it hide charactor, i.e. n looks like r
+
 #### Fixed
+* fix following char is upper case, the lowwer case is used in decorator problem
 ---
 
 ## In Development

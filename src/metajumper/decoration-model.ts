@@ -89,7 +89,7 @@ export class DecorationModelBuilder {
             throw new Error("metaGo: no target location match for input char");
         }
 
-        let chars = lettersExcluded === null ? this.config.jumper.characters : this.config.jumper.characters.filter(c => !lettersExcluded.has(c));
+        let chars = lettersExcluded === null ? this.config.jumper.characters : this.config.jumper.characters.filter(c => !lettersExcluded.has(c.toUpperCase()) && !lettersExcluded.has(c.toLowerCase()));
         let signalCharLetters = lettersExcluded === null ? this.config.jumper.additionalSingleCharCodeCharacters : this.config.jumper.additionalSingleCharCodeCharacters.filter(c => !lettersExcluded.has(c));
         let encoder = new Encoder(targetCount, chars, signalCharLetters);
         let models = new Map<vscode.TextEditor, DecorationModel[]>();
