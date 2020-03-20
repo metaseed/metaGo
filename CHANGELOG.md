@@ -19,6 +19,14 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
 ## In Development
+
+### 
+#### Added
+#### Removed
+#### Changd
+#### Fixed
+
+---
 ### V3.4.3 - Mar 19, 2020
 #### Added
 * text decorator support background color transparent: opacity
