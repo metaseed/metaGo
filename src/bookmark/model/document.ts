@@ -26,7 +26,7 @@ export class Document {
     }
 
     public addBookmark = (bookmark: Bookmark) => {
-        let key: string = bookmark.key;
+        let key = bookmark.key;
 
         if (this.bookmarks.has(key)) {
             return;
@@ -136,7 +136,7 @@ export class Document {
                         let lineText = doc.lineAt(lineNumber - 1).text;
                         let normalizedPath = Document.normalize(doc.uri.fsPath);
                         items.push(new BookmarkItem(
-                            lineNumber.toString(),
+                            `${lineNumber}`,
                             lineText,
                             normalizedPath, null, new BookmarkLocation(this, value)
                         ));

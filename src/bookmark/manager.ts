@@ -1,7 +1,6 @@
 import * as vscode from "vscode";
 import fs = require("fs");
 import { Document } from "./model/document";
-import { BookmarkConfig } from './config';
 import { Bookmark } from './model/bookmark';
 import { History } from './model/history';
 import { BookmarkLocation, JumpDirection } from './model/location';
@@ -47,13 +46,14 @@ export class BookmarkManager {
     }
 
     public toggleBookmark = () => {
-        if (!vscode.window.activeTextEditor) {
-            vscode.window.showInformationMessage("Open a file first to toggle bookmarks");
+        let editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            vscode.window.showInformationMessage("Put the cursor to the text editor to toggle bookmarks");
             return;
         }
 
-        let line = vscode.window.activeTextEditor.selection.active.line;
-        let char = vscode.window.activeTextEditor.selection.active.character;
+        let line = editor.selection.active.line;
+        let char = editor.selection.active.character;
 
         let doc = this.addDocumentIfNotExist(vscode.window.activeTextEditor.document.uri.fsPath);
         this.activeDocument = doc;

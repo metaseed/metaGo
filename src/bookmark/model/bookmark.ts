@@ -12,6 +12,6 @@ export class Bookmark {
     }
 
     public get key(): string {
-        return this.line + ':' + this.char;
+        return this.line.toString(); // one bookmark per line //+ ':' + this.char;
     }
 }

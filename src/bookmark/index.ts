@@ -1,6 +1,4 @@
 import * as vscode from "vscode";
-import fs = require("fs");
-import path = require("path");
 
 import { BookmarkItem } from "./model/document";
 import { Bookmark } from './model/bookmark';
