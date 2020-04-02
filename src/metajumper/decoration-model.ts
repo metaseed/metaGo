@@ -8,6 +8,8 @@ export interface ILineCharIndexes {
     indexes: LineCharIndex[];
     lowIndexNearFocus: number;
     highIndexNearFocus: number;
+    firstLineInParagraph: number;
+    lastLineInparagraphy: number;
 }
 
 export enum Direction {

@@ -226,13 +226,13 @@ export class MetaJumper {
                 var model = await this.getLocation(mutiEditor);
                 return model;
             }
-            catch(e) {
-                if(e === CANCEL_MSG) {
+            catch (e) {
+                if (e === CANCEL_MSG) {
                     canceled = true;
                 }
             }
             finally {
-                if(!canceled)
+                if (!canceled)
                     vscode.commands.executeCommand('setContext', "metaGoJumping", false);
 
                 if (this.jumpTimeoutId) {
@@ -363,11 +363,11 @@ export class MetaJumper {
         var targetLowCase = targetChars.toLocaleLowerCase();
         let lastIndex = targetChars.length - 1;
         var last = targetChars[lastIndex];
-        let lastLowCase = targetLowCase[ lastIndex];
+        let lastLowCase = targetLowCase[lastIndex];
         let ignoreCase = lastLowCase === last; // no UperCase
         let str = text.substring(char, char + targetChars.length);
         str = str.padEnd(targetChars.length, '\n');
-        let r = (str.toLocaleLowerCase() === targetLowCase) && (ignoreCase ?  true: str[lastIndex] === last);
+        let r = (str.toLocaleLowerCase() === targetLowCase) && (ignoreCase ? true : str[lastIndex] === last);
         return r;
     }
 
@@ -376,7 +376,9 @@ export class MetaJumper {
         let lineCharIndexes: ILineCharIndexes = {
             lowIndexNearFocus: -1,
             highIndexNearFocus: -1,
-            indexes: []
+            indexes: [],
+            firstLineInParagraph: -1,
+            lastLineInparagraphy: -1
         };
 
         let followingChars = new Set<string>()
@@ -390,17 +392,28 @@ export class MetaJumper {
             return r;
         });
         lineCharIndexes.indexes = ms;
-        this.updateIndexes(selection, lineCharIndexes);
+        this.updateIndexes(selection.active.line, selection.active.character, lineCharIndexes);
 
         return { lineCharIndexes, followingChars };
     }
 
     private find = (editor: vscode.TextEditor, ranges: vscode.Range[], targetChars: string) => {
+        if (ranges.length === 0) return;
+
         let { document, selection } = editor;
+        let line = selection.active.line;
+        let char = selection.active.character;
+        if (selection.active.line < ranges[0].start.line || selection.active.line > ranges[ranges.length - 1].end.line) {
+            line = ViewPort.viewPortCenter(editor, ranges).line;
+            char = 0;
+        }
+
         let lineCharIndexes: ILineCharIndexes = {
             lowIndexNearFocus: -1,
             highIndexNearFocus: -1,
-            indexes: []
+            indexes: [],
+            firstLineInParagraph: -1,
+            lastLineInparagraphy: -1
         };
 
         let followingChars = new Set<string>();
@@ -432,18 +445,19 @@ export class MetaJumper {
             }
         }
 
-        this.updateIndexes(selection, lineCharIndexes);
+        this.updateIndexes(line, char, lineCharIndexes);
         return { lineCharIndexes, followingChars }
     }
 
-    private updateIndexes(selection: vscode.Selection, lineCharIndexes: ILineCharIndexes) {
+    private updateIndexes(line: number, char: number, lineCharIndexes: ILineCharIndexes) {
+
         lineCharIndexes.indexes.forEach((m, i) => {
             let lineIndex = m.line;
-            if (lineIndex < selection.active.line) { //up
+            if (lineIndex < line) { //up
                 lineCharIndexes.lowIndexNearFocus = i;
             }
-            else if (lineIndex == selection.active.line) {
-                if (m.char <= selection.active.character) { // left
+            else if (lineIndex == line) {
+                if (m.char <= char) { // left
                     lineCharIndexes.lowIndexNearFocus = i;
                 }
             }
