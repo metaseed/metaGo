@@ -313,6 +313,7 @@ export class MetaJumper {
         }
         let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, lettersExclude);
         // here, we have editorToModelsMap.size > 1 || models.length > 1
+        let isTargetChar = false; // if is target char, not jump, fix type muti chars may edit doc
         do {
             let { map, letter } = await this.getExactLocation(editorToModelsMap, this.targetChars, enableSequentialTargetChars);
             if (map.size === 0) {
@@ -334,12 +335,14 @@ export class MetaJumper {
                     throw new Error(error);
                 // build model
                 editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(lineCharMap, excludeLetters);
+                isTargetChar = true;
             }
             else {
                 editorToModelsMap = map;
+                isTargetChar = false;
             }
             [editor, models] = editorToModelsMap.entries().next().value; // first entry
-        } while (editorToModelsMap.size > 1 || models.length > 1);
+        } while (isTargetChar || editorToModelsMap.size > 1 || models.length > 1);
         model = models[0];
         return [editor, model];
     }
@@ -541,7 +544,7 @@ export class MetaJumper {
 
             let map = new Map<vscode.TextEditor, DecorationModel[]>();
             editorToModelsMap.forEach((models, editor) => {
-                // filter location candidates
+                // filter target candidates
                 let md = models.filter(model => {
                     if (model.code[0] && model.code[0] === letter) {
                         model.code = model.code.substring(1)
