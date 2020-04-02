@@ -437,6 +437,15 @@ export class MetaJumper {
                     }
                 }
 
+                if (text === '') {
+                    if (lineCharIndexes.firstLineInParagraph < lineIndex && lineIndex < line) {
+                        lineCharIndexes.firstLineInParagraph = lineIndex;
+                    }
+                    if(lineIndex > line && lineCharIndexes.lastLineInparagraphy === -1) {
+                        lineCharIndexes.lastLineInparagraphy = lineIndex;
+                    }
+                }
+
                 let { indexes, followingChars: followingCharsInLine } = this.indexesOf(lineIndex, text, targetChars);
                 for (const ind of indexes) {
                     lineCharIndexes.indexes.push(ind);
