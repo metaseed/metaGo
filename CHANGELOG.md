@@ -13,8 +13,8 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] fix enter key at end of sequential-target jump
    - [x] backspace as command to delete last input char: could done by registered as texteditor command
    - [x] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
-   - [ ] ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
    - [x] target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
+   - [ ] ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
    
 
    - [ ] Line selection up/down command: ?
