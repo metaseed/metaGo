@@ -31,8 +31,8 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ### V3.5.0 - April 8, 2020
 #### Added
-   - ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
-   - target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
+   - [ ] ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
+   - [ ] target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
 
 #### Removed
 
@@ -40,6 +40,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
 
 #### Fixed
+   - [ ] bookmark: type in popup box, would jump automaticly, may edit when type fast. should only do filter!
 
 ---
 ### V3.4.3 - Mar 19, 2020

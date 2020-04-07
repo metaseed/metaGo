@@ -8,8 +8,8 @@ export interface ILineCharIndexes {
     indexes: LineCharIndex[];
     lowIndexNearFocus: number;
     highIndexNearFocus: number;
-    firstLineInParagraph: number;
-    lastLineInparagraphy: number;
+    firstIndexInParagraph: number;
+    lastIndexInParagraphy: number;
 }
 
 export enum Direction {
@@ -84,18 +84,39 @@ export class DecorationModelBuilder {
         this.config = config
     }
 
-    buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, lettersExcluded: Set<string> = null): Map<vscode.TextEditor, DecorationModel[]> => {
+    buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, lettersExcluded: Set<string> = null, enableSequentialTargetChars: boolean = false, targetCharsCount = 1): Map<vscode.TextEditor, DecorationModel[]> => {
+        if (editorToLineCharIndexesMap.entries.length === 0) throw new Error("metaGo: no editor");
+        let chars = lettersExcluded === null ? this.config.jumper.characters : this.config.jumper.characters.filter(c => !lettersExcluded.has(c.toUpperCase()) && !lettersExcluded.has(c.toLowerCase()));
+        let signalCharLetters = lettersExcluded === null ? this.config.jumper.additionalSingleCharCodeCharacters : this.config.jumper.additionalSingleCharCodeCharacters.filter(c => !lettersExcluded.has(c));
         let targetCount = 0;
-        editorToLineCharIndexesMap.forEach(lineCharIndex => targetCount += lineCharIndex.indexes.length)
+        if (enableSequentialTargetChars) {
+            let [[, activeLineCharIndexes]] = editorToLineCharIndexesMap;// current active doc
+            if (targetCharsCount === 1) {
+                targetCount = chars.length + signalCharLetters.length;
+                if(activeLineCharIndexes.firstIndexInParagraph !== -1 && activeLineCharIndexes.lastIndexInParagraphy !== -1) {
+                    let c = activeLineCharIndexes.lastIndexInParagraphy - activeLineCharIndexes.firstIndexInParagraph + 1;
+                    targetCount = c > targetCount? c: targetCount;
+                }
+
+            }
+            else if (targetCharsCount === 2) {
+                targetCount = activeLineCharIndexes.indexes.length;
+                if(targetCount === 0) editorToLineCharIndexesMap.forEach(lineCharIndex => targetCount += lineCharIndex.indexes.length)
+            }
+            else {
+                editorToLineCharIndexesMap.forEach(lineCharIndex => targetCount += lineCharIndex.indexes.length)
+            }
+        } else {
+            editorToLineCharIndexesMap.forEach(lineCharIndex => targetCount += lineCharIndex.indexes.length)
+        }
         if (targetCount <= 0) {
             throw new Error("metaGo: no target location match for input char");
         }
 
-        let chars = lettersExcluded === null ? this.config.jumper.characters : this.config.jumper.characters.filter(c => !lettersExcluded.has(c.toUpperCase()) && !lettersExcluded.has(c.toLowerCase()));
-        let signalCharLetters = lettersExcluded === null ? this.config.jumper.additionalSingleCharCodeCharacters : this.config.jumper.additionalSingleCharCodeCharacters.filter(c => !lettersExcluded.has(c));
         let encoder = new Encoder(targetCount, chars, signalCharLetters);
         let models = new Map<vscode.TextEditor, DecorationModel[]>();
         let codeOffset = 0;
+        let tCount = 0;
 
         for (let [editor, lineIndexes] of editorToLineCharIndexesMap) {
             let count = lineIndexes.indexes.length;
@@ -113,9 +134,12 @@ export class DecorationModelBuilder {
                 let model = new DecorationModel(lineCharIndex);
                 model.code = code;
                 dModels.push(model)
+                tCount++;
+                if (tCount >= targetCount) break;
             }
             models.set(editor, dModels);
             codeOffset += count
+            if (tCount >= targetCount) break;
         }
 
         return models;
@@ -135,7 +159,7 @@ export class Encoder {
         let letterCount = letters.length;
         let codeCountRemain = codeCount - additionalFirstDimOnlyLetters.length;
 
-        if (codeCountRemain < letterCount) {
+        if (codeCountRemain <= letterCount) {
             this.dimensions = 1; // fix bug: log(1)/log(26) = 0
             this.usedInLowDim = 0;
             this.notUsedInLowDim = 0;

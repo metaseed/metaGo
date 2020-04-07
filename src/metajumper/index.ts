@@ -311,7 +311,7 @@ export class MetaJumper {
             if (lineCharIndexes.indexes.length > 0)
                 editorToLineCharIndexesMap.set(editor, lineCharIndexes);
         }
-        let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, lettersExclude);
+        let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, lettersExclude, enableSequentialTargetChars, this.targetChars.length);
         // here, we have editorToModelsMap.size > 1 || models.length > 1
         let isTargetChar = false; // if is target char, not jump, fix type muti chars may edit doc
         do {
@@ -334,7 +334,7 @@ export class MetaJumper {
                 if (lineCharMap.size === 0)
                     throw new Error(error);
                 // build model
-                editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(lineCharMap, excludeLetters);
+                editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(lineCharMap, excludeLetters, enableSequentialTargetChars, this.targetChars.length);
                 isTargetChar = true;
             }
             else {
@@ -377,8 +377,8 @@ export class MetaJumper {
             lowIndexNearFocus: -1,
             highIndexNearFocus: -1,
             indexes: [],
-            firstLineInParagraph: -1,
-            lastLineInparagraphy: -1
+            firstIndexInParagraph: -1,
+            lastIndexInParagraphy: -1,
         };
 
         let followingChars = new Set<string>()
@@ -412,8 +412,8 @@ export class MetaJumper {
             lowIndexNearFocus: -1,
             highIndexNearFocus: -1,
             indexes: [],
-            firstLineInParagraph: -1,
-            lastLineInparagraphy: -1
+            firstIndexInParagraph: -1,
+            lastIndexInParagraphy: -1,
         };
 
         let followingChars = new Set<string>();
@@ -438,11 +438,11 @@ export class MetaJumper {
                 }
 
                 if (text === '') {
-                    if (lineCharIndexes.firstLineInParagraph < lineIndex && lineIndex < line) {
-                        lineCharIndexes.firstLineInParagraph = lineIndex;
+                    if (lineCharIndexes.firstIndexInParagraph < lineIndex && lineIndex < line) {
+                        lineCharIndexes.firstIndexInParagraph = lineCharIndexes.indexes.length; // next index
                     }
-                    if(lineIndex > line && lineCharIndexes.lastLineInparagraphy === -1) {
-                        lineCharIndexes.lastLineInparagraphy = lineIndex;
+                    if (lineIndex > line && lineCharIndexes.lastIndexInParagraphy === -1) {
+                        lineCharIndexes.lastIndexInParagraphy = lineCharIndexes.indexes.length - 1; // current last item index
                     }
                 }
 
@@ -470,7 +470,18 @@ export class MetaJumper {
                     lineCharIndexes.lowIndexNearFocus = i;
                 }
             }
+            
         });
+
+        if(lineCharIndexes.lastIndexInParagraphy === -1) { // no empty line after active line
+            lineCharIndexes.lastIndexInParagraphy = lineCharIndexes.indexes.length - 1;
+        }
+
+        if(lineCharIndexes.firstIndexInParagraph === lineCharIndexes.indexes.length) { // no index after empty line
+            lineCharIndexes.firstIndexInParagraph = -1;
+            lineCharIndexes.lastIndexInParagraphy = -1;
+        }
+
         if (lineCharIndexes.lowIndexNearFocus !== lineCharIndexes.indexes.length - 1)
             lineCharIndexes.highIndexNearFocus = lineCharIndexes.lowIndexNearFocus + 1;
     }
