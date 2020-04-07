@@ -438,7 +438,7 @@ export class MetaJumper {
                 }
 
                 if (text === '') {
-                    if (lineCharIndexes.firstIndexInParagraph < lineIndex && lineIndex < line) {
+                    if (lineCharIndexes.firstIndexInParagraph < lineCharIndexes.indexes.length && lineIndex < line) {
                         lineCharIndexes.firstIndexInParagraph = lineCharIndexes.indexes.length; // next index
                     }
                     if (lineIndex > line && lineCharIndexes.lastIndexInParagraphy === -1) {

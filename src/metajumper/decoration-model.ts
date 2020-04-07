@@ -85,7 +85,7 @@ export class DecorationModelBuilder {
     }
 
     buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, lettersExcluded: Set<string> = null, enableSequentialTargetChars: boolean = false, targetCharsCount = 1): Map<vscode.TextEditor, DecorationModel[]> => {
-        if (editorToLineCharIndexesMap.entries.length === 0) throw new Error("metaGo: no editor");
+        if (editorToLineCharIndexesMap.size === 0) throw new Error("metaGo: no open editor");
         let chars = lettersExcluded === null ? this.config.jumper.characters : this.config.jumper.characters.filter(c => !lettersExcluded.has(c.toUpperCase()) && !lettersExcluded.has(c.toLowerCase()));
         let signalCharLetters = lettersExcluded === null ? this.config.jumper.additionalSingleCharCodeCharacters : this.config.jumper.additionalSingleCharCodeCharacters.filter(c => !lettersExcluded.has(c));
         let targetCount = 0;
