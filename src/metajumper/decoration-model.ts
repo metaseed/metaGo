@@ -84,37 +84,47 @@ export class DecorationModelBuilder {
         this.config = config
     }
 
-    buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, lettersExcluded: Set<string> = null, enableSequentialTargetChars: boolean = false, targetCharsCount = 1): Map<vscode.TextEditor, DecorationModel[]> => {
+    buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, lettersExcluded: Set<string>, enableSequentialTargetChars: boolean, targetCharsCount: number, rippleSupport: boolean) => {
         if (editorToLineCharIndexesMap.size === 0) throw new Error("metaGo: no open editor");
-        let chars = lettersExcluded === null ? this.config.jumper.characters : this.config.jumper.characters.filter(c => !lettersExcluded.has(c.toUpperCase()) && !lettersExcluded.has(c.toLowerCase()));
+        let chars = lettersExcluded === null || lettersExcluded.size === 0 ? this.config.jumper.characters : this.config.jumper.characters.filter(c => !lettersExcluded.has(c.toUpperCase()) && !lettersExcluded.has(c.toLowerCase()));
         let signalCharLetters = lettersExcluded === null ? this.config.jumper.additionalSingleCharCodeCharacters : this.config.jumper.additionalSingleCharCodeCharacters.filter(c => !lettersExcluded.has(c));
+
         let targetCount = 0;
-        if (enableSequentialTargetChars) {
+        let all = 0;
+        editorToLineCharIndexesMap.forEach(lineCharIndex => all += lineCharIndex.indexes.length);
+        targetCount = all;
+
+        if (enableSequentialTargetChars && rippleSupport) {
             let [[, activeLineCharIndexes]] = editorToLineCharIndexesMap;// current active doc
             if (targetCharsCount === 1) {
                 targetCount = chars.length + signalCharLetters.length;
-                if(activeLineCharIndexes.firstIndexInParagraph !== -1 && activeLineCharIndexes.lastIndexInParagraphy !== -1) {
-                    let c = activeLineCharIndexes.lastIndexInParagraphy - activeLineCharIndexes.firstIndexInParagraph + 1;
-                    targetCount = c > targetCount? c: targetCount;
+                if (activeLineCharIndexes.firstIndexInParagraph !== -1 && activeLineCharIndexes.lastIndexInParagraphy !== -1) {
+                    let countInParagraph = activeLineCharIndexes.lastIndexInParagraphy - activeLineCharIndexes.firstIndexInParagraph + 1;
+                    targetCount = countInParagraph > targetCount ? countInParagraph : targetCount;
+                }
+                let activeLen = activeLineCharIndexes.indexes.length;
+                if (activeLen < targetCount) {
+                    if (activeLen === 0) {
+                        targetCount = all > targetCount ? targetCount : all;
+                    } else {
+                        targetCount = activeLen;
+                    }
                 }
 
             }
             else if (targetCharsCount === 2) {
-                targetCount = activeLineCharIndexes.indexes.length;
-                if(targetCount === 0) editorToLineCharIndexesMap.forEach(lineCharIndex => targetCount += lineCharIndex.indexes.length)
+                let c = activeLineCharIndexes.indexes.length;
+                if (c !== 0)
+                    targetCount = c;
             }
-            else {
-                editorToLineCharIndexesMap.forEach(lineCharIndex => targetCount += lineCharIndex.indexes.length)
-            }
-        } else {
-            editorToLineCharIndexesMap.forEach(lineCharIndex => targetCount += lineCharIndex.indexes.length)
         }
+
         if (targetCount <= 0) {
             throw new Error("metaGo: no target location match for input char");
         }
 
         let encoder = new Encoder(targetCount, chars, signalCharLetters);
-        let models = new Map<vscode.TextEditor, DecorationModel[]>();
+        let editorToModelsMap = new Map<vscode.TextEditor, DecorationModel[]>();
         let codeOffset = 0;
         let tCount = 0;
 
@@ -133,16 +143,16 @@ export class DecorationModelBuilder {
                 let code = encoder.getCode(i + codeOffset);
                 let model = new DecorationModel(lineCharIndex);
                 model.code = code;
-                dModels.push(model)
+                dModels.push(model);
                 tCount++;
                 if (tCount >= targetCount) break;
             }
-            models.set(editor, dModels);
-            codeOffset += count
+            editorToModelsMap.set(editor, dModels);
+            codeOffset += count;
             if (tCount >= targetCount) break;
         }
 
-        return models;
+        return editorToModelsMap;
     }
 }
 

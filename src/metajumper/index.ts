@@ -296,7 +296,7 @@ export class MetaJumper {
         return result;
     }
 
-    private async getLocationFromTargetChars(inputEditor: vscode.TextEditor, mutiEditor: boolean, enableSequentialTargetChars: boolean): Promise<[vscode.TextEditor, DecorationModel]> {
+    private async getLocationFromTargetChars(inputEditor: vscode.TextEditor, mutiEditor: boolean, enableSequentialTargetChars: boolean, rippleSupport = true): Promise<[vscode.TextEditor, DecorationModel]> {
         var editor: vscode.TextEditor = null;
         var models: DecorationModel[] = null;
         var model: DecorationModel = null;
@@ -311,7 +311,7 @@ export class MetaJumper {
             if (lineCharIndexes.indexes.length > 0)
                 editorToLineCharIndexesMap.set(editor, lineCharIndexes);
         }
-        let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, lettersExclude, enableSequentialTargetChars, this.targetChars.length);
+        let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, lettersExclude, enableSequentialTargetChars, this.targetChars.length, rippleSupport);
         // here, we have editorToModelsMap.size > 1 || models.length > 1
         let isTargetChar = false; // if is target char, not jump, fix type muti chars may edit doc
         do {
@@ -324,17 +324,19 @@ export class MetaJumper {
                 this.targetChars += letter;
                 let lineCharMap = new Map<vscode.TextEditor, ILineCharIndexes>();
                 let excludeLetters = new Set<string>();
-                editorToModelsMap.forEach((m, e) => {
-                    let { lineCharIndexes, followingChars } = this.findInModel(e, m, this.targetChars);
+                editorToLineCharIndexesMap.forEach((m, e) => {
+                    let { lineCharIndexes, followingChars } = this.findInModel(e, m.indexes, this.targetChars);
                     if (enableSequentialTargetChars)
                         followingChars.forEach(v => excludeLetters.add(v));
                     if (lineCharIndexes.indexes.length > 0)
                         lineCharMap.set(e, lineCharIndexes);
                 });
+
                 if (lineCharMap.size === 0)
                     throw new Error(error);
                 // build model
-                editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(lineCharMap, excludeLetters, enableSequentialTargetChars, this.targetChars.length);
+                editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(lineCharMap, excludeLetters, enableSequentialTargetChars, this.targetChars.length, rippleSupport);
+                editorToLineCharIndexesMap = lineCharMap;
                 isTargetChar = true;
             }
             else {
@@ -371,7 +373,7 @@ export class MetaJumper {
         return r;
     }
 
-    private findInModel(editor: vscode.TextEditor, models: DecorationModel[], targetChars: string) {
+    private findInModel(editor: vscode.TextEditor, models: LineCharIndex[], targetChars: string) {
         let { selection } = editor;
         let lineCharIndexes: ILineCharIndexes = {
             lowIndexNearFocus: -1,
@@ -437,7 +439,7 @@ export class MetaJumper {
                     }
                 }
 
-                if (text === '') {
+                if (text.trim() === '') {
                     if (lineCharIndexes.firstIndexInParagraph < lineCharIndexes.indexes.length && lineIndex < line) {
                         lineCharIndexes.firstIndexInParagraph = lineCharIndexes.indexes.length; // next index
                     }
@@ -552,9 +554,9 @@ export class MetaJumper {
         return { indexes, followingChars };
     }
 
-    private getExactLocation = async (editorToModelsMap: Map<vscode.TextEditor, DecorationModel[]>, targetChars: string, enableSequentialTargetChars: boolean) => {
+    private getExactLocation = async (editorToModelsMap: Map<vscode.TextEditor, DecorationModel[]>,  targetChars: string, enableSequentialTargetChars: boolean) => {
         // show location candidates
-        var decs = this.decorator.createAll(editorToModelsMap, targetChars, enableSequentialTargetChars);
+        var decorators = this.decorator.createAll(editorToModelsMap, targetChars, enableSequentialTargetChars);
 
         let msg = this.isSelectionMode ? "metaGo: Select To" : "metaGo: Jump To";
         let messageDisposable = vscode.window.setStatusBarMessage(msg, this.config.jumper.timeout);
@@ -565,15 +567,15 @@ export class MetaJumper {
             var letter = await new Input(this.config).onKey(this.config.decoration.hide.trigerKey, editor, v => v, 'type the character to goto',
                 k => { // down
                     if (this.jumpTimeoutId != null) clearTimeout(this.jumpTimeoutId);
-                    this.decorator.hideAll(decs)
+                    this.decorator.hideAll(decorators)
                 }, k => { // up
                     this.jumpTimeoutId = setTimeout(() => { this.jumpTimeoutId = null; this.cancel(); }, this.config.jumper.timeout);
-                    this.decorator.showAll(decs);
+                    this.decorator.showAll(decorators);
                 }, k => {
                 }
             );
 
-            this.decorator.removeAll(decs, enableSequentialTargetChars);
+            this.decorator.removeAll(decorators, enableSequentialTargetChars);
             if (!letter) throw new Error('no key code input')
 
             let map = new Map<vscode.TextEditor, DecorationModel[]>();
@@ -593,7 +595,7 @@ export class MetaJumper {
             return { map, letter };
 
         } catch (e) {
-            this.decorator.removeAll(decs, enableSequentialTargetChars);
+            this.decorator.removeAll(decorators, enableSequentialTargetChars);
             throw e;
         } finally {
             messageDisposable.dispose();

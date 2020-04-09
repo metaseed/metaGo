@@ -52,7 +52,7 @@ export class Decorator {
 	createAll(editorToModelMap: Map<vscode.TextEditor, DecorationModel[]>, targetChars: string, enableSequentialTargetChars: boolean): Map<vscode.TextEditor, Decorations> {
 		let editorToDecorationsMap = new Map<vscode.TextEditor, Decorations>();
 		editorToModelMap.forEach((model, editor) => {
-			var decorations = this.create(editor, model, targetChars, enableSequentialTargetChars);
+			let decorations = this.create(editor, model, targetChars, enableSequentialTargetChars);
 			editorToDecorationsMap.set(editor, decorations);
 		})
 		return editorToDecorationsMap;
@@ -62,6 +62,7 @@ export class Decorator {
 		let decorations: Decorations = [];
 		let selectionDecoratoins: vscode.DecorationOptions[] = [];
 		let targetFollowCharDecorations: vscode.DecorationOptions[] = [];
+
 		decorationModel.forEach(model => {
 			let code = model.code;
 			let len = code.length;
@@ -84,7 +85,7 @@ export class Decorator {
 
 			selectionDecoratoins.push({ range: new vscode.Range(new vscode.Position(model.line, charIndex), new vscode.Position(model.line, charIndex + targetChars.length)) })
 			targetFollowCharDecorations.push({ range: new vscode.Range(new vscode.Position(model.line, charIndex + targetChars.length), new vscode.Position(model.line, charIndex + targetChars.length + 1)) })
-		})
+		});
 		if (enableSequentialTargetChars) {
 			editor.setDecorations(this.selectionDecorationType, selectionDecoratoins);
 			editor.setDecorations(this.targetFollowCharDecorationType, targetFollowCharDecorations);
