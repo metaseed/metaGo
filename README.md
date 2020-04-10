@@ -57,6 +57,7 @@ With this new V3 released, we are going to add more features, peek features in d
 * hold <kbd>/</kbd> to hide jumper decorators on screen.(Done😉)
 * jumper commands for all opened editors, not just the active editor.(Done!)
 * support having fold regions.(V3.2 Done!)
+* ripple jump support to show less decorators on screen. one target char for current paragraphy(seperated by empty lines), two target chars for current document editor, three or more for all open editors. 
 * and more... at [changelog](https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md)
 * if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or contact with us on [SLACK☕](https://join.slack.com/t/metaseedworkspace/shared_invite/enQtOTU5ODM1MTI2MDcwLWM5N2QzY2MzMTVjMjVlZDVjZTVmMDFjNmViNmE4MzE3NGM4Mzk5M2UwNDAwYjQ4ZGM5Y2U2YjdlMGM5MjJiNDQ)
 
@@ -81,8 +82,13 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 2. type the characters(stands for the target location) on screen, metaGo will show you some codes(candidate target locations) encoded with character. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
 3. you could continue type characters following the target location, or type the code decoration characters, then you will *go* to that location.
 
-> at any time press <kbd>ESC</kbd> to cancel, <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> trigers 'step cancel')
+> at any time press <kbd>ESC</kbd> to cancel, <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> trigers 'step cancel')    
 
+> Ripple Support, Less Decorators On Screen: type location-chars to encode locations far from center(cursor location): 
+> 1. one target char for current paragraph(seperated by empty lines);
+> 1. two target chars for current doc;
+> 1. three or more target chars for all opened editors;
+> 1. for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current paragraph)
 
 > the <kbd>Alt</kbd>+<kbd>.</kbd> command will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
 > the <kbd>Alt</kbd>+<kbd>,</kbd> command will trigger the metaGo.gotoBefore command, the cursor will be placed before the target character;
