@@ -297,20 +297,12 @@ export class MetaJumper {
     }
 
     private async getLocationFromTargetChars(inputEditor: vscode.TextEditor, mutiEditor: boolean, enableSequentialTargetChars: boolean, rippleSupport = true): Promise<[vscode.TextEditor, DecorationModel]> {
+        if(rippleSupport && !enableSequentialTargetChars) throw new Error("ripple support must with sequential target chars enable")
+
         var editor: vscode.TextEditor = null;
         var models: DecorationModel[] = null;
         var model: DecorationModel = null;
-        let editorToLineCharIndexesMap = new Map<vscode.TextEditor, ILineCharIndexes>();
-        let editors = mutiEditor ? [inputEditor, ...vscode.window.visibleTextEditors.filter(e => e !== inputEditor)] : [inputEditor];
-        let lettersExclude = new Set<string>();
-        for (let editor of editors) {
-            var jumpRange = await this.getJumpRange(editor);
-            let { lineCharIndexes, followingChars } = this.find(editor, jumpRange, this.targetChars);
-            if (enableSequentialTargetChars)
-                followingChars.forEach(v => lettersExclude.add(v));
-            if (lineCharIndexes.indexes.length > 0)
-                editorToLineCharIndexesMap.set(editor, lineCharIndexes);
-        }
+        let { editorToLineCharIndexesMap, lettersExclude } = await this.findAll(mutiEditor, inputEditor, enableSequentialTargetChars);
         let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, lettersExclude, enableSequentialTargetChars, this.targetChars.length, rippleSupport);
         // here, we have editorToModelsMap.size > 1 || models.length > 1
         let isTargetChar = false; // if is target char, not jump, fix type muti chars may edit doc
@@ -347,6 +339,21 @@ export class MetaJumper {
         } while (isTargetChar || editorToModelsMap.size > 1 || models.length > 1);
         model = models[0];
         return [editor, model];
+    }
+
+    private async findAll(mutiEditor: boolean, inputEditor: vscode.TextEditor, enableSequentialTargetChars: boolean) {
+        let editorToLineCharIndexesMap = new Map<vscode.TextEditor, ILineCharIndexes>();
+        let editors = mutiEditor ? [inputEditor, ...vscode.window.visibleTextEditors.filter(e => e !== inputEditor)] : [inputEditor];
+        let lettersExclude = new Set<string>();
+        for (let editor of editors) {
+            var jumpRange = await this.getJumpRange(editor);
+            let { lineCharIndexes, followingChars } = this.find(editor, jumpRange, this.targetChars);
+            if (enableSequentialTargetChars)
+                followingChars.forEach(v => lettersExclude.add(v));
+            if (lineCharIndexes.indexes.length > 0)
+                editorToLineCharIndexesMap.set(editor, lineCharIndexes);
+        }
+        return { editorToLineCharIndexesMap, lettersExclude };
     }
 
     private async getJumpRange(editor: vscode.TextEditor): Promise<vscode.Range[]> {

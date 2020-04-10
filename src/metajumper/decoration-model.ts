@@ -38,10 +38,10 @@ class LineCharIndexState {
     downIndexCounter: number;
     indexes: LineCharIndex[];
 
-    constructor(private lineIndexes: ILineCharIndexes, private firstIndex: number, private lastIndex: number, private direction = Direction.up) {
+    constructor(private lineIndexes: ILineCharIndexes, private firstIndex: number, private count: number, private direction = Direction.up) {
         this.upIndexCounter = lineIndexes.lowIndexNearFocus - firstIndex;
         this.downIndexCounter = lineIndexes.highIndexNearFocus - firstIndex;
-        this.indexes = lineIndexes.indexes.slice(firstIndex, lastIndex + 1);
+        this.indexes = lineIndexes.indexes.slice(firstIndex, firstIndex + count);
     }
 
     findNextAutoWrap() {
@@ -91,6 +91,7 @@ export class DecorationModelBuilder {
 
     buildDecorationModel = (editorToLineCharIndexesMap: Map<vscode.TextEditor, ILineCharIndexes>, lettersExcluded: Set<string>, enableSequentialTargetChars: boolean, targetCharsCount: number, rippleSupport: boolean) => {
         if (editorToLineCharIndexesMap.size === 0) throw new Error("metaGo: no open editor");
+
         let chars = lettersExcluded === null || lettersExcluded.size === 0 ? this.config.jumper.characters : this.config.jumper.characters.filter(c => !lettersExcluded.has(c.toUpperCase()) && !lettersExcluded.has(c.toLowerCase()));
         let signalCharLetters = lettersExcluded === null ? this.config.jumper.additionalSingleCharCodeCharacters : this.config.jumper.additionalSingleCharCodeCharacters.filter(c => !lettersExcluded.has(c));
 
@@ -98,14 +99,20 @@ export class DecorationModelBuilder {
         let all = 0;
         editorToLineCharIndexesMap.forEach(lineCharIndex => all += lineCharIndex.indexes.length);
         targetCount = all;
+        let indexParagraph = false;
+        let availableOneChars = chars.length + signalCharLetters.length;
 
         let [[activeEditor, activeLineCharIndexes]] = editorToLineCharIndexesMap;// current active doc
         if (enableSequentialTargetChars && rippleSupport) {
             if (targetCharsCount === 1) {
-                targetCount = chars.length + signalCharLetters.length;
+                targetCount = availableOneChars;
                 if (activeLineCharIndexes.firstIndexInParagraph !== -1 && activeLineCharIndexes.lastIndexInParagraphy !== -1) {
                     let countInParagraph = activeLineCharIndexes.lastIndexInParagraphy - activeLineCharIndexes.firstIndexInParagraph + 1;
-                    targetCount = countInParagraph > targetCount ? countInParagraph : targetCount;
+                    if (countInParagraph > targetCount) {
+                        targetCount = countInParagraph;
+                        indexParagraph = true;
+                    }
+
                 }
                 let activeLen = activeLineCharIndexes.indexes.length;
                 if (activeLen < targetCount) {
@@ -117,9 +124,9 @@ export class DecorationModelBuilder {
                 }
 
             }
-            else if (targetCharsCount === 2) {
+            else if (targetCharsCount === 2 && editorToLineCharIndexesMap.size > 1) {
                 let c = activeLineCharIndexes.indexes.length;
-                if (c !== 0)
+                if (c !== 0 && c > availableOneChars)
                     targetCount = c;
             }
         }
@@ -138,12 +145,11 @@ export class DecorationModelBuilder {
             if (count === 0) continue;
 
             let firstIndex = 0;
-            let lastIndex = lineIndexes.indexes.length - 1;
-            if (editor === activeEditor && targetCharsCount === 1 && lineIndexes.firstIndexInParagraph != -1 && lineIndexes.lastIndexInParagraphy !== -1) {
+            if (editor === activeEditor && indexParagraph) {
                 firstIndex = lineIndexes.firstIndexInParagraph;
-                lastIndex = lineIndexes.lastIndexInParagraphy;
+                count = lineIndexes.lastIndexInParagraphy - lineIndexes.firstIndexInParagraph + 1;
             }
-            let lineIndexesState = new LineCharIndexState(lineIndexes, firstIndex, lastIndex, Direction.up);
+            let lineIndexesState = new LineCharIndexState(lineIndexes, firstIndex, count, Direction.up);
 
             let dModels: DecorationModel[] = []
             for (let i = 0; i < count; i++) {
