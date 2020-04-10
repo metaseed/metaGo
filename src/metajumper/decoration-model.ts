@@ -36,8 +36,13 @@ export class DecorationModel extends LineCharIndex {
 class LineCharIndexState {
     upIndexCounter: number;
     downIndexCounter: number;
+    indexes: LineCharIndex[];
 
-    constructor(private lineIndexes: ILineCharIndexes, private direction = Direction.up) { this.upIndexCounter = lineIndexes.lowIndexNearFocus; this.downIndexCounter = lineIndexes.highIndexNearFocus }
+    constructor(private lineIndexes: ILineCharIndexes, private firstIndex: number, private lastIndex: number, private direction = Direction.up) {
+        this.upIndexCounter = lineIndexes.lowIndexNearFocus - firstIndex;
+        this.downIndexCounter = lineIndexes.highIndexNearFocus - firstIndex;
+        this.indexes = lineIndexes.indexes.slice(firstIndex, lastIndex + 1);
+    }
 
     findNextAutoWrap() {
         let r = this.findNext();
@@ -65,16 +70,16 @@ class LineCharIndexState {
     private findUp(): { lineCharIndex: LineCharIndex, lineChanging: boolean } {
         if (this.upIndexCounter == -1) return { lineCharIndex: LineCharIndex.END, lineChanging: false };
 
-        let lineChanging = this.upIndexCounter > 0 && this.lineIndexes.indexes[this.upIndexCounter].line !== this.lineIndexes.indexes[this.upIndexCounter - 1].line
-        return { lineCharIndex: this.lineIndexes.indexes[this.upIndexCounter--], lineChanging }
+        let lineChanging = this.upIndexCounter > 0 && this.indexes[this.upIndexCounter].line !== this.indexes[this.upIndexCounter - 1].line
+        return { lineCharIndex: this.indexes[this.upIndexCounter--], lineChanging }
     }
 
     private findDown(): { lineCharIndex: LineCharIndex, lineChanging: boolean } {
-        let len = this.lineIndexes.indexes.length;
+        let len = this.indexes.length;
         if (this.downIndexCounter == -1 || this.downIndexCounter === len) return { lineCharIndex: LineCharIndex.END, lineChanging: false };
 
-        let lineChanging = this.downIndexCounter < len - 1 && this.lineIndexes.indexes[this.downIndexCounter].line !== this.lineIndexes.indexes[this.downIndexCounter + 1].line
-        return { lineCharIndex: this.lineIndexes.indexes[this.downIndexCounter++], lineChanging }
+        let lineChanging = this.downIndexCounter < len - 1 && this.indexes[this.downIndexCounter].line !== this.indexes[this.downIndexCounter + 1].line
+        return { lineCharIndex: this.indexes[this.downIndexCounter++], lineChanging }
     }
 }
 
@@ -94,8 +99,8 @@ export class DecorationModelBuilder {
         editorToLineCharIndexesMap.forEach(lineCharIndex => all += lineCharIndex.indexes.length);
         targetCount = all;
 
+        let [[activeEditor, activeLineCharIndexes]] = editorToLineCharIndexesMap;// current active doc
         if (enableSequentialTargetChars && rippleSupport) {
-            let [[, activeLineCharIndexes]] = editorToLineCharIndexesMap;// current active doc
             if (targetCharsCount === 1) {
                 targetCount = chars.length + signalCharLetters.length;
                 if (activeLineCharIndexes.firstIndexInParagraph !== -1 && activeLineCharIndexes.lastIndexInParagraphy !== -1) {
@@ -132,7 +137,13 @@ export class DecorationModelBuilder {
             let count = lineIndexes.indexes.length;
             if (count === 0) continue;
 
-            let lineIndexesState = new LineCharIndexState(lineIndexes, Direction.up);
+            let firstIndex = 0;
+            let lastIndex = lineIndexes.indexes.length - 1;
+            if (editor === activeEditor && targetCharsCount === 1 && lineIndexes.firstIndexInParagraph != -1 && lineIndexes.lastIndexInParagraphy !== -1) {
+                firstIndex = lineIndexes.firstIndexInParagraph;
+                lastIndex = lineIndexes.lastIndexInParagraphy;
+            }
+            let lineIndexesState = new LineCharIndexState(lineIndexes, firstIndex, lastIndex, Direction.up);
 
             let dModels: DecorationModel[] = []
             for (let i = 0; i < count; i++) {

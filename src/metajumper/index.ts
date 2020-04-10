@@ -475,6 +475,11 @@ export class MetaJumper {
             
         });
 
+
+        if(lineCharIndexes.firstIndexInParagraph === -1 && lineCharIndexes.indexes.length > 0) {
+            lineCharIndexes.firstIndexInParagraph = 0;
+        }
+
         if(lineCharIndexes.lastIndexInParagraphy === -1) { // no empty line after active line
             lineCharIndexes.lastIndexInParagraphy = lineCharIndexes.indexes.length - 1;
         }
