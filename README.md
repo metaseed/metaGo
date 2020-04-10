@@ -82,7 +82,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 2. type the characters(stands for the target location) on screen, metaGo will show you some codes(candidate target locations) encoded with character. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
 3. you could continue type characters following the target location, or type the code decoration characters, then you will *go* to that location.
 
-> at any time press <kbd>ESC</kbd> to cancel, <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> trigers 'step cancel')    
+> at any time press <kbd>ESC</kbd> to cancel the command; <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> trigers 'step cancel')    
 
 > Ripple Support, Less Decorators On Screen: type location-chars to encode locations far from center(cursor location): 
 > 1. one target char for current paragraph(seperated by empty lines);
@@ -90,12 +90,11 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > 1. three or more target chars for all opened editors;
 > 1. for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current paragraph)
 
-> the <kbd>Alt</kbd>+<kbd>.</kbd> command will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
-> the <kbd>Alt</kbd>+<kbd>,</kbd> command will trigger the metaGo.gotoBefore command, the cursor will be placed before the target character;
-
-> the <kbd>Alt</kbd>+<kbd>/</kbd> command will trigger the metaGo.gotoSmart mommand which intelligently set cursor position after navigation:
-> if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
-> The 'word' is defined as a group of all alphanumeric or punctuation characters.
+* the <kbd>Alt</kbd>+<kbd>.</kbd> command will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
+* the <kbd>Alt</kbd>+<kbd>,</kbd> command will trigger the metaGo.gotoBefore command, the cursor will be placed before the target character;
+* the <kbd>Alt</kbd>+<kbd>/</kbd> command will trigger the metaGo.gotoSmart mommand which intelligently set cursor position after navigation:
+    * if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
+    * The 'word' is defined as a group of all alphanumeric or punctuation characters.
 
 > Note: <kbd>Enter</kbd> is also usable as location charactor, it means the end of lines
 > commands that only navagite in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
