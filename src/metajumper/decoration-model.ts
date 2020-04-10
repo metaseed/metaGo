@@ -104,31 +104,28 @@ export class DecorationModelBuilder {
 
         let [[activeEditor, activeLineCharIndexes]] = editorToLineCharIndexesMap;// current active doc
         if (enableSequentialTargetChars && rippleSupport) {
-            if (targetCharsCount === 1) {
-                targetCount = availableOneChars;
-                if (activeLineCharIndexes.firstIndexInParagraph !== -1 && activeLineCharIndexes.lastIndexInParagraphy !== -1) {
-                    let countInParagraph = activeLineCharIndexes.lastIndexInParagraphy - activeLineCharIndexes.firstIndexInParagraph + 1;
-                    if (countInParagraph > targetCount) {
-                        targetCount = countInParagraph;
-                        indexParagraph = true;
+            if(all > availableOneChars) { // if(all <= availableOneChars) targetCount = all;
+                // current paragraphy with more than one decorator chars or all one char decorators
+                if (targetCharsCount === 1) {
+                    targetCount = availableOneChars;
+                    if (activeLineCharIndexes.firstIndexInParagraph !== -1 && activeLineCharIndexes.lastIndexInParagraphy !== -1) {
+                        let countInParagraph = activeLineCharIndexes.lastIndexInParagraphy - activeLineCharIndexes.firstIndexInParagraph + 1;
+                        if (countInParagraph > availableOneChars) {
+                            targetCount = countInParagraph;
+                            indexParagraph = true;
+                        }
                     }
-
                 }
-                let activeLen = activeLineCharIndexes.indexes.length;
-                if (activeLen < targetCount) {
-                    if (activeLen === 0) {
-                        targetCount = all > targetCount ? targetCount : all;
-                    } else {
-                        targetCount = activeLen;
-                    }
+                // current editor with more than one decorator chars or all one char decorators
+                else if (targetCharsCount === 2 && editorToLineCharIndexesMap.size > 1) {
+                    targetCount = availableOneChars;
+                    let activeLen = activeLineCharIndexes.indexes.length;
+                    if (activeLen >= availableOneChars)
+                        targetCount = activeLen; 
                 }
 
             }
-            else if (targetCharsCount === 2 && editorToLineCharIndexesMap.size > 1) {
-                let c = activeLineCharIndexes.indexes.length;
-                if (c !== 0 && c > availableOneChars)
-                    targetCount = c;
-            }
+           
         }
 
         if (targetCount <= 0) {

@@ -14,7 +14,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] backspace as command to delete last input char: could done by registered as texteditor command
    - [x] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
    - [x] target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
-   - [ ] ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
+   - [x] ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
    
 
    - [ ] Line selection up/down command: ?
@@ -29,10 +29,10 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Changd
 #### Fixed
 
-### V3.5.0 - April 8, 2020
+### V3.5.0 - April 10, 2020
 #### Added
-   - [ ] ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
-   - [x] target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
+   - [x] metaJump: ripple support, type location-chars to triger far from center: one char current paragraph(seperated by empty lines); two chars current doc; three chars all opened editors; for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current paragraph)
+   - [x] metaJump: target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
 
 #### Removed
 
