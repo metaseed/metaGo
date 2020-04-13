@@ -131,9 +131,9 @@ export class BookmarkExt {
         if (doc.key !== uri) {
             let uriDocument = vscode.Uri.file(doc.key);
             vscode.workspace.openTextDocument(uriDocument).then(doc => {
-                vscode.window.showTextDocument(doc, undefined, preserveFocus).then(editor => {
-                    this.gotoBookmarkInActiveDoc(bm);
-                });
+                 vscode.window.showTextDocument(doc,  {preserveFocus, preview: true}).then(editor => {
+                     this.gotoBookmarkInActiveDoc(bm);
+                 });
             });
         }
 
@@ -349,6 +349,7 @@ export class BookmarkExt {
                     let options = <vscode.QuickPickOptions>{
                         placeHolder: "Type a line number or a piece of code to navigate to",
                         matchOnDescription: true,
+                        // ignoreFocusOut: true,
                         onDidSelectItem: (item: BookmarkItem) => {
                             let filePath: string;
                             if (item.commandId) return;
