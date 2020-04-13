@@ -34,7 +34,7 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ## Current Version
 ---
-### V3.5.0 - April 10, 2020
+### V3.5.0 - April 16, 2020
 #### Added
    - [x] metaJump: ripple support, type location-chars to triger far from center: one char current paragraph(seperated by empty lines); two chars current doc; three chars all opened editors; for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current paragraph)
    - [x] metaJump: target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
@@ -46,7 +46,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
 
 #### Fixed
-   - [ ] bookmark: type in popup box, would jump automaticly, may edit when type fast. should only do filter!
+   - [x] bookmark: type in popup box, would jump automaticly, may edit when type fast. should only do filter!
    - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
 
 ---
