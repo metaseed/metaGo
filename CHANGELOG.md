@@ -16,7 +16,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
    - [x] ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
    
-
+   - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
    - [ ] Line selection up/down command: ?
       make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
@@ -44,10 +44,9 @@ All notable changes to the "metago" extension will be documented in this file.
 
 #### Changed
    - [x] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
-
+   - [x] line selection: metaGo.selectLineUp default shortcut changed from ctrl+shift+l to ctrl+i, to avoid collision with default command of ctrl+shift+l.
 #### Fixed
    - [x] bookmark: type in popup box, would jump automaticly, may edit when type fast. should only do filter!
-   - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
 
 ---
 ### V3.4.3 - Mar 19, 2020

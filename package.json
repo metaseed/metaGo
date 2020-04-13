@@ -181,8 +181,8 @@
 			},
 			{
 				"command": "metaGo.selectLineUp",
-				"key": "ctrl+shift+l",
-				"mac": "cmd+shift+l",
+				"key": "ctrl+i",
+				"mac": "cmd+i",
 				"when": "editorTextFocus"
 			},
 			{
