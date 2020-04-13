@@ -14,10 +14,10 @@ Metago tries its best to be the coolest😎 keyboard(mouseless) focused navigati
 Metago tries to make your keyboard⌨ to you as meaningful as a kitchen knife to a masterchef👩‍🍳.    
 
 <br>
-Metago as an open source free tool, currently is mentained and developed by me in my spare time🌙⏳, if you think it's useful to you or even indispensable like some of our users, please support me, just buy me a drink☕ would be a great inspiration for me, which means there is someone really like it. 😊
+Metago as an free tool, currently is mentained and developed by me in my spare time🌙⏳, if you think it's useful to you or even indispensable like some of our users, please support me, just buy me a drink☕ would be a great inspiration for me, which means there is someone really like it. 😊
 
 Give me a  [github⭐](https://github.com/metaseed/metago)
-<table align="center" width="60%" border="0">
+<table align="center" width="40%" border="0">
   <tr>
     <td>
       <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=P9GXHBAAHPBMN&item_name=metago+dev&currency_code=USD&source=url">
@@ -30,11 +30,6 @@ Give me a  [github⭐](https://github.com/metaseed/metago)
           <img src="./donate/scan.png" style="height: 66px;"/>
       </a>
     </td>
-	<td>
-	  <a href="https://join.slack.com/t/metaseedworkspace/shared_invite/enQtOTU5ODM1MTI2MDcwLWM5N2QzY2MzMTVjMjVlZDVjZTVmMDFjNmViNmE4MzE3NGM4Mzk5M2UwNDAwYjQ4ZGM5Y2U2YjdlMGM5MjJiNDQ">
-		<img src="https://i.imgur.com/1QWdtcX.png" alt="Drawing" style="width: 150px;"/>
-	  </a>
-	</td>
   </tr>
 </table>
 <br>
@@ -59,7 +54,7 @@ With this new V3 released, we are going to add more features, peek features in d
 * support having fold regions.(V3.2 Done!)
 * ripple jump support to show less decorators on screen. one target char for current paragraphy(seperated by empty lines), two target chars for current document editor, three or more for all open editors. 
 * and more... at [changelog](https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md)
-* if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or contact with us on [SLACK☕](https://join.slack.com/t/metaseedworkspace/shared_invite/enQtOTU5ODM1MTI2MDcwLWM5N2QzY2MzMTVjMjVlZDVjZTVmMDFjNmViNmE4MzE3NGM4Mzk5M2UwNDAwYjQ4ZGM5Y2U2YjdlMGM5MjJiNDQ)
+* if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or contact with us on [SLACK☕](https://metaseed-workspace.slack.com/archives/CTVFB7CLR)
 
 ## Features Summary
 MetaGo provides fast cursor movement/selection for keyboard focused users:

@@ -129,7 +129,7 @@ export class BookmarkExt {
         const doc = bookmarkModel.document;
         const uri = Document.normalize(vscode.window.activeTextEditor.document.uri.fsPath);
         if (doc.key !== uri) {
-            let uriDocument: vscode.Uri = vscode.Uri.file(doc.key);
+            let uriDocument = vscode.Uri.file(doc.key);
             vscode.workspace.openTextDocument(uriDocument).then(doc => {
                 vscode.window.showTextDocument(doc, undefined, preserveFocus).then(editor => {
                     this.gotoBookmarkInActiveDoc(bm);

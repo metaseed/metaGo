@@ -23,31 +23,38 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] Create command for move to previous/next member
 ## In Development
 
+---
 ### 
 #### Added
 #### Removed
-#### Changd
+#### Changed
 #### Fixed
+---
 
+
+## Current Version
+---
 ### V3.5.0 - April 10, 2020
 #### Added
    - [x] metaJump: ripple support, type location-chars to triger far from center: one char current paragraph(seperated by empty lines); two chars current doc; three chars all opened editors; for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current paragraph)
    - [x] metaJump: target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
+   - [x] metaGo: what's new page to show when major and minor upgrade
 
 #### Removed
 
-#### Changd
+#### Changed
    - [x] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
 
 #### Fixed
    - [ ] bookmark: type in popup box, would jump automaticly, may edit when type fast. should only do filter!
+   - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
 
 ---
 ### V3.4.3 - Mar 19, 2020
 #### Added
 * text decorator support background color transparent: opacity
 #### Removed
-#### Changd
+#### Changed
 * decoration background opacity as border opacity
 * adjust defaut decorator width to 8, otherwise it hide charactor, i.e. n looks like r
 
@@ -64,7 +71,7 @@ All notable changes to the "metago" extension will be documented in this file.
 * left boder on jump code decorator, easier for discrimating concatenated/overllaped decorators
 * `Backspace` as command to delete last input char, it's a step cancel command, `Esc` is a whole cancel command.
 #### Removed
-#### Changd
+#### Changed
 * update metago.jump gif in readme.md
 * the target location chars case sensitive method is changed from 'if has upper case' to 'the last char is upper case"
 #### Fixed

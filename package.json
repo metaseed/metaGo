@@ -3,7 +3,7 @@
 	"displayName": "MetaGo",
 	"description": "vscode cursor move and select; jump, navigation, goto, acejump",
 	"icon": "images/metago.gif",
-	"version": "3.4.3",
+	"version": "3.5.3",
 	"publisher": "metaseed",
 	"homepage": "https://github.com/metaseed/metaGo",
 	"license": "MIT",
@@ -43,6 +43,11 @@
 				"command": "metaGo.metaJump.backspace",
 				"title": "xx: metaJump step-cancel",
 				"category": "metaGo.metaJump"
+			},
+			{
+				"command": "metago.showLandingPage",
+				"title": "xx: metaGo.showLandingPage.ChangeLog",
+				"category": "metaGo"
 			},
 			{
 				"command": "metaGo.gotoSmart",
@@ -390,7 +395,8 @@
 		}
 	},
 	"scripts": {
-		"publish": "vsce publish",
+		"changelog": "node changelog.js",
+		"publish": "node changelog.js && vsce publish",
 		"package": "vsce package",
 		"vscode:prepublish": "npm run compile",
 		"lint": "tslint -p ./",
@@ -410,6 +416,7 @@
 		"@types/node": "^13.7.1",
 		"vsce": "^1.74.0",
 		"@types/mocha": "^7.0.1",
-		"source-map-support": "^0.5.12"
+		"source-map-support": "^0.5.12",
+		"semver": "^7.2.2"
 	}
 }
