@@ -303,6 +303,10 @@ export class MetaJumper {
         var editor: vscode.TextEditor = null;
         var models: DecorationModel[] = null;
         var model: DecorationModel = null;
+        if(this.targetChars === this.config.decoration.hide.trigerKey) {
+            enableSequentialTargetChars = false;
+            rippleSupport = false;
+        }
         let { editorToLineCharIndexesMap, lettersExclude } = await this.findAll(mutiEditor, inputEditor, enableSequentialTargetChars);
         let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, lettersExclude, enableSequentialTargetChars, this.targetChars.length, rippleSupport);
         // here, we have editorToModelsMap.size > 1 || models.length > 1

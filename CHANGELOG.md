@@ -17,7 +17,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
    
 
-   - [ ] bug: metaJump: '/' key could not be used as following sequence key, if already used as decorator hide key. we need to use Ctrl key as the decorator hiding key.
+   - [x] bug: metaJump: '/' key could not be used as following sequence key, if already used as decorator hide key. fix it by disable sequential-target-chars if it used as the target char.
    - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
    - [ ] Line selection up/down command: ?
       make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand
@@ -50,6 +50,8 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Fixed
    - [x] bookmark: type in popup box, would jump automaticly, may edit when type fast. should only do filter!
    - [x] metaJump: fix cancel exception: after tigger jump, then press Esc would throw exception.
+   - [x] metaJump: '/' key could not be used as following sequence key, if already used as decorator hide key. fix it by disable sequential-target-chars if it used as the target char.
+
 ---
 ### V3.4.3 - Mar 19, 2020
 #### Added

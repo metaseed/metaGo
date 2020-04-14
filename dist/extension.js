@@ -5480,6 +5480,10 @@ class MetaJumper {
             var editor = null;
             var models = null;
             var model = null;
+            if (this.targetChars === this.config.decoration.hide.trigerKey) {
+                enableSequentialTargetChars = false;
+                rippleSupport = false;
+            }
             let { editorToLineCharIndexesMap, lettersExclude } = yield this.findAll(mutiEditor, inputEditor, enableSequentialTargetChars);
             let editorToModelsMap = this.decorationModelBuilder.buildDecorationModel(editorToLineCharIndexesMap, lettersExclude, enableSequentialTargetChars, this.targetChars.length, rippleSupport);
             // here, we have editorToModelsMap.size > 1 || models.length > 1

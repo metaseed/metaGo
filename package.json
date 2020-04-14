@@ -351,7 +351,7 @@
 				"metaGo.decoration.hide.trigerKey": {
 					"type": "string",
 					"default": "/",
-					"description": "keyboard key, hold to hide decorators on screen, release to show again. Do NOT use andy key in 'metaGo.decoration.characters'"
+					"description": "keyboard key, hold to hide decorators on screen, release to show again. Do NOT use any key in 'metaGo.decoration.characters'. note: if this char is a target, sequencial target chars is disabled"
 				},
 				"metaGo.decoration.hide.triggerKeyDownRepeatInitialDelay": {
 					"type": "number",
