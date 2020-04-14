@@ -3,7 +3,7 @@
 	"displayName": "MetaGo",
 	"description": "vscode cursor move and select; jump, navigation, goto, acejump",
 	"icon": "images/metago.gif",
-	"version": "3.5.3",
+	"version": "3.5.0",
 	"publisher": "metaseed",
 	"homepage": "https://github.com/metaseed/metaGo",
 	"license": "MIT",
@@ -31,7 +31,7 @@
 	"activationEvents": [
 		"*"
 	],
-	"main": "./out/src/extension",
+	"main": "./dist/extension",
 	"contributes": {
 		"commands": [
 			{
@@ -396,11 +396,15 @@
 	},
 	"scripts": {
 		"changelog": "node changelog.js",
-		"publish": "node changelog.js && vsce publish",
+		"vscode:prepublish": "node changelog.js && webpack --mode production",
+		"publish": "vsce publish",
+		"vscode:prepackage": "node changelog.js && webpack --mode production",
 		"package": "vsce package",
-		"vscode:prepublish": "npm run compile",
+		"build": "webpack --mode development",
+		"watch": "webpack --mode development --watch --info-verbosity verbose",
+		"test-compile": "tsc -p ./",
 		"lint": "tslint -p ./",
-		"watch": "tsc -watch -p ./",
+		"tswatch": "tsc -watch -p ./",
 		"compile": "tsc -p ./",
 		"pretest": "npm run compile",
 		"test": "node ./out/test/runTest.js"
@@ -409,14 +413,20 @@
 		"vscode": "^1.39.0"
 	},
 	"devDependencies": {
-		"eslint": "^6.8.0",
-		"typescript": "^3.7.0",
-		"@types/vscode": "^1.39.0",
-		"mocha": "^7.0.1",
-		"@types/node": "^13.7.1",
-		"vsce": "^1.74.0",
 		"@types/mocha": "^7.0.1",
+		"@types/node": "^13.7.1",
+		"@types/vscode": "^1.39.0",
+		"eslint": "^6.8.0",
+		"mocha": "^7.0.1",
 		"source-map-support": "^0.5.12",
+		"ts-loader": "^6.2.2",
+		"typescript": "^3.8.3",
+		"vsce": "^1.74.0",
+		"webpack": "^4.42.1",
+		"webpack-cli": "^3.3.11",
+		"terser-webpack-plugin": "^2.3.5"
+	},
+	"dependencies": {
 		"semver": "^7.2.2"
 	}
 }

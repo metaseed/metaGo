@@ -22,9 +22,9 @@
 			"stopOnEntry": false,
 			"sourceMaps": true,
 			"outFiles": [
-				"${workspaceRoot}/out/src/**/*.js"
+				"${workspaceRoot}/dist/**/*.js"
 			],
-			"preLaunchTask": "npm"
+			"preLaunchTask": "npm: watch"
 		},
 		{
 			"name": "Launch Tests",
@@ -40,7 +40,7 @@
 			"outFiles": [
 				"${workspaceRoot}/out/test/**/*.js"
 			],
-			"preLaunchTask": "npm"
+			"preLaunchTask": "npm:test-compile"
 		}
 	]
 }

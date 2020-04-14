@@ -376,6 +376,11 @@ to modify default press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
 				"title": "xx: metaGo.Bookmark Clear"
 			}
 		
+## Development
+install vscode extension: TypeScript + Webpack Problem Matchers
+open terminal:
+	npm i
+	F5
 ## Credits
 
 ### Contributers:

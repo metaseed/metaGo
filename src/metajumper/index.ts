@@ -230,6 +230,7 @@ export class MetaJumper {
                 if (e === CANCEL_MSG) {
                     canceled = true;
                 }
+                throw e;
             }
             finally {
                 if (!canceled)

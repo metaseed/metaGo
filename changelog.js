@@ -6,8 +6,8 @@ let findCurrentVersion = false;
 let findStart = false;
 let changeType = '';
 
-let write = fs.createWriteStream('./landing-page/changelog.ts', { encoding: 'utf8', flags: 'w' });
-write.write(`import { ChangeLogItem, ChangeLogKind } from "./ContentProvider";\n`);
+let write = fs.createWriteStream('./src/landing-page/changelog.ts', { encoding: 'utf8', flags: 'w' });
+write.write(`import { ChangeLogItem, ChangeLogKind } from "./contentProvider";\n`);
 write.write(`export const changeLog: ChangeLogItem[] = [\n`);
 
 for (let i = 0; i < lines.length; i++) {
