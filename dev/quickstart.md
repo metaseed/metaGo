@@ -1,5 +1,10 @@
 ## Development
+`npm i vsce -g`
+
 install vscode extension: TypeScript + Webpack Problem Matchers
+ 
 open terminal:
-	npm i
+```
+    npm i
 	F5
+```

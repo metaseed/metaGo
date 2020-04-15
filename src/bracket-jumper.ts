@@ -13,11 +13,11 @@ export class BracketJumper {
         let disposable = vscode.commands.registerCommand('metaGo.jumpToBracket', () => {
             const editor = vscode.window.activeTextEditor;
             const selection = editor.selection;
-
-            let fromLine = editor.selection.active.line;
-            let fromChar = editor.selection.active.character;
+            let fromLine = selection.active.line;
+            let fromChar = selection.active.character;
             let line = editor.document.lineAt(fromLine);
             this.clearBracketsCounter();
+
             if (this.isBracket(line.text[fromChar]) || this.isBracket(line.text[fromChar - 1])) {
                 vscode.commands.executeCommand('editor.action.jumpToBracket');
                 return;
@@ -58,18 +58,26 @@ export class BracketJumper {
         }
         return false;
     }
+
     private isBracket(char: string) {
-        return this.bracketPairs.some((c) => c.start === char || c.end === char);
+        return this.isBracketStart(char) || this.isBracketEnd(char);
     }
+
     private isBracketStart(char: string) {
-        return this.bracketPairs.some((c) => c.start === char);
+        return this.bracketPairs.some(c => c.start === char);
     }
+
     private isBracketEnd(char: string) {
-        return this.bracketPairs.some((c, i) => c.end === char);
+        return this.bracketPairs.some(c => c.end === char);
     }
 
     private clearBracketsCounter() {
-        this.bracketPairs.forEach((c) => c.counter = 0)
+        this.bracketPairs.forEach(c => c.counter = 0)
     }
 
 }
+
+// note the default bracketjump command also work for current implementation. 
+// search bracket in extension
+// https://marketplace.visualstudio.com/items?itemName=sashaweiss.bracket-jumper
+// https://marketplace.visualstudio.com/items?itemName=jomeinaster.bracket-peek
