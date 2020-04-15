@@ -1,0 +1,1 @@
+https://marketplace.visualstudio.com/items?itemName=tintinweb.vscode-inline-bookmarks
