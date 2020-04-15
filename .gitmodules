@@ -1,0 +1,3 @@
+[submodule "src/metajump"]
+	path = src/metajump
+	url = https://github.com/metaseed/metajump
