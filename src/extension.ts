@@ -3,7 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { Config } from "./config";
-import { MetaJumper } from './metajumper';
+import { MetaJumper } from './metajump';
 import { CurrentLineScroller } from './current-line-scroller';
 import { BlankLineJumper } from './blank-line-jumper';
 import { SelectLines } from './select-lines';
