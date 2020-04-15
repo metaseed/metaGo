@@ -233,8 +233,7 @@
 			},
 			{
 				"command": "metaGo.bookmark.view",
-				"key": "alt+\\",
-				"when": "editorTextFocus"
+				"key": "alt+\\"
 			},
 			{
 				"command": "metaGo.bookmark.previous",

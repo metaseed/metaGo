@@ -50,6 +50,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] line selection: metaGo.selectLineUp default shortcut changed from ctrl+shift+l to ctrl+i, to avoid collision with default command of ctrl+shift+l.
 #### Fixed
    - [x] bookmark: type in popup box, would jump automaticly, may edit when type fast. should only do filter!
+   - [x] bookmark: trigger bookmark.view command event there is no openned editor or no editor has focus.
    - [x] metaJump: fix cancel exception: after tigger jump, then press Esc would throw exception.
    - [x] metaJump: '/' key could not be used as following sequence key, if already used as decorator hide key. fix it by disable sequential-target-chars if it used as the target char.
 
