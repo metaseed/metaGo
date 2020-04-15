@@ -42,6 +42,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
    - [x] metaGo: what's new page to show when major and minor upgrade
    - [x] dev: webpack support bundle third party packates
+   - [x] dev: add local package generation, uninstall then install npm command
 
 #### Removed
 

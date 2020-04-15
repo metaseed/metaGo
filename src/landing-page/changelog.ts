@@ -7,5 +7,7 @@ export const changeLog: ChangeLogItem[] = [
   { kind: ChangeLogKind.CHANGED,   message: `bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.`},
   { kind: ChangeLogKind.CHANGED,   message: `line selection: metaGo.selectLineUp default shortcut changed from ctrl+shift+l to ctrl+i, to avoid collision with default command of ctrl+shift+l.`},
   { kind: ChangeLogKind.FIXED,   message: `bookmark: type in popup box, would jump automaticly, may edit when type fast. should only do filter!`},
+  { kind: ChangeLogKind.FIXED,   message: `bookmark: trigger bookmark.view command event there is no openned editor or no editor has focus.`},
   { kind: ChangeLogKind.FIXED,   message: `metaJump: fix cancel exception: after tigger jump, then press Esc would throw exception.`},
+  { kind: ChangeLogKind.FIXED,   message: `metaJump: '/' key could not be used as following sequence key, if already used as decorator hide key. fix it by disable sequential-target-chars if it used as the target char.`},
 ];
