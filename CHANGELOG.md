@@ -15,9 +15,8 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
    - [x] target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
    - [x] ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
-   
-
    - [x] bug: metaJump: '/' key could not be used as following sequence key, if already used as decorator hide key. fix it by disable sequential-target-chars if it used as the target char.
+   
    - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
    - [ ] Line selection up/down command: ?
       make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand
