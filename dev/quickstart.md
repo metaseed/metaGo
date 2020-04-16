@@ -11,3 +11,8 @@ open terminal:
     npm i
 	F5
 ```
+
+### publish
+```
+git publish
+```

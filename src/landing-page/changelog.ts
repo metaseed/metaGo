@@ -4,6 +4,7 @@ export const changeLog: ChangeLogItem[] = [
   { kind: ChangeLogKind.ADDED,   message: `metaJump: target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake`},
   { kind: ChangeLogKind.ADDED,   message: `metaGo: what's new page to show when major and minor upgrade`},
   { kind: ChangeLogKind.ADDED,   message: `dev: webpack support bundle third party packates`},
+  { kind: ChangeLogKind.ADDED,   message: `dev: add local package generation, uninstall then install npm command`},
   { kind: ChangeLogKind.CHANGED,   message: `bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.`},
   { kind: ChangeLogKind.CHANGED,   message: `line selection: metaGo.selectLineUp default shortcut changed from ctrl+shift+l to ctrl+i, to avoid collision with default command of ctrl+shift+l.`},
   { kind: ChangeLogKind.FIXED,   message: `bookmark: type in popup box, would jump automaticly, may edit when type fast. should only do filter!`},
