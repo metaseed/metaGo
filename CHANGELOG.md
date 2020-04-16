@@ -20,8 +20,9 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] bookmark: use treeview and implement tag mark.
    - [ ] bracketJump: level navagate.
    - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
-   - [ ] Line selection up/down command: ?
-      make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand
+   - [ ] Line selection up/down command: ? editorHasSelection
+      ~~make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand~~
+      Ctrl+o to extenlineselection up when has selection
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
 ## In Development
@@ -36,7 +37,7 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ## Current Version
 ---
-### V3.5.0 - April 16, 2020
+### V3.5.1 - April 16, 2020
 #### Added
    - [x] metaJump: ripple support, type location-chars to triger far from center: one char current paragraph(seperated by empty lines); two chars current doc; three chars all opened editors; for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current paragraph)
    - [x] metaJump: target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
