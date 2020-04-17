@@ -144,9 +144,20 @@ the defaul select line down command not works well, if you press `ctrl+l, shift+
 we create our own:
 * <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line or extend selection by one line below.
 * <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend selection by one line above.
-> note: <kbd>Ctrl</kbd>+<kbd>o</kbd> triggers open file by default, and it triggers extend line selection when there is selection in active editor.
+> note: <kbd>Ctrl</kbd>+<kbd>o</kbd> triggers open file by default, and it triggers extend line selection above when there is selection in active editor.
 
 > if you want to select line up, you should press <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line and then press <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend line selection up.
+
+by default selectLineUp command is configed as:
+```json
+{
+	"command": "metaGo.selectLineUp",
+	"key": "ctrl+o",
+	"mac": "cmd+o",
+	"when": "editorTextFocus && editorHasSelection"
+}
+```
+you could asign a shortcut key not collision with default vscode ones, and remove the `editorHasSelection` condition, so it would work even so selection in editor.
 
 ### jump to bracket
 * extend the default jumpToBracket command.
