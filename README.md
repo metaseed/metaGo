@@ -85,16 +85,16 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > 1. three or more target chars for all opened editors;
 > 1. for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current paragraph)
 
-* the <kbd>Alt</kbd>+<kbd>.</kbd> command will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
-* the <kbd>Alt</kbd>+<kbd>,</kbd> command will trigger the metaGo.gotoBefore command, the cursor will be placed before the target character;
-* the <kbd>Alt</kbd>+<kbd>/</kbd> command will trigger the metaGo.gotoSmart mommand which intelligently set cursor position after navigation:
+* the <kbd>Alt</kbd>+<kbd>.</kbd> shortcut will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
+* the <kbd>Alt</kbd>+<kbd>,</kbd> shortcut will trigger the metaGo.gotoBefore command, the cursor will be placed before the target character;
+* the <kbd>Alt</kbd>+<kbd>/</kbd> shortcut will trigger the metaGo.gotoSmart mommand which intelligently set cursor position after navigation:
     * if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
     * The 'word' is defined as a group of all alphanumeric or punctuation characters.
 
 > Note: <kbd>Enter</kbd> is also usable as location charactor, it means the end of lines
 > commands that only navagite in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
 
-### select to any character on screen from cursor
+### select to any character in the active editor from cursor
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>/</kbd> to tell I want to *select* to somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *select* to that location.
@@ -102,6 +102,15 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > at any time press <kbd>ESC</kbd> to cancel
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
+
+### add mutiple cursors to the active editor
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>,</kbd> to add another cursor before the target charactor
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>.</kbd> to add another cursor after the target charactor
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>/</kbd> to add another cursor smartly to the target charactor
+
+> <kbd>Ctrl</kbd>+<kbd>u</kbd> to cancel last cursor adding.
+
+![MetaGo.MutiCursor](images/metato.mutiCursor.gif)
 
 #### features highlight
 * code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
@@ -114,10 +123,10 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 ### navigate between files using bookmarks
 
-* <kbd>Alt</kbd>+ <kdb>\'</kbd> to set a bookmark at the cursor location.
-* <kbd>Alt</kbd>+ <kdb>[</kbd> goto previous bookmark.
-* <kbd>Alt</kbd>+ <kdb>]</kbd> goto next bookmark
-* <kbd>Alt</kbd>+<kdb>\\</kbd> to list the bookmarks and show management menu.
+* <kbd>Alt</kbd>+ <kbd>\'</kbd> to set a bookmark at the cursor location.
+* <kbd>Alt</kbd>+ <kbd>[</kbd> goto previous bookmark.
+* <kbd>Alt</kbd>+ <kbd>]</kbd> goto next bookmark
+* <kbd>Alt</kbd>+<kbd>\\</kbd> to list the bookmarks and show management menu.
     1. press <kdb>cc</kbd> and <kbd>enter</kbd> to clear all the bookmarks
     2. press <kdb>c</kbd> and <kbd>enter</kbd> to clear all the bookmarks in current document.
     3. press <kdb>n</kbd> and <kbd>enter</kbd> to go to the next bookmark.
@@ -157,7 +166,7 @@ by default selectLineUp command is configed as:
 	"when": "editorTextFocus && editorHasSelection"
 }
 ```
-you could asign a shortcut key not collision with default vscode ones, and remove the `editorHasSelection` condition, so it would work even so selection in editor.
+you could asign a shortcut key not collision with default vscode ones, and remove the `editorHasSelection` condition, so it would work even no selection in editor.
 
 ### jump to bracket
 * extend the default jumpToBracket command.

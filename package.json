@@ -63,6 +63,21 @@
 				"title": "xx: metaGo.goto Before"
 			},
 			{
+				"command": "metaGo.insertCursorSmart",
+				"title": "xx: metaGo.insertCursor Smart",
+				"category": "metaGo.metaJump"
+			},
+			{
+				"command": "metaGo.insertCursorAfter",
+				"title": "xx: metaGo.insertCursor After",
+				"category": "metaGo.metaJump"
+			},
+			{
+				"command": "metaGo.insertCursorBefore",
+				"title": "xx: metaGo.insertCursor Before",
+				"category": "metaGo.metaJump"
+			},
+			{
 				"command": "metaGo.gotoSmartActive",
 				"title": "xx: metaGo.Goto Smart only in Active editor"
 			},
@@ -160,6 +175,21 @@
 				"command": "metaGo.gotoSmart",
 				"key": "alt+/",
 				"description": "goto the character and set the cursor smartly"
+			},
+			{
+				"command": "metaGo.insertCursorBefore",
+				"key": "ctrl+alt+,",
+				"description": "insert another cursor before the character"
+			},
+			{
+				"command": "metaGo.insertCursorAfter",
+				"key": "ctrl+alt+.",
+				"description": "insert another cursor after the character"
+			},
+			{
+				"command": "metaGo.insertCursorSmart",
+				"key": "ctrl+alt+/",
+				"description": "insert another cursor to the character location smartly"
 			},
 			{
 				"command": "metaGo.selectBefore",
