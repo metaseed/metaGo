@@ -142,8 +142,11 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 ### select line up/down
 the defaul select line down command not works well, if you press `ctrl+l, shift+up` to select line up, it will not select the current line but start from the line above.
 we create our own:
-* <kbd>Ctrl</kbd>+<kbd>l</kbd> to select line up.
-* <kbd>Ctrl</kbd>+<kbd>shift</kbd>+<kbd>l</kbd> to select line down.
+* <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line or extend selection by one line below.
+* <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend selection by one line above.
+> note: <kbd>Ctrl</kbd>+<kbd>o</kbd> triggers open file by default, and it triggers extend line selection when there is selection in active editor.
+
+> if you want to select line up, you should press <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line and then press <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend line selection up.
 
 ### jump to bracket
 * extend the default jumpToBracket command.

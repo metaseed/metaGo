@@ -17,12 +17,13 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
    - [x] bug: metaJump: '/' key could not be used as following sequence key, if already used as decorator hide key. fix it by disable sequential-target-chars if it used as the target char.
 
-   - [ ] bookmark: use treeview and implement tag mark.
-   - [ ] bracketJump: level navagate.
-   - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
-   - [ ] Line selection up/down command: ? editorHasSelection
+   - [x] Line selection up/down command: ? editorHasSelection
       ~~make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand~~
       Ctrl+o to extenlineselection up when has selection
+   - [ ] bracketJump: level navagate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
+   
+   - [ ] bookmark: use treeview and implement tag mark.
+   - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
 ## In Development
@@ -33,9 +34,17 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Removed
 #### Changed
 #### Fixed
----
+
 
 ## Current Version
+---
+### V3.6.0 - April 28, 2020 
+#### Added
+#### Removed
+#### Changed
+   - [x] lineSelection: Ctrl+l to select current line or extend selection by one line below. Ctrl+o to extend selection by one line above.
+#### Fixed
+
 ---
 ### V3.5.1 - April 16, 2020
 #### Added
