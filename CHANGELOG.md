@@ -42,7 +42,7 @@ All notable changes to the "metago" extension will be documented in this file.
 ### V3.6.0 - April 28, 2020 
 #### Added
    - [ ] selection: command to switch selection active with anchor.
-   - [ ] metaJump: command to add cursor 
+   - [x] metaJump: commands to add additianal cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCurosrSmart) 
    - [ ] lineSelection: muti cursor support.
 #### Removed
 #### Changed
