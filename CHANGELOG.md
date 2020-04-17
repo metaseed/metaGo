@@ -20,6 +20,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] Line selection up/down command: ? editorHasSelection
       ~~make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand~~
       Ctrl+o to extenlineselection up when has selection
+
    - [ ] bracketJump: level navagate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
    
    - [ ] bookmark: use treeview and implement tag mark.
@@ -40,6 +41,9 @@ All notable changes to the "metago" extension will be documented in this file.
 ---
 ### V3.6.0 - April 28, 2020 
 #### Added
+   - [ ] selection: command to switch selection active with anchor.
+   - [ ] metaJump: command to add cursor 
+   - [ ] lineSelection: muti cursor support.
 #### Removed
 #### Changed
    - [x] lineSelection: Ctrl+l to select current line or extend selection by one line below. Ctrl+o to extend selection by one line above.
