@@ -149,11 +149,12 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 ![MetaGo.blankLine](images/metago.blankLine.gif)
 
 ### select line up/down
-the defaul select line down command not works well, if you press `ctrl+l, shift+up` to select line up, it will not select the current line but start from the line above.
+the default select line down command not works well, if you press `ctrl+l, shift+up` to select line up, it will not select the current line but start from the line above.
 we create our own:
-* <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line or extend selection by one line below.
-* <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend selection by one line above.
-* <kbd>Ctrl</kbd>+<kbd>i</kbd> to swith the selection's active(cursor flashing) end with the anchor end.
+* <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line or extend selections by one line below.
+* <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend selections by one line above.
+* <kbd>Ctrl</kbd>+<kbd>i</kbd> to swith the selection's active(cursor flashing) with the anchor.
+
 > note: <kbd>Ctrl</kbd>+<kbd>o</kbd> triggers open file by default, and it triggers extend line selection above when there is selection in active editor.
 
 > if you want to select line up, you should press <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line and then press <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend line selection up.
