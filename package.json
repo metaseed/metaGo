@@ -3,7 +3,7 @@
 	"displayName": "MetaGo",
 	"description": "vscode cursor move and select; jump, navigation, goto, acejump",
 	"icon": "images/metago.gif",
-	"version": "3.6.0",
+	"version": "3.6.1",
 	"publisher": "metaseed",
 	"homepage": "https://github.com/metaseed/metaGo",
 	"license": "MIT",
@@ -100,6 +100,10 @@
 			{
 				"command": "metaGo.selectAfter",
 				"title": "xx: metaGo.Select to position After the charactor"
+			},
+			{
+				"command": "metaGo.selectionSwitchActiveWithAnchor",
+				"title": "xx: metaGo.selectionSwitchActiveWithAnchor"
 			},
 			{
 				"command": "metaGo.selectLineUp",
@@ -208,6 +212,12 @@
 				"key": "alt+shift+/",
 				"when": "editorTextFocus",
 				"description": "select to the cursor position smartly"
+			},			
+			{
+				"command": "metaGo.selectionSwitchActiveWithAnchor",
+				"key": "ctrl+i",
+				"mac": "cmd+i",
+				"when": "editorTextFocus && editorHasSelection"
 			},
 			{
 				"command": "metaGo.selectLineUp",

@@ -22,6 +22,7 @@ All notable changes to the "metago" extension will be documented in this file.
       Ctrl+o to extenlineselection up when has selection
 
    - [ ] bracketJump: level navagate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
+   - [ ] ctrl+i i ': select in '; ctrl+i a ': select ' and content;
    
    - [ ] bookmark: use treeview and implement tag mark.
    - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
@@ -39,15 +40,16 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ## Current Version
 ---
-### V3.6.0 - April 28, 2020 
+### V3.6.1 - April 28, 2020 
 #### Added
-   - [ ] selection: command to switch selection active with anchor.
+   - [x] selection: command to switch selection active with anchor.
    - [x] metaJump: commands to add additianal cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCurosrSmart) 
    - [ ] lineSelection: muti cursor support.
 #### Removed
 #### Changed
    - [x] lineSelection: Ctrl+l to select current line or extend selection by one line below. Ctrl+o to extend selection by one line above.
 #### Fixed
+   - [x] metaJump: undefined property ref exception, when cursor below the last location target candidate;
 
 ---
 ### V3.5.1 - April 16, 2020

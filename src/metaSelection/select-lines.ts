@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-export class SelectLines {
+export class LineSelection {
 
     constructor(context: vscode.ExtensionContext) {
         let disposable = vscode.commands.registerCommand('metaGo.selectLineUp', () => {

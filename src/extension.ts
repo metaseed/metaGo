@@ -6,7 +6,7 @@ import { Config } from "./config";
 import { MetaJumper } from './metajump';
 import { CurrentLineScroller } from './current-line-scroller';
 import { BlankLineJumper } from './blank-line-jumper';
-import { SelectLines } from './select-lines';
+import { MetaSelection } from './metaSelection';
 import { BookmarkExt } from './bookmark';
 import { BracketJumper } from './bracket-jumper';
 import { LandingPage } from './landing-page';
@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
     let metaJumper = new MetaJumper(context, config);
     let centerEditor = new CurrentLineScroller(context);
     let spaceBlockJumper = new BlankLineJumper(context);
-    let selectLineUp = new SelectLines(context);
+    let metaSelection = new MetaSelection(context);
     let bookmark = new BookmarkExt(context, config.bookmark);
     let bracketJumper = new BracketJumper(context);
 
