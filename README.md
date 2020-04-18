@@ -153,10 +153,12 @@ the defaul select line down command not works well, if you press `ctrl+l, shift+
 we create our own:
 * <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line or extend selection by one line below.
 * <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend selection by one line above.
+* <kbd>Ctrl</kbd>+<kbd>i</kbd> to swith the selection's active(cursor flashing) end with the anchor end.
 > note: <kbd>Ctrl</kbd>+<kbd>o</kbd> triggers open file by default, and it triggers extend line selection above when there is selection in active editor.
 
 > if you want to select line up, you should press <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line and then press <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend line selection up.
 
+> if you want extend lines from another end, press <kbd>Ctrl</kbd>+<kbd>i</kbd> to switch the selection's active end, then do extending. 
 by default selectLineUp command is configed as:
 ```json
 {
