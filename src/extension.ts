@@ -6,11 +6,10 @@ import { Config } from "./config";
 import { MetaJump } from './metajump';
 import { CurrentLineScroller } from './current-line-scroller';
 import { BlankLineJumper } from './blank-line-jumper';
-import { MetaSelection } from './metaSelection';
+import { MetaSelection } from './metaSelect';
 import { BookmarkExt } from './bookmark';
 import { BracketJumper } from './bracket-jumper';
 import { LandingPage } from './landing-page';
-
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
