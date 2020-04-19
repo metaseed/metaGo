@@ -151,15 +151,16 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 ### select line up/down
 the default select line down command not works well, if you press `ctrl+l, shift+up` to select line up, it will not select the current line but start from the line above.
 we create our own:
-* <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line or extend selections by one line below.
-* <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend selections by one line above.
-* <kbd>Ctrl</kbd>+<kbd>i</kbd> to swith the selection's active(cursor flashing) with the anchor.
+* <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line or extend/shrink selections by one line below.
+* <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend/shrink selections by one line above.
+* <kbd>Alt</kbd>+<kbd>a</kbd> to swith the selection's active(cursor flashing) with the anchor.
+
+> extend/shrink selections work at the selection's active end, if you want to extend/shrink at the selection's anchor end, use <kbd>Alt</kbd>+<kbd>a</kdb> to swith selection's anchor with active at first. 
 
 > note: <kbd>Ctrl</kbd>+<kbd>o</kbd> triggers open file by default, and it triggers extend line selection above when there is selection in active editor.
 
 > if you want to select line up, you should press <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line and then press <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend line selection up.
 
-> if you want extend lines from another end, press <kbd>Ctrl</kbd>+<kbd>i</kbd> to switch the selection's active end, then do extending. 
 by default selectLineUp command is configed as:
 ```json
 {

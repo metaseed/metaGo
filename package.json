@@ -114,6 +114,14 @@
 				"title": "xx: metaGo.Select Line Down"
 			},
 			{
+				"command": "metaGo.inSelection",
+				"title": "xx: metaGo select inside separators"
+			},
+			{
+				"command": "metaGo.inSelectionWithSeparators",
+				"title": "xx: metaGo select inside separators and the two separators"
+			},
+			{
 				"command": "metaGo.scrollCurrentLineToMiddle",
 				"title": "xx: metaGo.cscroll urrent Line Middle"
 			},
@@ -212,11 +220,11 @@
 				"key": "alt+shift+/",
 				"when": "editorTextFocus",
 				"description": "select to the cursor position smartly"
-			},			
+			},
 			{
 				"command": "metaGo.selectionSwitchActiveWithAnchor",
-				"key": "ctrl+i",
-				"mac": "cmd+i",
+				"key": "alt+a",
+				"mac": "cmd+a",
 				"when": "editorTextFocus && editorHasSelection"
 			},
 			{
@@ -229,6 +237,18 @@
 				"command": "metaGo.selectLineDown",
 				"key": "ctrl+l",
 				"mac": "cmd+l",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.inSelection",
+				"key": "ctrl+i",
+				"mac": "cmd+i",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "metaGo.inSelectionWithSeparators",
+				"key": "ctrl+i ctrl+i",
+				"mac": "cmd+i ctrl+i",
 				"when": "editorTextFocus"
 			},
 			{

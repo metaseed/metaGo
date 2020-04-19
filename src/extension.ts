@@ -32,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
     let metaJumper = new MetaJump(context, config);
     let centerEditor = new CurrentLineScroller(context);
     let spaceBlockJumper = new BlankLineJumper(context);
-    let metaSelection = new MetaSelection(context);
+    let metaSelection = new MetaSelection(context, config);
     let bookmark = new BookmarkExt(context, config.bookmark);
     let bracketJumper = new BracketJumper(context);
 
