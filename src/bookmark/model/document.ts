@@ -6,7 +6,7 @@ import { Bookmark } from './bookmark';
 import { History } from './history';
 import { BookmarkLocation } from './location';
 
-export class BookmarkItem {
+export class BookmarkItem implements vscode.QuickPickItem {
     constructor(public label: string,
         public description: string,
         public detail?: string,
