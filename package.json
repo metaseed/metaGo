@@ -249,7 +249,7 @@
 				"command": "metaGo.inSelectionWithSeparators",
 				"key": "ctrl+shift+i",
 				"mac": "cmd+shift+i",
-				"when": "editorTextFocus"
+				"when": "editorTextFocus&&!isDevelopment"
 			},
 			{
 				"command": "metaGo.scrollCurrentLineToMiddle",
