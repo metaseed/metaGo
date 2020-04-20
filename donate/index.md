@@ -26,5 +26,5 @@ Metago as an free tool, currently is mentained and developed by me in my spare t
           <img src="./alipay.png"/>
       </td>
   </tr>
-  <tr>or <b>zelle account</b> : metaseed@gmail.com</tr>
+  <tr><td colspan="4">or <b>zelle account</b> : metaseed@gmail.com</td></tr>
 </table>
