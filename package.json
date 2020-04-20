@@ -247,8 +247,8 @@
 			},
 			{
 				"command": "metaGo.inSelectionWithSeparators",
-				"key": "ctrl+i ctrl+i",
-				"mac": "cmd+i ctrl+i",
+				"key": "ctrl+shift+i",
+				"mac": "cmd+shift+i",
 				"when": "editorTextFocus"
 			},
 			{
