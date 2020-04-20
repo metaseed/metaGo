@@ -99,7 +99,9 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *select* to that location.
 4. repeat 1-3 to adjust your current selection.
-> at any time press <kbd>ESC</kbd> to cancel
+> at any time press <kbd>ESC</kbd> to cancel, or press <kdb>Backspace</kbd> to do step cancel to reinput last typed chararactor
+
+> support to do mutiple selections, 
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
 

@@ -2,8 +2,8 @@ import * as vscode from 'vscode';
 
 export class Utilities {
     public static goto(editor: vscode.TextEditor, line: number = -1, character: number = -1, addCursor = false) {
-        line = line === -1 ? editor.selection.active.line: line;
-        character = character === -1 ? editor.selection.active.character: character;
+        line = line === -1 ? editor.selection.active.line : line;
+        character = character === -1 ? editor.selection.active.character : character;
         this.select(editor, line, character, line, character, addCursor);
     }
 
@@ -13,13 +13,15 @@ export class Utilities {
         if(addCursor){
             editor.selections = [...editor.selections, new vscode.Selection(startRange, endRange)];
         } else {
-            editor.selection = new vscode.Selection(startRange, endRange);
+            const selections = editor.selections.slice(0, editor.selections.length -1);
+            const selection = new vscode.Selection(startRange, endRange);
+            editor.selections = [...selections, selection];
         }
         const range = new vscode.Range(startRange, endRange);
         editor.revealRange(range, vscode.TextEditorRevealType.InCenterIfOutsideViewport);
         this.focusColumn(editor.viewColumn)
     }
-    
+
     private static focusColumn(i: number): void {
         let exec = vscode.commands.executeCommand
         if (i === 1) exec('workbench.action.focusFirstEditorGroup')
@@ -30,6 +32,6 @@ export class Utilities {
         else if (i === 6) exec('workbench.action.focusSixthEditorGroup')
         else if (i === 7) exec('workbench.action.focusSeventhEditorGroup')
         else if (i === 8) exec('workbench.action.focusEighthEditorGroup')
-      }
+    }
     public static wait = m => new Promise(r => setTimeout(r, m))
 }

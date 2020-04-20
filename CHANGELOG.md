@@ -28,6 +28,10 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
+## Todo List for V4
+   - [ ] extract metajump as seperate vscode extension
+   - [ ] extract metaSelection as seperate vscode extension
+   - [ ] extract metaMark as seperate vscode extensio 
 ## In Development
 
 ---
@@ -44,9 +48,11 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Added
    - [x] selection: command to switch selection's active with anchor.
    - [x] metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCurosrSmart) 
-   - [ ] lineSelection: muti cursor support, could extend mutiple selections together.
+   - [x] lineSelection: muti cursor support, extend/shrink lines for last active cursor.
    - [ ] metaJump: selection support muti cursor, could add more selection parts to current selections
+   - [ ] metaJump: adding cursor command reused to change active selection if cursor is added to a selection already exist.
    - [ ] metaJump: forground decorator color for one char decorator, blue and yellow background for one and two length decorator.
+   - [x] insideSelection: 
 #### Removed
 #### Changed
    - [x] lineSelection: Ctrl+l to select current line or extend selection by one line below. Ctrl+o to extend selection by one line above.
