@@ -5,11 +5,13 @@ export class Utilities {
         line = line === -1 ? editor.selection.active.line : line;
         character = character === -1 ? editor.selection.active.character : character;
 
-        for (const selection of editor.selections) {
-            if (selection.contains(new vscode.Position(line, character))) {
-                const selections = editor.selections.filter(s=>s !== selection);
-                editor.selections = [...selections, selection];
-                return;
+        if (addCursor) { // change active selection
+            for (const selection of editor.selections) {
+                if (selection.contains(new vscode.Position(line, character))) {
+                    const selections = editor.selections.filter(s => s !== selection);
+                    editor.selections = [...selections, selection];
+                    return;
+                }
             }
         }
         this.select(editor, line, character, line, character, addCursor);
@@ -21,9 +23,13 @@ export class Utilities {
         if (addCursor) {
             editor.selections = [...editor.selections, new vscode.Selection(startRange, endRange)];
         } else {
-            const selections = editor.selections.slice(0, editor.selections.length - 1);
-            const selection = new vscode.Selection(startRange, endRange);
-            editor.selections = [...selections, selection];
+            if (fromLine === toLine && fromCharacter === toCharacter) { // goto
+                editor.selection = new vscode.Selection(startRange, endRange);
+            } else {
+                const selections = editor.selections.slice(0, editor.selections.length - 1);
+                const selection = new vscode.Selection(startRange, endRange);
+                editor.selections = [...selections, selection];
+            }
         }
         const range = new vscode.Range(startRange, endRange);
         editor.revealRange(range, vscode.TextEditorRevealType.InCenterIfOutsideViewport);
