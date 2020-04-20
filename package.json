@@ -3,7 +3,7 @@
 	"displayName": "MetaGo",
 	"description": "vscode cursor move and select; jump, navigation, goto, acejump",
 	"icon": "images/metago.gif",
-	"version": "3.6.2",
+	"version": "3.6.3",
 	"publisher": "metaseed",
 	"homepage": "https://github.com/metaseed/metaGo",
 	"license": "MIT",
@@ -35,7 +35,7 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "metaGo.input.cancel",
+				"command": "met3Go.input.cancel",
 				"title": "xx: metaJump cancel",
 				"category": "metaGo.metaJump"
 			},
@@ -482,7 +482,7 @@
 		"source-map-support": "^0.5.12",
 		"ts-loader": "^6.2.2",
 		"typescript": "^3.8.3",
-		"vsce": "^1.74.0",
+		"vsce": "^1.75.0",
 		"webpack": "^4.42.1",
 		"webpack-cli": "^3.3.11",
 		"terser-webpack-plugin": "^2.3.5"
