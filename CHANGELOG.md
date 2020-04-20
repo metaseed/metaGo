@@ -49,7 +49,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] selection: command to switch selection's active with anchor.
    - [x] metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCurosrSmart) 
    - [x] lineSelection: muti cursor support, extend/shrink lines for last active cursor.
-   - [ ] metaJump: selection support muti cursor, could add more selection parts to current selections
+   - [x] metaJump: selection support muti cursor, could add more selection parts to current selections
    - [ ] metaJump: adding cursor command reused to change active selection if cursor is added to a selection already exist.
    - [ ] metaJump: forground decorator color for one char decorator, blue and yellow background for one and two length decorator.
    - [x] insideSelection: 
@@ -60,6 +60,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: command indicator is shown at last cursor position when has muti cursor. i.e. when triggering 'add cursor' command.
 #### Fixed
    - [x] metaJump: undefined property ref exception, when cursor below the last location target candidate;
+   - [ ]selectLines: could select to first and last line
 
 ---
 ### V3.5.1 - April 16, 2020

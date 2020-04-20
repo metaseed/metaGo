@@ -27,3 +27,5 @@ Metago as an open source free tool, currently is mentained and developed by me i
       </td>
   </tr>
 </table>
+
+or **zelle account** : metaseed@gmail.com
