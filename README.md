@@ -72,7 +72,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 >
 > i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;</kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
 
-### Metajump: go to any character on screen
+## Metajump
+### go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere. (Triger)
 2. type the characters(stands for the target location) on screen, metaGo will show you some codes(candidate target locations) encoded with character. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
 3. you could continue type characters following the target location, or type the code decoration characters, then you will *go* to that location.
@@ -110,7 +111,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>.</kbd> to add another cursor after the target charactor
 1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>/</kbd> to add another cursor smartly to the target charactor
 
-> <kbd>Ctrl</kbd>+<kbd>u</kbd> to cancel last cursor adding.
+> <kbd>Ctrl</kbd>+<kbd>u</kbd> to cancel last cursor action.
 
 ![MetaGo.MutiCursor](images/metato.mutiCursor.gif)
 
@@ -150,12 +151,12 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>End</kbd>(default shortcut) to select from the cursor to the blank line below.
 ![MetaGo.blankLine](images/metago.blankLine.gif)
 
-### select line up/down
-the default select line down command not works well, if you press `ctrl+l, shift+up` to select line up, it will not select the current line but start from the line above.
-we create our own:
-* <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line or extend/shrink selections by one line below.
-* <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend/shrink selections by one line above.
-* <kbd>Alt</kbd>+<kbd>a</kbd> to swith the selection's active(cursor flashing) with the anchor.
+### select lines up/down
+the default select current line command(defaut Ctrl+l) selects current line and the cursor is at the next line's start position.
+we create our own to extend/shrink the current line selection:
+* <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line if no selection at cursor, or extend/shrink selections by one line below if there is selection before/after the cursor.
+* <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend/shrink selection by one line above if there is selection after/before the cursor.
+* <kbd>Alt</kbd>+<kbd>a</kbd> to change the selection's active(cursor flashing) with the anchor.
 
 > extend/shrink selections work at the selection's active end, if you want to extend/shrink at the selection's anchor end, use <kbd>Alt</kbd>+<kbd>a</kdb> to swith selection's anchor with active at first. 
 
