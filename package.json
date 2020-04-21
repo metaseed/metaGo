@@ -114,11 +114,11 @@
 				"title": "xx: metaGo.Select Line Down"
 			},
 			{
-				"command": "metaGo.inSelection",
+				"command": "metaGo.inPairSelection",
 				"title": "xx: metaGo select inside separators"
 			},
 			{
-				"command": "metaGo.inSelectionWithSeparators",
+				"command": "metaGo.inPairSelectionWithSeparators",
 				"title": "xx: metaGo select inside separators and the two separators"
 			},
 			{
@@ -224,32 +224,27 @@
 			{
 				"command": "metaGo.selectionSwitchActiveWithAnchor",
 				"key": "alt+a",
-				"mac": "cmd+a",
 				"when": "editorTextFocus && editorHasSelection"
 			},
 			{
 				"command": "metaGo.selectLineUp",
 				"key": "ctrl+o",
-				"mac": "cmd+o",
 				"when": "editorTextFocus && editorHasSelection"
 			},
 			{
 				"command": "metaGo.selectLineDown",
 				"key": "ctrl+l",
-				"mac": "cmd+l",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.inSelection",
-				"key": "ctrl+i",
-				"mac": "cmd+i",
+				"command": "metaGo.inPairSelection",
+				"key": "alt+p",
 				"when": "editorTextFocus"
 			},
 			{
-				"command": "metaGo.inSelectionWithSeparators",
-				"key": "ctrl+shift+i",
-				"mac": "cmd+shift+i",
-				"when": "editorTextFocus&&!isDevelopment"
+				"command": "metaGo.inPairSelectionWithPairs",
+				"key": "ctrl+alt+p",
+				"when": "editorTextFocus"
 			},
 			{
 				"command": "metaGo.scrollCurrentLineToMiddle",
