@@ -62,7 +62,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: command indicator is shown at last cursor position when has muti cursor. i.e. when triggering 'add cursor' command.
 #### Fixed
    - [x] metaJump: undefined property ref exception, when cursor below the last location target candidate;
-   - [x]selectLines: could select to first and last line
+   - [x] selectLines: could select to first and last line
 
 ---
 ### V3.5.1 - April 16, 2020
