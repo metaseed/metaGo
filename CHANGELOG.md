@@ -51,8 +51,9 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] lineSelection: muti cursor support, extend/shrink lines for last active cursor.
    - [x] metaJump: selection support muti cursor, could add more selection parts to current selections
    - [x] metaJump: show typed target chars in status bar.
-   - [ ] metaJump: adding cursor command reused to change active selection if cursor is added to a selection already exist.
-   - [ ] metaJump: forground decorator color for one char decorator, blue and yellow background for one and two length decorator.
+   - [x] metaJump: adding cursor command reused to change active selection if cursor is added to a selection already exist.
+   - [x] metaJump: forground decorator color for one char decorator.
+   - [ ] metaJump: select command indication color: blue
    - [x] insideSelection: 
 #### Removed
 #### Changed

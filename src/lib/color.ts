@@ -151,7 +151,7 @@ const Colors: { [name: string]: [number, number, number] } = {
 };
 
 import { ThemeColor } from 'vscode';
-
+// themeColors: https://code.visualstudio.com/api/references/theme-color
 export function color(inputColor: string, opacity: number = 255): string | ThemeColor {
 	if (/[a-z]+\.[a-z]+/i.test(inputColor) ||
 		['contrastActiveBorder', 'contrastBorder', 'focusBorder', 'foreground', 'descriptionForeground', 'errorForeground'].includes(inputColor)
