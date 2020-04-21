@@ -53,7 +53,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: show typed target chars in status bar.
    - [x] metaJump: adding cursor command reused to change active selection if cursor is added to a selection already exist.
    - [x] metaJump: forground decorator color for one char decorator.
-   - [ ] metaJump: select command indication color: blue
+   - [x] metaJump: different command indication colors for jump, selection and addCursor command
    - [x] insideSelection: 
 #### Removed
 #### Changed
@@ -62,7 +62,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: command indicator is shown at last cursor position when has muti cursor. i.e. when triggering 'add cursor' command.
 #### Fixed
    - [x] metaJump: undefined property ref exception, when cursor below the last location target candidate;
-   - [ ]selectLines: could select to first and last line
+   - [x]selectLines: could select to first and last line
 
 ---
 ### V3.5.1 - April 16, 2020
