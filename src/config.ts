@@ -61,7 +61,7 @@ class DecoratorConfig {
 
 	bgOpacity: string = '0.8';
 	bgColor: string = "lime,yellow";
-	color: string = "black";
+	color: string = "white, blue";
 	borderColor: string = "black";
 
 	width: number = 12;

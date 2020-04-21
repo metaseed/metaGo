@@ -364,7 +364,7 @@
 				},
 				"metaGo.decoration.fontFamily": {
 					"type": "string",
-					"default": "Consolas",
+					"default": "Consolas, 'Operator Mono SSm Lig', 'Fira Code', Menlo, Monaco, 'Courier New', monospace",
 					"description": "only for svg based decoration"
 				},
 				"metaGo.decoration.fontWeight": {
@@ -378,7 +378,7 @@
 				"metaGo.decoration.backgroundColor": {
 					"type": "string",
 					"default": "chartreuse,yellow",
-					"description": "code decorator background color"
+					"description": "code decorator background color for different code length"
 				},
 				"metaGo.decoration.matchBackground": {
 					"type": "string",
@@ -396,7 +396,8 @@
 				},
 				"metaGo.decoration.color": {
 					"type": "string",
-					"default": "blue"
+					"default": "blue, blue",
+					"description": "code decorator foreground color for different code length"
 				},
 				"metaGo.decoration.characters": {
 					"type": "string",
