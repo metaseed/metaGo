@@ -4,3 +4,6 @@
 [submodule "src/metaSelect"]
 	path = src/metaSelect
 	url = https://github.com/metaseed/metaSelect
+[submodule "src/metago.lib"]
+	path = src/metago.lib
+	url = https://github.com/metaseed/metago.lib
