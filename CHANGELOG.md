@@ -55,11 +55,11 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: different command indication colors for jump, selection and addCursor command.
    - [x] metaJump: could config foreground decorator color for both one-char and two-char decorator.
    - [x] metaSelection: command to alternate selection's active with anchor.
-   - [x] lineSelection: multi cursors support, extend/shrink lines for last active cursor.
+   - [x] lineSelection: multi cursors support, extend/shrink lines for last active cursor. <a href="https://github.com/metaseed/metaGo#lines-selection">(Detail)</a>
    - [x] inPairSelection: 
 #### Removed
 #### Changed
-   - [x] lineSelection: Ctrl+l to select current line or extend/shrink selection by one line below. Ctrl+o to extend/shrink selection by one line above.
+   - [x] lineSelection: Ctrl+l to select current line or extend/shrink selection by one line below. Ctrl+o to extend/shrink selection by one line above. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>
    - [x] metaJump: when have multiple cursors, add cursor does decorators encoding from last cursor position. originally always start from the first cursor position
    - [x] metaJump: command indicator is shown at last cursor position when has multi cursor. i.e. when triggering 'add cursor' command.
 #### Fixed
