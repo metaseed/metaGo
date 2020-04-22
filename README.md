@@ -64,7 +64,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * select code block when moving cursor while hold shift key.
 * scroll the active line (contains cursor) to the screen Top/Middle/Bottom.
 * select line up/down.
-* compatible with the vim plugins. 😊
+* compatible with the vim plugins.
 
 
 > if you like this tool, and using Windows, you may also be interested in my other tool: [**metaTool**](https://github.com/metatool/metatool). (release soon) 😉    
@@ -107,9 +107,9 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 ![MetaGo.MetaJump](images/metago.jump.gif)
 
 ### add multiple cursors to the active editor
-1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>,</kbd> to add another cursor before the target character
-1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>.</kbd> to add another cursor after the target character
-1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>/</kbd> to add another cursor smartly to the target character
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>,</kbd> to add another cursor before the target-character
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>.</kbd> to add another cursor after the target-character
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>/</kbd> to add another cursor smartly to the target-character
 
 > <kbd>Ctrl</kbd>+<kbd>u</kbd> to cancel last cursor action.
 
