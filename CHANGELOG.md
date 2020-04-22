@@ -6,26 +6,28 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] support real viewport range, not use config
    - [x] jumper support fold region    
    - [x] Color settings support referencing [Theme Color Id](https://code.visualstudio.com/api/references/theme-color)
-   - [x] sequential-target-chars support: type a sequence of target-chars, and dynamicly change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the target chars sequence and another set is the dynamicly generated docrators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
+   - [x] sequential-target-chars support: type a sequence of target-chars, and dynamically change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the target chars sequence and another set is the dynamically generated decorators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
    - [x] add following char decorator in sequential-target.
    - [x] jump commands could be triggered event editor not focused, has any open editor
-   - [x] left boder on jump code decorator support
+   - [x] left border on jump code decorator support
    - [x] fix enter key at end of sequential-target jump
-   - [x] backspace as command to delete last input char: could done by registered as texteditor command
+   - [x] backspace as command to delete last input char: could done by registered as textEditor command
    - [x] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
-   - [x] target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
-   - [x] ripple search support, type location-chars to triger far from center: one char nearby; two char current doc; three chars all opened editors
+   - [x] target chars is only used for narrow down searching range, not for navigation. solve the problem of typing multi target chars together may edit document by mistake
+   - [x] ripple search support, type location-chars to trigger far from center: one char nearby; two char current doc; three chars all opened editors
    - [x] bug: metaJump: '/' key could not be used as following sequence key, if already used as decorator hide key. fix it by disable sequential-target-chars if it used as the target char.
 
    - [x] Line selection up/down command: ? editorHasSelection
-      ~~make Ctrl+L into a line command trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this command~~
-      Ctrl+o to extenlineselection up when has selection
+      ~~make Ctrl+L into a line command trigger: if the user press i(means up, configurable), triggers the selecting up subCommand, in this subCommand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this command~~
+      Ctrl+o to extendLineSelection up when has selection
 
    - [ ] bracketJump: level navigate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
    - [ ] ctrl+i i ': select in '; ctrl+i a ': select ' and content;
    
    - [ ] bookmark: use treeView and implement tag mark.
+   - [ ] metaSelection: active selection's cursor should be special to identify, when there are multiple selections or multiple cursors
    - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
+   - [ ] metaJump: alt+/ then ctrl+alt+/ could cancel and press ctrl+alt+/ to trigger.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
 ## Todo List for V4
@@ -44,7 +46,7 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ## Current Version
 ---
-### V3.6.6 - April 22, 2020 
+### V3.6.6 - April 26, 2020 
 #### Added
    - [x] selection: command to switch selection's active with anchor.
    - [x] metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCursorSmart) 
@@ -54,15 +56,15 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: adding cursor command reused to change active selection if cursor is added to a selection already exist.
    - [x] metaJump: foreground decorator color for one char decorator.
    - [x] metaJump: different command indication colors for jump, selection and addCursor command
-   - [x] insideSelection: 
+   - [x] inPairSelection: 
 #### Removed
 #### Changed
-   - [x] lineSelection: Ctrl+l to select current line or extend selection by one line below. Ctrl+o to extend selection by one line above.
-   - [x] metaJump: add cursor does decorators encoding from last cursor position. originally always use the first cursor position
+   - [x] lineSelection: Ctrl+l to select current line or extend/shrink selection by one line below. Ctrl+o to extend/shrink selection by one line above.
+   - [x] metaJump: when have multiple cursors, add cursor does decorators encoding from last cursor position. originally always start from the first cursor position
    - [x] metaJump: command indicator is shown at last cursor position when has multi cursor. i.e. when triggering 'add cursor' command.
 #### Fixed
    - [x] metaJump: undefined property ref exception, when cursor below the last location target candidate;
-   - [x] selectLines: could select to first and last line
+   - [x] selectLines: could select to first and last line of the document.
 
 ---
 ### V3.5.1 - April 16, 2020
