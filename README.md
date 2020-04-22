@@ -115,7 +115,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 ![MetaGo.MutiCursor](images/metato.mutiCursor.gif)
 
-#### features highlight
+### features highlight
 * code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
 * code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
 * only encode characters on viewable screen area, so metaGo is faster.
@@ -124,36 +124,10 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * support having fold regions
 * support all opened editors
 
-### navigate between files using bookmarks
-
-* <kbd>Alt</kbd>+ <kbd>\'</kbd> to set a bookmark at the cursor location.
-* <kbd>Alt</kbd>+ <kbd>[</kbd> goto previous bookmark.
-* <kbd>Alt</kbd>+ <kbd>]</kbd> goto next bookmark
-* <kbd>Alt</kbd>+<kbd>\\</kbd> to list the bookmarks and show management menu.
-    1. press <kdb>cc</kbd> and <kbd>enter</kbd> to clear all the bookmarks
-    2. press <kdb>c</kbd> and <kbd>enter</kbd> to clear all the bookmarks in current document.
-    3. press <kdb>n</kbd> and <kbd>enter</kbd> to go to the next bookmark.
-    4. press <kdb>p</kbd> and <kbd>enter</kbd> to go to the previous bookmark.
-
-![MetaGo.Center](images/metago.bookmark.gif)
-
-### scroll line to the screen center/top
-* <kbd>Alt</kbd>+<kbd>m</kbd> is the default shortcut to scroll current line to screen center.
-* <kbd>Alt</kbd>+<kbd>t</kbd> is the default shortcut to scroll current line to screen top.
-* <kbd>Alt</kbd>+<kbd>b</kbd> is the default shortcut to scroll current line to screen bottom.
-
-![MetaGo.Center](images/metago.center.gif)
-
-### moving cursor up/down between blank lines
-* <kbd>Alt</kbd>+<kbd>Home</kbd>(default shortcut) to move cursor to the blank line above.
-* <kbd>Alt</kbd>+<kbd>End</kbd>(default shortcut) to move cursor to the blank line below.
-* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Home</kbd>(default shortcut) to select from the cursor to the blank line above.
-* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>End</kbd>(default shortcut) to select from the cursor to the blank line below.
-![MetaGo.blankLine](images/metago.blankLine.gif)
-
+## metaSelection
 ### select lines up/down
-the default select current line command(defaut Ctrl+l) selects current line and the cursor is at the next line's start position.
-we create our own to extend/shrink the current line selection:
+the default select current line command(defaut Ctrl+l) selects current line and put the cursor at the next line's start position.
+we create our own to extend/shrink the selection of the current line:
 * <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line if no selection at cursor, or extend/shrink selections by one line below if there is selection before/after the cursor.
 * <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend/shrink selection by one line above if there is selection after/before the cursor.
 * <kbd>Alt</kbd>+<kbd>a</kbd> to change the selection's active(cursor flashing) with the anchor.
@@ -175,11 +149,40 @@ by default selectLineUp command is configed as:
 ```
 you could asign a shortcut key not collision with default vscode ones, and remove the `editorHasSelection` condition, so it would work even no selection in editor.
 
+## navigate between files using bookmarks
+
+* <kbd>Alt</kbd>+ <kbd>\'</kbd> to set a bookmark at the cursor location.
+* <kbd>Alt</kbd>+ <kbd>[</kbd> goto previous bookmark.
+* <kbd>Alt</kbd>+ <kbd>]</kbd> goto next bookmark
+* <kbd>Alt</kbd>+<kbd>\\</kbd> to list the bookmarks and show management menu.
+    1. press <kdb>cc</kbd> and <kbd>enter</kbd> to clear all the bookmarks
+    2. press <kdb>c</kbd> and <kbd>enter</kbd> to clear all the bookmarks in current document.
+    3. press <kdb>n</kbd> and <kbd>enter</kbd> to go to the next bookmark.
+    4. press <kdb>p</kbd> and <kbd>enter</kbd> to go to the previous bookmark.
+
+![MetaGo.Center](images/metago.bookmark.gif)
+
+## Other features
+### scroll the active line(where there is cursor) to the screen top, middle and bottom
+* <kbd>Alt</kbd>+<kbd>t</kbd> is the default shortcut to scroll current line to screen top.
+* <kbd>Alt</kbd>+<kbd>m</kbd> is the default shortcut to scroll current line to screen middle.
+* <kbd>Alt</kbd>+<kbd>b</kbd> is the default shortcut to scroll current line to screen bottom.
+
+![MetaGo.Center](images/metago.center.gif)
+
+### moving cursor up/down between blank lines
+* <kbd>Alt</kbd>+<kbd>Home</kbd> to move cursor to the blank line above.
+* <kbd>Alt</kbd>+<kbd>End</kbd> to move cursor to the blank line below.
+* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Home</kbd> to select from the cursor to the blank line above.
+* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>End</kbd> to select from the cursor to the blank line below.
+![MetaGo.blankLine](images/metago.blankLine.gif)
+
 ### jump to bracket
 * extend the default jumpToBracket command.
 * <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>\\</kbd>: jump to the begin bracket that contains the cursor. Press the shortcut *again* jump to the end bracket.
 
-> it's very easy to triger metago command: type `F1, xx...`. `xx` is a prefix for search metago commands
+### to invoke command from command panel
+it's very easy to triger metago command: type <kbd>F1</kbd>, xx...`. `xx` is a prefix for search metago commands
 
 ### Other resources that help you understand MetaGo
 
