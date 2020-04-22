@@ -27,6 +27,8 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] bookmark: use treeView and implement tag mark.
    - [ ] metaSelection: active selection's cursor should be special to identify, when there are multiple selections or multiple cursors
    - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
+   - [ ] inPairSelection: pairs configuration
+   - [ ] inPairSelection: tag selection support
    - [ ] metaJump: alt+/ then ctrl+alt+/ could cancel and press ctrl+alt+/ to trigger.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
@@ -54,7 +56,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: the addCursor command could be used to change active selection when there are multiple selections.
    - [x] metaJump: different command indication colors for jump, selection and addCursor command.
    - [x] metaJump: could config foreground decorator color for both one-char and two-char decorator.
-   - [x] metaSelection: command to alternate selection's active with anchor.
+   - [x] metaSelection: command to alternate selection's active with anchor. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>
    - [x] lineSelection: multi cursors support, extend/shrink lines for last active cursor. <a href="https://github.com/metaseed/metaGo#lines-selection">(Detail)</a>
    - [x] inPairSelection: 
 #### Removed
@@ -69,7 +71,7 @@ All notable changes to the "metago" extension will be documented in this file.
 ---
 ### V3.5.1 - April 16, 2020
 #### Added
-   - [x] metaJump: ripple support, type location-chars to trigger far from center: one char current paragraph(separated by empty lines); two chars current doc; three chars all opened editors; for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current paragraph)
+   - [x] metaJump: ripple support, type location-chars to trigger far from center: one char current section(separated by empty lines); two chars current doc; three chars all opened editors; for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current section)
    - [x] metaJump: target chars is only used for narrow down searching range, not for navigation. solve the problem of typing multi target chars together may edit document by mistake
    - [x] metaGo: what's new page to show when major and minor upgrade
    - [x] dev: webpack support bundle third party packages

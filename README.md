@@ -52,7 +52,7 @@ With this new V3 released, we are going to add more features, peek features in d
 * hold <kbd>/</kbd> to hide jumper decorators on screen.(Done😉)
 * jumper commands for all opened editors, not just the active editor.(Done!)
 * support having fold regions.(V3.2 Done!)
-* ripple jump support to show less decorators on screen. one target char for current paragraphy(seperated by empty lines), two target chars for current document editor, three or more for all open editors. 
+* ripple jump support to show less decorators on screen. one target-char for current section(seperated by empty lines), two target-chars for current document editor, three or more for all open editors. 
 * and more... at [changelog](https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md)
 * if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or contact with us on [SLACK☕](https://metaseed-workspace.slack.com/archives/CTVFB7CLR)
 
@@ -68,52 +68,52 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 
 > if you like this tool, and using Windows, you may also be interested in my other tool: [**metaTool**](https://github.com/metatool/metatool). (release soon) 😉    
-> with metatool running with it's metakeyboard plugin, you just using the 61 keys main keyboard area to type any key you want.
+> with metaTool running with it's metaKeyboard plugin, you just using the 61 keys main keyboard area to type any key you want.
 >
 > i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;</kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
 
-## Metajump
+## MetaJump
 ### go to any character on screen
-1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere. (Triger)
-2. type the characters(stands for the target location) on screen, metaGo will show you some codes(candidate target locations) encoded with character. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
-3. you could continue type characters following the target location, or type the code decoration characters, then you will *go* to that location.
+1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere. (Trigger)
+2. type the characters(stands for the target location) on screen, metaGo will show you some decorator codes(candidate target locations) encoded with characters. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
+3. you could continue type characters following the target location to narrow down the possible targets range, or type the code decoration characters of one location to *go* to that target location.
 
-> at any time press <kbd>ESC</kbd> to cancel the command; <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> trigers 'step cancel')    
+> at any time press <kbd>ESC</kbd> to cancel the command; <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> triggers 'step-cancel')    
 
 > Ripple Support, Less Decorators On Screen: type location-chars to encode locations far from center(cursor location): 
-> 1. one target char for current paragraph(seperated by empty lines);
-> 1. two target chars for current doc;
-> 1. three or more target chars for all opened editors;
-> 1. for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current paragraph)
+> 1. one target-char for current section(separated by empty lines);
+> 1. two target-chars for current doc;
+> 1. three or more target-chars for all opened editors;
+> 1. for one or two target-chars, one-char-decorators will pass through boundaries(section or document) if possible. (i.e. for one-target-char, one-char-decorators has encoded all possible target locations in the section, then it will continue encodes until all one-char-decorators are used up).
 
 * the <kbd>Alt</kbd>+<kbd>.</kbd> shortcut will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
 * the <kbd>Alt</kbd>+<kbd>,</kbd> shortcut will trigger the metaGo.gotoBefore command, the cursor will be placed before the target character;
-* the <kbd>Alt</kbd>+<kbd>/</kbd> shortcut will trigger the metaGo.gotoSmart mommand which intelligently set cursor position after navigation:
+* the <kbd>Alt</kbd>+<kbd>/</kbd> shortcut will trigger the metaGo.gotoSmart command which intelligently set cursor position after navigation:
     * if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
     * The 'word' is defined as a group of all alphanumeric or punctuation characters.
 
-> Note: <kbd>Enter</kbd> is also usable as location charactor, it means the end of lines
-> commands that only navagite in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
+> Note: <kbd>Enter</kbd> is also usable as location character, it means the end of lines
+> commands that only navigate in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
 
 ### select to any character in the active editor from cursor
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>/</kbd> to tell I want to *select* to somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *select* to that location.
 4. repeat 1-3 to adjust your current selection.
-> at any time press <kbd>ESC</kbd> to cancel, or press <kdb>Backspace</kbd> to do step cancel to reinput last typed chararactor
+> at any time press <kbd>ESC</kbd> to cancel, or press <kdb>Backspace</kbd> to do step cancel to re-input last typed character
 
-> support to do mutiple selections, 
+> support to do multiple selections, 
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
 
-### add mutiple cursors to the active editor
-1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>,</kbd> to add another cursor before the target charactor
-1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>.</kbd> to add another cursor after the target charactor
-1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>/</kbd> to add another cursor smartly to the target charactor
+### add multiple cursors to the active editor
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>,</kbd> to add another cursor before the target character
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>.</kbd> to add another cursor after the target character
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>/</kbd> to add another cursor smartly to the target character
 
 > <kbd>Ctrl</kbd>+<kbd>u</kbd> to cancel last cursor action.
 
-![MetaGo.MutiCursor](images/metato.mutiCursor.gif)
+![MetaGo.MultiCursor](images/metato.mutiCursor.gif)
 
 ### features highlight
 * code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
@@ -130,7 +130,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * <kbd>Alt</kbd>+<kbd>a</kbd> to alternate the selection's active(cursor flashing) with the anchor.
 
 ### lines selection
-vscode's default select current line command(`Ctrl+l`) selects current line and puts the cursor at the next line's start position.
+vsCode's default select current line command(`Ctrl+l`) selects current line and puts the cursor at the next line's start position.
 we create our own to extend/shrink the selection of the current line:
 * <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line if no selection at cursor, or extend/shrink selections by one line below if there is selection before/after the cursor.
 * <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend/shrink selection by one line above if there is selection after/before the cursor.
@@ -191,7 +191,7 @@ With the two selections, you could then delete or copy...
 * <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>\\</kbd>: jump to the begin bracket that contains the cursor. Press the shortcut *again* jump to the end bracket.
 
 ### to invoke command from command panel
-it's very easy to triger metago command: type <kbd>F1</kbd>, xx...`. `xx` is a prefix for search metago commands
+it's very easy to trigger metago command: type <kbd>F1</kbd>, xx...`. `xx` is a prefix for search metago commands
 
 ### Other resources that help you understand MetaGo
 
@@ -379,7 +379,7 @@ to modify default press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
             },
             {
                 "command": "metaGo.scrollCurrentLineToMiddle",
-                "title": "xx: metaGo.cscroll urrent Line Middle"
+                "title": "xx: metaGo.scroll current Line Middle"
             },
             {
                 "command": "metaGo.scrollCurrentLineToTop",

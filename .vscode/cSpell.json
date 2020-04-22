@@ -6,15 +6,16 @@
     "language": "en",
     // words - list of words to be always considered correct
     "words": [
-        "splitted",
-        "metajumper",
-        "metago",
-        "vsix",
         "Consolas",
         "Inteli",
-        "Scroller",
+        "metago",
+        "metajumper",
         "Octicons",
-        "ROOTPATH"
+        "ROOTPATH",
+        "Scroller",
+        "seperated",
+        "splitted",
+        "vsix"
     ],
     // flagWords - list of words to be always considered incorrect
     // This is useful for offensive words and common spelling errors.
