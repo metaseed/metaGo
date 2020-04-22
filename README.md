@@ -26,7 +26,7 @@ Give me a  [github⭐](https://github.com/metaseed/metago)
       <br>
     </td>
     <td>
-	  <a href="https://github.com/metaseed/metaGo/blob/master/donate/index.md">
+      <a href="https://github.com/metaseed/metaGo/blob/master/donate/index.md">
           <img src="./donate/scan.png" style="height: 66px;"/>
       </a>
     </td>
@@ -125,29 +125,32 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * support all opened editors
 
 ## metaSelection
-### select lines up/down
-the default select current line command(defaut Ctrl+l) selects current line and put the cursor at the next line's start position.
+
+### Alternate Selection's active with anchor
+* <kbd>Alt</kbd>+<kbd>a</kbd> to alternate the selection's active(cursor flashing) with the anchor.
+
+### lines selection
+vscode's default select current line command(`Ctrl+l`) selects current line and puts the cursor at the next line's start position.
 we create our own to extend/shrink the selection of the current line:
 * <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line if no selection at cursor, or extend/shrink selections by one line below if there is selection before/after the cursor.
 * <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend/shrink selection by one line above if there is selection after/before the cursor.
-* <kbd>Alt</kbd>+<kbd>a</kbd> to change the selection's active(cursor flashing) with the anchor.
 
-> extend/shrink selections work at the selection's active end, if you want to extend/shrink at the selection's anchor end, use <kbd>Alt</kbd>+<kbd>a</kdb> to swith selection's anchor with active at first. 
+> extend/shrink selections work at the selection's active end(where cursor flashing), if you want to extend/shrink at the selection's anchor end, use <kbd>Alt</kbd>+<kbd>a</kdb> to alternate selection's anchor with active at first. 
 
-> note: <kbd>Ctrl</kbd>+<kbd>o</kbd> triggers open file by default, and it triggers extend line selection above when there is selection in active editor.
+> note: <kbd>Ctrl</kbd>+<kbd>o</kbd> triggers open file by default, and it triggers extend line selection above only when there is selection in active editor.
 
-> if you want to select line up, you should press <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line and then press <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend line selection up.
+> if you want to select line up, you should press <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line and then press <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend line selection above.
 
-by default selectLineUp command is configed as:
+by default selectLineUp command is configured as:
 ```json
 {
-	"command": "metaGo.selectLineUp",
-	"key": "ctrl+o",
-	"mac": "cmd+o",
-	"when": "editorTextFocus && editorHasSelection"
+    "command": "metaGo.selectLineUp",
+    "key": "ctrl+o",
+    "mac": "cmd+o",
+    "when": "editorTextFocus && editorHasSelection"
 }
 ```
-you could asign a shortcut key not collision with default vscode ones, and remove the `editorHasSelection` condition, so it would work even no selection in editor.
+you could assign a shortcut key not collision with default vscode ones, and remove the `editorHasSelection` condition, so it would work even no selection in editor.
 
 ## navigate between files using bookmarks
 
@@ -195,220 +198,220 @@ If you have any requirements or dependencies, add a section describing those and
 ## Default Shortcut Settings
 
             {
-				"command": "metaGo.input.cancel",
-				"key": "escape",
-				"when": "editorTextFocus && metaGoInput"
-			},
-			{
-				"command": "metaGo.gotoBefore",
-				"key": "alt+,",
-				"when": "editorTextFocus",
-				"description": "goto the character and set the cursor before the character"
-			},
-			{
-				"command": "metaGo.gotoAfter",
-				"key": "alt+.",
-				"when": "editorTextFocus",
-				"description": "goto the character and set the cursor after the character"
-			},
-			{
-				"command": "metaGo.gotoSmart",
-				"key": "alt+/",
-				"when": "editorTextFocus",
-				"description": "goto the character and set the cursor smartly"
-			},
-			{
-				"command": "metaGo.selectBefore",
-				"key": "alt+shift+,",
-				"when": "editorTextFocus",
-				"description": "select to the cursor position before the character"
-			},
-			{
-				"command": "metaGo.selectAfter",
-				"key": "alt+shift+.",
-				"when": "editorTextFocus",
-				"description": "select to the cursor position after the character"
-			},
-			{
-				"command": "metaGo.selectSmart",
-				"key": "alt+shift+/",
-				"when": "editorTextFocus",
-				"description": "select to the cursor position smartly"
-			},
-			{
-				"command": "metaGo.selectLineUp",
-				"key": "ctrl+shift+l",
-				"mac": "cmd+shift+l",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.selectLineDown",
-				"key": "ctrl+l",
-				"mac": "cmd+l",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.scrollCurrentLineToMiddle",
-				"key": "alt+m",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.scrollCurrentLineToBottom",
-				"key": "alt+b",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.scrollCurrentLineToTop",
-				"key": "alt+t",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.gotoEmptyLineUp",
-				"key": "alt+home",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.selectEmptyLineUp",
-				"key": "alt+shift+home",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.gotoEmptyLineDown",
-				"key": "alt+end",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.selectEmptyLineDown",
-				"key": "alt+shift+end",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.bookmark.toggle",
-				"key": "alt+'",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.bookmark.view",
-				"key": "alt+\\",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.bookmark.previous",
-				"key": "alt+[",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.bookmark.next",
-				"key": "alt+]",
-				"when": "editorTextFocus"
-			},
-			{
-				"command": "metaGo.jumpToBracket",
-				"key": "ctrl+shift+\\",
-				"when": "editorTextFocus"
-			}
+                "command": "metaGo.input.cancel",
+                "key": "escape",
+                "when": "editorTextFocus && metaGoInput"
+            },
+            {
+                "command": "metaGo.gotoBefore",
+                "key": "alt+,",
+                "when": "editorTextFocus",
+                "description": "goto the character and set the cursor before the character"
+            },
+            {
+                "command": "metaGo.gotoAfter",
+                "key": "alt+.",
+                "when": "editorTextFocus",
+                "description": "goto the character and set the cursor after the character"
+            },
+            {
+                "command": "metaGo.gotoSmart",
+                "key": "alt+/",
+                "when": "editorTextFocus",
+                "description": "goto the character and set the cursor smartly"
+            },
+            {
+                "command": "metaGo.selectBefore",
+                "key": "alt+shift+,",
+                "when": "editorTextFocus",
+                "description": "select to the cursor position before the character"
+            },
+            {
+                "command": "metaGo.selectAfter",
+                "key": "alt+shift+.",
+                "when": "editorTextFocus",
+                "description": "select to the cursor position after the character"
+            },
+            {
+                "command": "metaGo.selectSmart",
+                "key": "alt+shift+/",
+                "when": "editorTextFocus",
+                "description": "select to the cursor position smartly"
+            },
+            {
+                "command": "metaGo.selectLineUp",
+                "key": "ctrl+shift+l",
+                "mac": "cmd+shift+l",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.selectLineDown",
+                "key": "ctrl+l",
+                "mac": "cmd+l",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.scrollCurrentLineToMiddle",
+                "key": "alt+m",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.scrollCurrentLineToBottom",
+                "key": "alt+b",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.scrollCurrentLineToTop",
+                "key": "alt+t",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.gotoEmptyLineUp",
+                "key": "alt+home",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.selectEmptyLineUp",
+                "key": "alt+shift+home",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.gotoEmptyLineDown",
+                "key": "alt+end",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.selectEmptyLineDown",
+                "key": "alt+shift+end",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.bookmark.toggle",
+                "key": "alt+'",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.bookmark.view",
+                "key": "alt+\\",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.bookmark.previous",
+                "key": "alt+[",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.bookmark.next",
+                "key": "alt+]",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.jumpToBracket",
+                "key": "ctrl+shift+\\",
+                "when": "editorTextFocus"
+            }
 
 To configure the keybinding, add the following lines to *keybindings.json* (File -> Preferences -> Keyboard Shortcuts):
 ## extension Settings
 to modify default press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
 # default settings:
 
-			{
-				"command": "metaGo.input.cancel",
-				"title": "xx: metaJump cancel",
-				"category": "metaGo.metaJump"
-			},
-			{
-				"command": "metaGo.metaJump.backspace",
-				"title": "xx: metaJump step-cancel",
-				"category": "metaGo.metaJump"
-			},
-			{
-				"command": "metaGo.gotoSmart",
-				"title": "xx: metaGo.goto Smart",
-				"category": "metaGo.metaJump"
-			},
-			{
-				"command": "metaGo.gotoAfter",
-				"title": "xx: metaGo.goto After"
-			},
-			{
-				"command": "metaGo.gotoBefore",
-				"title": "xx: metaGo.goto Before"
-			},
-			{
-				"command": "metaGo.gotoSmartActive",
-				"title": "xx: metaGo.Goto Smart only in Active editor"
-			},
-			{
-				"command": "metaGo.gotoAfterActive",
-				"title": "xx: metaGo.Goto After only in Active editor"
-			},
-			{
-				"command": "metaGo.gotoBeforeActive",
-				"title": "xx: metaGo.goto Before only in Active editor"
-			},
-			{
-				"command": "metaGo.selectSmart",
-				"title": "xx: metaGo.Select to the cursor position Smartly"
-			},
-			{
-				"command": "metaGo.selectBefore",
-				"title": "xx: metaGo.Select to position Before the charactor"
-			},
-			{
-				"command": "metaGo.selectAfter",
-				"title": "xx: metaGo.Select to position After the charactor"
-			},
-			{
-				"command": "metaGo.selectLineUp",
-				"title": "xx: metaGo.Select Line Up"
-			},
-			{
-				"command": "metaGo.selectLineDown",
-				"title": "xx: metaGo.Select Line Down"
-			},
-			{
-				"command": "metaGo.scrollCurrentLineToMiddle",
-				"title": "xx: metaGo.cscroll urrent Line Middle"
-			},
-			{
-				"command": "metaGo.scrollCurrentLineToTop",
-				"title": "xx: metaGo.scroll current Line Top"
-			},
-			{
-				"command": "metaGo.scrollCurrentLineToBottom",
-				"title": "xx: metaGo.scroll current Line Bottom"
-			},
-			{
-				"command": "metaGo.gotoEmptyLineUp",
-				"title": "xx: metaGo.select Empty Line Move Up"
-			},
-			{
-				"command": "metaGo.selectEmptyLineUp",
-				"title": "xx: metaGo.select Empty Line Up"
-			},
-			{
-				"command": "metaGo.gotoEmptyLineDown",
-				"title": "xx: metaGo.Goto Empty Line Down"
-			},
-			{
-				"command": "metaGo.selectEmptyLineDown",
-				"title": "xx: metaGo.Select Empty Line Down"
-			},
-			{
-				"command": "metaGo.bookmark.toggle",
-				"title": "xx: metaGo.Bookmark Toggle"
-			},
-			{
-				"command": "metaGo.bookmark.view",
-				"title": "xx: metaGo.Bookmark View"
-			},
-			{
-				"command": "metaGo.bookmark.clear",
-				"title": "xx: metaGo.Bookmark Clear"
-			}
-		
+            {
+                "command": "metaGo.input.cancel",
+                "title": "xx: metaJump cancel",
+                "category": "metaGo.metaJump"
+            },
+            {
+                "command": "metaGo.metaJump.backspace",
+                "title": "xx: metaJump step-cancel",
+                "category": "metaGo.metaJump"
+            },
+            {
+                "command": "metaGo.gotoSmart",
+                "title": "xx: metaGo.goto Smart",
+                "category": "metaGo.metaJump"
+            },
+            {
+                "command": "metaGo.gotoAfter",
+                "title": "xx: metaGo.goto After"
+            },
+            {
+                "command": "metaGo.gotoBefore",
+                "title": "xx: metaGo.goto Before"
+            },
+            {
+                "command": "metaGo.gotoSmartActive",
+                "title": "xx: metaGo.Goto Smart only in Active editor"
+            },
+            {
+                "command": "metaGo.gotoAfterActive",
+                "title": "xx: metaGo.Goto After only in Active editor"
+            },
+            {
+                "command": "metaGo.gotoBeforeActive",
+                "title": "xx: metaGo.goto Before only in Active editor"
+            },
+            {
+                "command": "metaGo.selectSmart",
+                "title": "xx: metaGo.Select to the cursor position Smartly"
+            },
+            {
+                "command": "metaGo.selectBefore",
+                "title": "xx: metaGo.Select to position Before the charactor"
+            },
+            {
+                "command": "metaGo.selectAfter",
+                "title": "xx: metaGo.Select to position After the charactor"
+            },
+            {
+                "command": "metaGo.selectLineUp",
+                "title": "xx: metaGo.Select Line Up"
+            },
+            {
+                "command": "metaGo.selectLineDown",
+                "title": "xx: metaGo.Select Line Down"
+            },
+            {
+                "command": "metaGo.scrollCurrentLineToMiddle",
+                "title": "xx: metaGo.cscroll urrent Line Middle"
+            },
+            {
+                "command": "metaGo.scrollCurrentLineToTop",
+                "title": "xx: metaGo.scroll current Line Top"
+            },
+            {
+                "command": "metaGo.scrollCurrentLineToBottom",
+                "title": "xx: metaGo.scroll current Line Bottom"
+            },
+            {
+                "command": "metaGo.gotoEmptyLineUp",
+                "title": "xx: metaGo.select Empty Line Move Up"
+            },
+            {
+                "command": "metaGo.selectEmptyLineUp",
+                "title": "xx: metaGo.select Empty Line Up"
+            },
+            {
+                "command": "metaGo.gotoEmptyLineDown",
+                "title": "xx: metaGo.Goto Empty Line Down"
+            },
+            {
+                "command": "metaGo.selectEmptyLineDown",
+                "title": "xx: metaGo.Select Empty Line Down"
+            },
+            {
+                "command": "metaGo.bookmark.toggle",
+                "title": "xx: metaGo.Bookmark Toggle"
+            },
+            {
+                "command": "metaGo.bookmark.view",
+                "title": "xx: metaGo.Bookmark View"
+            },
+            {
+                "command": "metaGo.bookmark.clear",
+                "title": "xx: metaGo.Bookmark Clear"
+            }
+        
 ## Credits
 
 ### Contributers:
