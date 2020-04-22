@@ -146,22 +146,28 @@ by default selectLineUp command is configured as:
 {
     "command": "metaGo.selectLineUp",
     "key": "ctrl+o",
-    "mac": "cmd+o",
     "when": "editorTextFocus && editorHasSelection"
 }
 ```
-you could assign a shortcut key not collision with default vscode ones, and remove the `editorHasSelection` condition, so it would work even no selection in editor.
+you could assign a shortcut key not collision with default vscode ones, just remove the `editorHasSelection` condition, so it works even with no selection in editor.
+
+#### lineSelection demo
+we use `ctrl+l` to select current line, then `ctrl+l` again to extend current selection below, then `ctrl+o` to shrink current selection above, then `alt+a` to alternate the current selection's active end with anchor end, then `ctrl+o` to extend current selection above, then `ctrl+alt+/` to add another cursor, and `ctrl+l` to select current line, `ctrl+l` again to extend selection below, then `alt+a` to alternate selection's active with anchor, then `ctrl+o` to extend selection above. 
+
+With the two selections, you could then delete or copy...
+
+![MetaGo.LineSelection](images/line-selection.gif)
 
 ## navigate between files using bookmarks
 
-* <kbd>Alt</kbd>+ <kbd>\'</kbd> to set a bookmark at the cursor location.
+* <kbd>Alt</kbd>+ <kbd>\'</kbd> to toggle a bookmark at the cursor location.
 * <kbd>Alt</kbd>+ <kbd>[</kbd> goto previous bookmark.
-* <kbd>Alt</kbd>+ <kbd>]</kbd> goto next bookmark
-* <kbd>Alt</kbd>+<kbd>\\</kbd> to list the bookmarks and show management menu.
-    1. press <kdb>cc</kbd> and <kbd>enter</kbd> to clear all the bookmarks
-    2. press <kdb>c</kbd> and <kbd>enter</kbd> to clear all the bookmarks in current document.
-    3. press <kdb>n</kbd> and <kbd>enter</kbd> to go to the next bookmark.
-    4. press <kdb>p</kbd> and <kbd>enter</kbd> to go to the previous bookmark.
+* <kbd>Alt</kbd>+ <kbd>]</kbd> goto next bookmark.
+* <kbd>Alt</kbd>+<kbd>\\</kbd> to list the bookmarks with management menu:
+    1. press <kdb>cc</kbd> then <kbd>enter</kbd> to clear all the bookmarks
+    2. press <kdb>c</kbd> then <kbd>enter</kbd> to clear all the bookmarks in current document.
+    3. press <kdb>n</kbd> then <kbd>enter</kbd> to go to the next bookmark.
+    4. press <kdb>p</kbd> then <kbd>enter</kbd> to go to the previous bookmark.
 
 ![MetaGo.Center](images/metago.bookmark.gif)
 
