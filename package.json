@@ -36,13 +36,11 @@
 		"commands": [
 			{
 				"command": "met3Go.input.cancel",
-				"title": "xx: metaJump cancel",
-				"category": "metaGo.metaJump"
+				"title": "xx: metaJump cancel"
 			},
 			{
 				"command": "metaGo.metaJump.backspace",
-				"title": "xx: metaJump step-cancel",
-				"category": "metaGo.metaJump"
+				"title": "xx: metaJump step-cancel"
 			},
 			{
 				"command": "metago.showLandingPage",
@@ -51,8 +49,7 @@
 			},
 			{
 				"command": "metaGo.gotoSmart",
-				"title": "xx: metaGo.goto Smart",
-				"category": "metaGo.metaJump"
+				"title": "xx: metaGo.goto Smart"
 			},
 			{
 				"command": "metaGo.gotoAfter",
@@ -64,18 +61,15 @@
 			},
 			{
 				"command": "metaGo.insertCursorSmart",
-				"title": "xx: metaGo.insertCursor Smart",
-				"category": "metaGo.metaJump"
+				"title": "xx: metaGo.insertCursor Smart"
 			},
 			{
 				"command": "metaGo.insertCursorAfter",
-				"title": "xx: metaGo.insertCursor After",
-				"category": "metaGo.metaJump"
+				"title": "xx: metaGo.insertCursor After"
 			},
 			{
 				"command": "metaGo.insertCursorBefore",
-				"title": "xx: metaGo.insertCursor Before",
-				"category": "metaGo.metaJump"
+				"title": "xx: metaGo.insertCursor Before"
 			},
 			{
 				"command": "metaGo.gotoSmartActive",
@@ -95,11 +89,11 @@
 			},
 			{
 				"command": "metaGo.selectBefore",
-				"title": "xx: metaGo.Select to position Before the charactor"
+				"title": "xx: metaGo.Select to position Before the character"
 			},
 			{
 				"command": "metaGo.selectAfter",
-				"title": "xx: metaGo.Select to position After the charactor"
+				"title": "xx: metaGo.Select to position After the character"
 			},
 			{
 				"command": "metaGo.selectionSwitchActiveWithAnchor",
@@ -123,15 +117,15 @@
 			},
 			{
 				"command": "metaGo.scrollCurrentLineToMiddle",
-				"title": "xx: metaGo.cscroll urrent Line Middle"
+				"title": "xx: metaGo.scroll current line to Middle"
 			},
 			{
 				"command": "metaGo.scrollCurrentLineToTop",
-				"title": "xx: metaGo.scroll current Line Top"
+				"title": "xx: metaGo.scroll current line to Top"
 			},
 			{
 				"command": "metaGo.scrollCurrentLineToBottom",
-				"title": "xx: metaGo.scroll current Line Bottom"
+				"title": "xx: metaGo.scroll current line to Bottom"
 			},
 			{
 				"command": "metaGo.gotoEmptyLineUp",

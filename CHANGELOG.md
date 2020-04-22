@@ -18,20 +18,20 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] bug: metaJump: '/' key could not be used as following sequence key, if already used as decorator hide key. fix it by disable sequential-target-chars if it used as the target char.
 
    - [x] Line selection up/down command: ? editorHasSelection
-      ~~make Ctrl+L into a line comand trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this comand~~
+      ~~make Ctrl+L into a line command trigger: if the user press i(means up, configurable), triggers the selecting up subcomand, in this subcomand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subcomand triger. any other key other than i,k would escape this command~~
       Ctrl+o to extenlineselection up when has selection
 
-   - [ ] bracketJump: level navagate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
+   - [ ] bracketJump: level navigate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
    - [ ] ctrl+i i ': select in '; ctrl+i a ': select ' and content;
    
-   - [ ] bookmark: use treeview and implement tag mark.
+   - [ ] bookmark: use treeView and implement tag mark.
    - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
 ## Todo List for V4
-   - [ ] extract metajump as seperate vscode extension
-   - [ ] extract metaSelection as seperate vscode extension
-   - [ ] extract metaMark as seperate vscode extensio 
+   - [ ] extract metaJump as separate vscode extension
+   - [ ] extract metaSelection as separate vscode extension
+   - [ ] extract metaMark as separate vscode extension
 ## In Development
 
 ---
@@ -47,19 +47,19 @@ All notable changes to the "metago" extension will be documented in this file.
 ### V3.6.6 - April 22, 2020 
 #### Added
    - [x] selection: command to switch selection's active with anchor.
-   - [x] metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCurosrSmart) 
-   - [x] lineSelection: muti cursor support, extend/shrink lines for last active cursor.
-   - [x] metaJump: selection support muti cursor, could add more selection parts to current selections
+   - [x] metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCursorSmart) 
+   - [x] lineSelection: multi cursor support, extend/shrink lines for last active cursor.
+   - [x] metaJump: selection support multi cursor, could add more selection parts to current selections
    - [x] metaJump: show typed target chars in status bar.
    - [x] metaJump: adding cursor command reused to change active selection if cursor is added to a selection already exist.
-   - [x] metaJump: forground decorator color for one char decorator.
+   - [x] metaJump: foreground decorator color for one char decorator.
    - [x] metaJump: different command indication colors for jump, selection and addCursor command
    - [x] insideSelection: 
 #### Removed
 #### Changed
    - [x] lineSelection: Ctrl+l to select current line or extend selection by one line below. Ctrl+o to extend selection by one line above.
    - [x] metaJump: add cursor does decorators encoding from last cursor position. originally always use the first cursor position
-   - [x] metaJump: command indicator is shown at last cursor position when has muti cursor. i.e. when triggering 'add cursor' command.
+   - [x] metaJump: command indicator is shown at last cursor position when has multi cursor. i.e. when triggering 'add cursor' command.
 #### Fixed
    - [x] metaJump: undefined property ref exception, when cursor below the last location target candidate;
    - [x] selectLines: could select to first and last line
@@ -67,10 +67,10 @@ All notable changes to the "metago" extension will be documented in this file.
 ---
 ### V3.5.1 - April 16, 2020
 #### Added
-   - [x] metaJump: ripple support, type location-chars to triger far from center: one char current paragraph(seperated by empty lines); two chars current doc; three chars all opened editors; for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current paragraph)
-   - [x] metaJump: target chars is only used for narrow down searching range, not for navagition. solve the problem of typing muti target chars together may edit document by mistake
+   - [x] metaJump: ripple support, type location-chars to trigger far from center: one char current paragraph(separated by empty lines); two chars current doc; three chars all opened editors; for one and two target chars, one char decorators will pass through boundaries if possible(i.e. for one target char, no two chars decorators are needed for all candidates in the current paragraph)
+   - [x] metaJump: target chars is only used for narrow down searching range, not for navigation. solve the problem of typing multi target chars together may edit document by mistake
    - [x] metaGo: what's new page to show when major and minor upgrade
-   - [x] dev: webpack support bundle third party packates
+   - [x] dev: webpack support bundle third party packages
    - [x] dev: add local package generation, uninstall then install npm command
 
 #### Removed
