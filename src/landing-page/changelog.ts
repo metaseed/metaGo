@@ -6,7 +6,7 @@ export const changeLog: ChangeLogItem[] = [
   { kind: ChangeLogKind.ADDED,   message: `metaJump: the addCursor command could be used to change active selection when there are multiple selections.`},
   { kind: ChangeLogKind.ADDED,   message: `metaJump: different command indication colors for jump, selection and addCursor command.`},
   { kind: ChangeLogKind.ADDED,   message: `metaJump: could config foreground decorator color for both one-char and two-char decorator.`},
-  { kind: ChangeLogKind.ADDED,   message: `metaSelection: command to alternate selection's active with anchor.`},
+  { kind: ChangeLogKind.ADDED,   message: `metaSelection: command to alternate selection's active with anchor. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>`},
   { kind: ChangeLogKind.ADDED,   message: `lineSelection: multi cursors support, extend/shrink lines for last active cursor. <a href="https://github.com/metaseed/metaGo#lines-selection">(Detail)</a>`},
   { kind: ChangeLogKind.ADDED,   message: `inPairSelection:`},
   { kind: ChangeLogKind.CHANGED,   message: `lineSelection: Ctrl+l to select current line or extend/shrink selection by one line below. Ctrl+o to extend/shrink selection by one line above. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>`},
