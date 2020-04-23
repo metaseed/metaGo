@@ -40,7 +40,7 @@ quotes from users:
 
 > [This boosts my performance so much since It’s a trouble for me to use VIM (I’m leftie :( )](https://medium.com/@ColCh/i-found-also-these-plugins-very-helpful-in-my-work-df795a9e929f)
 
-> [ probably the best tool for keyboard driven navigation bar none (better than vim), includes bookmarks](https://dev.to/fbnlsr/10-essential-extensions-for-vscode-174i#comment-node-140785)
+> [probably the best tool for keyboard driven navigation bar none (better than vim), includes bookmarks](https://dev.to/fbnlsr/10-essential-extensions-for-vscode-174i#comment-node-140785)
 
 > [MetaGo is a way to move your cursor to a position quickly and without using your mouse/trackpad.](https://scotch.io/starters/visual-studio-code/metago)
 
@@ -52,7 +52,11 @@ With this new V3 released, we are going to add more features, peek features in d
 * hold <kbd>/</kbd> to hide jumper decorators on screen.(Done😉)
 * jumper commands for all opened editors, not just the active editor.(Done!)
 * support having fold regions.(V3.2 Done!)
-* ripple jump support to show less decorators on screen. one target-char for current section(seperated by empty lines), two target-chars for current document editor, three or more for all open editors. 
+* ripple jump support to show less decorators on screen. one target-char for current section(seperated by empty lines), two target-chars for current document editor, three or more for all open editors.
+* improved line-selection extend/shrink command.
+* command to add multiple cursors, and multiple cursor/selection support for all command in metaGo
+* command to change active selection in multiple selections
+* command to select within separator pairs. i.e. '(', ')'; '[',']', '"',''',...
 * and more... at [changelog](https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md)
 * if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or contact with us on [SLACK☕](https://metaseed-workspace.slack.com/archives/CTVFB7CLR)
 
@@ -113,7 +117,17 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 > <kbd>Ctrl</kbd>+<kbd>u</kbd> to cancel last cursor action.
 
+#### add-multi-cursors demo
+we want to modify the three wrongly spelled words, `alt+/` to goto the end of one of them, and `ctrl+alt+/` two times to add two additional cursors to the end of the other two words, `ctrl+backspace` to delete them together, `esc` to escape multi-cursor mode:
+
 ![MetaGo.MultiCursor](images/metato.mutiCursor.gif)
+
+#### change-active-selection command
+> the three add-cursor commands would become change-active-selection commands if the target location is inside a selection. It is useful to modify multiple selection ranges, just select one selection as the active one and do extending or shrinking there.
+#### change-active-selection demo
+we use `alt+shift+/` do selection, then `alt+a` to alternate selection's active with anchor, then `alt+shift+/` to extend selection from another end; then we use `ctrl+alt+/` to add another cursor to code above, `alt+shift+/` to do selection, then `ctrl+alt+/` to change make the first selection active, `alt+shift+/` to shrink selection there:
+![MetaGo.change-active-selection](images/metato.change-active-selection.gif)
+
 
 ### features highlight
 * code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
