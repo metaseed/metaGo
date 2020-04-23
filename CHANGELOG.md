@@ -50,10 +50,10 @@ All notable changes to the "metago" extension will be documented in this file.
 ---
 ### V3.6.6 - April 26, 2020 
 #### Added
-   - [x] metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCursorSmart) 
-   - [x] metaJump: selection support multi cursor, could add more selection parts to current selections.
-   - [x] metaJump: show typed target chars in status bar.
-   - [x] metaJump: the addCursor command could be used to change active selection when there are multiple selections.
+   - [x] metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCursorSmart) <a href="https://github.com/metaseed/metaGo#add-multiple-cursors-to-the-active-editor">(Detail)</a>
+   - [x] metaJump: selection support multi cursor, could add more selection parts to current selections. 
+   - [x] metaJump: the addCursor command could be used to change active selection when there are multiple selections.<a href="https://github.com/metaseed/metaGo#change-active-selection-demo">(Detail)</a>
+   - [x] metaJump: show typed target chars in status bar. <a href="https://github.com/metaseed/metaGo#change-active-selection-demo">(Detail)</a>
    - [x] metaJump: different command indication colors for jump, selection and addCursor command.
    - [x] metaJump: could config foreground decorator color for both one-char and two-char decorator.
    - [x] metaSelection: command to alternate selection's active with anchor. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>
