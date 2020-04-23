@@ -1,9 +1,9 @@
 import { ChangeLogItem, ChangeLogKind } from "./contentProvider";
 export const changeLog: ChangeLogItem[] = [
-  { kind: ChangeLogKind.ADDED,   message: `metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCursorSmart)`},
+  { kind: ChangeLogKind.ADDED,   message: `metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCursorSmart) <a href="https://github.com/metaseed/metaGo#add-multiple-cursors-to-the-active-editor">(Detail)</a>`},
   { kind: ChangeLogKind.ADDED,   message: `metaJump: selection support multi cursor, could add more selection parts to current selections.`},
-  { kind: ChangeLogKind.ADDED,   message: `metaJump: show typed target chars in status bar.`},
-  { kind: ChangeLogKind.ADDED,   message: `metaJump: the addCursor command could be used to change active selection when there are multiple selections.`},
+  { kind: ChangeLogKind.ADDED,   message: `metaJump: the addCursor command could be used to change active selection when there are multiple selections.<a href="https://github.com/metaseed/metaGo#change-active-selection-demo">(Detail)</a>`},
+  { kind: ChangeLogKind.ADDED,   message: `metaJump: show typed target chars in status bar. <a href="https://github.com/metaseed/metaGo#change-active-selection-demo">(Detail)</a>`},
   { kind: ChangeLogKind.ADDED,   message: `metaJump: different command indication colors for jump, selection and addCursor command.`},
   { kind: ChangeLogKind.ADDED,   message: `metaJump: could config foreground decorator color for both one-char and two-char decorator.`},
   { kind: ChangeLogKind.ADDED,   message: `metaSelection: command to alternate selection's active with anchor. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>`},

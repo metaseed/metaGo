@@ -125,7 +125,7 @@ we want to modify the three wrongly spelled words, `alt+/` to goto the end of on
 #### change-active-selection command
 > the three add-cursor commands would become change-active-selection commands if the target location is inside a selection. It is useful to modify multiple selection ranges, just select one selection as the active one and do extending or shrinking there.
 #### change-active-selection demo
-we use `alt+shift+/` do selection, then `alt+a` to alternate selection's active with anchor, then `alt+shift+/` to extend selection from another end; then we use `ctrl+alt+/` to add another cursor to code above, `alt+shift+/` to do selection, then `ctrl+alt+/` to change make the first selection active, `alt+shift+/` to shrink selection there:
+we use `alt+shift+/` do selection, then `alt+a` to alternate selection's active with anchor, then `alt+shift+/` to extend selection from another end; then we use `ctrl+alt+/` to add another cursor to code above, `alt+shift+/` to do selection, then `ctrl+alt+/` to make the first selection active, `alt+shift+/` to shrink selection there:
 ![MetaGo.change-active-selection](images/metato.change-active-selection.gif)
 
 
