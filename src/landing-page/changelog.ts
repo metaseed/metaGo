@@ -12,6 +12,7 @@ export const changeLog: ChangeLogItem[] = [
   { kind: ChangeLogKind.CHANGED,   message: `lineSelection: Ctrl+l to select current line or extend/shrink selection by one line below. Ctrl+o to extend/shrink selection by one line above. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>`},
   { kind: ChangeLogKind.CHANGED,   message: `metaJump: when have multiple cursors, add cursor does decorators encoding from last cursor position. originally always start from the first cursor position`},
   { kind: ChangeLogKind.CHANGED,   message: `metaJump: command indicator is shown at last cursor position when has multi cursor. i.e. when triggering 'add cursor' command.`},
+  { kind: ChangeLogKind.FIXED,   message: `metaJump: multi 'enter' as target chars, would generate new line in status bar message.`},
   { kind: ChangeLogKind.FIXED,   message: `metaJump: undefined property ref exception, when cursor below the last location target candidate;`},
   { kind: ChangeLogKind.FIXED,   message: `selectLines: could select to first and last line of the document.`},
 ];

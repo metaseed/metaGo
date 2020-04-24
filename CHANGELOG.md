@@ -65,7 +65,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: when have multiple cursors, add cursor does decorators encoding from last cursor position. originally always start from the first cursor position
    - [x] metaJump: command indicator is shown at last cursor position when has multi cursor. i.e. when triggering 'add cursor' command.
 #### Fixed
-   - [ ] metaJump: multi 'enter' as target chars, would generate new line in status bar message.
+   - [x] metaJump: multi 'enter' as target chars, would generate new line in status bar message.
    - [x] metaJump: undefined property ref exception, when cursor below the last location target candidate;
    - [x] selectLines: could select to first and last line of the document.
 

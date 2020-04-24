@@ -52,17 +52,19 @@ With this new V3 released, we are going to add more features, peek features in d
 * hold <kbd>/</kbd> to hide jumper decorators on screen.(Done😉)
 * jumper commands for all opened editors, not just the active editor.(Done!)
 * support having fold regions.(V3.2 Done!)
-* ripple jump support to show less decorators on screen. one target-char for current section(seperated by empty lines), two target-chars for current document editor, three or more for all open editors.
-* improved line-selection extend/shrink command.
-* command to add multiple cursors, and multiple cursor/selection support for all command in metaGo
-* command to change active selection in multiple selections
-* command to select within separator pairs. i.e. '(', ')'; '[',']', '"',''',...
+* ripple jump support to show less decorators on screen. one target-char for current section(seperated by empty lines), two target-chars for current document editor, three or more for all open editors.(V3.5 Done!)
+* improved line-selection extend/shrink command. (V3.6 Done!)
+* command to add multiple cursors, and multiple cursor/selection support for all command in metaGo (V3.6 Done!)
+* command to change active selection in multiple selections (V3.6 Done!)
+* command to select within separator pairs. i.e. '(', ')'; '[',']', '"',''',... (V3.6 Done!)
 * and more... at [changelog](https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md)
-* if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or contact with us on [Gitter☕](https://gitter.im/vscode-metago/community)
+if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or contact with us on [Gitter☕](https://gitter.im/vscode-metago/community)
 
 ## Features Summary
 MetaGo provides fast cursor movement/selection for keyboard focused users:
-* go to any character on screen with 3(most cases) or 4 times key press, support navigate to any visible editor tabs.
+* [MetaJump](https://github.com/metaseed/metaGo/blob/master/README.md#metajump)
+    * [features highlight](https://github.com/metaseed/metaGo/blob/master/README.md#features-highlight)
+    * [go to any character on screen with 3(most cases) or 4 times key press](https://github.com/metaseed/metaGo/blob/master/README.md#go-to-any-character-on-screen)
 * using bookmarks to jump between files.
 * moving cursor up/down between blank lines.
 * select code block when moving cursor while hold shift key.
@@ -77,6 +79,15 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 > i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;</kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
 
 ## MetaJump
+
+### features highlight
+* code characters are based on priority, the character easier to type has higher priority. i.e. 'k','j', and code characters are configurable.
+* code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
+* only encode characters on viewable screen area, so metaGo is faster.
+* support having fold regions
+* support jumping to all opened editors
+* work with vim plugin
+
 ### go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere. (Trigger)
 2. type the characters(stands for the target location) on screen, metaGo will show you some decorator codes(candidate target locations) encoded with characters. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
@@ -128,15 +139,6 @@ we want to modify the three wrongly spelled words, `alt+/` to goto the end of on
 we use `alt+shift+/` do selection, then `alt+a` to alternate selection's active with anchor, then `alt+shift+/` to extend selection from another end; then we use `ctrl+alt+/` to add another cursor to code above, `alt+shift+/` to do selection, then `ctrl+alt+/` to make the first selection active, `alt+shift+/` to shrink selection there:
 ![MetaGo.change-active-selection](images/metago.change-active-selection.gif)
 
-
-### features highlight
-* code characters are based on priority, the easier to type character has higher priority. i.e. 'k','j', and code characters are configurable, if you like.
-* code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
-* only encode characters on viewable screen area, so metaGo is faster.
-* even though your cursor is out of your viewable screen, metaGo still works!
-* work with vim plugin
-* support having fold regions
-* support all opened editors
 
 ## metaSelection
 
