@@ -487,8 +487,12 @@ to modify default press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
                 "title": "xx: metaGo.Bookmark Clear"
             }
         
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
+
 ## Credits
 
-### Contributers:
+### Contributors:
 
 <a href="https://github.com/metaseed/metago/graphs/contributors">Thank you to all the people who have already contributed to MetaGo!🤞</a>
+
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
