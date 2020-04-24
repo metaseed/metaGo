@@ -22,11 +22,13 @@ All notable changes to the "metago" extension will be documented in this file.
       Ctrl+o to extendLineSelection up when has selection
 
    - [ ] bracketJump: level navigate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
+   - [ ] metaJump: backspace to cancel last input decoration code.
    - [ ] ctrl+i i ': select in '; ctrl+i a ': select ' and content;
    
    - [ ] bookmark: use treeView and implement tag mark.
    - [ ] metaSelection: active selection's cursor should be special to identify, when there are multiple selections or multiple cursors
    - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
+
    - [ ] inPairSelection: pairs configuration
    - [ ] inPairSelection: tag selection support
    - [ ] metaJump: alt+/ then ctrl+alt+/ could cancel and press ctrl+alt+/ to trigger.

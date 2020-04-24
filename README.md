@@ -65,6 +65,9 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * [MetaJump](https://github.com/metaseed/metaGo/blob/master/README.md#metajump)
     * [features highlight](https://github.com/metaseed/metaGo/blob/master/README.md#features-highlight)
     * [go to any character on screen with 3(most cases) or 4 times key press](https://github.com/metaseed/metaGo/blob/master/README.md#go-to-any-character-on-screen)
+    * [select to any character in the active editor](https://github.com/metaseed/metaGo/blob/master/README.md#select-to-any-character-in-the-active-editor)
+    * [add multiple cursors to the active editor](https://github.com/metaseed/metaGo/blob/master/README.md#select-to-any-character-in-the-active-editor)
+    * [change active selection in multiple selections](https://github.com/metaseed/metaGo/blob/master/README.md#change-active-selection-in-multiple-selections)
 * using bookmarks to jump between files.
 * moving cursor up/down between blank lines.
 * select code block when moving cursor while hold shift key.
@@ -107,10 +110,10 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
     * if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
     * The 'word' is defined as a group of all alphanumeric or punctuation characters.
 
-> Note: <kbd>Enter</kbd> is also usable as location character, it means the end of line. You could press <kbd>Enter</kbd> any times to trigger the decorator-encoding for the line-end out side of current section(2 times) or document(3 times). (like a ripple)
+> Note: <kbd>Enter</kbd> is also usable as location character, it means the end of line. You could press <kbd>Enter</kbd> any times to trigger the decorator-encoding for the line-end out side of current section(2 times) or document(3 times). (like a ripple)    
 > commands that only navigate in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
 
-### select to any character in the active editor from cursor
+### select to any character in the active editor
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>/</kbd> to tell I want to *select* to somewhere.
 2. type the character(stands for location) on screen, metaGo will show you some codes encoded with character.
 3. type the code characters, you will *select* to that location.
@@ -133,7 +136,7 @@ we want to modify the three wrongly spelled words, `alt+/` to goto the end of on
 
 ![MetaGo.MultiCursor](images/metago.mutiCursor.gif)
 
-#### change-active-selection command
+### change active selection in multiple selections
 > the three add-cursor commands would become change-active-selection commands if the target location is inside a selection. It is useful to modify multiple selection ranges, just select one selection as the active one and do extending or shrinking there.
 #### change-active-selection demo
 we use `alt+shift+/` do selection, then `alt+a` to alternate selection's active with anchor, then `alt+shift+/` to extend selection from another end; then we use `ctrl+alt+/` to add another cursor to code above, `alt+shift+/` to do selection, then `ctrl+alt+/` to make the first selection active, `alt+shift+/` to shrink selection there:
