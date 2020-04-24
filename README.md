@@ -68,6 +68,8 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
     * [select to any character in the active editor](https://github.com/metaseed/metaGo/blob/master/README.md#select-to-any-character-in-the-active-editor)
     * [add multiple cursors to the active editor](https://github.com/metaseed/metaGo/blob/master/README.md#select-to-any-character-in-the-active-editor)
     * [change active selection in multiple selections](https://github.com/metaseed/metaGo/blob/master/README.md#change-active-selection-in-multiple-selections)
+* [MetaSelection](https://github.com/metaseed/metaGo/blob/master/README.md#metaselection)
+    * [lines selection](https://github.com/metaseed/metaGo/blob/master/README.md#lines-selection)
 * using bookmarks to jump between files.
 * moving cursor up/down between blank lines.
 * select code block when moving cursor while hold shift key.
@@ -177,7 +179,7 @@ we use `ctrl+l` to select current line, then `ctrl+l` again to extend current se
 With the two selections, you could then delete or copy...
 ![MetaGo.LineSelection](images/line-selection.gif)
 
-### inside-pair-selection
+### inside-pair selection
 commands to select content inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...
 
 1. <kbd>Alt</kbd>+<kbd>p</kbd>: I want to select inside a pair of chars.
