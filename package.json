@@ -397,10 +397,10 @@
 					"default": "J,D,F,L,A,H,G,I,N,R,E,M,B,Q,T,Y",
 					"description": "only appears as one char decoration codes"
 				},
-				"metaGo.decoration.hide.trigerKey": {
+				"metaGo.decoration.hide.triggerKey": {
 					"type": "string",
 					"default": "/",
-					"description": "keyboard key, hold to hide decorators on screen, release to show again. Do NOT use any key in 'metaGo.decoration.characters'. note: if this char is a target, sequencial target chars is disabled"
+					"description": "keyboard key, hold to hide decorators on screen, release to show again. Do NOT use any key in 'metaGo.decoration.characters'. note: if this char is a target, sequential target chars is disabled"
 				},
 				"metaGo.decoration.hide.triggerKeyDownRepeatInitialDelay": {
 					"type": "number",

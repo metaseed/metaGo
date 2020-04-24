@@ -33,7 +33,7 @@ export class Config {
 
 			this.jumper.characters = config.get<string>("decoration.characters", "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z").split(/[\s,]+/);
 			this.jumper.additionalSingleCharCodeCharacters = config.get<string>("decoration.additionalSingleCharCodeCharacters", "J,D,F,L,A,H,G,I,N,R,E,M,B,Q,T,Y").split(/[\s,]+/);
-			this.decoration.hide.trigerKey = config.get<string>('decoration.hide.trigerKey');
+			this.decoration.hide.triggerKey = config.get<string>('decoration.hide.triggerKey');
 			this.decoration.hide.triggerKeyDownRepeatInitialDelay = config.get<number>('decoration.hide.triggerKeyDownRepeatInitialDelay');
 			this.decoration.hide.triggerKeyDownRepeatInterval = config.get<number>('decoration.hide.triggerKeyDownRepeatInterval');
 
@@ -51,7 +51,7 @@ export class Config {
 }
 
 class DecoratorHide {
-	trigerKey: string='/';
+	triggerKey: string='/';
 	triggerKeyDownRepeatInitialDelay: number=550;
 	triggerKeyDownRepeatInterval:number=60;
 }
