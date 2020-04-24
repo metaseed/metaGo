@@ -6,8 +6,8 @@
 [![](https://img.shields.io/badge/TWITTER-%40metaseed-blue.svg?logo=twitter&style=for-the-badge)](https://twitter.com/metaseed)
 [![](https://img.shields.io/badge/gitter-join_chat-1dce73.svg?style=for-the-badge&logo=gitter-white)](https://gitter.im/vscode-metago/community)
 ---
-
- **Attension: In V3 we changed Metajump command names and the command default trigger keys**
+ 
+ > **Attension: In V3 we changed Metajump command names and the command default trigger keys**
 
 First of all, Metago is a tool made for myself, it comes from the voice in my heart💖as a programmer.    
 Metago tries its best to be the coolest😎 keyboard(mouseless) focused navigation tool in vscode.    
@@ -35,7 +35,7 @@ Give me a  [github⭐](https://github.com/metaseed/metago)
 <br>
 <br>
 
-quotes from users:
+**quotes from users:**
 > [Wicked fast cursor movement/selection for a focus on keyboard usage. This changed how I use VS Code forever. Seriously.](https://spectrum.chat/frontend/general/favourite-vs-code-extensions~9ad33139-aa3a-4f8e-a640-d08ba08736b0)
 
 > [This boosts my performance so much since It’s a trouble for me to use VIM (I’m leftie :( )](https://medium.com/@ColCh/i-found-also-these-plugins-very-helpful-in-my-work-df795a9e929f)
@@ -48,7 +48,7 @@ quotes from users:
 
 > and MORE from you... 
 
-With this new V3 released, we are going to add more features, peek features in dev:
+**With this new V3 released, we are going to add more features, peek features in dev:**
 * hold <kbd>/</kbd> to hide jumper decorators on screen.(Done😉)
 * jumper commands for all opened editors, not just the active editor.(Done!)
 * support having fold regions.(V3.2 Done!)
