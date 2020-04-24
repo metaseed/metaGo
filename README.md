@@ -78,14 +78,10 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 * [Other features](https://github.com/metaseed/metaGo/blob/master/README.md#other-features)
     * [scroll the active line to the screen top, middle and bottom](https://github.com/metaseed/metaGo/blob/master/README.md#scroll-the-active-line-to-the-screen-top-middle-and-bottom)
-    * [moving/select up/down between blank lines](https://github.com/metaseed/metaGo/blob/master/README.md#moving-cursor-updown-between-blank-lines)
+    * [moving/select up/down between blank lines](https://github.com/metaseed/metaGo/blob/master/README.md#moveselect-updown-between-blank-lines)
     * [jump to bracket](https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket)
 
-* select code block when moving cursor while hold shift key.
-* scroll the active line (contains cursor) to the screen Top/Middle/Bottom.
-* select line up/down.
-* compatible with the vim plugins.
-
+> MetaGo compatible with the vim plugins.
 
 > if you like this tool, and using Windows, you may also be interested in my other tool: [**metaTool**](https://github.com/metatool/metatool). (release soon) 😉    
 > with metaTool running with it's metaKeyboard plugin, you just using the 61 keys main keyboard area to type any key you want.
@@ -153,6 +149,7 @@ we want to modify the three wrongly spelled words, `alt+/` to goto the end of on
 we use `alt+shift+/` do selection, then `alt+a` to alternate selection's active with anchor, then `alt+shift+/` to extend selection from another end; then we use `ctrl+alt+/` to add another cursor to code above, `alt+shift+/` to do selection, then `ctrl+alt+/` to make the first selection active, `alt+shift+/` to shrink selection there:
 ![MetaGo.change-active-selection](images/metago.change-active-selection.gif)
 
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ## metaSelection
 
@@ -201,6 +198,9 @@ commands to select content inside a pair of separators: '(',')'; '[',']'; '{','}
 #### inside-pair-selection demo
 we use `alt+p (` to select content inside the '(' and ')', then `alt+p {` to extend selection, then `alt+p {` to extend further, then `alt+shift+p {` to include then pair('{'and '}') in the selection, then `alt+shift+p` to extend the selection further with the pair('{' and '}') included.
 ![metago.in-pair-selection](images/metago.in-pair-selection.gif)
+
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
+
 ## navigate between files using bookmarks
 
 * <kbd>Alt</kbd>+ <kbd>\'</kbd> to toggle a bookmark at the cursor location.
@@ -213,6 +213,8 @@ we use `alt+p (` to select content inside the '(' and ')', then `alt+p {` to ext
     4. press <kdb>p</kbd> then <kbd>enter</kbd> to go to the previous bookmark.
 
 ![MetaGo.Center](images/metago.bookmark.gif)
+
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ## Other features
 ### scroll the active line to the screen top, middle and bottom
@@ -239,6 +241,9 @@ it's very easy to trigger metago command: type <kbd>F1</kbd>, xx...`. `xx` is a 
 ### Other resources that help you understand MetaGo
 
 [Use MetaGo to Quickly Move Around Your Code in VS Code](https://scotch.io/starters/visual-studio-code/metago#toc-conclusion)
+
+
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ## Requirements
 
