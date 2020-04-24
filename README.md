@@ -68,13 +68,16 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
     * [select to any character in the active editor](https://github.com/metaseed/metaGo/blob/master/README.md#select-to-any-character-in-the-active-editor)
     * [add multiple cursors to the active editor](https://github.com/metaseed/metaGo/blob/master/README.md#select-to-any-character-in-the-active-editor)
     * [change active selection in multiple selections](https://github.com/metaseed/metaGo/blob/master/README.md#change-active-selection-in-multiple-selections)
+
 * [MetaSelection](https://github.com/metaseed/metaGo/blob/master/README.md#metaselection)
     * [alternate Selection's active with anchor](https://github.com/metaseed/metaGo/blob/master/README.md#alternate-selections-active-with-anchor)
     * [lines selection](https://github.com/metaseed/metaGo/blob/master/README.md#lines-selection)
     * [inside-pair selection](https://github.com/metaseed/metaGo/blob/master/README.md#inside-pair-selection)
+
 * [Navigate between files using bookmarks](https://github.com/metaseed/metaGo/blob/master/README.md#navigate-between-files-using-bookmarks)
 
-* using bookmarks to jump between files.
+* [Other features](https://github.com/metaseed/metaGo/blob/master/README.md#other-features)
+    * []
 * moving cursor up/down between blank lines.
 * select code block when moving cursor while hold shift key.
 * scroll the active line (contains cursor) to the screen Top/Middle/Bottom.
@@ -210,7 +213,7 @@ we use `alt+p (` to select content inside the '(' and ')', then `alt+p {` to ext
 ![MetaGo.Center](images/metago.bookmark.gif)
 
 ## Other features
-### scroll the active line(where there is cursor) to the screen top, middle and bottom
+### scroll the active line to the screen top, middle and bottom
 * <kbd>Alt</kbd>+<kbd>t</kbd> is the default shortcut to scroll current line to screen top.
 * <kbd>Alt</kbd>+<kbd>m</kbd> is the default shortcut to scroll current line to screen middle.
 * <kbd>Alt</kbd>+<kbd>b</kbd> is the default shortcut to scroll current line to screen bottom.
