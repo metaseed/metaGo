@@ -96,7 +96,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
     * if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
     * The 'word' is defined as a group of all alphanumeric or punctuation characters.
 
-> Note: <kbd>Enter</kbd> is also usable as location character, it means the end of lines
+> Note: <kbd>Enter</kbd> is also usable as location character, it means the end of line. You could press <kbd>Enter</kbd> any times to trigger the decorator-encoding for the line-end out side of current section(2 times) or document(3 times). (like a ripple)
 > commands that only navigate in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
 
 ### select to any character in the active editor from cursor
@@ -168,7 +168,15 @@ you could assign a shortcut key not collision with default vscode ones, just rem
 #### lineSelection demo
 we use `ctrl+l` to select current line, then `ctrl+l` again to extend current selection below, then `ctrl+o` to shrink current selection above, then `alt+a` to alternate the current selection's active end with anchor end, then `ctrl+o` to extend current selection above, then `ctrl+alt+/` to add another cursor, and `ctrl+l` to select current line, `ctrl+l` again to extend selection below, then `alt+a` to alternate selection's active with anchor, then `ctrl+o` to extend selection above. 
 
+
 With the two selections, you could then delete or copy...
+
+### inside-pairs-selection
+
+* <kbd>Alt</kbd>+<kbd>p</kbd> to select content inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...
+* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd> to selection both the content and the pair of separators.
+
+> it supports multiple cursors/selections
 
 ![MetaGo.LineSelection](images/line-selection.gif)
 
