@@ -120,13 +120,13 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 #### add-multi-cursors demo
 we want to modify the three wrongly spelled words, `alt+/` to goto the end of one of them, and `ctrl+alt+/` two times to add two additional cursors to the end of the other two words, `ctrl+backspace` to delete them together, `esc` to escape multi-cursor mode:
 
-![MetaGo.MultiCursor](images/metato.mutiCursor.gif)
+![MetaGo.MultiCursor](images/metago.mutiCursor.gif)
 
 #### change-active-selection command
 > the three add-cursor commands would become change-active-selection commands if the target location is inside a selection. It is useful to modify multiple selection ranges, just select one selection as the active one and do extending or shrinking there.
 #### change-active-selection demo
 we use `alt+shift+/` do selection, then `alt+a` to alternate selection's active with anchor, then `alt+shift+/` to extend selection from another end; then we use `ctrl+alt+/` to add another cursor to code above, `alt+shift+/` to do selection, then `ctrl+alt+/` to make the first selection active, `alt+shift+/` to shrink selection there:
-![MetaGo.change-active-selection](images/metato.change-active-selection.gif)
+![MetaGo.change-active-selection](images/metago.change-active-selection.gif)
 
 
 ### features highlight
@@ -172,13 +172,19 @@ we use `ctrl+l` to select current line, then `ctrl+l` again to extend current se
 With the two selections, you could then delete or copy...
 ![MetaGo.LineSelection](images/line-selection.gif)
 
-### inside-pairs-selection
+### inside-pair-selection
+commands to select content inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...
 
-* <kbd>Alt</kbd>+<kbd>p</kbd> to select content inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...
-* <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd> to selection both the content and the pair of separators.
+1. <kbd>Alt</kbd>+<kbd>p</kbd>: I want to select inside a pair of chars.
+2. type the start character of the pair. i.e. '(', '[', '{', '"'...
+
+> Note: <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd> to selection both the content and the pair of separators.
 
 > it supports multiple cursors/selections
 
+#### inside-pair-selection demo
+we use `alt+p (` to select content inside the '(' and ')', then `alt+p {` to extend selection, then `alt+p {` to extend further, then `alt+shift+p {` to include then pair('{'and '}') in the selection, then `alt+shift+p` to extend the selection further with the pair('{' and '}') included.
+![metago.in-pair-selection](images/metago.in-pair-selection.gif)
 ## navigate between files using bookmarks
 
 * <kbd>Alt</kbd>+ <kbd>\'</kbd> to toggle a bookmark at the cursor location.
