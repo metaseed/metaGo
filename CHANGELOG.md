@@ -83,6 +83,7 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Removed
 
 #### Changed
+   - [x] readme: make user manual better. <a href="https://github.com/metaseed/metaGo/blob/master/README.md#features-summary">(Detail)</a>
    - [x] bookmark: one bookmark in one line, toggle-bookmark command works when cursor not at char location. char location is still used when goto the bookmark.
    - [x] line selection: metaGo.selectLineUp default shortcut changed from ctrl+shift+l to ctrl+i, to avoid collision with default command of ctrl+shift+l.
 #### Fixed
