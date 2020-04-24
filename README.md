@@ -119,6 +119,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 > Note: <kbd>Enter</kbd> is also usable as location character, it means the end of line. You could press <kbd>Enter</kbd> any times to trigger the decorator-encoding for the line-end out side of current section(2 times) or document(3 times). (like a ripple)    
 > commands that only navigate in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ### select to any character in the active editor
 1. type <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>/</kbd> to tell I want to *select* to somewhere.
@@ -142,6 +143,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 we want to modify the three wrongly spelled words, `alt+/` to goto the end of one of them, and `ctrl+alt+/` two times to add two additional cursors to the end of the other two words, `ctrl+backspace` to delete them together, `esc` to escape multi-cursor mode:
 
 ![MetaGo.MultiCursor](images/metago.mutiCursor.gif)
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ### change active selection in multiple selections
 > the three add-cursor commands would become change-active-selection commands if the target location is inside a selection. It is useful to modify multiple selection ranges, just select one selection as the active one and do extending or shrinking there.
@@ -155,6 +157,7 @@ we use `alt+shift+/` do selection, then `alt+a` to alternate selection's active 
 
 ### alternate Selection's active with anchor
 * <kbd>Alt</kbd>+<kbd>a</kbd> to alternate the selection's active(cursor flashing) with the anchor.
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ### lines selection
 vsCode's default select current line command(`Ctrl+l`) selects current line and puts the cursor at the next line's start position.
@@ -184,6 +187,7 @@ we use `ctrl+l` to select current line, then `ctrl+l` again to extend current se
 
 With the two selections, you could then delete or copy...
 ![MetaGo.LineSelection](images/line-selection.gif)
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ### inside-pair selection
 commands to select content inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...
@@ -230,13 +234,16 @@ we use `alt+p (` to select content inside the '(' and ')', then `alt+p {` to ext
 * <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Home</kbd> to select from the cursor to the blank line above.
 * <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>End</kbd> to select from the cursor to the blank line below.
 ![MetaGo.blankLine](images/metago.blankLine.gif)
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ### jump to bracket
 * extend the default jumpToBracket command.
 * <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>\\</kbd>: jump to the begin bracket that contains the cursor. Press the shortcut *again* jump to the end bracket.
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ### to invoke command from command panel
 it's very easy to trigger metago command: type <kbd>F1</kbd>, xx...`. `xx` is a prefix for search metago commands
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ### Other resources that help you understand MetaGo
 
@@ -366,6 +373,8 @@ If you have any requirements or dependencies, add a section describing those and
             }
 
 To configure the keybinding, add the following lines to *keybindings.json* (File -> Preferences -> Keyboard Shortcuts):
+
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 ## extension Settings
 to modify default press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
 # default settings:
