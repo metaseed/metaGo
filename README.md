@@ -59,7 +59,7 @@ With this new V3 released, we are going to add more features, peek features in d
 * command to select within separator pairs. i.e. '(', ')'; '[',']', '"',''',... (V3.6 Done!)
 * and more... at [changelog](https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md)
 
-if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or contact with us on [Gitter☕](https://gitter.im/vscode-metago/community)
+if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or discuss with us on [Gitter☕](https://gitter.im/vscode-metago/community)
 
 ## Features Summary
 MetaGo provides fast cursor movement/selection for keyboard focused users:
