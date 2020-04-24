@@ -8,7 +8,7 @@ export const changeLog: ChangeLogItem[] = [
   { kind: ChangeLogKind.ADDED,   message: `metaJump: could config foreground decorator color for both one-char and two-char decorator.`},
   { kind: ChangeLogKind.ADDED,   message: `metaSelection: command to alternate selection's active with anchor. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>`},
   { kind: ChangeLogKind.ADDED,   message: `lineSelection: multi cursors support, extend/shrink lines for last active cursor. <a href="https://github.com/metaseed/metaGo#lines-selection">(Detail)</a>`},
-  { kind: ChangeLogKind.ADDED,   message: `inPairSelection:`},
+  { kind: ChangeLogKind.ADDED,   message: `inPairSelection: command to select inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...<a href="https://github.com/metaseed/metaGo#inside-pair-selection">(Detail)</a>`},
   { kind: ChangeLogKind.CHANGED,   message: `lineSelection: Ctrl+l to select current line or extend/shrink selection by one line below. Ctrl+o to extend/shrink selection by one line above. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>`},
   { kind: ChangeLogKind.CHANGED,   message: `metaJump: when have multiple cursors, add cursor does decorators encoding from last cursor position. originally always start from the first cursor position`},
   { kind: ChangeLogKind.CHANGED,   message: `metaJump: command indicator is shown at last cursor position when has multi cursor. i.e. when triggering 'add cursor' command.`},
