@@ -11,7 +11,7 @@
 
 First of all, Metago is a tool made for myself, it comes from the voice in my heart💖as a programmer.    
 Metago tries its best to be the coolest😎 keyboard(mouseless) focused navigation tool in vscode.    
-Metago tries to make your keyboard⌨ to you as meaningful as a kitchen knife to a masterchef👩‍🍳.    
+Metago tries to make your keyboard⌨ to you as meaningful as a kitchen knife to a master chef👩‍🍳.    
 
 <br>
 Metago as an free tool, currently is maintained and developed by me in my spare time🌙⏳, if you think it's useful to you or even indispensable like some of our users, please support me, just buy me a drink☕ would be a great inspiration for me, which means there is someone really like it. 😊
