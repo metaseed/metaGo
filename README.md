@@ -77,8 +77,10 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * [Navigate between files using bookmarks](https://github.com/metaseed/metaGo/blob/master/README.md#navigate-between-files-using-bookmarks)
 
 * [Other features](https://github.com/metaseed/metaGo/blob/master/README.md#other-features)
-    * []
-* moving cursor up/down between blank lines.
+    * [scroll the active line to the screen top, middle and bottom](https://github.com/metaseed/metaGo/blob/master/README.md#scroll-the-active-line-to-the-screen-top-middle-and-bottom)
+    * [moving/select up/down between blank lines](https://github.com/metaseed/metaGo/blob/master/README.md#moving-cursor-updown-between-blank-lines)
+    * [jump to bracket](https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket)
+
 * select code block when moving cursor while hold shift key.
 * scroll the active line (contains cursor) to the screen Top/Middle/Bottom.
 * select line up/down.
@@ -220,7 +222,7 @@ we use `alt+p (` to select content inside the '(' and ')', then `alt+p {` to ext
 
 ![MetaGo.Center](images/metago.center.gif)
 
-### moving cursor up/down between blank lines
+### move/select up/down between blank lines
 * <kbd>Alt</kbd>+<kbd>Home</kbd> to move cursor to the blank line above.
 * <kbd>Alt</kbd>+<kbd>End</kbd> to move cursor to the blank line below.
 * <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Home</kbd> to select from the cursor to the blank line above.
