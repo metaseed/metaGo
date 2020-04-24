@@ -170,6 +170,7 @@ we use `ctrl+l` to select current line, then `ctrl+l` again to extend current se
 
 
 With the two selections, you could then delete or copy...
+![MetaGo.LineSelection](images/line-selection.gif)
 
 ### inside-pairs-selection
 
@@ -177,8 +178,6 @@ With the two selections, you could then delete or copy...
 * <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd> to selection both the content and the pair of separators.
 
 > it supports multiple cursors/selections
-
-![MetaGo.LineSelection](images/line-selection.gif)
 
 ## navigate between files using bookmarks
 
