@@ -69,7 +69,11 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
     * [add multiple cursors to the active editor](https://github.com/metaseed/metaGo/blob/master/README.md#select-to-any-character-in-the-active-editor)
     * [change active selection in multiple selections](https://github.com/metaseed/metaGo/blob/master/README.md#change-active-selection-in-multiple-selections)
 * [MetaSelection](https://github.com/metaseed/metaGo/blob/master/README.md#metaselection)
+    * [alternate Selection's active with anchor](https://github.com/metaseed/metaGo/blob/master/README.md#alternate-selections-active-with-anchor)
     * [lines selection](https://github.com/metaseed/metaGo/blob/master/README.md#lines-selection)
+    * [inside-pair selection](https://github.com/metaseed/metaGo/blob/master/README.md#inside-pair-selection)
+* [Navigate between files using bookmarks](https://github.com/metaseed/metaGo/blob/master/README.md#navigate-between-files-using-bookmarks)
+
 * using bookmarks to jump between files.
 * moving cursor up/down between blank lines.
 * select code block when moving cursor while hold shift key.
@@ -147,7 +151,7 @@ we use `alt+shift+/` do selection, then `alt+a` to alternate selection's active 
 
 ## metaSelection
 
-### Alternate Selection's active with anchor
+### alternate Selection's active with anchor
 * <kbd>Alt</kbd>+<kbd>a</kbd> to alternate the selection's active(cursor flashing) with the anchor.
 
 ### lines selection
