@@ -35,16 +35,23 @@ for (let i = 0; i < lines.length; i++) {
         } else if (line.startsWith('#### Fixed')) {
             changeType = 'Fixed';
             continue;
+        } else if (line .startsWith('### ')) {
+            changeType = 'Version';
+            line = line.substring(4);
+            write.write(`  { kind: ChangeLogKind.${changeType.toUpperCase()},   message: \`${line}\`},\n`);
+            continue;
         }
     }
 
     if (findStart && line.startsWith('---')) {
-        console.log("changelog.ts generated")
-        break;
+        //console.log("changelog.ts generated")
+        //break;
+        continue;
     }
     if (findStart && changeType) {
         if(line.trim() == '') continue;
         line = line.trim().replace(/^- \[ \]/,'').replace(/^- \[x\]/,'').replace(/^- /,'').trim();
+        line = line.trim().replace(/^\* \[ \]/,'').replace(/^\* \[x\]/,'').replace(/^\* /,'').trim();
         switch (changeType) {
             case 'Added':
                 break;

@@ -56,12 +56,14 @@ export class LandingPageBuilder {
         let changeLogString: string = "";
 
         for (const cl of changeLog) {
-            const badge: string = this.getBadgeFromChangeLogKind(cl.kind);
-            changeLogString = changeLogString.concat(
-                `<li><span class="changelog__badge changelog__badge--${badge}">${cl.kind}</span>
-                    ${cl.message}
-                </li>`
-            )           
+            if (cl.kind === ChangeLogKind.VERSION) {
+                changeLogString = changeLogString.concat(`<li><b>${cl.message}</b></li>`);
+            } else {
+                const badge: string = this.getBadgeFromChangeLogKind(cl.kind);
+                changeLogString = changeLogString.concat(
+                    `<li><span class="changelog__badge changelog__badge--${badge}">${cl.kind}</span>${cl.message}</li>`
+                )
+            }
         }
         this.htmlFile = this.htmlFile.replace("${changeLog}", changeLogString);
         return this;
@@ -83,7 +85,7 @@ export class LandingPageBuilder {
                 </a>
                 ${sp.message} 
                 ${sp.extra}`
-            )           
+            )
         }
         sponsorsString = sponsorsString.concat("</p>");
         this.htmlFile = this.htmlFile.replace("${sponsors}", sponsorsString);
@@ -98,15 +100,15 @@ export class LandingPageBuilder {
         switch (kind) {
             case ChangeLogKind.ADDED:
                 return "added";
-        
+
             case ChangeLogKind.CHANGED:
                 return "changed";
-            
+
             case ChangeLogKind.FIXED:
                 return "fixed";
             case ChangeLogKind.REMOVED:
                 return "removed";
-        
+
             default:
                 break;
         }

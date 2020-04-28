@@ -9,7 +9,7 @@ export interface Header {
     message: string; // html
 }
 
-export enum ChangeLogKind { ADDED = "ADDED", REMOVED = "REMOVED", CHANGED = "CHANGED", FIXED = "FIXED" };
+export enum ChangeLogKind { ADDED = "ADDED", REMOVED = "REMOVED", CHANGED = "CHANGED", FIXED = "FIXED", VERSION = "VERSION" };
 
 export interface ChangeLogItem {
     kind: ChangeLogKind;

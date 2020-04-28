@@ -105,14 +105,13 @@ All notable changes to the "metago" extension will be documented in this file.
 * fix following char is upper case, the lower case is used in decorator problem
 ---
 
-## In Development
 ### V3.4.0 - Mar 18, 2020
 #### Added
 * in sequential-target-chars jump, background color of the char follows target char
 * new gif logo
 * jump commands could be triggered event editor not focused, and has any open editor. i.e when in "Explorer" treeView.
 * left border on jump code decorator, easier for discriminating concatenated/overlapped decorators
-* `Backspace` as command to delete last input char, it's a step cancel command, `Esc` is a whole cancel command.
+* 'Backspace' as command to delete last input char, it's a step cancel command, 'Esc' is a whole cancel command.
 #### Removed
 #### Changed
 * update metago.jump gif in readme.md
@@ -137,7 +136,7 @@ All notable changes to the "metago" extension will be documented in this file.
 ### V3.2.0 - Feb 28, 2020
 #### Added
 * support real viewport range, not use config
-* easy to trigger metago command: type `F1, xx...`. `xx` as a prefix for search metagoCommands
+* easy to trigger metago command: type 'F1, xx...'. 'xx' as a prefix for search metagoCommands
 * jumper support fold region
 #### Removed
 * remove editor viewport range lines in config, use new api to get editor viewport range
@@ -146,12 +145,12 @@ All notable changes to the "metago" extension will be documented in this file.
    - remove 'jumper.targetIgnoreCase' in config, replace it with: if the location char is Upper case it is case sensitive, otherwise it's case insensitive.
    - upgrade vscode engine to the latest one, released in Sep 2019, need 1.22.0 at least to support editor.visibleRanges
    - rename commands name with verb-none pattern, easy to search in command list: F1, xsd -> select line down
-#### Fix
+#### Fixed
    - Jumper: svg decorator could not be shown
    - Jumper: if the the line of location char is less than codes length, decorator codes hide partially
-   - Jumper: support show decorators for `\n` of empty line, we could jump to every line end.
+   - Jumper: support show decorators for '\n' of empty line, we could jump to every line end.
+---
 
-## Released
 ### V3.1.0 - Feb 24, 2020
 #### Added
 * jumper could goto any opened editors not just the active editor.
@@ -164,6 +163,8 @@ All notable changes to the "metago" extension will be documented in this file.
 * replace Promise with async/await in MetaJump
 * updated readme
 * metaJump decoration support any code length
+
+---
 
 ### V3.0.0 - Feb 19, 2020
 #### Added
