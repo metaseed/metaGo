@@ -56,8 +56,8 @@ export class LandingPageManager {
         if (previousVersion) {
             const differs: semver.ReleaseType | null = semver.diff(currentVersion, previousVersion);
 
-            // only "patch" should be suppressed
-            if (!differs || differs === "patch") {
+            // to do "patch" suppress add || differs === "patch"
+            if (!differs ) { 
                 return;
             }
         }
