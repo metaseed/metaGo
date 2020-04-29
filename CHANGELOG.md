@@ -20,7 +20,7 @@ All notable changes to the "metago" extension will be documented in this file.
       ~~make Ctrl+L into a line command trigger: if the user press i(means up, configurable), triggers the selecting up subCommand, in this subCommand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subCommand trigger. any other key other than i,k would escape this command~~
       Ctrl+o to extendLineSelection up when has selection
    - [x] metaJump: contributed command: metaGo.Cancel doesn't exist.
-
+   - [x] exclude <br> from start tag regex
    - [ ] bracketJump: level navigate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
    - [ ] metaJump: backspace to cancel last input decoration code.
    - [ ] ctrl+i i ': select in '; ctrl+i a ': select ' and content;
