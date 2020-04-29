@@ -53,7 +53,7 @@ All notable changes to the "metago" extension will be documented in this file.
 ### V3.6.7
 #### Added
 #### Removed
-   - [x] metaJump: Remove find in selection and it's config. (seldom used, I never use)
+   - [x] metaJump: Remove find in selection and it's config. (never use)
 #### Changed
 #### Fixed
 
