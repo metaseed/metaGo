@@ -50,6 +50,14 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ## Current Version
 ---
+### V3.6.7
+#### Added
+#### Removed
+   - [x] metaJump: Remove find in selection and it's config. (seldom used, I never use)
+#### Changed
+#### Fixed
+
+---
 ### V3.6.6 - April 26, 2020 
 #### Added
    - [x] metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCursorSmart) <a href="https://github.com/metaseed/metaGo#add-multiple-cursors-to-the-active-editor">(Detail)</a>

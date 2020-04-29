@@ -412,10 +412,6 @@
                     "default": "80",
                     "description": "unit: ms, increase this number if your hide trigger key not work"
                 },
-                "metaGo.jumper.findInSelection": {
-                    "type": "string",
-                    "default": "off"
-                },
                 "metaGo.jumper.timeout": {
                     "type": "number",
                     "default": "12",

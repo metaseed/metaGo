@@ -38,7 +38,6 @@ export class Config {
 			this.decoration.hide.triggerKeyDownRepeatInterval = config.get<number>('decoration.hide.triggerKeyDownRepeatInterval');
 
 			this.jumper.findAllMode = config.get<string>("jumper.findAllMode", this.jumper.findAllMode);
-			this.jumper.findInSelection = config.get<string>("jumper.findInSelection", this.jumper.findInSelection);
 			this.jumper.wordSeparatorPattern = config.get<string>("jumper.wordSeparatorPattern", this.jumper.wordSeparatorPattern);
 			let timeout = config.get<number>("jumper.timeout", this.jumper.timeout);
 			this.jumper.timeout = isNaN(timeout) ? 12000 : timeout * 1000;
@@ -83,7 +82,6 @@ class FinderConfig {
 	characters: string[];
 	additionalSingleCharCodeCharacters: string[];
 	findAllMode: string = 'on';
-	findInSelection: string = 'off';
 	wordSeparatorPattern: string = "[ ,-.{_(\"'<\\/[+]";
 	timeout: number = 12000;
 }
