@@ -16,10 +16,10 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] target chars is only used for narrow down searching range, not for navigation. solve the problem of typing multi target chars together may edit document by mistake
    - [x] ripple search support, type location-chars to trigger far from center: one char nearby; two char current doc; three chars all opened editors
    - [x] bug: metaJump: '/' key could not be used as following sequence key, if already used as decorator hide key. fix it by disable sequential-target-chars if it used as the target char.
-
    - [x] Line selection up/down command: ? editorHasSelection
       ~~make Ctrl+L into a line command trigger: if the user press i(means up, configurable), triggers the selecting up subCommand, in this subCommand the user can press i again or press k (mean down) several times. Ctrl+L, k is select down subCommand trigger. any other key other than i,k would escape this command~~
       Ctrl+o to extendLineSelection up when has selection
+   - [x] metaJump: contributed command: metaGo.Cancel doesn't exist.
 
    - [ ] bracketJump: level navigate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
    - [ ] metaJump: backspace to cancel last input decoration code.
@@ -27,7 +27,6 @@ All notable changes to the "metago" extension will be documented in this file.
    
    - [ ] bookmark: use treeView and implement tag mark.
    - [ ] metaSelection: active selection's cursor should be special to identify, when there are multiple selections or multiple cursors
-   - [ ] metaJump: contributed command: metaGo.Cancel doesn't exist.
 
    - [ ] inPairSelection: pairs configuration
    - [ ] inPairSelection: tag selection support
@@ -50,15 +49,18 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ## Current Version
 ---
-### V3.6.7
+### V3.7.0 - May 8, 2020
 #### Added
    - [x] metaSelection: in-pair-selection command use cancel timeout in config.
+   - [ ] metaSelection: in-pair-selection command's pairs support regex, html tag selection is supported.
+   - [ ] metaSelection: in-pair-selection command's pairs could be configurable.
 #### Removed
    - [x] metaJump: Remove find in selection and it's config. (never use)
 #### Changed
 #### Fixed
-
+   - [x] metaJump: Command indicator is not removed sometimes.
 ---
+
 ### V3.6.6 - April 26, 2020 
 #### Added
    - [x] metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCursorSmart) <a href="https://github.com/metaseed/metaGo#add-multiple-cursors-to-the-active-editor">(Detail)</a>
