@@ -52,6 +52,7 @@ All notable changes to the "metago" extension will be documented in this file.
 ---
 ### V3.6.7
 #### Added
+   - [x] metaSelection: in-pair-selection command use cancel timeout in config.
 #### Removed
    - [x] metaJump: Remove find in selection and it's config. (never use)
 #### Changed
