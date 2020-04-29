@@ -353,7 +353,7 @@
                 },
                 "metaGo.decoration.fontFamily": {
                     "type": "string",
-                    "default": "Consolas, 'Operator Mono SSm Lig', 'Fira Code', Menlo, Monaco, 'Courier New', monospace",
+                    "default": "'Operator Mono SSm Lig', 'Fira Code', Menlo, Monaco, 'Courier New', monospace",
                     "description": "only for svg based decoration"
                 },
                 "metaGo.decoration.fontWeight": {
