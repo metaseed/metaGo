@@ -426,6 +426,10 @@
                     "type": "string",
                     "default": "[ ,-.{_(\"'<\\/[+]"
                 },
+                "metaGo.surroundPairs": {
+                    "type": "object",
+                    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!br)[^\/!]+?>/", "/<\/.+?>/", "t"]]
+                },
                 "metaGo.bookmark.saveBookmarksInProject": {
                     "type": "boolean",
                     "default": false,

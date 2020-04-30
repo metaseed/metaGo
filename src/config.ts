@@ -5,7 +5,7 @@ export class Config {
 	decoration: DecoratorConfig = new DecoratorConfig();
 	jumper: FinderConfig = new FinderConfig();
 	bookmark = new BookmarkConfig();
-
+	surroundPairs: Array<Array<string>>;
 	loadConfig = () => {
 		try {
 			this.bookmark.loadConfig();
@@ -40,6 +40,7 @@ export class Config {
 			this.jumper.findAllMode = config.get<string>("jumper.findAllMode", this.jumper.findAllMode);
 			this.jumper.wordSeparatorPattern = config.get<string>("jumper.wordSeparatorPattern", this.jumper.wordSeparatorPattern);
 			let timeout = config.get<number>("jumper.timeout", this.jumper.timeout);
+			this.surroundPairs = config.get<Array<Array<string>>>("surroundPairs", null);
 			this.jumper.timeout = isNaN(timeout) ? 12000 : timeout * 1000;
 		}
 		catch (e) {
