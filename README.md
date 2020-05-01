@@ -219,14 +219,15 @@ html tag pair is supported via regexp. (`alt+p t`, `t` means tag).
                     "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!br)[^\/!]+?>/", "/<\/.+?>/", "t"]]
                 },
 ```
-> `["/<(?!br)[^\/!]+?>/", "/<\/.+?>/", "t"]`: this array has 3 items: start html tag regex, end html tag regex, trigger key.    
+> `["/<(?!/)(?!br)[^!]+?>>/", "/<\/.+?>/", "t"]`: this array has 3 items: start html tag regex, end html tag regex, trigger key.    
 > the default trigger key is the start pair, if start pair is only one char.    
 > regex is the content inside '/' and '/'    
 > you could config your own regex pairs
 
-> `<(?!br)[^\/!]+?>`: 
->   `<(?!br)`: '<' not followed by 'br'. `<br>` is special, it is not a start tag. 
->   `[^\/!]+?`: one or more char (not greedy before mach '>') which is not '/'(end html tag) or '!'(comment html tag) 
+> `<(?!/)(?!br)[^!]+?>`: 
+>   `<(?!/)`: '<' not followed by '/'. '</' is considered as end tag
+>   `(?!br)`: '<' not followed by 'br'. `<br>` is special, it is not a start tag. 
+>   `[^!]+?`: one or more char (not greedy before mach '>') which is not '!'(comment html tag) 
 
 #### inside-pair-selection demo
 we use `alt+p (` to select content inside the '(' and ')', then `alt+p {` to extend selection, then `alt+p {` to extend further, then `alt+shift+p {` to include then pair('{'and '}') in the selection, then `alt+shift+p` to extend the selection further with the pair('{' and '}') included.
