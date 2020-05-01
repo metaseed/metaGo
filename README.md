@@ -212,6 +212,8 @@ html tag pair is supported via regexp. (`alt+p t`, `t` means tag).
 > Note: <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd> to selection both the content and the pair of separators.
 
 > it supports multiple cursors/selections
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
+
 #### surroundPairs config
 ```json
 "metaGo.surroundPairs": {
@@ -224,10 +226,11 @@ html tag pair is supported via regexp. (`alt+p t`, `t` means tag).
 > regex is the content inside '/' and '/'    
 > you could config your own regex pairs
 
-> `<(?!/)(?!br)[^!]+?>`: 
->   `<(?!/)`: '<' not followed by '/'. '</' is considered as end tag
->   `(?!br)`: '<' not followed by 'br'. `<br>` is special, it is not a start tag. 
->   `[^!]+?`: one or more char (not greedy before mach '>') which is not '!'(comment html tag) 
+> `<(?!/)(?!br)[^!]+?>`:     
+>   `<(?!/)`: '<' not followed by '/'. '</' is considered as end tag     
+>   `(?!br)`: '<' not followed by 'br'. `<br>` is special, it is not a start tag.     
+>   `[^!]+?`: one or more char (not greedy before mach '>') which is not '!'(comment html tag)    
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 #### inside-pair-selection demo
 we use `alt+p (` to select content inside the '(' and ')', then `alt+p {` to extend selection, then `alt+p {` to extend further, then `alt+shift+p {` to include then pair('{'and '}') in the selection, then `alt+shift+p` to extend the selection further with the pair('{' and '}') included.
