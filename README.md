@@ -212,7 +212,7 @@ html tag pair is supported via regexp. (`alt+p t`, `t` means tag).
 > Note: <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd> to selection both the content and the pair of separators.
 
 > it supports multiple cursors/selections
-#### config
+#### surroundPairs config
 ```json
 "metaGo.surroundPairs": {
                     "type": "object",
