@@ -428,7 +428,7 @@
                 },
                 "metaGo.surroundPairs": {
                     "type": "object",
-                    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!br)[^\/!]+?>/", "/<\/.+?>/", "t"]]
+                    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!/)(?!br)[^!]+?>/", "/<\/.+?>/", "t"]]
                 },
                 "metaGo.bookmark.saveBookmarksInProject": {
                     "type": "boolean",
