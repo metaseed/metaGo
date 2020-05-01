@@ -1,6 +1,6 @@
 import { ChangeLogItem, ChangeLogKind } from "./contentProvider";
 export const changeLog: ChangeLogItem[] = [
-  { kind: ChangeLogKind.VERSION,   message: `V3.7.0 - May 8, 2020`},
+  { kind: ChangeLogKind.VERSION,   message: `V3.7.0 - April 30, 2020`},
   { kind: ChangeLogKind.ADDED,   message: `metaSelection: in-pair-selection command use cancel timeout in config.`},
   { kind: ChangeLogKind.ADDED,   message: `metaSelection: in-pair-selection command's pairs could be configurable. <a href="https://github.com/metaseed/metaGo/blob/master/README.md#surroundpairs-config">(Detail)</a>`},
   { kind: ChangeLogKind.ADDED,   message: `metaSelection: in-pair-selection command's pairs support regex, html tag selection is supported.<a href="https://github.com/metaseed/metaGo/blob/master/README.md#surroundpairs-config">(Detail)</a>`},
