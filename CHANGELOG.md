@@ -52,8 +52,8 @@ All notable changes to the "metago" extension will be documented in this file.
 ### V3.7.0 - May 8, 2020
 #### Added
    - [x] metaSelection: in-pair-selection command use cancel timeout in config.
+   - [x] metaSelection: in-pair-selection command's pairs could be configurable.
    - [x] metaSelection: in-pair-selection command's pairs support regex, html tag selection is supported.
-   - [ ] metaSelection: in-pair-selection command's pairs could be configurable.
 #### Removed
    - [x] metaJump: Remove find in selection and it's config. (never use)
 #### Changed

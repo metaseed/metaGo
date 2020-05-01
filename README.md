@@ -203,6 +203,8 @@ With the two selections, you could then delete or copy...
 
 ### inside-pair selection
 commands to select content inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...
+html tag pair is supported via regexp. (`alt+p t`, `t` means tag).
+
 
 1. <kbd>Alt</kbd>+<kbd>p</kbd>: I want to select inside a pair of chars.
 2. type the start character of the pair. i.e. '(', '[', '{', '"'...
@@ -210,13 +212,32 @@ commands to select content inside a pair of separators: '(',')'; '[',']'; '{','}
 > Note: <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd> to selection both the content and the pair of separators.
 
 > it supports multiple cursors/selections
+#### config
+```json
+"metaGo.surroundPairs": {
+                    "type": "object",
+                    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!br)[^\/!]+?>/", "/<\/.+?>/", "t"]]
+                },
+```
+> `["/<(?!br)[^\/!]+?>/", "/<\/.+?>/", "t"]`: this array has 3 items: start html tag regex, end html tag regex, trigger key.    
+> the default trigger key is the start pair, if start pair is only one char.    
+> regex is the content inside '/' and '/'    
+> you could config your own regex pairs
+
+> `<(?!br)[^\/!]+?>`: 
+>   `<(?!br)`: '<' not followed by 'br'. `<br>` is special, it is not a start tag. 
+>   `[^\/!]+?`: one or more char (not greedy before mach '>') which is not '/'(end html tag) or '!'(comment html tag) 
 
 #### inside-pair-selection demo
 we use `alt+p (` to select content inside the '(' and ')', then `alt+p {` to extend selection, then `alt+p {` to extend further, then `alt+shift+p {` to include then pair('{'and '}') in the selection, then `alt+shift+p` to extend the selection further with the pair('{' and '}') included.
 ![metago.in-pair-selection](images/metago.in-pair-selection.gif)
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
-
+#### inside-pair-selection demo: html tag pairs
+we use `alt+p t` to select content inside html tag, `alt+shift+p` to select both the content and the tag pairs.
+if the cursor is in the start or end tag, `alt+p t` would select both the tag and the content.
+![metago.in-pair-selection-html-tag](images/metago.in-selection-html-tag.gif)
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 ## navigate between files using bookmarks
 
 * <kbd>Alt</kbd>+ <kbd>\'</kbd> to toggle a bookmark at the cursor location.
