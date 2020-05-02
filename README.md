@@ -275,7 +275,10 @@ if the cursor is in the start or end tag, `alt+p t` would select both the tag an
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ### jump to bracket
-* extend the default jumpToBracket command.
+default command always put cursor before the bracket, we want it after start bracket and before end bracket.
+
+default command always search down for the end bracket if the cursor is not at bracket, we want it search up.
+
 * <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>\\</kbd>: jump to the begin bracket that contains the cursor. Press the shortcut *again* jump to the end bracket.
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)

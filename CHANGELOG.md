@@ -27,7 +27,7 @@ All notable changes to the "metago" extension will be documented in this file.
    
    - [ ] bookmark: use treeView and implement tag mark.
    - [ ] metaSelection: active selection's cursor should be special to identify, when there are multiple selections or multiple cursors
-
+   - [ ] extend selecttobracket alt+shift+\ command to do further extension
    - [ ] inPairSelection: pairs configuration
    - [ ] inPairSelection: tag selection support
    - [ ] metaJump: alt+/ then ctrl+alt+/ could cancel and press ctrl+alt+/ to trigger.
@@ -46,6 +46,13 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Changed
 #### Fixed
 
+---
+### V3.8.0 - May 08, 2020
+#### Added
+#### Removed
+#### Changed
+   - [x] improve go-to-bracket command <a href="https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket">(Detail)</a>
+#### Fixed
 
 ## Current Version
 ---

@@ -7,10 +7,10 @@ class bracket {
 }
 
 export class BracketJumper {
-    private bracketPairs = [new bracket('[', ']'), new bracket('{', '}'), new bracket('(', ')')];
+    private bracketPairs = [new bracket('[', ']'), new bracket('{', '}'), new bracket('(', ')'), new bracket('<','>')];
 
     constructor(context: vscode.ExtensionContext) {
-        let disposable = vscode.commands.registerCommand('metaGo.jumpToBracket', () => {
+        let disposable = vscode.commands.registerCommand('metaGo.jumpToBracket', async () => {
             const editor = vscode.window.activeTextEditor;
             const selection = editor.selection;
             let fromLine = selection.active.line;
@@ -18,10 +18,19 @@ export class BracketJumper {
             let line = editor.document.lineAt(fromLine);
             this.clearBracketsCounter();
 
-            if (this.isBracket(line.text[fromChar]) || this.isBracket(line.text[fromChar - 1])) {
+            /// default command always put cursor before the bracket, we want it after start bracket and before end bracket
+            if (this.isBracketStart(line.text[fromChar]) || this.isBracketStart(line.text[fromChar - 1])) {
                 vscode.commands.executeCommand('editor.action.jumpToBracket');
                 return;
+            } else if (this.isBracketEnd(line.text[fromChar]) || this.isBracketEnd(line.text[fromChar - 1])) {
+                await vscode.commands.executeCommand('editor.action.jumpToBracket');
+                const selection = editor.selection;
+                const position = new vscode.Position(selection.active.line, selection.active.character +1);
+                const selections = editor.selections.slice(0, editor.selections.length -1);
+                editor.selections = [...selections, new vscode.Selection(position,position)];
+                return;
             }
+
             if (this.testLine(line, fromChar)) return;
 
             while (--fromLine >= 0) {
@@ -47,7 +56,8 @@ export class BracketJumper {
             } else if (this.bracketPairs.some((c, i) => { index = i; return c.start === char })) {
                 if (this.bracketPairs[index].counter === 0) {
                     let lineN = line.lineNumber;
-                    Utilities.goto(editor, lineN, i);
+
+                    Utilities.goto(editor, lineN, i+1);
                     let position = new vscode.Position(lineN, i);
                     let range = new vscode.Range(position, position);
                     vscode.window.activeTextEditor.revealRange(range);
