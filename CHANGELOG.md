@@ -58,9 +58,9 @@ All notable changes to the "metago" extension will be documented in this file.
 ---
 ### V3.7.0 - April 30, 2020
 #### Added
-   - [x] metaSelection: in-pair-selection command use cancel timeout in config.
-   - [x] metaSelection: in-pair-selection command's pairs could be configurable. <a href="https://github.com/metaseed/metaGo/blob/master/README.md#surroundpairs-config">(Detail)</a>
-   - [x] metaSelection: in-pair-selection command's pairs support regex, html tag selection is supported.<a href="https://github.com/metaseed/metaGo/blob/master/README.md#surroundpairs-config">(Detail)</a>
+   - [x] metaSelection: surrounding-pair-selection command use cancel timeout in config.
+   - [x] metaSelection: surrounding-pair-selection command's pairs could be configurable. <a href="https://github.com/metaseed/metaGo/blob/master/README.md#surroundpairs-config">(Detail)</a>
+   - [x] metaSelection: surrounding-pair-selection command's pairs support regex, html tag selection is supported.<a href="https://github.com/metaseed/metaGo/blob/master/README.md#surroundpairs-config">(Detail)</a>
 #### Removed
    - [x] metaJump: Remove find in selection and it's config. (never use)
 #### Changed
@@ -78,7 +78,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: could config foreground decorator color for both one-char and two-char decorator.
    - [x] metaSelection: command to alternate selection's active with anchor. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>
    - [x] lineSelection: multi cursors support, extend/shrink lines for last active cursor. <a href="https://github.com/metaseed/metaGo#lines-selection">(Detail)</a>
-   - [x] inPairSelection: command to select inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...<a href="https://github.com/metaseed/metaGo#inside-pair-selection">(Detail)</a>
+   - [x] inPairSelection: command to select inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...<a href="https://github.com/metaseed/metaGo#surrounding-pair-selection">(Detail)</a>
 #### Removed
 #### Changed
    - [x] lineSelection: Ctrl+l to select current line or extend/shrink selection by one line below. Ctrl+o to extend/shrink selection by one line above. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>

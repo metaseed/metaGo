@@ -78,7 +78,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 * [MetaSelection](https://github.com/metaseed/metaGo/blob/master/README.md#metaselection)
     * [alternate Selection's active with anchor](https://github.com/metaseed/metaGo/blob/master/README.md#alternate-selections-active-with-anchor)
     * [lines selection](https://github.com/metaseed/metaGo/blob/master/README.md#lines-selection)
-    * [inside-pair selection](https://github.com/metaseed/metaGo/blob/master/README.md#inside-pair-selection)
+    * [surrounding-pair selection](https://github.com/metaseed/metaGo/blob/master/README.md#surrounding-pair-selection)
 
 * [Navigate between files using bookmarks](https://github.com/metaseed/metaGo/blob/master/README.md#navigate-between-files-using-bookmarks)
 
@@ -201,7 +201,7 @@ With the two selections, you could then delete or copy...
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
-### inside-pair selection
+### surrounding-pair selection
 commands to select content inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...
 html tag pair is supported via regexp. (`alt+p t`, `t` means tag).
 
@@ -232,15 +232,15 @@ html tag pair is supported via regexp. (`alt+p t`, `t` means tag).
 >   `[^!]+?`: one or more char (not greedy before mach '>') which is not '!'(comment html tag)    
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
-#### inside-pair-selection demo
+#### surrounding-pair-selection demo
 we use `alt+p (` to select content inside the '(' and ')', then `alt+p {` to extend selection, then `alt+p {` to extend further, then `alt+shift+p {` to include then pair('{'and '}') in the selection, then `alt+shift+p` to extend the selection further with the pair('{' and '}') included.
-![metago.in-pair-selection](images/metago.in-pair-selection.gif)
+![metago.surrounding-pair-selection](images/metago.surrounding-pair-selection.gif)
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
-#### inside-pair-selection demo: html tag pairs
+#### surrounding-pair-selection demo: html tag pairs
 we use `alt+p t` to select content inside html tag, `alt+shift+p` to select both the content and the tag pairs.
 if the cursor is in the start or end tag, `alt+p t` would select both the tag and the content.
-![metago.in-pair-selection-html-tag](images/metago.in-selection-html-tag.gif)
+![metago.surrounding-pair-selection-html-tag](images/metago.in-selection-html-tag.gif)
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 ## navigate between files using bookmarks
 
