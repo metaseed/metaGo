@@ -108,7 +108,7 @@
                 "title": "xx: metaGo.Select Line Down"
             },
             {
-                "command": "metaGo.surroundingPairSelection",
+                "command": "metaGo.changeSurroundingPair",
                 "title": "xx: metaGo select the surrounding pairs"
             },
             {
@@ -235,18 +235,18 @@
                 "when": "editorTextFocus"
             },
             {
-                "command": "metaGo.surroundingPairSelection",
-                "key": "ctrl+alt+p",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.inSurroundingPairSelection",
+                "command": "metaGo.changeSurroundingPair",
                 "key": "alt+p",
                 "when": "editorTextFocus"
             },
             {
+                "command": "metaGo.inSurroundingPairSelection",
+                "key": "alt+shift+p",
+                "when": "editorTextFocus"
+            },
+            {
                 "command": "metaGo.inSurroundingPairSelectionWithPairs",
-                "key": "shift+alt+p",
+                "key": "ctrl+alt+p",
                 "when": "editorTextFocus"
             },
             {
