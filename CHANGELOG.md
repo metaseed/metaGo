@@ -28,8 +28,8 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] bookmark: use treeView and implement tag mark.
    - [ ] metaSelection: active selection's cursor should be special to identify, when there are multiple selections or multiple cursors
    - [ ] extend selecttobracket alt+shift+\ command to do further extension
-   - [ ] inPairSelection: pairs configuration
-   - [ ] inPairSelection: tag selection support
+   - [ ] inSurroundingPairSelection: pairs configuration
+   - [ ] inSurroundingPairSelection: tag selection support
    - [ ] metaJump: alt+/ then ctrl+alt+/ could cancel and press ctrl+alt+/ to trigger.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
@@ -78,7 +78,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: could config foreground decorator color for both one-char and two-char decorator.
    - [x] metaSelection: command to alternate selection's active with anchor. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>
    - [x] lineSelection: multi cursors support, extend/shrink lines for last active cursor. <a href="https://github.com/metaseed/metaGo#lines-selection">(Detail)</a>
-   - [x] inPairSelection: command to select inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...<a href="https://github.com/metaseed/metaGo#surrounding-pair-selection">(Detail)</a>
+   - [x] inSurroundingPairSelection: command to select inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...<a href="https://github.com/metaseed/metaGo#surrounding-pair-selection">(Detail)</a>
 #### Removed
 #### Changed
    - [x] lineSelection: Ctrl+l to select current line or extend/shrink selection by one line below. Ctrl+o to extend/shrink selection by one line above. <a href="https://github.com/metaseed/metaGo#lineselection-demo">(Detail)</a>

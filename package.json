@@ -108,12 +108,16 @@
                 "title": "xx: metaGo.Select Line Down"
             },
             {
-                "command": "metaGo.inPairSelection",
-                "title": "xx: metaGo select inside separators"
+                "command": "metaGo.surroundingPairSelection",
+                "title": "xx: metaGo select the surrounding pairs"
+            },
+            {
+                "command": "metaGo.inSurroundingPairSelection",
+                "title": "xx: metaGo select inside the surrounding pairs"
             },
             {
                 "command": "metaGo.inPairSelectionWithSeparators",
-                "title": "xx: metaGo select inside separators and the two separators"
+                "title": "xx: metaGo select both the surrounding pairs and the content inside"
             },
             {
                 "command": "metaGo.scrollCurrentLineToMiddle",
@@ -231,12 +235,17 @@
                 "when": "editorTextFocus"
             },
             {
-                "command": "metaGo.inPairSelection",
+                "command": "metaGo.surroundingPairSelection",
+                "key": "ctrl+alt+p",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.inSurroundingPairSelection",
                 "key": "alt+p",
                 "when": "editorTextFocus"
             },
             {
-                "command": "metaGo.inPairSelectionWithPairs",
+                "command": "metaGo.inSurroundingPairSelectionWithPairs",
                 "key": "shift+alt+p",
                 "when": "editorTextFocus"
             },
@@ -428,7 +437,7 @@
                 },
                 "metaGo.surroundPairs": {
                     "type": "object",
-                    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!/)(?!br)([^!]+?)(?<!/)>/", "/<\/.+?>/", "t"]]
+                    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!/)(?!br)([^!]+?)(?<!/)>/", "/<\/(.+?)>/", "t"]]
                 },
                 "metaGo.bookmark.saveBookmarksInProject": {
                     "type": "boolean",
