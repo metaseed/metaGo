@@ -67,14 +67,14 @@ export class SurroundingPairSelection {
 
     private async input(config: Config, editor: vscode.TextEditor) {
         this.inputTimeoutId = setTimeout(() => { this.inputTimeoutId = null; this.cancelInput(); }, config.jumper.timeout);
-            try {
-                const matchChar = await new Input(config).input(editor, v => v);
-                return matchChar;
-            } catch (reason) {
-                if (!reason) reason = new Error("Canceled!");
-                vscode.window.setStatusBarMessage(`metaGo: ${reason}`, 6000);
-                return null;
-            }
+        try {
+            const matchChar = await new Input(config).input(editor, v => v);
+            return matchChar;
+        } catch (reason) {
+            if (!reason) reason = new Error("Canceled!");
+            vscode.window.setStatusBarMessage(`metaGo: ${reason}`, 6000);
+            return null;
+        }
     }
 
     private async select(config: Config, editor: vscode.TextEditor, mode = Mode.InPair) {
@@ -84,15 +84,15 @@ export class SurroundingPairSelection {
 
             let { selections, document } = editor;
             selections = editor.selections.slice(0, editor.selections.length - 1);
-            const selection = editor.selections[editor.selections.length - 1];
+            const currentSelection = editor.selections[editor.selections.length - 1];
             /// adjust start/end
-            let start = selection.start;
+            let start = currentSelection.start;
             let line = start.line;
             const startLineText = document.lineAt(line).text;
-            let end = selection.end;
+            let end = currentSelection.end;
             const endLineText = document.lineAt(end.line).text;
             const matchChar = await this.input(config, editor);
-            if(matchChar === null) return;
+            if (matchChar === null) return;
 
             var pair = this.getPair(matchChar);
             const startLineMatch = startLineText.matchAll(pair.startRegex);
@@ -261,20 +261,27 @@ export class SurroundingPairSelection {
                 if (pair) {
                     vscode.window.setStatusBarMessage(`metaGo.surroundingPairs: input the new start-pair...`);
                     const matchChar = await this.input(config, editor);
-                    if(matchChar === null) return;
-                    
+                    if (matchChar === null) {
+                        return;
+                    }
+                    var pair = this.separatorPairs.find(p => p.start === matchChar);
+                    if (!pair) pair = new SeparatorPair(matchChar, matchChar);
                     await editor.edit(builder => {
                         builder.replace(start, pair.start);
                         builder.replace(end, pair.end);
                     });
+
+                    editor.selections = [...selections, currentSelection];
+
                 }
             }
-            else
+            else {
                 editor.selections = [...selections, new vscode.Selection(startPosition, endPosition)];
+                vscode.window.setStatusBarMessage(`metaGo.surroundingPairs: Selected via pair '${pair.start}' and '${pair.end}'`, 3000)
+            }
 
             const range = (<vscode.Range[]>editor.selections).reduce((a, c) => a.union(c))
             editor.revealRange(range);
-            vscode.window.setStatusBarMessage(`metaGo.surroundingPairs: Selected via pair '${pair.start}' and '${pair.end}'`, 6000)
 
         } catch (e) {
             vscode.window.setStatusBarMessage(`metaGo.surroundingPairs exception: ${e}`, 6000)
