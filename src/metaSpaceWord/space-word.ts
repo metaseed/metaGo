@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import { Config } from './config';
+import { Config } from '../config';
 
 enum Mode { Move, Select, Delete }
-export class SpaceWord {
+export class MetaSpaceWord {
 
     constructor(context: vscode.ExtensionContext, config: Config) {
         context.subscriptions.push(
@@ -27,7 +27,7 @@ export class SpaceWord {
         )
     }
 
-    left(editor, edit, mode = Mode.Move) {
+    left(editor, edit, mode = Mode.Move, char = ' ') {
         let selections: vscode.Selection[] = [];
         for (let s = 0; s < editor.selections.length; s++) {
             const selection = editor.selections[s];
@@ -45,7 +45,7 @@ export class SpaceWord {
 
             let findNoneSpace = false;
             for (let j = charIndex - 1; j >= -1; j--) {
-                if (text[j] !== ' ' && text[j] !== undefined) {
+                if (text[j] !== char && text[j] !== undefined) {
                     findNoneSpace = true;
                     continue;
                 }
@@ -61,7 +61,7 @@ export class SpaceWord {
         editor.selections = selections;
     }
 
-    right(editor: vscode.TextEditor, edit: vscode.TextEditorEdit, mode = Mode.Move) {
+    right(editor: vscode.TextEditor, edit: vscode.TextEditorEdit, mode = Mode.Move, char = ' ') {
         const lines = editor.document.lineCount;
         let selections: vscode.Selection[] = [];
         for (let s = 0; s < editor.selections.length; s++) {
@@ -79,7 +79,7 @@ export class SpaceWord {
 
             let findNoneSpace = false;
             for (let j = charIndex; j <= text.length; j++) {
-                if (text[j] !== ' ' && text[j] !== undefined) {
+                if (text[j] !== char && text[j] !== undefined) {
                     findNoneSpace = true;
                     continue;
                 }
