@@ -10,7 +10,8 @@ import { MetaSelection } from './metaSelect';
 import { BookmarkExt } from './bookmark';
 import { BracketJumper } from './bracket-jumper';
 import { LandingPage } from './landing-page';
-import {MetaSpaceWord} from './metaSpaceWord/space-word';
+import {MetaSpaceWord} from './metaWord/space-word';
+import { MetaSurroundingPair } from './metaSurroundingPair';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -37,6 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
     let metaSelection = new MetaSelection(context, config);
     let bookmark = new BookmarkExt(context, config.bookmark);
     let bracketJumper = new BracketJumper(context);
+    let metaSurroundingPair = new MetaSurroundingPair(context, config);
 
 }
 
