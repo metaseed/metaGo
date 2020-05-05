@@ -272,7 +272,9 @@ export class SurroundingPairSelection {
                     });
 
                     editor.selections = [...selections, currentSelection];
-
+                    vscode.window.setStatusBarMessage(`metaGo.surroundingPairs: pair changed`, 3000);
+                } else {
+                    vscode.window.setStatusBarMessage(`metaGo.surroundingPairs: input the new pair...`, 6000);
                 }
             }
             else {
