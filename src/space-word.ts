@@ -50,8 +50,8 @@ export class SpaceWord {
                         findNoneSpace = true;
                         continue;
                     }
-                    if (findNoneSpace && (text[j] === ' ' || j === -1)) {
-                         position = new vscode.Position(i, j + 1);
+                    if (findNoneSpace && (text[j] === ' ' || j === -1) || (j === -1 && selection.active.character-1 !== j)) {
+                        position = new vscode.Position(i, j + 1);
                         done = true;
                         break;
                     }
@@ -87,7 +87,7 @@ export class SpaceWord {
                         findNoneSpace = true;
                         continue;
                     }
-                    if (findNoneSpace && (text[j] === ' ' || j === text.length)) {
+                    if (findNoneSpace && (text[j] === ' ' || j === text.length) || (j === text.length && j !== selection.active.character) ) {
                         position = new vscode.Position(i, j);
                         done = true;
                         break;
