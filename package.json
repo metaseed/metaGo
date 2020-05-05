@@ -96,6 +96,14 @@
                 "title": "xx: metaGo.Select to position After the character"
             },
             {
+                "command": "metaGo.cursorSpaceWordLeft",
+                "title": "xx: metaGo.cursorSpaceWordLeft"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordRight",
+                "title": "xx: metaGo.cursorSpaceWordRight"
+            },
+            {
                 "command": "metaGo.selectionSwitchActiveWithAnchor",
                 "title": "xx: metaGo.selectionSwitchActiveWithAnchor"
             },
@@ -219,6 +227,21 @@
                 "when": "editorTextFocus",
                 "description": "select to the cursor position smartly"
             },
+            {
+                "command": "metaGo.cursorSpaceWordLeft",
+                "key": "win+alt+left",
+                "mac": "cmd+alt+left",
+                "when": "editorTextFocus",
+                "description": "move cursor to the begin of the word which seperated by 'space'"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordRight",
+                "key": "win+alt+right",
+                "mac": "cmd+alt+right",
+                "when": "editorTextFocus",
+                "description": "move cursor to the end of the word which seperated by 'space'"
+            },
+
             {
                 "command": "metaGo.selectionSwitchActiveWithAnchor",
                 "key": "alt+a",

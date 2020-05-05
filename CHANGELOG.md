@@ -24,7 +24,9 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] bracketJump: level navigate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
    - [ ] metaJump: backspace to cancel last input decoration code.
    - [ ] ctrl+i i ': select in '; ctrl+i a ': select ' and content;
-   
+   - [ ] pair-selection: support mutiline start-pair
+   - [ ] space-word: cursor move, delete, select
+   - [ ] alt+g *: cursor to char forward, alt+f *: cursor to char backward.
    - [ ] bookmark: use treeView and implement tag mark.
    - [ ] metaSelection: active selection's cursor should be special to identify, when there are multiple selections or multiple cursors
    - [ ] extend selecttobracket alt+shift+\ command to do further extension
