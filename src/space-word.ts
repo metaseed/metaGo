@@ -33,31 +33,27 @@ export class SpaceWord {
             const selection = editor.selections[s];
             let i = selection.active.line;
             let charIndex = selection.active.character;
+            if (charIndex === 0) {
+                i--;
+            }
 
-            let text: string;
             let position: vscode.Position;
+            const line = editor.document.lineAt(i);
+            var text = line.text;
+            if (i !== selection.active.line)
+                charIndex = text.length;
 
-            do {
-                const line = editor.document.lineAt(i);
-                text = line.text;
-                if (i !== selection.active.line)
-                    charIndex = text.length;
-
-                let findNoneSpace = false;
-                let done = false;
-                for (let j = charIndex - 1; j >= -1; j--) {
-                    if (text[j] !== ' ' && text[j] !== undefined) {
-                        findNoneSpace = true;
-                        continue;
-                    }
-                    if (findNoneSpace && (text[j] === ' ' || j === -1) || (j === -1 && selection.active.character-1 !== j)) {
-                        position = new vscode.Position(i, j + 1);
-                        done = true;
-                        break;
-                    }
+            let findNoneSpace = false;
+            for (let j = charIndex - 1; j >= -1; j--) {
+                if (text[j] !== ' ' && text[j] !== undefined) {
+                    findNoneSpace = true;
+                    continue;
                 }
-                if (done) break;
-            } while (--i > -1);
+                if (findNoneSpace && (text[j] === ' ' || j === -1) || j === -1) {
+                    position = new vscode.Position(i, j + 1);
+                    break;
+                }
+            }
             if (i === -1) position = selection.active;
             this.action(mode, selection, position, selections, edit);
         }
@@ -71,30 +67,27 @@ export class SpaceWord {
         for (let s = 0; s < editor.selections.length; s++) {
             const selection = editor.selections[s];
             let i = selection.active.line;
+            const line = editor.document.lineAt(i);
             let charIndex = selection.active.character;
+            let text = line.text;
+            if (charIndex === line.text.length) {
+                i++;
+                text = editor.document.lineAt(i).text;
+                charIndex = 0;
+            }
             let position: vscode.Position;
-            do {
-                const line = editor.document.lineAt(i);
-                const text = line.text;
-                if (selection.active.line !== i) {
-                    charIndex = 0;
-                }
 
-                let findNoneSpace = false;
-                let done = false;
-                for (let j = charIndex; j <= text.length; j++) {
-                    if (text[j] !== ' ' && text[j] !== undefined) {
-                        findNoneSpace = true;
-                        continue;
-                    }
-                    if (findNoneSpace && (text[j] === ' ' || j === text.length) || (j === text.length && j !== selection.active.character) ) {
-                        position = new vscode.Position(i, j);
-                        done = true;
-                        break;
-                    }
+            let findNoneSpace = false;
+            for (let j = charIndex; j <= text.length; j++) {
+                if (text[j] !== ' ' && text[j] !== undefined) {
+                    findNoneSpace = true;
+                    continue;
                 }
-                if (done) break;
-            } while (++i < lines);
+                if (findNoneSpace && (text[j] === ' ' || j === text.length) || j === text.length) {
+                    position = new vscode.Position(i, j);
+                    break;
+                }
+            }
 
             if (i === lines) position = selection.active;
 
