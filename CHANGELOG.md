@@ -52,7 +52,8 @@ All notable changes to the "metago" extension will be documented in this file.
 ### V3.8.0 - May 08, 2020
 #### Added
    - [x] metaWord: add commands to moveCursor/select/delete one space-word left/right.
-   - 
+   - [x] metaSurroundingPair: add command to change surrounding pairs.
+   - [ ] metaSurroundingPair: support multiline tags.
 
 #### Removed
 #### Changed
