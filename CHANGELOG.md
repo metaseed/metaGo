@@ -51,9 +51,12 @@ All notable changes to the "metago" extension will be documented in this file.
 ---
 ### V3.8.0 - May 08, 2020
 #### Added
+   - [x] metaWord: add commands to moveCursor/select/delete one space-word left/right.
+   - 
+
 #### Removed
 #### Changed
-   - [x] metaJump: default foreground/background colors for one-char and two-char decorator changed to be more easier to differentiate.
+   - [x] metaJump: default foreground/background colors for one-char and two-char decorator changed to be more easier to differentiate if overlapped.
    - [x] improve go-to-bracket command <a href="https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket">(Detail)</a>
 #### Fixed
 
