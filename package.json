@@ -100,8 +100,24 @@
                 "title": "xx: metaGo.cursorSpaceWordLeft"
             },
             {
+                "command": "metaGo.cursorSpaceWordLeftSelect",
+                "title": "xx: metaGo.cursorSpaceWordLeftSelect"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordLeftDelete",
+                "title": "xx: metaGo.cursorSpaceWordLeftDelete"
+            },
+            {
                 "command": "metaGo.cursorSpaceWordRight",
                 "title": "xx: metaGo.cursorSpaceWordRight"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordRightSelect",
+                "title": "xx: metaGo.cursorSpaceWordRightSelect"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordRightDelete",
+                "title": "xx: metaGo.cursorSpaceWordRightDelete"
             },
             {
                 "command": "metaGo.selectionSwitchActiveWithAnchor",
@@ -235,11 +251,46 @@
                 "description": "move cursor to the begin of the word which seperated by 'space'"
             },
             {
+                "command": "metaGo.cursorSpaceWordLeftSelect",
+                "key": "win+alt+shift+left",
+                "mac": "cmd+alt+shift+left",
+                "when": "editorTextFocus",
+                "description": "move cursor to the begin of the word which seperated by 'space'"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordLeftDelete",
+                "key": "win+alt+backspace",
+                "mac": "cmd+alt+backspace",
+                "when": "editorTextFocus",
+                "description": "delete cursor to the begin of the word which seperated by 'space'"
+            },
+            {
                 "command": "metaGo.cursorSpaceWordRight",
                 "key": "win+alt+right",
                 "mac": "cmd+alt+right",
                 "when": "editorTextFocus",
                 "description": "move cursor to the end of the word which seperated by 'space'"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordRightSelect",
+                "key": "win+shift+alt+right",
+                "mac": "cmd++shift+alt+right",
+                "when": "editorTextFocus",
+                "description": "select to the end of the word which seperated by 'space'"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordRightDelete",
+                "key": "win+alt+delete",
+                "mac": "cmd+alt+delete",
+                "when": "editorTextFocus",
+                "description": "delete to the end of the word which seperated by 'space'"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordRightDelete",
+                "key": "win+alt+shift+backspace",
+                "mac": "cmd+alt+shift+backspace",
+                "when": "editorTextFocus",
+                "description": "delete to the end of the word which seperated by 'space'"
             },
 
             {
