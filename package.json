@@ -447,11 +447,6 @@
                     "type": "string",
                     "default": "#1e1e1e"
                 },
-                "metaGo.decoration.backgroundColor": {
-                    "type": "string",
-                    "default": "chartreuse,yellow",
-                    "description": "code decorator background color for different code length"
-                },
                 "metaGo.decoration.matchBackground": {
                     "type": "string",
                     "default": "editor.wordHighlightBackground",
@@ -459,16 +454,21 @@
                 },
                 "metaGo.decoration.targetFollowCharBackground": {
                     "type": "string",
-                    "default": "#4169E1AA",
+                    "default": "#3058B888",
                     "description": "in sequential-target-chars jump, background color of the char follows target char"
                 },
                 "metaGo.decoration.backgroundOpacity": {
                     "type": "string",
                     "default": "0.8"
                 },
+                "metaGo.decoration.backgroundColor": {
+                    "type": "string",
+                    "default": "yellow,#4068FF",
+                    "description": "code decorator background color for different code length"
+                },
                 "metaGo.decoration.color": {
                     "type": "string",
-                    "default": "blue, blue",
+                    "default": "blue,white",
                     "description": "code decorator foreground color for different code length"
                 },
                 "metaGo.decoration.characters": {

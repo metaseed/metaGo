@@ -53,6 +53,7 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Added
 #### Removed
 #### Changed
+   - [x] metaJump: default foreground/background colors for one-char and two-char decorator changed to be more easier to differentiate.
    - [x] improve go-to-bracket command <a href="https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket">(Detail)</a>
 #### Fixed
 
