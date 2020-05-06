@@ -3,32 +3,50 @@ import { Input } from '../metajump/input';
 import { Config } from '../config';
 import { CommandIndicator, CommandMode } from '../metago.lib';
 
+class PairData {
+    documentEnd = false;
+    line: number;
+    character: number;
+
+}
+
 class SeparatorPair {
     public counter = 0;
     public startRegex: RegExp = null;
     public endRegex: RegExp = null;
-    constructor(public start: string, public end: string, public matchChar = '') {
-        if (start.length > 2 && start[0] === '/' && '/' === start[start.length - 1]) {
-            this.startRegex = new RegExp(this.start.substring(1, this.start.length - 1), 'g');
-        } else {
-            this.startRegex = new RegExp(this.escapeRegExp(start), 'g');
-        }
-        if (end.length > 2 && end[0] === '/' && '/' === end[end.length - 1]) {
-            this.endRegex = new RegExp(this.end.substring(1, this.end.length - 1), 'g');
-        } else {
-            this.endRegex = new RegExp(this.escapeRegExp(this.end), 'g');
-        }
-    }
-
     escapeRegExp(string) {
         return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+    }
+    getRegex(regex:string, global = true) {
+        const additionalOption = global?'g':'';
+        try {
+            regex = regex.trim();
+            let parts = regex.split('/');
+            if(regex[0] !== '/' || parts.length< 3){
+              regex = this.escapeRegExp(regex);
+              return new RegExp(regex,additionalOption);
+            }
+    
+            let option =parts[parts.length - 1];
+            if(!option.includes(additionalOption)) option += additionalOption;
+            const lastIndex = regex.lastIndexOf('/');
+            regex = regex.substring(1, lastIndex);
+            return new RegExp(regex, option);
+        } catch (e) {
+            return null
+        }
+        
+    }
+    constructor(public start: string, public end: string, public matchChar = '') {
+        this.startRegex = this.getRegex(start);
+        this.endRegex = this.getRegex(end);
     }
 }
 
 enum Mode { InPair, WithPair, ChangePair }
 
 export class SurroundingPairSelection {
-    private separatorPairs = [new SeparatorPair('[', ']'), new SeparatorPair('{', '}'), new SeparatorPair('(', ')'), new SeparatorPair('<', '>'), new SeparatorPair('>', '<'), new SeparatorPair('/<(?!/)(?!br)([^!]+?)(?<!/)>/', '/<\/(.+?)>/', 't')];
+    private separatorPairs = [new SeparatorPair('[', ']'), new SeparatorPair('{', '}'), new SeparatorPair('(', ')'), new SeparatorPair('<', '>'), new SeparatorPair('/<(?!/)(?!br)(.+?)(?<!/)>/ms', '/<\/(.+?)>/', 't')];
     private commandIndicator = new CommandIndicator();
 
     private getPair(matchChar: string) {
@@ -46,7 +64,9 @@ export class SurroundingPairSelection {
     }
 
     constructor(context: vscode.ExtensionContext, config: Config) {
-        this.separatorPairs = config.surroundPairs.map(a => new SeparatorPair(a[0], a[1], a[2])) ?? this.separatorPairs;
+        const pairs = config.surroundPairs.map(a =>  new SeparatorPair(a[0], a[1], a[2])).filter(p => p.startRegex !==null && p.endRegex !== null);
+
+        this.separatorPairs = pairs.length === 0 ? this.separatorPairs : pairs;
         context.subscriptions.push(
             vscode.commands.registerTextEditorCommand('metaGo.inSurroundingPairSelection',
                 async (editor, edit) => await this.select(config, editor)));
@@ -78,7 +98,9 @@ export class SurroundingPairSelection {
     }
 
     private async select(config: Config, editor: vscode.TextEditor, mode = Mode.InPair) {
-        const status = vscode.window.setStatusBarMessage(`metaGo.surroundingPairs: please input the pair-start to find...`);
+        const oneStepLines = 8;
+        const status = vscode.window.setStatusBarMessage(`metaGo.surroundingPairs: input the pair-start to find...`);
+
         try {
             this.commandIndicator.addCommandIndicator(editor, CommandMode.Selection);
 
