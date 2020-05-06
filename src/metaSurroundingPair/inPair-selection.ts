@@ -114,7 +114,10 @@ export class SurroundingPairSelection {
             let end = currentSelection.end;
             const endLineText = document.lineAt(end.line).text;
             const matchChar = await this.input(config, editor);
-            if (matchChar === null) return;
+            if (matchChar === null) {
+                vscode.window.setStatusBarMessage('metaGo.surroundingPairs: canceled');
+                return;
+            }
 
             var pair = this.getPair(matchChar);
             const startLineMatch = startLineText.matchAll(pair.startRegex);
