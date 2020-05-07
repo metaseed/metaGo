@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { SurroundingPairSelection } from "./inPair-selection";
+import { SurroundingPairSelection } from "../metaSelect/inPair-selection";
 import { Config } from "../config";
 
 export class MetaSurroundingPair {

@@ -1,6 +1,6 @@
 import * as readline from "readline";
 import * as vscode from "vscode";
-import { Utilities } from './metago.lib';
+import { Utilities } from './metago.core';
 
 export class BlankLineJumper {
     constructor(context: vscode.ExtensionContext) {

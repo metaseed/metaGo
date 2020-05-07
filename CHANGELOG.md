@@ -22,6 +22,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: contributed command: metaGo.Cancel doesn't exist.
    - [x] exclude <br> from start tag regex
    - [ ] bracketJump: level navigate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
+   - [ ] alt+back to delete with metaJump
    - [ ] metaJump: backspace to cancel last input decoration code.
    - [ ] ctrl+i i ': select in '; ctrl+i a ': select ' and content;
    - [ ] pair-selection: support mutiline start-pair
@@ -53,13 +54,14 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Added
    - [x] metaWord: add commands to moveCursor/select/delete one space-word left/right.
    - [x] metaSurroundingPair: add command to change surrounding pairs.
-   - [ ] metaSurroundingPair: support multiline tags.
+   - [ ] metaSurroundingPair: rewrite surroundPairsSelection, support multiline tags.
 
 #### Removed
 #### Changed
    - [x] metaJump: default foreground/background colors for one-char and two-char decorator changed to be more easier to differentiate if overlapped.
    - [x] improve go-to-bracket command <a href="https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket">(Detail)</a>
 #### Fixed
+   -[ ] lineSelection: select line down if more than one screen lines selected could not show active line, always show selection start. 
 
 ## Current Version
 ---
