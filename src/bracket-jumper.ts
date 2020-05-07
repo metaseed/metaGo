@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Utilities } from './metago.core';
+import { Utilities } from './metago.lib';
 
 class bracket {
     constructor(public start: string, public end: string) { }

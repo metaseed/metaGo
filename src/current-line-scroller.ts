@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { ViewPort } from './metago.core';
+import { ViewPort } from './metago.lib';
 
 // todo: test revealLine command: 
 // https://code.visualstudio.com/api/references/commands
