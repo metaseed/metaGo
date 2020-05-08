@@ -511,7 +511,7 @@
                 },
                 "metaGo.surroundPairs": {
                     "type": "object",
-                    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!/)(?!br)(.+?)(?<!/)>/ms", "/<\/(.+?)>/", "t"]]
+                    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!/)(?!br)(?!!)(.+?)(?<!/)>/ms", "/<\/(.+?)>/", "t"]]
                 },
                 "metaGo.bookmark.saveBookmarksInProject": {
                     "type": "boolean",
