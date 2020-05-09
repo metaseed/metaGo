@@ -62,7 +62,7 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaSurroundingPair: default hotkey is changed. <a href="https://github.com/metaseed/metaGo#surrounding-pair-selection">(Detail)</a>
    - [x] improve go-to-bracket command <a href="https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket">(Detail)</a>
 #### Fixed
-   -[ ] lineSelection: select line down if more than one screen lines selected could not show active line(below the screen bottom), always show selection start. 
+   - [x] lineSelection: select line down if more than one screen lines selected, could not show active line(below the screen bottom), always show selection start. (works perfect with one line not selected show at the top or bottom)
 
 ## Current Version
 ---
