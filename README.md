@@ -150,7 +150,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 #### add-multi-cursors demo
 we want to modify the three wrongly spelled words, `alt+/` to goto the end of one of them, and `ctrl+alt+/` two times to add two additional cursors to the end of the other two words, `ctrl+backspace` to delete them together, `esc` to escape multi-cursor mode:
 
-![MetaGo.MultiCursor](images/metago.mutiCursor.gif)
+![MetaGo.MultiCursor](images/metago.multiCursor.gif)
 
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
