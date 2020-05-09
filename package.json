@@ -463,12 +463,12 @@
                 },
                 "metaGo.decoration.backgroundColor": {
                     "type": "string",
-                    "default": "yellow,#4068FF",
+                    "default": "#4068FF,yellow",
                     "description": "code decorator background color for different code length"
                 },
                 "metaGo.decoration.color": {
                     "type": "string",
-                    "default": "blue,white",
+                    "default": "white,blue",
                     "description": "code decorator foreground color for different code length"
                 },
                 "metaGo.decoration.characters": {

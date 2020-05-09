@@ -79,6 +79,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
     * [alternate Selection's active with anchor](https://github.com/metaseed/metaGo/blob/master/README.md#alternate-selections-active-with-anchor)
     * [lines selection](https://github.com/metaseed/metaGo/blob/master/README.md#lines-selection)
     * [surrounding-pair selection](https://github.com/metaseed/metaGo/blob/master/README.md#surrounding-pair-selection)
+    * 
 
 * [Navigate between files using bookmarks](https://github.com/metaseed/metaGo/blob/master/README.md#navigate-between-files-using-bookmarks)
 
@@ -257,10 +258,10 @@ if the cursor is in the start or end tag, `alt+shift+p t` would select both the 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 #### surrounding-pair changing demo
-##### common surrounding pairs
 
+in this demo, we `alt+p ' "` to change a pair of ' to ", and then goto another place use `alt+p [ (` to change a pair to '[]' to '()'. Then we switch to another html file, where we `alt+p t` to change a surrounding pair of 'h1' to 'h2`, and go to another place, to use `alt+p t` to change another pair of tag from 'h3' to 'h1', note: here is a multi-line start-tag, we use `alt+shift+//` to shrink the selection first and then modify the pair of tag.
 
-##### html tag
+![](images/metago.changing-surrounding-pair.gif)
 
 
 ## navigate between files using bookmarks
