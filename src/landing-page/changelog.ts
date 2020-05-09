@@ -1,7 +1,7 @@
 import { ChangeLogItem, ChangeLogKind } from "./contentProvider";
 export const changeLog: ChangeLogItem[] = [
-  { kind: ChangeLogKind.VERSION,   message: `V3.8.0 - May 08, 2020`},
-  { kind: ChangeLogKind.ADDED,   message: `metaWord: add commands to moveCursor/select/delete one space-word left/right.`},
+  { kind: ChangeLogKind.VERSION,   message: `V3.8.0 - May 09, 2020`},
+  { kind: ChangeLogKind.ADDED,   message: `metaWord: add commands to moveCursor/select/delete one space-word left/right. <a href="https://github.com/metaseed/metaGo/blob/master/README.md#metaword">(Detail)</a>`},
   { kind: ChangeLogKind.ADDED,   message: `metaSurroundingPair: add command to change surrounding pairs. <a href="https://github.com/metaseed/metaGo#surrounding-pair-changing-demo">(Detail)</a>`},
   { kind: ChangeLogKind.ADDED,   message: `metaSurroundingPair: rewrite surroundPairsSelection to support multiline tags, i.e the html-start-tag is multiline sometimes, html staring tag regex is revised. (this consumes most of my time for this release🤣)`},
   { kind: ChangeLogKind.CHANGED,   message: `metaJump: default foreground/background colors for one-char and two-char decorator changed to be more easier to differentiate if overlapped. (Have try you would know😉)`},
