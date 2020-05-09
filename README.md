@@ -85,7 +85,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 
 * [Navigate between files using bookmarks](https://github.com/metaseed/metaGo/blob/master/README.md#navigate-between-files-using-bookmarks)
-
+* [MetaWord](https://github.com/metaseed/metaGo/blob/master/README.md#metaword)
 * [Other features](https://github.com/metaseed/metaGo/blob/master/README.md#other-features)
     * [scroll the active line to the screen top, middle and bottom](https://github.com/metaseed/metaGo/blob/master/README.md#scroll-the-active-line-to-the-screen-top-middle-and-bottom)
     * [moving/select up/down between blank lines](https://github.com/metaseed/metaGo/blob/master/README.md#moveselect-updown-between-blank-lines)
@@ -283,6 +283,15 @@ in this demo, we `alt+p ' "` to change a pair of ' to ", and then goto another p
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
+## MetaWord
+### commands to moveCursor/select/delete word seperated by space:
+* <kbd>win/cmd</kbd>+<kbd>alt</alt>+<kbd>left/right</kbd>: to move cursor left/right by one space-word and set cursor at the begin/end of the word.
+* <kbd>win/cmd</kbd>+<kbd>alt</alt>+<kbd>shift</kbd>+<kbd>left/right</kbd>: to select to left/right by one space-word.
+* <kbd>win/cmd</kbd>+<kbd>alt</alt>+<kbd>backspace</kbd>: to delete one space-word left.
+* <kbd>win/cmd</kbd>+<kbd>alt</alt>+<kbd>del</kbd> or <kbd>win/cmd</kbd>+<kbd>alt</alt>+<kbd>shift</kbd>+<kbd>backspace</kbd>: to delete one space-word right.
+
+
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 ## Other features
 ### scroll the active line to the screen top, middle and bottom
 * <kbd>Alt</kbd>+<kbd>t</kbd> is the default shortcut to scroll current line to screen top.
