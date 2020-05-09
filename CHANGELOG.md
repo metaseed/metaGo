@@ -51,9 +51,9 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ## Current Version
 ---
-### V3.8.0 - May 08, 2020
-#### Added
-   - [x] metaWord: add commands to moveCursor/select/delete one space-word left/right.
+### V3.8.0 - May 09, 2020
+#### Added 
+   - [x] metaWord: add commands to moveCursor/select/delete one space-word left/right. <a href="https://github.com/metaseed/metaGo/blob/master/README.md#metaword">(Detail)</a>
    - [x] metaSurroundingPair: add command to change surrounding pairs. <a href="https://github.com/metaseed/metaGo#surrounding-pair-changing-demo">(Detail)</a>
    - [x] metaSurroundingPair: rewrite surroundPairsSelection to support multiline tags, i.e the html-start-tag is multiline sometimes, html staring tag regex is revised. (this consumes most of my time for this release🤣)
 
