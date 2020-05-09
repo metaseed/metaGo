@@ -59,6 +59,7 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Removed
 #### Changed
    - [x] metaJump: default foreground/background colors for one-char and two-char decorator changed to be more easier to differentiate if overlapped.
+   - [x] metaSurroundingPair: default hotkey is changed.
    - [x] improve go-to-bracket command <a href="https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket">(Detail)</a>
 #### Fixed
    -[ ] lineSelection: select line down if more than one screen lines selected could not show active line, always show selection start. 

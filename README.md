@@ -203,15 +203,19 @@ With the two selections, you could then delete or copy...
 
 ### surrounding-pair selection
 commands to select content inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...
-html tag pair is supported via regexp. (`alt+p t`, `t` means tag).
-> html elements is defined in https://www.w3.org/TR/2011/WD-html-markup-20110405/syntax.html#syntax-elements
+html tag pair is supported via regexp. (i.ed to select content between two html tag pairs: `alt+shift+p t`, `t` means tag).
 
-1. <kbd>Alt</kbd>+<kbd>p</kbd>: I want to select inside a pair of chars.
-2. type the start character of the pair. i.e. '(', '[', '{', '"'...
+* `Alt+p` to chang surrounding pairs.
+* `Alt+Shift+p` to select content between surrounding pairs.
+* `Alt+Ctrl+p` to select both the content and the pairs.
 
-> Note: <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd> to selection both the content and the pair of separators.
+1. <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd>: I want to select content between a pair of chars.
+2. type the start character of the pair. i.e. '(', '[', '{', '"'... or the specific regex key(i.e. 't' for html/xml tag)
+
+> Note: <kbd>Alt</kbd>+<kbd>Ctrl</kbd>+<kbd>p</kbd> to selection both the content and the pair of separators.
 
 > it supports multiple cursors/selections
+
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 #### surroundPairs config
@@ -221,6 +225,7 @@ below is the default surrounding-pairs config, it support regex:
     "type": "object",
     "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!/)(?!!)(?!br[\\s>])(?!area[\\s>])(?!base[\\s>])(?!col[\\s>])(?!command[\\s>])(?!embed[\\s>])(?!hr[\\s>])(?!img[\\s>])(?!input[\\s>])(?!keygen[\\s>])(?!link[\\s>])(?!meta[\\s>])(?!param[\\s>])(?!source[\\s>])(?!track[\\s>])(?!wbr[\\s>])((?:.(?!/>))+?)(?<!/)>/ms", "/<\/(.+?)>/", "t"]]
 },
+
 ```
 > the last one is and regex, it is used for html tag: this array has 3 items: start html tag regex, end html tag regex, trigger key.    
 > the default trigger key is the start pair, if start pair is only one char.    
@@ -228,18 +233,36 @@ below is the default surrounding-pairs config, it support regex:
 > you could config your own regex pairs
 > the regex pairs support all regex flags, which means it support multiline tag.
   
+> html elements is defined in https://www.w3.org/TR/2011/WD-html-markup-20110405/syntax.html#syntax-elements
+
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 #### surrounding-pair-selection demo
-we use `alt+p (` to select content inside the '(' and ')', then `alt+p {` to extend selection, then `alt+p {` to extend further, then `alt+shift+p {` to include then pair('{'and '}') in the selection, then `alt+shift+p` to extend the selection further with the pair('{' and '}') included.
+we use `alt+shift+p (` to select content inside the '(' and ')', then `alt+shift+p {` to extend selection, then `alt+shift+p {` to extend further, then `alt+ctrl+p {` to include then pair('{'and '}') in the selection, then `alt+ctrl+p` to extend the selection further with the pair('{' and '}') included.
+
 ![metago.surrounding-pair-selection](images/metago.surrounding-pair-selection.gif)
 
+> note: the hotkey in gif has been changed
+
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
+
 #### surrounding-pair-selection demo: html tag pairs
-we use `alt+p t` to select content inside html tag, `alt+shift+p` to select both the content and the tag pairs.
-if the cursor is in the start or end tag, `alt+p t` would select both the tag and the content.
+
+we use `alt+shift+p t` to select content inside html tag, `alt+ctrl+p` to select both the content and the tag pairs.
+if the cursor is in the start or end tag, `alt+shift+p t` would select both the tag and the content.
+
 ![metago.surrounding-pair-selection-html-tag](images/metago.in-selection-html-tag.gif)
+> note: hotkeys in gif have been changed
+
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
+
+#### surrounding-pair changing demo
+##### common surrounding pairs
+
+
+##### html tag
+
+
 ## navigate between files using bookmarks
 
 * <kbd>Alt</kbd>+ <kbd>\'</kbd> to toggle a bookmark at the cursor location.
