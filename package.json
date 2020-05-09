@@ -301,12 +301,12 @@
             {
                 "command": "metaGo.selectLineUp",
                 "key": "ctrl+o",
-                "when": "editorTextFocus && editorHasSelection"
+                "when": "textInputFocus && editorHasSelection"
             },
             {
                 "command": "metaGo.selectLineDown",
                 "key": "ctrl+l",
-                "when": "editorTextFocus"
+                "when": "textInputFocus"
             },
             {
                 "command": "metaGo.changeSurroundingPair",
