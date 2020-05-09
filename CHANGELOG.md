@@ -49,6 +49,7 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Changed
 #### Fixed
 
+## Current Version
 ---
 ### V3.8.0 - May 08, 2020
 #### Added
@@ -64,7 +65,6 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Fixed
    - [x] lineSelection: select line down if more than one screen lines selected, could not show active line(below the screen bottom), always show selection start. (works perfect with one line not selected show at the top or bottom)
 
-## Current Version
 ---
 ### V3.7.0 - April 30, 2020
 #### Added

@@ -1,5 +1,13 @@
 import { ChangeLogItem, ChangeLogKind } from "./contentProvider";
 export const changeLog: ChangeLogItem[] = [
+  { kind: ChangeLogKind.VERSION,   message: `V3.8.0 - May 08, 2020`},
+  { kind: ChangeLogKind.ADDED,   message: `metaWord: add commands to moveCursor/select/delete one space-word left/right.`},
+  { kind: ChangeLogKind.ADDED,   message: `metaSurroundingPair: add command to change surrounding pairs. <a href="https://github.com/metaseed/metaGo#surrounding-pair-changing-demo">(Detail)</a>`},
+  { kind: ChangeLogKind.ADDED,   message: `metaSurroundingPair: rewrite surroundPairsSelection to support multiline tags, i.e the html-start-tag is multiline sometimes, html staring tag regex is revised. (this consumes most of my time for this release🤣)`},
+  { kind: ChangeLogKind.CHANGED,   message: `metaJump: default foreground/background colors for one-char and two-char decorator changed to be more easier to differentiate if overlapped. (Have try you would know😉)`},
+  { kind: ChangeLogKind.CHANGED,   message: `metaSurroundingPair: default hotkey is changed. <a href="https://github.com/metaseed/metaGo#surrounding-pair-selection">(Detail)</a>`},
+  { kind: ChangeLogKind.CHANGED,   message: `improve go-to-bracket command <a href="https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket">(Detail)</a>`},
+  { kind: ChangeLogKind.FIXED,   message: `lineSelection: select line down if more than one screen lines selected, could not show active line(below the screen bottom), always show selection start. (works perfect with one line not selected show at the top or bottom)`},
   { kind: ChangeLogKind.VERSION,   message: `V3.7.0 - April 30, 2020`},
   { kind: ChangeLogKind.ADDED,   message: `metaSelection: surrounding-pair-selection command use cancel timeout in config.`},
   { kind: ChangeLogKind.ADDED,   message: `metaSelection: surrounding-pair-selection command's pairs could be configurable. <a href="https://github.com/metaseed/metaGo/blob/master/README.md#surroundpairs-config">(Detail)</a>`},
