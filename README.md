@@ -79,7 +79,10 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
     * [alternate Selection's active with anchor](https://github.com/metaseed/metaGo/blob/master/README.md#alternate-selections-active-with-anchor)
     * [lines selection](https://github.com/metaseed/metaGo/blob/master/README.md#lines-selection)
     * [surrounding-pair selection](https://github.com/metaseed/metaGo/blob/master/README.md#surrounding-pair-selection)
-    * 
+      * [surrounding-pair selection of common tag](https://github.com/metaseed/metaGo#surrounding-pair-selection-demo)
+      * [surrounding-pair selection of html tag](https://github.com/metaseed/metaGo#surrounding-pair-selection-demo-html-tag-pairs)
+      * [surrounding-pair changing demo](https://github.com/metaseed/metaGo#surrounding-pair-changing-demo)
+
 
 * [Navigate between files using bookmarks](https://github.com/metaseed/metaGo/blob/master/README.md#navigate-between-files-using-bookmarks)
 
@@ -263,6 +266,7 @@ in this demo, we `alt+p ' "` to change a pair of ' to ", and then goto another p
 
 ![](images/metago.changing-surrounding-pair.gif)
 
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ## navigate between files using bookmarks
 
