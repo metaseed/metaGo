@@ -204,7 +204,7 @@ With the two selections, you could then delete or copy...
 ### surrounding-pair selection
 commands to select content inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...
 html tag pair is supported via regexp. (`alt+p t`, `t` means tag).
-
+> html elements is defined in https://www.w3.org/TR/2011/WD-html-markup-20110405/syntax.html#syntax-elements
 
 1. <kbd>Alt</kbd>+<kbd>p</kbd>: I want to select inside a pair of chars.
 2. type the start character of the pair. i.e. '(', '[', '{', '"'...
@@ -215,21 +215,19 @@ html tag pair is supported via regexp. (`alt+p t`, `t` means tag).
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 #### surroundPairs config
+below is the default surrounding-pairs config, it support regex: 
 ```json
 "metaGo.surroundPairs": {
-                    "type": "object",
-                    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!br)[^\/!]+?>/", "/<\/.+?>/", "t"]]
-                },
+    "type": "object",
+    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!/)(?!!)(?!br[\\s>])(?!area[\\s>])(?!base[\\s>])(?!col[\\s>])(?!command[\\s>])(?!embed[\\s>])(?!hr[\\s>])(?!img[\\s>])(?!input[\\s>])(?!keygen[\\s>])(?!link[\\s>])(?!meta[\\s>])(?!param[\\s>])(?!source[\\s>])(?!track[\\s>])(?!wbr[\\s>])((?:.(?!/>))+?)(?<!/)>/ms", "/<\/(.+?)>/", "t"]]
+},
 ```
-> `["/<(?!/)(?!br)[^!]+?>>/", "/<\/.+?>/", "t"]`: this array has 3 items: start html tag regex, end html tag regex, trigger key.    
+> the last one is and regex, it is used for html tag: this array has 3 items: start html tag regex, end html tag regex, trigger key.    
 > the default trigger key is the start pair, if start pair is only one char.    
-> regex is the content inside '/' and '/'    
+> regex is the content inside '/' and '/', is defined by javascript regex grammar    
 > you could config your own regex pairs
-
-> `<(?!/)(?!br)[^!]+?>`:     
->   `<(?!/)`: '<' not followed by '/'. '</' is considered as end tag     
->   `(?!br)`: '<' not followed by 'br'. `<br>` is special, it is not a start tag.     
->   `[^!]+?`: one or more char (not greedy before mach '>') which is not '!'(comment html tag)    
+> the regex pairs support all regex flags, which means it support multiline tag.
+  
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 #### surrounding-pair-selection demo

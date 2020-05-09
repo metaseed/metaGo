@@ -511,7 +511,7 @@
                 },
                 "metaGo.surroundPairs": {
                     "type": "object",
-                    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!/)(?!br)(?!!)((?:.(?!/>))+?)(?<!/)>/ms", "/<\/(.+?)>/", "t"]]
+                    "default":[["{","}"],["(",")"],["[","]"],["<",">"],["/<(?!/)(?!!)(?!br[\\s>])(?!area[\\s>])(?!base[\\s>])(?!col[\\s>])(?!command[\\s>])(?!embed[\\s>])(?!hr[\\s>])(?!img[\\s>])(?!input[\\s>])(?!keygen[\\s>])(?!link[\\s>])(?!meta[\\s>])(?!param[\\s>])(?!source[\\s>])(?!track[\\s>])(?!wbr[\\s>])((?:.(?!/>))+?)(?<!/)>/ms", "/<\/(.+?)>/", "t"]]
                 },
                 "metaGo.bookmark.saveBookmarksInProject": {
                     "type": "boolean",

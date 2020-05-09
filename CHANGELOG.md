@@ -54,7 +54,7 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Added
    - [x] metaWord: add commands to moveCursor/select/delete one space-word left/right.
    - [x] metaSurroundingPair: add command to change surrounding pairs.
-   - [ ] metaSurroundingPair: rewrite surroundPairsSelection, support multiline tags.
+   - [x] metaSurroundingPair: rewrite surroundPairsSelection to support multiline tags, i.e the html-start-tag is multiline sometimes.
 
 #### Removed
 #### Changed
