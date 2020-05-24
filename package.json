@@ -8,14 +8,15 @@
     "homepage": "https://github.com/metaseed/metaGo",
     "license": "MIT",
     "keywords": [
-        "keyboard",
+        "keyboard", "cursor",
         "jump",
         "jumpy",
         "goto",
         "navigation",
         "EasyMotion",
         "bookmark",
-        "acejump, metaGo, center screen, focus screen, space jumper, shortcut"
+        "acejump", "metaGo", "center", "screen", "focus screen", "space jumper",
+        "metaWord", "line selection", "surrounding-pair", "change pair", "select pair","html tag pair"
     ],
     "repository": {
         "type": "git",
@@ -525,6 +526,9 @@
             }
         }
     },
+    "extensionPack":[
+        "metaseed.metaWord"
+    ],
     "scripts": {
         "changelog": "node changelog.js",
         "vscode:prepublish": "node changelog.js && webpack --mode production",
