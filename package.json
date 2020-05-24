@@ -35,7 +35,7 @@
     "contributes": {
         "commands": [
             {
-                "command": "met3Go.input.cancel",
+                "command": "metaGo.input.cancel",
                 "title": "xx: metaJump cancel"
             },
             {
@@ -44,8 +44,7 @@
             },
             {
                 "command": "metago.showLandingPage",
-                "title": "xx: metaGo.showLandingPage.ChangeLog, what's new",
-                "category": "metaGo"
+                "title": "xx: metaGo.showLandingPage.ChangeLog, what's new"
             },
             {
                 "command": "metaGo.gotoSmart",
