@@ -51,7 +51,7 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ## Current Version
 ---
-### V4.0.0 - May 25, 2020
+### V4.0.2 - May 25, 2020
 #### Added
    - [x] from V4 I would start to separate metaGo into several small extensions, and make metaGo also as an ExtensionPack.
 #### Removed
