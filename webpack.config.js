@@ -15,17 +15,17 @@ const config = {
   },
   optimization: {
     minimizer: [new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true, 
-        terserOptions: {
-            ecma: 8,
-            keep_classnames: false,
-            mangle: true,
-            module: true
-        }
+      cache: true,
+      parallel: true,
+      sourceMap: true,
+      terserOptions: {
+        ecma: 8,
+        keep_classnames: false,
+        mangle: true,
+        module: true
+      }
     })],
-},
+  },
   devtool: 'source-map',
   externals: {
     vscode: 'commonjs vscode' // the vscode-module is created on-the-fly and must be excluded. Add other modules that cannot be webpack'ed, 📖 -> https://webpack.js.org/configuration/externals/

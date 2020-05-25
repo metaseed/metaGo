@@ -1,10 +1,13 @@
 import * as vscode from 'vscode';
-import { Config } from '../config';
+import { Config } from './config';
 
 enum Mode { Move, Select, Delete }
 export class MetaSpaceWord {
 
-    constructor(context: vscode.ExtensionContext, config: Config) {
+    updateConfig(){
+
+    }
+    constructor(context: vscode.ExtensionContext, private config: Config) {
         context.subscriptions.push(
             vscode.commands.registerTextEditorCommand('metaGo.cursorSpaceWordLeft',
                 (editor, edit) => this.left(editor, edit)

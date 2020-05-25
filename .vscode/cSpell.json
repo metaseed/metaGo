@@ -15,6 +15,7 @@
         "Scroller",
         "seperated",
         "splitted",
+        "vsce",
         "vsix"
     ],
     // flagWords - list of words to be always considered incorrect

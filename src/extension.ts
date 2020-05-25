@@ -10,7 +10,7 @@ import { MetaSelection } from './metaSelect';
 import { BookmarkExt } from './bookmark';
 import { BracketJumper } from './bracket-jumper';
 import { LandingPage } from './landing-page';
-import {MetaSpaceWord} from './metaWord/space-word';
+import {MetaSpaceWord} from './metaWord/src/space-word';
 import { MetaSurroundingPair } from './metaSurroundingPair';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed

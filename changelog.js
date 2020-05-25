@@ -6,7 +6,7 @@ let findCurrentVersion = false;
 let findStart = false;
 let changeType = '';
 
-let write = fs.createWriteStream('./src/landing-page/changelog.ts', { encoding: 'utf8', flags: 'w' });
+let write = fs.createWriteStream(__dirname + '/src/landing-page/changelog.ts', { encoding: 'utf8', flags: 'w' });
 write.write(`import { ChangeLogItem, ChangeLogKind } from "./contentProvider";\n`);
 write.write(`export const changeLog: ChangeLogItem[] = [\n`);
 

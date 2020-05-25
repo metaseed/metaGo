@@ -284,7 +284,8 @@ in this demo, we `alt+p ' "` to change a pair of ' to ", and then goto another p
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ## MetaWord
-space is very common separator, it would be convenient to use it as cursor anchor when reading/editing document.
+space is very common separator, it would be convenient to use it as cursor anchor when reading/editing document.  
+
 [**USAGE DETAIL**](https://github.com/metaseed/metaGo/tree/master/src/metaWord/README.md)
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)

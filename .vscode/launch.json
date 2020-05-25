@@ -12,7 +12,7 @@
 			]
 		},
 		{
-			"name": "Launch Extension",
+			"name": "Launch MetaGo",
 			"type": "extensionHost",
 			"request": "launch",
 			"runtimeExecutable": "${execPath}",
