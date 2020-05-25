@@ -36,19 +36,15 @@ export class LandingPageManager {
         // Get path to resource on disk
         const onDiskPath = vscode.Uri.file(
             path.join(this.context.extensionPath, 'ui', "landing-page", "whats-new.html"));
-        const pageUri = onDiskPath.with({ scheme: "vscode-resource" });
-
         // Local path to main script run in the webview
         const cssPathOnDisk = vscode.Uri.file(
             path.join(this.context.extensionPath, 'ui', "landing-page", "main.css"));
-        const cssUri = cssPathOnDisk.with({ scheme: "vscode-resource" });
-
+        const cssUri = panel.webview.asWebviewUri(cssPathOnDisk);
         // Local path to main script run in the webview
         const logoPathOnDisk = vscode.Uri.file(
             path.join(this.context.extensionPath, "images", `metago.gif`));
-        const logoUri = logoPathOnDisk.with({ scheme: "vscode-resource" });
-
-        panel.webview.html = this.getWebviewContentLocal(pageUri.fsPath, cssUri.toString(), logoUri.toString());
+        const logoUri = panel.webview.asWebviewUri( logoPathOnDisk);
+        panel.webview.html = this.getWebviewContentLocal(onDiskPath.fsPath, cssUri.toString(), logoUri.toString());
     }
 
     private showPageIfVersionDiffers(currentVersion: string, previousVersion: string) {
