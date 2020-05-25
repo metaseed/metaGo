@@ -1,5 +1,8 @@
 import { ChangeLogItem, ChangeLogKind } from "./contentProvider";
 export const changeLog: ChangeLogItem[] = [
+  { kind: ChangeLogKind.VERSION,   message: `V4.0.0 - May 28, 2020`},
+  { kind: ChangeLogKind.ADDED,   message: `from V4 I would start to separate metaGo into several small extensions, and make metaGo also as an ExtensionPack.`},
+  { kind: ChangeLogKind.CHANGED,   message: `metaWord as separated extension.`},
   { kind: ChangeLogKind.VERSION,   message: `V3.8.0 - May 09, 2020`},
   { kind: ChangeLogKind.ADDED,   message: `metaWord: add commands to moveCursor/select/delete one space-word left/right. <a href="https://github.com/metaseed/metaGo/blob/master/README.md#metaword">(Detail)</a> (with this and vscode's cursorWordPartStartLeft, cursorWordStartLeft..., we could do bigWord, smallWord and partialWord navigation/selection/deletion, I would include my hotkey config for vscode's default word commands, and separate it into a signal vscode extension in next version)`},
   { kind: ChangeLogKind.ADDED,   message: `metaSurroundingPair: add command to change surrounding pairs. <a href="https://github.com/metaseed/metaGo#surrounding-pair-changing-demo">(Detail)</a>`},

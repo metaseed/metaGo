@@ -10,7 +10,6 @@ import { MetaSelection } from './metaSelect';
 import { BookmarkExt } from './bookmark';
 import { BracketJumper } from './bracket-jumper';
 import { LandingPage } from './landing-page';
-import {MetaSpaceWord} from './metaWord/src/space-word';
 import { MetaSurroundingPair } from './metaSurroundingPair';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -32,7 +31,6 @@ export function activate(context: vscode.ExtensionContext) {
     //let lineHight = editorConfig.inspect("lineHeight")
 
     let metaJumper = new MetaJump(context, config);
-    let spaceWord = new MetaSpaceWord(context, config);
     let centerEditor = new CurrentLineScroller(context);
     let spaceBlockJumper = new BlankLineJumper(context);
     let metaSelection = new MetaSelection(context, config);

@@ -51,6 +51,14 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ## Current Version
 ---
+### V4.0.0 - May 28, 2020
+#### Added
+   - [x] from V4 I would start to separate metaGo into several small extensions, and make metaGo also as an ExtensionPack.
+#### Removed
+#### Changed
+   - [x] metaWord as separated extension.
+#### Fixed
+---
 ### V3.8.0 - May 09, 2020
 #### Added 
    - [x] metaWord: add commands to moveCursor/select/delete one space-word left/right. <a href="https://github.com/metaseed/metaGo/blob/master/README.md#metaword">(Detail)</a> (with this and vscode's cursorWordPartStartLeft, cursorWordStartLeft..., we could do bigWord, smallWord and partialWord navigation/selection/deletion, I would include my hotkey config for vscode's default word commands, and separate it into a signal vscode extension in next version)

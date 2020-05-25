@@ -3,7 +3,7 @@
     "displayName": "MetaGo",
     "description": "vscode cursor move and select; jump, navigation, goto, acejump",
     "icon": "images/metago.gif",
-    "version": "3.8.0",
+    "version": "4.0.0",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo",
     "license": "MIT",
@@ -28,6 +28,9 @@
         "change pair",
         "select pair",
         "html tag pair"
+    ],
+    "extensionPack": [
+        "metaseed.metaWord"
     ],
     "repository": {
         "type": "git",
@@ -485,9 +488,6 @@
             }
         }
     },
-    "extensionPack": [
-        "metaseed.metaWord"
-    ],
     "scripts": {
         "changelog": "node changelog.js",
         "vscode:prepublish": "node changelog.js && webpack --mode production",
