@@ -17,11 +17,13 @@
 * `shift+del`: delete all from the cursor to the line end.
 
 ### Word commands to moveCursor/select/delete by word
-    > we use all default vscode commands
-    
-    > note: default cursorWordEndRight would do this: 'console|.log|(err|)|' and 'a|+=| 3| +5|-3| +| 7|' (planing to modify this)  
-    >       default cursorWordStartLeft would do this: 'this|.|is|.|a|.|test' and ' text| a|+=| 3| +|5|-|3| +| 7|' (work as expected)
-    >       default deleteWordLeft would do this: '|this.|is.|a.|test" (planing to modify this)
+
+> we use all default vscode commands
+
+> **note:**  
+> default cursorWordEndRight would do this: 'console|.log|(err|)|' and 'a|+=| 3| +5|-3| +| 7|' (planing to modify this)  
+> default cursorWordStartLeft would do this: 'this|.|is|.|a|.|test' and ' text| a|+=| 3| +|5|-|3| +| 7|' (work as expected)  
+> default deleteWordLeft would do this: '|this.|is.|a.|test" (planing to modify this)
 
 * `ctrl+left/right`: move cursor to word start/end.
 * `ctrl+shift+left/right`: select from cursor to word start/end.
