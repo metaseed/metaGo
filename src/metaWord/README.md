@@ -43,4 +43,4 @@
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>backspace</kbd>: to delete one space-word left.
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>del</kbd> or <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>backspace</kbd>: to delete one space-word right.
 
-[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
+[*➭MetaGo Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
