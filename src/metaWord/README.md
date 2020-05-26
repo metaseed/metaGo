@@ -7,10 +7,10 @@
 * WordPart: a group of spaces, a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters.
     > Examples:  
     > when find forward:  
-    >   'AB|Cdef|__gh|IJKL'  
-    >   'AB|Cdef|__gh|ijkl'  
+    >   'AB|Cdef|\_\_gh|IJKL'  
+    >   'AB|Cdef|\_\_gh|ijkl'  
     > when find backward:  
-    >   'AB|Cdef__|gh|IJKL' (<-start from end)  
+    >   'AB|Cdef\_\_|gh|IJKL' (<-start from end)  
 
 ### delete all left/right
 * `shift+backspace`: delete all from the cursor to the line start.
