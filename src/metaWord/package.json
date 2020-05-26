@@ -1,7 +1,7 @@
 {
     "name": "MetaWord",
     "displayName": "MetaWord",
-    "description": "word based cursor movement, selection and deletion",
+    "_description": "word based cursor movement, selection and deletion",
     "icon": "images/metaWord.png",
     "version": "1.0.0",
     "publisher": "metaseed",
@@ -66,53 +66,108 @@
         ],
         "keybindings": [
             {
-                "command": "metaGo.cursorSpaceWordLeft",
+                "key": "shift+backspace",
+                "command": "deleteAllLeft",
+                "when": "editorTextFocus && !editorReadonly"
+            },
+            {
+                "key": "shift+delete",
+                "command": "deleteAllRight",
+                "when": "editorTextFocus && !editorReadonly"
+            },
+            {
+                "key": "ctrl+k ctrl+right",
+                "command": "workbench.action.moveEditorToNextGroup",
+                "_note": "ctrl+alt+right by default"
+            },
+            {
+                "key": "ctrl+k ctrl+left",
+                "command": "workbench.action.moveEditorToPreviousGroup",
+                "_note": "ctrl+alt+left by default"
+            },
+            {
                 "key": "win+alt+left",
                 "mac": "cmd+alt+left",
+                "command": "cursorWordPartLeft",
+                "when": "textInputFocus"
+            },
+            {
+                "key": "ctrl+alt+right",
+                "mac": "cmd+alt+right",
+                "command": "cursorWordPartRight",
+                "when": "textInputFocus"
+            },
+            {
+                "key": "alt+v",
+                "command": "editor.action.toggleColumnSelection"
+            },
+            {
+                "key": "ctrl+shift+alt+right",
+                "command": "cursorWordPartRightSelect",
+                "when": "textInputFocus",
+                "_note": "ctrl+shift+alt+right used for cursorColumnSelectRight by default. note: use 'alt+v'"
+            },
+            {
+                "key": "ctrl+shift+alt+left",
+                "command": "cursorWordPartStartLeftSelect",
+                "when": "textInputFocus"
+            },
+            {
+                "key": "ctrl+alt+backspace",
+                "command": "deleteWordPartLeft",
+                "when": "textInputFocus && !editorReadonly"
+            },
+            {
+                "key": "ctrl+shift+alt+backspace",
+                "command": "deleteWordPartRight",
+                "when": "textInputFocus && !editorReadonly"
+            },
+            {
+                "key": "ctrl+shift+backspace",
+                "command": "deleteWordRight",
+                "when": "textInputFocus && !editorReadonly",
+            },
+            {
+                "command": "metaGo.cursorSpaceWordLeft",
+                "key": "ctrl+alt+left",
                 "when": "editorTextFocus",
-                "description": "move cursor to the begin of the word which seperated by 'space'"
+                "_description": "move cursor to the begin of the word which separated by 'space'"
             },
             {
                 "command": "metaGo.cursorSpaceWordLeftSelect",
-                "key": "win+alt+shift+left",
-                "mac": "cmd+alt+shift+left",
+                "key": "ctrl+alt+shift+left",
                 "when": "editorTextFocus",
-                "description": "move cursor to the begin of the word which seperated by 'space'"
+                "_description": "move cursor to the begin of the word which separated by 'space'"
             },
             {
                 "command": "metaGo.cursorSpaceWordLeftDelete",
-                "key": "win+alt+backspace",
-                "mac": "cmd+alt+backspace",
+                "key": "ctrl+alt+backspace",
                 "when": "editorTextFocus",
-                "description": "delete cursor to the begin of the word which seperated by 'space'"
+                "_description": "delete cursor to the begin of the word which separated by 'space'"
             },
             {
                 "command": "metaGo.cursorSpaceWordRight",
-                "key": "win+alt+right",
-                "mac": "cmd+alt+right",
+                "key": "ctrl+alt+right",
                 "when": "editorTextFocus",
-                "description": "move cursor to the end of the word which seperated by 'space'"
+                "_description": "move cursor to the end of the word which separated by 'space'"
             },
             {
                 "command": "metaGo.cursorSpaceWordRightSelect",
-                "key": "win+shift+alt+right",
-                "mac": "cmd++shift+alt+right",
+                "key": "ctrl+shift+alt+right",
                 "when": "editorTextFocus",
-                "description": "select to the end of the word which seperated by 'space'"
+                "_description": "select to the end of the word which separated by 'space'"
             },
             {
                 "command": "metaGo.cursorSpaceWordRightDelete",
-                "key": "win+alt+delete",
-                "mac": "cmd+alt+delete",
+                "key": "ctrl+alt+delete",
                 "when": "editorTextFocus",
-                "description": "delete to the end of the word which seperated by 'space'"
+                "_description": "delete to the end of the word which separated by 'space'"
             },
             {
                 "command": "metaGo.cursorSpaceWordRightDelete",
-                "key": "win+alt+shift+backspace",
-                "mac": "cmd+alt+shift+backspace",
+                "key": "ctrl+alt+shift+backspace",
                 "when": "editorTextFocus",
-                "description": "delete to the end of the word which seperated by 'space'"
+                "_description": "delete to the end of the word which separated by 'space'"
             }
         ]
     },
