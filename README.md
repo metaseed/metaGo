@@ -85,7 +85,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
 
 
 * [Navigate between files using bookmarks](https://github.com/metaseed/metaGo/blob/master/README.md#navigate-between-files-using-bookmarks)
-* [MetaWord](https://github.com/metaseed/metaGo/blob/master/README.md#metaword)
+* [MetaWord](https://github.com/metaseed/metaGo/tree/master/src/metaWord/README.md)
 * [Other features](https://github.com/metaseed/metaGo/blob/master/README.md#other-features)
     * [scroll the active line to the screen top, middle and bottom](https://github.com/metaseed/metaGo/blob/master/README.md#scroll-the-active-line-to-the-screen-top-middle-and-bottom)
     * [moving/select up/down between blank lines](https://github.com/metaseed/metaGo/blob/master/README.md#moveselect-updown-between-blank-lines)
@@ -283,12 +283,6 @@ in this demo, we `alt+p ' "` to change a pair of ' to ", and then goto another p
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
-## MetaWord
-space is very common separator, it would be convenient to use it as cursor anchor when reading/editing document.  
-
-[**USAGE DETAIL**](https://github.com/metaseed/metaGo/tree/master/src/metaWord/README.md)
-
-[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 ## Other features
 ### scroll the active line to the screen top, middle and bottom
 * <kbd>Alt</kbd>+<kbd>t</kbd> is the default shortcut to scroll current line to screen top.
