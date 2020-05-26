@@ -92,40 +92,39 @@
                 "when": "textInputFocus"
             },
             {
-                "key": "ctrl+alt+right",
+                "key": "win+alt+right",
                 "mac": "cmd+alt+right",
                 "command": "cursorWordPartRight",
                 "when": "textInputFocus"
             },
             {
-                "key": "alt+v",
-                "command": "editor.action.toggleColumnSelection"
-            },
-            {
-                "key": "ctrl+shift+alt+right",
+                "key": "win+alt+shift+right",
+                "mac": "cmd+alt+shift+right",
                 "command": "cursorWordPartRightSelect",
                 "when": "textInputFocus",
-                "_note": "ctrl+shift+alt+right used for cursorColumnSelectRight by default. note: use 'alt+v'"
             },
             {
-                "key": "ctrl+shift+alt+left",
-                "command": "cursorWordPartStartLeftSelect",
+                "key": "win+alt+shift+left",
+                "mac": "mac+alt+shift+left",
+                "command": "cursorWordPartLeftSelect",
                 "when": "textInputFocus"
             },
             {
-                "key": "ctrl+alt+backspace",
+                "key": "win+alt+backspace",
+                "mac": "cmd+alt+backspace",
                 "command": "deleteWordPartLeft",
                 "when": "textInputFocus && !editorReadonly"
             },
             {
-                "key": "ctrl+shift+alt+backspace",
+                "key": "win+alt+delete",
+                "mac": "cmd+alt+delete",
                 "command": "deleteWordPartRight",
                 "when": "textInputFocus && !editorReadonly"
             },
+
             {
-                "key": "ctrl+shift+backspace",
-                "command": "deleteWordRight",
-                "when": "textInputFocus && !editorReadonly",
+                "key": "alt+v",
+                "command": "editor.action.toggleColumnSelection"
             },
             {
                 "command": "metaGo.cursorSpaceWordLeft",
@@ -155,7 +154,8 @@
                 "command": "metaGo.cursorSpaceWordRightSelect",
                 "key": "ctrl+shift+alt+right",
                 "when": "editorTextFocus",
-                "_description": "select to the end of the word which separated by 'space'"
+                "_description": "select to the end of the word which separated by 'space'",
+                "_note": "ctrl+shift+alt+right used for cursorColumnSelectRight by default. note: use 'alt+v'"
             },
             {
                 "command": "metaGo.cursorSpaceWordRightDelete",

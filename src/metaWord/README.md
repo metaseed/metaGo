@@ -1,18 +1,36 @@
+> **MetaWord is part of [MetaGo extension](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)**
+
 ## MetaWord
 
 * SpaceWord: characters separated by 'space'.
 * Word: a group of (A-Za-z0-9_) or a group of other symbol characters.
-	> note: default cursorWordEndRight would do this: 'console|.log|(err|)|' and 'a|+=| 3| +5|-3| +| 7|' (planing to modify this)  
-	>       default cursorWordStartLeft would do this: 'this|.|is|.|a|.|test' and ' text| a|+=| 3| +|5|-|3| +| 7|'
 * WordPart: a group of spaces, a part in a group of CamelCase (A-Za-z0-9_) characters (note: '_' is considered as word parts connector ), or a group of other symbol characters *)
     >CamelCase partial example:  
     > when find forward:  (start from begin ->) AB|Cdef|__gh|IJKL   AB|Cdef|__gh|ijkl
     > when find backward: AB|Cdef__|gh|IJKL (<-start from end)
+### delete all left/right
+* `shift+backspace`: delete all from the cursor to the line start.
+* `shift+del`: delete all from the cursor to the line end.
+
+### Word commands to moveCursor/select/delete by word
+    > we use all default vscode commands
+    
+    > note: default cursorWordEndRight would do this: 'console|.log|(err|)|' and 'a|+=| 3| +5|-3| +| 7|' (planing to modify this)  
+    >       default cursorWordStartLeft would do this: 'this|.|is|.|a|.|test' and ' text| a|+=| 3| +|5|-|3| +| 7|' (work as expected)
+    >       default deleteWordLeft would do this: '|this.|is.|a.|test" (planing to modify this)
+
+* `ctrl+left/right`: move cursor to word start/end.
+* `ctrl+shift+left/right`: select from cursor to word start/end.
+* `ctrl+backspace/delete`: delete from cursor to word start/end.
+
+### WordPart commands to moveCursor/select/delete by wordPart
+
+
 ### SpaceWord commands to moveCursor/select/delete word separated by space:
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: to move cursor left/right by one space-word and set cursor at the begin/end of the word.
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>home(end</kbd>: to move cursor left/right by one space-word and set cursor at the begin/end of the word.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: to select to left/right by one space-word.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>backspace</kbd>: to delete one space-word left.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>del</kbd> or <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>backspace</kbd>: to delete one space-word right.
+* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: to select to left/right by one space-word.
+* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>backspace</kbd>: to delete one space-word left.
+* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>del</kbd> or <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>backspace</kbd>: to delete one space-word right.
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)

@@ -51,12 +51,13 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ## Current Version
 ---
-### 
+### V4.1.0 - May 28, 2020
 #### Added
 #### Removed
 #### Changed
+ - [x] use logo v4
 #### Fixed
- - [x] close issue [#42](https://github.com/metaseed/metaGo/issues/42)
+ - [x] close issue <a href="https://github.com/metaseed/metaGo/issues/42">[#42]</a>
 ---
 ### V4.0.2 - May 25, 2020
 #### Added

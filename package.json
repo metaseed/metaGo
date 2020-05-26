@@ -2,7 +2,7 @@
     "name": "metago",
     "displayName": "MetaGo",
     "description": "vscode cursor move and select; jump, navigation, goto, acejump",
-    "icon": "images/metago.gif",
+    "icon": "images/metagoV4.gif",
     "version": "4.0.2",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo",
