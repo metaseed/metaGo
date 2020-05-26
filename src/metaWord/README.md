@@ -4,10 +4,14 @@
 
 * SpaceWord: characters separated by 'space'.
 * Word: a group of (A-Za-z0-9_) or a group of other symbol characters.
-* WordPart: a group of spaces, a part in a group of CamelCase (A-Za-z0-9_) characters (note: '_' is considered as word parts connector ), or a group of other symbol characters *)
-    >CamelCase partial example:  
-    > when find forward:  (start from begin ->) AB|Cdef|__gh|IJKL   AB|Cdef|__gh|ijkl
-    > when find backward: AB|Cdef__|gh|IJKL (<-start from end)
+* WordPart: a group of spaces, a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters.
+    > Examples:  
+    > when find forward:  
+    >   'AB|Cdef|__gh|IJKL'  
+    >   'AB|Cdef|__gh|ijkl'  
+    > when find backward:  
+    >   'AB|Cdef__|gh|IJKL' (<-start from end)  
+
 ### delete all left/right
 * `shift+backspace`: delete all from the cursor to the line start.
 * `shift+del`: delete all from the cursor to the line end.
