@@ -30,11 +30,11 @@
 
 ### WordPart commands to moveCursor/select/delete by wordPart
 > Examples:  
-> when find forward:  
->   'AB|Cdef|\_\_gh|IJKL'  
->   'AB|Cdef|\_\_gh|ijkl'  
-> when find backward:  
->   'AB|Cdef\_\_|gh|IJKL' (<-start from end)  
+> * when forward:  
+>   * 'AB|Cdef|\_\_gh|IJKL'  
+>   * 'AB|Cdef|\_\_gh|ijkl'  
+> * when backward:  
+>   * 'AB|Cdef\_\_|gh|IJKL' (<-start from end)  
 
 ### SpaceWord commands to moveCursor/select/delete word separated by space:
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: to move cursor left/right by one space-word and set cursor at the begin/end of the word.
