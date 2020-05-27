@@ -166,12 +166,6 @@
                 "key": "ctrl+alt+delete",
                 "when": "editorTextFocus",
                 "_description": "delete to the end of the word which separated by 'space'"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordRightDelete",
-                "key": "ctrl+alt+shift+backspace",
-                "when": "editorTextFocus",
-                "_description": "delete to the end of the word which separated by 'space'"
             }
         ]
     },
