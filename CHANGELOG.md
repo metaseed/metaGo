@@ -53,6 +53,7 @@ All notable changes to the "metago" extension will be documented in this file.
 ---
 ### V4.1.0 - May 28, 2020
 #### Added
+ - [x] landing-page as a common module that could be used by sub extension.
 #### Removed
 #### Changed
  - [x] use logo v4

@@ -1,5 +1,5 @@
 # Change Log
-All notable changes to the "metago" extension will be documented in this file.
+All notable changes to the "metaWord" extension will be documented in this file.
 
 ## Todo List:
 
@@ -25,7 +25,7 @@ All notable changes to the "metago" extension will be documented in this file.
 ---
 ### V1.0.0 - May 25, 2020
 #### Added
- - [x] metaWord as a seperated vscode extension
+ - [x] metaWord as a separated vscode extension
 #### Removed
 #### Changed
 #### Fixed
