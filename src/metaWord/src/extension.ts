@@ -9,7 +9,6 @@ import {MetaSpaceWord} from './space-word';
 export function activate(context: vscode.ExtensionContext) {
     const landingPage = new LandingPage(context);
     landingPage.showIfNeed();
-    // console.log('Congratulations, your extension "metago" is1  now _v_ab-activeBig!');
     let config = new Config();
     config.loadConfig();
     // Event to update active configuration items when changed without restarting vscode
@@ -19,8 +18,6 @@ export function activate(context: vscode.ExtensionContext) {
         
     });
     let spaceWord = new MetaSpaceWord(context, config);
-
-
 }
 
 // this method is called when your extension is deactivated

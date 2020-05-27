@@ -2,9 +2,9 @@
 
 ## MetaWord
 
-* SpaceWord: characters separated by 'space'.
+* SpaceWord(BigWord): characters separated by 'space'.
 * Word: a group of (A-Za-z0-9_) or a group of other symbol characters.
-* WordPart: a group of spaces, a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters.
+* WordPart(SmallWord): a group of spaces, a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters.
 
 ### delete all left/right
 * `shift+backspace`: delete all from the cursor to the line start.
@@ -12,7 +12,7 @@
 
 ### Word commands to moveCursor/select/delete by word
 
-> we use all default vscode commands
+> we use all default 'Word' vscode commands
 
 > **note:**  
 > default cursorWordEndRight would do this:   
@@ -24,9 +24,9 @@
 > default deleteWordLeft would do this:  
 > '|this.|is.|a.|test" (planing to modify this)
 
-* `ctrl+left/right`: move cursor to word start/end.
-* `ctrl+shift+left/right`: select from cursor to word start/end.
-* `ctrl+backspace/delete`: delete from cursor to word start/end.
+* <kbd>ctrl</kbd>+<kbd>left/right</kbd>: move cursor to word start/end.
+* <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: select from cursor to word start/end.
+* <kbd>ctrl</kbd>+<kbd>backspace/delete</kbd>: delete from cursor to word start/end.
 
 ### WordPart commands to moveCursor/select/delete by wordPart
 > Examples:  
