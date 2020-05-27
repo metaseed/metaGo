@@ -7,10 +7,17 @@
             "es2020"
         ],
         "sourceMap": true,
-        "rootDir": "."
+        "rootDir": ".",
+        "baseUrl": ".",
+        "paths": {
+            "@landing-page/*": [
+                "./src/landing-page/*"
+            ]
+        }
     },
     "exclude": [
         "node_modules",
-        ".vscode-test"
+        ".vscode-test",
+        "./src/metaWord"
     ]
 }

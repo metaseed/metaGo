@@ -1,7 +1,7 @@
 {
     "name": "MetaWord",
     "displayName": "MetaWord",
-    "_description": "word based cursor movement, selection and deletion",
+    "description": "word based cursor movement, selection and deletion",
     "icon": "images/metaWord.png",
     "version": "1.0.0",
     "publisher": "metaseed",
@@ -39,6 +39,10 @@
     "main": "./dist/extension",
     "contributes": {
         "commands": [
+            {
+                "command": "metaWord.showLandingPage",
+                "title": "xx: metaWord.showLandingPage.ChangeLog, what's new"
+            },
             {
                 "command": "metaGo.cursorSpaceWordLeft",
                 "title": "xx: metaGo.cursorSpaceWordLeft"
@@ -101,7 +105,7 @@
                 "key": "win+alt+shift+right",
                 "mac": "cmd+alt+shift+right",
                 "command": "cursorWordPartRightSelect",
-                "when": "textInputFocus",
+                "when": "textInputFocus"
             },
             {
                 "key": "win+alt+shift+left",
@@ -174,7 +178,7 @@
     "scripts": {
         "vscode:prepublish": "node ../../changelog.js && webpack --mode production",
         "publish": "git tag -a V%npm_package_version% -m 'V%npm_package_version%' && git push origin --tags && vsce publish",
-        "vscode:prepackage": "node changelog.js && webpack --mode production",
+        "vscode:prepackage": "node ../../changelog.js && webpack --mode production",
         "package": "vsce package",
         "deploy": "npm run package && code --uninstall-extension metaseed.metaword && code --install-extension metaword-%npm_package_version%.vsix",
         "build": "webpack --mode development",
@@ -195,6 +199,7 @@
         "@types/vscode": "^1.39.0",
         "eslint": "^6.8.0",
         "mocha": "^7.0.1",
+        "raw-loader": "^4.0.1",
         "source-map-support": "^0.5.12",
         "ts-loader": "^6.2.2",
         "typescript": "^3.8.3",

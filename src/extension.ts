@@ -14,7 +14,7 @@ import { MetaSurroundingPair } from './metaSurroundingPair';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-    const landingPage = new LandingPage(context);
+    const landingPage = new LandingPage(context, 'metago');
     landingPage.showIfNeed();
     // console.log('Congratulations, your extension "metago" is now active!');
     let config = new Config();

@@ -1,13 +1,6 @@
-/*---------------------------------------------------------------------------------------------
-*  Copyright (c) Eric Amodio & Alessandro Fragnani. All rights reserved.
-*  Licensed under the MIT License. See License.md in the project root for license information.
-*
-*  Original Author: Eric Amodio @ GitLens
-*  Modifications by: Alessandro Fragnani
-*--------------------------------------------------------------------------------------------*/
-
 html {
-  height: 100%; }
+  height: 100%;
+}
 
 body {
   background-color: var(--vscode-editor-background);

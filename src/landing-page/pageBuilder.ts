@@ -1,12 +1,11 @@
-import * as fs from "fs";
+// import * as fs from "fs";
 import { ChangeLogItem, ChangeLogKind, Header, Sponsor } from "./contentProvider";
 
 export class LandingPageBuilder {
 
-    private htmlFile: string;
 
-    constructor(htmlFile: string) {
-        this.htmlFile = fs.readFileSync(htmlFile).toString();
+    constructor(private htmlFile: string) {
+        // this.htmlFile = fs.readFileSync(htmlFile).toString();
     }
 
     public updateExtensionDisplayName(extensionDisplayName: string) {
@@ -40,7 +39,7 @@ export class LandingPageBuilder {
     }
 
     public updateCSS(cssUrl: string): LandingPageBuilder {
-        this.htmlFile = this.htmlFile.replace("${cssUrl}", cssUrl);
+        this.htmlFile = this.htmlFile.replace("${css}", cssUrl);
         return this;
     }
 

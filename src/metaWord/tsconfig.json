@@ -7,6 +7,12 @@
             "es2020"
         ],
         "sourceMap": true,
+        "baseUrl": ".",
+        "paths": {
+            "@landing-page/*": [
+                "../landing-page/*"
+            ]
+        }
     },
     "exclude": [
         "node_modules",

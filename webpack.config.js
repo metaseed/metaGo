@@ -2,6 +2,23 @@
 const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 
+function resolveTsconfigPathsToAlias({
+    tsconfigPath = './tsconfig.json',
+    webpackConfigBasePath = __dirname,
+} = {}) {
+    const { paths } = require(tsconfigPath).compilerOptions;
+
+    const aliases = {};
+
+    Object.keys(paths).forEach((item) => {
+        const key = item.replace('/*', '');
+        const value = path.resolve(webpackConfigBasePath, paths[item][0].replace('/*', '').replace('*', ''));
+
+        aliases[key] = value;
+    });
+
+    return aliases;
+}
 /**@type {import('webpack').Configuration}*/
 const config = {
   target: 'node', // vscode extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/
@@ -32,10 +49,21 @@ const config = {
   },
   resolve: {
     // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
+    alias: resolveTsconfigPathsToAlias(),
   },
   module: {
     rules: [
+      {
+        test: /\.ts$/,
+        exclude: [
+          path.resolve(__dirname, './src/metaWord/')
+        ]
+      },
+      {
+        test: /\.html$|\.css$/,
+        use: 'raw-loader'
+      },
       {
         test: /\.ts$/,
         exclude: /node_modules/,

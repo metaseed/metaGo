@@ -490,7 +490,7 @@
     },
     "scripts": {
         "changelog": "node changelog.js",
-        "vscode:prepublish": "node changelog.js && webpack --mode production",
+        "vscode:prepublish": "node changelog.jsF && webpack --mode production",
         "publish": "git tag -a V%npm_package_version% -m 'V%npm_package_version%' && git push origin --tags && vsce publish",
         "vscode:prepackage": "node changelog.js && webpack --mode production",
         "package": "vsce package",
@@ -513,13 +513,14 @@
         "@types/vscode": "^1.39.0",
         "eslint": "^6.8.0",
         "mocha": "^7.0.1",
+        "raw-loader": "^4.0.1",
         "source-map-support": "^0.5.12",
+        "terser-webpack-plugin": "^2.3.5",
         "ts-loader": "^6.2.2",
         "typescript": "^3.8.3",
         "vsce": "^1.75.0",
         "webpack": "^4.42.1",
-        "webpack-cli": "^3.3.11",
-        "terser-webpack-plugin": "^2.3.5"
+        "webpack-cli": "^3.3.11"
     },
     "dependencies": {
         "semver": "^7.2.2"
