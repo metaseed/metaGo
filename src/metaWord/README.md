@@ -1,10 +1,11 @@
 > **MetaWord is part of [MetaGo extension](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)**
 
 ## MetaWord
-
-* SpaceWord(BigWord): characters separated by 'space'.
-* Word: a group of (A-Za-z0-9_) or a group of other symbol characters.
-* WordPart(SmallWord): a group of spaces, a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters.
+|word type|description|
+|---|---|
+|SpaceWord(BigWord)| characters separated by 'space'|
+|Word|a group of (A-Za-z0-9_) or a group of other symbol characters|
+|WordPart(SmallWord)| a group of spaces, a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters|
 
 ### delete all left/right
 * `shift+backspace`: delete all from the cursor to the line start.
@@ -36,9 +37,11 @@
 > * when backward:  
 >   * 'AB|Cdef\_\_|gh|IJKL' (<-start from end)  
 
+* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: move cursor left/right to the wordPart start/end.
+
 ### SpaceWord commands to moveCursor/select/delete word separated by space:
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: to move cursor left/right by one space-word and set cursor at the begin/end of the word.
-* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>home(end</kbd>: to move cursor left/right by one space-word and set cursor at the begin/end of the word.
+* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>home/end</kbd>: to move cursor left/right by one space-word and set cursor at the begin/end of the word.
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: to select to left/right by one space-word.
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>backspace</kbd>: to delete one space-word left.
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>del</kbd> or <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>backspace</kbd>: to delete one space-word right.
