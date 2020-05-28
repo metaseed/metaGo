@@ -1,3 +1,5 @@
+**the Goal of MetaWord is providing different kinds of words based cursorMove/Select/Delete commands.**
+
 > **MetaWord is part of [MetaGo extension](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)**
 
 ## MetaWord
