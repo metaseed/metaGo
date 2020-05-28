@@ -3,7 +3,7 @@
     "displayName": "MetaWord",
     "description": "word based cursor movement, selection and deletion",
     "icon": "images/metaWord.png",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo/tree/master/src/metaWord",
     "license": "MIT",
@@ -92,38 +92,34 @@
                 "_note": "ctrl+alt+left by default"
             },
             {
-                "key": "win+alt+left",
-                "mac": "cmd+alt+left",
+                "key": "ctrl+alt+left",
                 "command": "cursorWordPartLeft",
                 "when": "textInputFocus"
             },
             {
-                "key": "win+alt+right",
-                "mac": "cmd+alt+right",
+                "key": "ctrl+alt+right",
                 "command": "cursorWordPartRight",
                 "when": "textInputFocus"
             },
             {
-                "key": "win+alt+shift+right",
-                "mac": "cmd+alt+shift+right",
+                "key": "ctrl+alt+shift+right",
+                "_note": "ctrl+alt+shift+right used for cursorColumnSelectRight by default. note: use 'alt+v'",
                 "command": "cursorWordPartRightSelect",
                 "when": "textInputFocus"
             },
             {
-                "key": "win+alt+shift+left",
-                "mac": "mac+alt+shift+left",
+                "key": "ctrl+alt+shift+left",
                 "command": "cursorWordPartLeftSelect",
                 "when": "textInputFocus"
             },
             {
-                "key": "win+alt+backspace",
-                "mac": "cmd+alt+backspace",
+                "key": "ctrl+alt+backspace",
                 "command": "deleteWordPartLeft",
                 "when": "textInputFocus && !editorReadonly"
             },
             {
-                "key": "win+alt+delete",
-                "mac": "cmd+alt+delete",
+                "key": "ctrl+alt+shift+backspace",
+                "_note": "ctrl+alt+delete on windows is a system shortcut",
                 "command": "deleteWordPartRight",
                 "when": "textInputFocus && !editorReadonly"
             },
@@ -134,40 +130,39 @@
             },
             {
                 "command": "metaGo.cursorSpaceWordLeft",
-                "key": "ctrl+alt+left",
-                "when": "editorTextFocus",
-                "_description": "move cursor to the begin of the word which separated by 'space'"
+                "key": "win+alt+left",
+                "mac": "cmd+alt+left",
+                "when": "editorTextFocus"
             },
             {
                 "command": "metaGo.cursorSpaceWordLeftSelect",
-                "key": "ctrl+alt+shift+left",
-                "when": "editorTextFocus",
-                "_description": "move cursor to the begin of the word which separated by 'space'"
+                "key": "win+alt+shift+left",
+                "mac": "cmd+alt+shift+left",
+                "when": "editorTextFocus"
             },
             {
                 "command": "metaGo.cursorSpaceWordLeftDelete",
-                "key": "ctrl+alt+backspace",
-                "when": "editorTextFocus",
-                "_description": "delete cursor to the begin of the word which separated by 'space'"
+                "key": "win+alt+backspace",
+                "mac": "cmd+alt+backspace",
+                "when": "editorTextFocus"
             },
             {
                 "command": "metaGo.cursorSpaceWordRight",
-                "key": "ctrl+alt+right",
-                "when": "editorTextFocus",
-                "_description": "move cursor to the end of the word which separated by 'space'"
+                "key": "win+alt+right",
+                "mac": "cmd+alt+right",
+                "when": "editorTextFocus"
             },
             {
                 "command": "metaGo.cursorSpaceWordRightSelect",
-                "key": "ctrl+shift+alt+right",
-                "when": "editorTextFocus",
-                "_description": "select to the end of the word which separated by 'space'",
-                "_note": "ctrl+shift+alt+right used for cursorColumnSelectRight by default. note: use 'alt+v'"
+                "key": "win+shift+alt+right",
+                "mac": "cmd+shift+alt+right",
+                "when": "editorTextFocus"
             },
             {
                 "command": "metaGo.cursorSpaceWordRightDelete",
-                "key": "ctrl+alt+delete",
-                "when": "editorTextFocus",
-                "_description": "delete to the end of the word which separated by 'space'"
+                "key": "win+alt+delete",
+                "mac": "cmd+alt+delete",
+                "when": "editorTextFocus"
             }
         ]
     },

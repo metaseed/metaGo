@@ -37,15 +37,16 @@
 > * when backward:  
 >   * 'AB|Cdef\_\_|gh|IJKL' (<-start from end)  
 
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: move cursor left/right to the wordPart start/end.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: left/right select from cursor to the wordPart start/end.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>backspace/delete</kbd>: left/right delete to the wordPart start/end.
+* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: move cursor left/right to the wordPart start/end.
+* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: left/right select from cursor to the wordPart start/end.
+* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>backspace</kbd>: left delete to the wordPart start.
+* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>backspace</kbd>: right delete to the wordPart end.(note: `ctrl+alt+del` on windows is a system shortcut, we could not use it)
 
 ### SpaceWord commands to moveCursor/select/delete word separated by space:
-* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: move cursor left/right by one space-word and set cursor at the begin/end of the word.
-* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: select to left/right by one space-word.
-* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>backspace</kbd>: delete one space-word left.
-* <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>del</kbd>: delete one space-word right.
+* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: move cursor left/right by one space-word and set cursor at the begin/end of the word.
+* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: select to left/right by one space-word.
+* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>backspace</kbd>: delete one space-word left.
+* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>del</kbd>: delete one space-word right.
 
 ## Note
 we modified several default command vscode command's shortcut, because we want to use it to do word based cursorMove/select/delete.
