@@ -494,10 +494,10 @@
     "scripts": {
         "changelog": "node changelog.js",
         "vscode:prepublish": "node changelog.jsF && webpack --mode production",
-        "publish": "git tag -a V%npm_package_version% -m 'V%npm_package_version%' && git push origin --tags && vsce publish",
+        "publish": "git tag -a %npm_package_name%V%npm_package_version% -m '%npm_package_name%V%npm_package_version%' && git push origin --tags && vsce publish",
         "vscode:prepackage": "node changelog.js && webpack --mode production",
         "package": "vsce package",
-        "deploy": "npm run package && code --uninstall-extension metaseed.metago && code --install-extension metago-%npm_package_version%.vsix",
+        "deploy": "npm run package && code --uninstall-extension metaseed.%npm_package_name% && code --install-extension %npm_package_name%-%npm_package_version%.vsix",
         "build": "webpack --mode development",
         "watch": "webpack --mode development --watch --info-verbosity verbose",
         "test-compile": "tsc -p ./",
