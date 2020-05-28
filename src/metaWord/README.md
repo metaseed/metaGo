@@ -34,10 +34,10 @@
 ### WordPart commands to moveCursor/select/delete by wordPart
 > Examples:  
 > * when forward:  
->   * 'AB|Cdef|\_\_gh|IJKL'  
->   * 'AB|Cdef|\_\_gh|ijkl'  
+>   * 'AB|Cdef|\_\_gh|IJKL|'  
+>   * 'AB|Cdef|\_\_gh|ijkl|'  
 > * when backward:  
->   * 'AB|Cdef\_\_|gh|IJKL' (<-start from end)  
+>   * '|AB|Cdef\_\_|gh|IJKL' (<-start from end)  
 
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: move cursor left/right to the wordPart start/end.
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: left/right select from cursor to the wordPart start/end.
