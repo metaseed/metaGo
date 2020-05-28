@@ -14,10 +14,10 @@ All notable changes to the "metaWord" extension will be documented in this file.
 
 ## Current Version
 ---
-### V1.2.0 - May 26, 2020
+### V1.1.0 - May 27, 2020
 #### Added
  - [x] add default word related commands shortcuts.
- - [ ] what's new landing page.
+ - [x] what's new landing page.
 #### Removed
 #### Changed
  - [x] improve readme. <a href="https://github.com/metaseed/metaGo/blob/master/src/metaWord/README.md">(detail)</a>

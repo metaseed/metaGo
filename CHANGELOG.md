@@ -21,6 +21,7 @@ All notable changes to the "metago" extension will be documented in this file.
       Ctrl+o to extendLineSelection up when has selection
    - [x] metaJump: contributed command: metaGo.Cancel doesn't exist.
    - [x] exclude <br> from start tag regex
+   - [ ] metaJump: `alt+backspace` to delete to.
    - [ ] bracketJump: level navigate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
    - [ ] alt+back to delete with metaJump
    - [ ] metaJump: backspace to cancel last input decoration code.

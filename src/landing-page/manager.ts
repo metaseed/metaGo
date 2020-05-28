@@ -69,10 +69,11 @@ export class LandingPageManager {
             .updateExtensionDisplayName(this.extension.packageJSON.displayName)
             .updateExtensionName(this.extensionName)
             .updateExtensionVersion(this.extension.packageJSON.version)
-            .updateRepositoryUrl(this.extension.packageJSON.repository.url.slice(
-                0, this.extension.packageJSON.repository.url.length - 4))
+            .updateRepositoryUrl(this.extension.packageJSON.repository.url)
             .updateRepositoryIssues(this.extension.packageJSON.bugs.url)
             .updateRepositoryHomepage(this.extension.packageJSON.homepage)
+            .updateManual(this.extension.packageJSON.manual)
+            .updateChangelogUrl(this.extension.packageJSON.changelog)
             .updateCSS(css)
             .updateHeader(this.contentProvider.provideHeader(logoUrl))
             .updateChangeLog(this.contentProvider.provideChangeLog())

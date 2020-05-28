@@ -1,5 +1,6 @@
 // import * as fs from "fs";
 import { ChangeLogItem, ChangeLogKind, Header, Sponsor } from "./contentProvider";
+import { changeLog } from "src/changelog";
 
 export class LandingPageBuilder {
 
@@ -24,12 +25,24 @@ export class LandingPageBuilder {
     }
 
     public updateRepositoryUrl(repositoryUrl: string) {
+        if(repositoryUrl.endsWith('.git')) {
+            repositoryUrl = repositoryUrl.slice(0, repositoryUrl.length - 4)
+        }
         this.htmlFile = this.htmlFile.replace(/\$\{repositoryUrl\}/g, repositoryUrl);
         return this;
     }
 
     public updateRepositoryIssues(repositoryIssues: string) {
         this.htmlFile = this.htmlFile.replace("${repositoryIssues}", repositoryIssues);
+        return this;
+    }
+
+    public updateChangelogUrl(changelog: string) {
+        this.htmlFile = this.htmlFile.replace("${changelog}", changelog);
+        return this;
+    }
+    public updateManual(manual: string) {
+        this.htmlFile = this.htmlFile.replace("${manual}", manual);
         return this;
     }
 

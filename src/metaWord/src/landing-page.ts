@@ -23,7 +23,7 @@ export class LandingPage implements ContentProvider {
     provideHeader(logoUrl: string): Header {
         return <Header>{
             logo: <Image>{ src: logoUrl, height: 120, width: 120 },
-            message: `<b>MetaGo</b> comes from the voice in my heart💖as a programmer. <i>Metago</i> tries its best to be the coolest😎 keyboard(mouseless) focused navigation tool in vscode. <i>Metago</i> tries to make your keyboard⌨ to you as meaningful as a kitchen knife to a master chef👩‍🍳. <a title="Star me on GitHub" href="https://github.com/metaseed/metaGo/">GitHub⭐</a>`
+            message: `<b>MetaWord</b> is one part of the tool set <i>MetaGo</i>, with the goal to moveCursor/select/delete by different kinds of words. If you like it, you make also like other tools from <i>MetaGo</i>. <a title="Star me on GitHub" href="https://github.com/metaseed/metaGo/">GitHub⭐</a>`
         };
     }
 

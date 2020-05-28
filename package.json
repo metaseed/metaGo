@@ -40,6 +40,9 @@
         "url": "https://github.com/metaseed/metaGo/issues",
         "email": "metaseed@gmail.com"
     },
+    "changelog": "https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md",
+    "manual": "https://github.com/metaseed/metaGo/blob/master/README.md#features-summary",
+
     "categories": [
         "Other"
     ],

@@ -3,7 +3,7 @@
     "displayName": "MetaWord",
     "description": "word based cursor movement, selection and deletion",
     "icon": "images/metaWord.png",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo/tree/master/src/metaWord",
     "license": "MIT",
@@ -30,6 +30,8 @@
         "url": "https://github.com/metaseed/metaGo/issues",
         "email": "metaseed@gmail.com"
     },
+    "changelog": "https://github.com/metaseed/metaGo/blob/master/src/metaWord/CHANGELOG.md",
+    "manual": "https://github.com/metaseed/metaGo/blob/master/src/metaWord/README.md#metaword",
     "categories": [
         "Other"
     ],
