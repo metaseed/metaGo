@@ -119,6 +119,7 @@
             },
             {
                 "key": "ctrl+alt+shift+backspace",
+                "mac": "ctrl+alt+delete",
                 "_note": "ctrl+alt+delete on windows is a system shortcut",
                 "command": "deleteWordPartRight",
                 "when": "textInputFocus && !editorReadonly"

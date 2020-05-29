@@ -10,6 +10,7 @@ All notable changes to the "metaWord" extension will be documented in this file.
 #### Added
 #### Removed
 #### Changed
+ - [x] on Mac ctrl+alt+del to right delete wordPart.
 #### Fixed
 
 ## Current Version
