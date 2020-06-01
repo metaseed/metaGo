@@ -8,6 +8,7 @@ All notable changes to the "metaWord" extension will be documented in this file.
 ---
 ### 
 #### Added
+ - [x] add commands to moveCursor/select/delete spaceWord, that include spaces before/after the word. <a href="https://github.com/metaseed/metaGo/tree/master/src/metaWord#spaceword-commands-to-movecursorselectdelete-word-separated-by-space">(detail)</a>
 #### Removed
 #### Changed
  - [x] on Mac ctrl+alt+del to right delete wordPart.

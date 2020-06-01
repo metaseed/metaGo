@@ -124,7 +124,6 @@
                 "command": "deleteWordPartRight",
                 "when": "textInputFocus && !editorReadonly"
             },
-
             {
                 "key": "alt+v",
                 "command": "editor.action.toggleColumnSelection"
@@ -164,6 +163,42 @@
                 "key": "win+alt+delete",
                 "mac": "cmd+alt+delete",
                 "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordSpaceLeft",
+                "key": "win+alt+home",
+                "mac": "cmd+alt+home",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordSpaceLeftSelect",
+                "key": "win+alt+shift+home",
+                "mac": "cmd+alt+shift+home",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordLeftSpaceDelete",
+                "key": "win+alt+shift+backspace",
+                "mac": "cmd+alt++shift+backspace",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordSpaceRight",
+                "key": "win+alt+end",
+                "mac": "cmd+alt+end",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordSpaceRightSelect",
+                "key": "win+shift+alt+end",
+                "mac": "cmd+shift+alt+end",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordSpaceRightDelete",
+                "key": "win+alt+shift+delete",
+                "mac": "cmd+alt+shift+delete",
+                "when": "editorTextFocus"
             }
         ]
     },
@@ -189,16 +224,16 @@
         "@types/mocha": "^7.0.1",
         "@types/node": "^13.7.1",
         "@types/vscode": "^1.39.0",
-        "eslint": "^6.8.0",
-        "mocha": "^7.0.1",
+        "eslint": "^7.1.0",
+        "mocha": "^7.2.0",
         "raw-loader": "^4.0.1",
-        "source-map-support": "^0.5.12",
-        "ts-loader": "^6.2.2",
-        "typescript": "^3.8.3",
+        "source-map-support": "^0.5.19",
+        "ts-loader": "^7.0.5",
+        "typescript": "^3.9.3",
         "vsce": "^1.75.0",
-        "webpack": "^4.42.1",
+        "webpack": "^4.43.0",
         "webpack-cli": "^3.3.11",
-        "terser-webpack-plugin": "^2.3.5",
+        "terser-webpack-plugin": "^3.0.2",
         "copy-webpack-plugin": "^6.0.1"
     }
 }

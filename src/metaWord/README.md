@@ -51,6 +51,11 @@
 * <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>backspace</kbd>: delete one space-word left.
 * <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>del</kbd>: delete one space-word right.
 
+* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>home/end</kbd>: move cursor left/right by one space-word and set cursor at the begin/end of the spaces surrounding the word.
+* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>home/end</kbd>: select to left/right by one space-word, spaces before/after the word is included.
+* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>backspace</kbd>: delete one space-word left, spaces before the word are also deleted.
+* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>del</kbd>: delete one space-word right, spaces after the word are also deleted.
+
 ## Note
 we modified several default command vscode command's shortcut, because we want to use it to do word based cursorMove/select/delete.
 * `ctrl+alt+left/right` by default is used by "workbench.action.moveEditorToPreviousGroup/NextGroup", so we assign `ctrl+k ctrl+left/right` to do the editor movement.
