@@ -5,7 +5,7 @@
 ## MetaWord
 |word type|description|
 |---|---|
-|SpaceWord(BigWord)| characters separated by 'space'|
+|SpaceWord(BigWord)| characters separated by 'space'('Space' or 'Tab')|
 |Word|a group of (A-Za-z0-9_) or a group of other symbol characters|
 |WordPart(SmallWord)| a group of spaces, a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters|
 
@@ -52,7 +52,7 @@
 * <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>del</kbd>: delete one space-word right.
 
 * <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>home/end</kbd>: move cursor left/right by one space-word and set cursor at the begin/end of the spaces surrounding the word.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>home/end</kbd>: select to left/right by one space-word, spaces before/after the word is included.
+* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>home/end</kbd>: select to left/right by one space-word, spaces before/after the word is selected too.
 * <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>backspace</kbd>: delete one space-word left, spaces before the word are also deleted.
 * <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>del</kbd>: delete one space-word right, spaces after the word are also deleted.
 
