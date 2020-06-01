@@ -6,7 +6,7 @@ All notable changes to the "metaWord" extension will be documented in this file.
 ## In Development
 
 ---
-### 
+### V1.2.0 - June 01, 2020
 #### Added
  - [x] add commands to moveCursor/select/delete spaceWord, that include spaces before/after the word. <a href="https://github.com/metaseed/metaGo/tree/master/src/metaWord#spaceword-commands-to-movecursorselectdelete-word-separated-by-space">(detail)</a>
  - [x] make spaceWord commands use both 'Tab' and 'Space' as spaces.
