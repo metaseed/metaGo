@@ -2,9 +2,15 @@
 All notable changes to the "metaWord" extension will be documented in this file.
 
 ## Todo List:
-
 ## In Development
+---
+### 
+#### Added
+#### Removed
+#### Changed
+#### Fixed
 
+## Current Version
 ---
 ### V1.2.0 - June 01, 2020
 #### Added
@@ -15,7 +21,6 @@ All notable changes to the "metaWord" extension will be documented in this file.
  - [x] on Mac ctrl+alt+del to right delete wordPart.
 #### Fixed
 
-## Current Version
 ---
 ### V1.1.0 - May 27, 2020
 #### Added
