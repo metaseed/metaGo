@@ -1,6 +1,5 @@
 out
 node_modules
-*.vsix
 .vscode/metago_bookmarks.json
 images/Thumbs.db
 dist
