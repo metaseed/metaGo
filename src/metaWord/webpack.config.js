@@ -1,7 +1,6 @@
 'use strict';
 const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
 
 function resolveTsconfigPathsToAlias({
   tsconfigPath = './tsconfig.json',
