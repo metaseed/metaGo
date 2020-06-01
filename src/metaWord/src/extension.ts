@@ -7,8 +7,7 @@ import {MetaSpaceWord} from './space-word';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-    const landingPage = new LandingPage(context);
-    landingPage.showIfNeed();
+    new LandingPage(context).showIfNeed(); // comment out this line to make breakpoint work when debugging
     let config = new Config();
     config.loadConfig();
     // Event to update active configuration items when changed without restarting vscode
