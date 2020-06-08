@@ -22,7 +22,7 @@
     </td>
     <td>
       <a href="https://github.com/metaseed/metaGo/blob/master/donate/index.md">
-          <img src="./donate/scan.png" style="height: 66px;"/>
+          <img src="https://github.com/metaseed/metaGo/blob/master/donate/scan.png?raw=true" style="height: 66px;"/>
       </a>
     </td>
   </tr>
