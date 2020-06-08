@@ -4,3 +4,6 @@
 [submodule "src/metago.lib"]
 	path = src/metago.lib
 	url = https://github.com/metaseed/metago.lib
+[submodule "src/metaJump/src"]
+	path = src/metaJump/src
+	url = https://github.com/metaseed/metaJump
