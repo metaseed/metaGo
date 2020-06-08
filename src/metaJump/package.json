@@ -20,14 +20,7 @@
         "metaGo",
         "center",
         "screen",
-        "focus screen",
-        "space jumper",
-        "metaWord",
-        "line selection",
-        "surrounding-pair",
-        "change pair",
-        "select pair",
-        "html tag pair"
+        "focus screen"
     ],
     "repository": {
         "type": "git",
@@ -38,7 +31,7 @@
         "email": "metaseed@gmail.com"
     },
     "changelog": "https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md",
-    "manual": "https://github.com/metaseed/metaGo/blob/master/README.md#features-summary",
+    "manual": "https://github.com/metaseed/metaGo/blob/master/src/metaJump/CHANGELOG.md",
     "categories": [
         "Other"
     ],
