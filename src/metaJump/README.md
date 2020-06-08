@@ -1,6 +1,6 @@
-[![Version](https://vsmarketplacebadge.apphb.com/version/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metajump)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metajump)
-[![Ratings](https://vsmarketplacebadge.apphb.com/rating/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metajump)
+[![Version](https://vsmarketplacebadge.apphb.com/version/metaseed.metajump.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metajump)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs/metaseed.metajump.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metajump)
+[![Ratings](https://vsmarketplacebadge.apphb.com/rating/metaseed.metajump.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metajump)
 [![](https://img.shields.io/badge/TWITTER-%40metaseed-blue.svg?logo=twitter&style=flat)](https://twitter.com/metaseed)
 [![](https://img.shields.io/badge/gitter-join_chat-1dce73.svg?style=flat&logo=gitter-white)](https://gitter.im/vscode-metago/community)
 ## MetaJump

@@ -1,6 +1,6 @@
-[![Version](https://vsmarketplacebadge.apphb.com/version/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metaword)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metaword)
-[![Ratings](https://vsmarketplacebadge.apphb.com/rating/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metaword)
+[![Version](https://vsmarketplacebadge.apphb.com/version/metaseed.metaword.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metaword)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs/metaseed.metaword.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metaword)
+[![Ratings](https://vsmarketplacebadge.apphb.com/rating/metaseed.metaword.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metaword)
 [![](https://img.shields.io/badge/TWITTER-%40metaseed-blue.svg?logo=twitter&style=flat)](https://twitter.com/metaseed)
 [![](https://img.shields.io/badge/gitter-join_chat-1dce73.svg?style=flat&logo=gitter-white)](https://gitter.im/vscode-metago/community)
 
