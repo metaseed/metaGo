@@ -36,7 +36,6 @@ Give me a  [github⭐](https://github.com/metaseed/metago)
   </tr>
 </table>
 <br>
-<br>
 
 **quotes from users:**
 > [Wicked fast cursor movement/selection for a focus on keyboard usage. This changed how I use VS Code forever. Seriously.](https://spectrum.chat/frontend/general/favourite-vs-code-extensions~9ad33139-aa3a-4f8e-a640-d08ba08736b0)

@@ -25,8 +25,6 @@
   </tr>
 </table>
 <br>
-<br>
-
 
 ## MetaJump
 

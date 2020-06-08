@@ -28,7 +28,6 @@
   </tr>
 </table>
 <br>
-<br>
 
 ## MetaWord
 |word type|description|
