@@ -51,7 +51,7 @@ Give me a  [github⭐](https://github.com/metaseed/metago)
 ## Features Summary
 MetaGo provides fast cursor movement/selection for keyboard focused users:
 * [MetaJump](https://github.com/metaseed/metaGo/blob/master/README.md#metajump)
-    * [features highlight](https://github.com/metaseed/metaGo/blob/master/README.md#features-highlight)
+    * [features highlight](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#features-highlight)
     * [go to any character on screen with 3(most cases) or 4 times key press](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#go-to-any-character-on-screen)
     * [select to any character in the active editor](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#select-to-any-character-in-the-active-editor)
     * [add multiple cursors to the active editor](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#select-to-any-character-in-the-active-editor)
