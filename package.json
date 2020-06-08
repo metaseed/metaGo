@@ -30,7 +30,8 @@
         "html tag pair"
     ],
     "extensionPack": [
-        "metaseed.metaGo"
+        "metaseed.metaWord",
+        "metaseed.metaJump"
     ],
     "repository": {
         "type": "git",
