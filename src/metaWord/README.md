@@ -7,6 +7,28 @@
 **the Goal of MetaWord is providing different kinds of words based cursorMove/Select/Delete commands.**
 
 > **MetaWord is part of [MetaGo extension](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)**
+<table align="center" width="68%" border="0">
+  <tr>
+    <td>
+      <a href="https://github.com/sponsors/metasong">
+          <img src="https://github.com/metaseed/metaGo/blob/master/donate/githubSponsors.png?raw=true" style="height: 66px;" />
+      </a>
+    </td>
+    <td>
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=P9GXHBAAHPBMN&item_name=metago+dev&currency_code=USD&source=url">
+          <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"/>
+      </a>
+      <br>
+    </td>
+    <td>
+      <a href="https://github.com/metaseed/metaGo/blob/master/donate/index.md">
+          <img src="./donate/scan.png" style="height: 66px;"/>
+      </a>
+    </td>
+  </tr>
+</table>
+<br>
+<br>
 
 ## MetaWord
 |word type|description|
@@ -70,3 +92,4 @@ we modified several default command vscode command's shortcut, because we want t
     > `alt+v` to enter vertical column selection model, then press `shift+left/right/up/down` as needed to do column mode selection.
 
 [*➭MetaGo Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
+

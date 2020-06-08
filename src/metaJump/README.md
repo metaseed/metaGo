@@ -3,6 +3,31 @@
 [![Ratings](https://vsmarketplacebadge.apphb.com/rating/metaseed.metajump.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metajump)
 [![](https://img.shields.io/badge/TWITTER-%40metaseed-blue.svg?logo=twitter&style=flat)](https://twitter.com/metaseed)
 [![](https://img.shields.io/badge/gitter-join_chat-1dce73.svg?style=flat&logo=gitter-white)](https://gitter.im/vscode-metago/community)
+
+<table align="center" width="68%" border="0">
+  <tr>
+    <td>
+      <a href="https://github.com/sponsors/metasong">
+          <img src="https://github.com/metaseed/metaGo/blob/master/donate/githubSponsors.png?raw=true" style="height: 66px;" />
+      </a>
+    </td>
+    <td>
+      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=P9GXHBAAHPBMN&item_name=metago+dev&currency_code=USD&source=url">
+          <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"/>
+      </a>
+      <br>
+    </td>
+    <td>
+      <a href="https://github.com/metaseed/metaGo/blob/master/donate/index.md">
+          <img src="./donate/scan.png" style="height: 66px;"/>
+      </a>
+    </td>
+  </tr>
+</table>
+<br>
+<br>
+
+
 ## MetaJump
 
 ### features highlight
