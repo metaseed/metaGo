@@ -1,8 +1,9 @@
 import { ChangeLogItem, ChangeLogKind } from "@landing-page/index";
 export const changeLog: ChangeLogItem[] = [
-  { kind: ChangeLogKind.VERSION,   message: `V4.1.0 - May 28, 2020`},
+  { kind: ChangeLogKind.VERSION,   message: `V4.2.0 - June 8, 2020`},
   { kind: ChangeLogKind.ADDED,   message: `landing-page as a common module that could be used by sub extension.`},
   { kind: ChangeLogKind.CHANGED,   message: `use logo v4`},
+  { kind: ChangeLogKind.CHANGED,   message: `metaJump as a separated extension`},
   { kind: ChangeLogKind.FIXED,   message: `close issue <a href="https://github.com/metaseed/metaGo/issues/42">[#42]</a>`},
   { kind: ChangeLogKind.VERSION,   message: `V4.0.2 - May 25, 2020`},
   { kind: ChangeLogKind.ADDED,   message: `from V4 I would start to separate metaGo into several small extensions, and make metaGo also as an ExtensionPack.`},

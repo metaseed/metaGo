@@ -52,12 +52,13 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ## Current Version
 ---
-### V4.1.0 - May 28, 2020
+### V4.2.0 - June 8, 2020
 #### Added
  - [x] landing-page as a common module that could be used by sub extension.
 #### Removed
 #### Changed
  - [x] use logo v4
+ - [x] metaJump as a separated extension
 #### Fixed
  - [x] close issue <a href="https://github.com/metaseed/metaGo/issues/42">[#42]</a>
 ---
