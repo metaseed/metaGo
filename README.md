@@ -67,10 +67,10 @@ if you have andy suggestion just open an [issue on github](https://github.com/me
 MetaGo provides fast cursor movement/selection for keyboard focused users:
 * [MetaJump](https://github.com/metaseed/metaGo/blob/master/README.md#metajump)
     * [features highlight](https://github.com/metaseed/metaGo/blob/master/README.md#features-highlight)
-    * [go to any character on screen with 3(most cases) or 4 times key press](https://github.com/metaseed/metaGo/blob/master/README.md#go-to-any-character-on-screen)
-    * [select to any character in the active editor](https://github.com/metaseed/metaGo/blob/master/README.md#select-to-any-character-in-the-active-editor)
-    * [add multiple cursors to the active editor](https://github.com/metaseed/metaGo/blob/master/README.md#select-to-any-character-in-the-active-editor)
-    * [change active selection in multiple selections](https://github.com/metaseed/metaGo/blob/master/README.md#change-active-selection-in-multiple-selections)
+    * [go to any character on screen with 3(most cases) or 4 times key press](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#go-to-any-character-on-screen)
+    * [select to any character in the active editor](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#select-to-any-character-in-the-active-editor)
+    * [add multiple cursors to the active editor](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#select-to-any-character-in-the-active-editor)
+    * [change active selection in multiple selections](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#change-active-selection-in-multiple-selections)
 
 * [MetaSelection](https://github.com/metaseed/metaGo/blob/master/README.md#metaselection)
     * [alternate Selection's active with anchor](https://github.com/metaseed/metaGo/blob/master/README.md#alternate-selections-active-with-anchor)
@@ -79,7 +79,6 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
       * [surrounding-pair selection of common tag](https://github.com/metaseed/metaGo#surrounding-pair-selection-demo)
       * [surrounding-pair selection of html tag](https://github.com/metaseed/metaGo#surrounding-pair-selection-demo-html-tag-pairs)
       * [surrounding-pair changing demo](https://github.com/metaseed/metaGo#surrounding-pair-changing-demo)
-
 
 * [Navigate between files using bookmarks](https://github.com/metaseed/metaGo/blob/master/README.md#navigate-between-files-using-bookmarks)
 * [MetaWord](https://github.com/metaseed/metaGo/tree/master/src/metaWord/README.md)
