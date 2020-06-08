@@ -34,7 +34,7 @@
 * only encode characters on viewable screen area, so metaGo is faster.
 * support having fold regions
 * support jumping to all opened editors
-* work with vim plugin
+* compatible with the vim plugins.
 
 ### go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere. (Trigger)

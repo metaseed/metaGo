@@ -5,8 +5,6 @@
 [![](https://img.shields.io/badge/gitter-join_chat-1dce73.svg?style=flat&logo=gitter-white)](https://gitter.im/vscode-metago/community)
 ---
  
- > **Attention: In V3 we changed MetaJump command names and the command default trigger keys**
-
 First of all, Metago is a tool made for myself, it comes from the voice in my heart💖as a programmer.    
 Metago tries its best to be the coolest😎 keyboard(mouseless) focused navigation tool in vscode.    
 Metago tries to make your keyboard⌨ to you as meaningful as a kitchen knife to a master chef👩‍🍳.    
@@ -50,19 +48,6 @@ Give me a  [github⭐](https://github.com/metaseed/metago)
 
 > and MORE from you... 
 
-**With this new V3 released, we are going to add more features, peek features in dev:**
-* hold <kbd>/</kbd> to hide jumper decorators on screen.(Done😉)
-* jumper commands for all opened editors, not just the active editor.(Done!)
-* support having fold regions.(V3.2 Done!)
-* ripple jump support to show less decorators on screen. one target-char for current section(seperated by empty lines), two target-chars for current document editor, three or more for all open editors.(V3.5 Done!)
-* improved line-selection extend/shrink command. (V3.6 Done!)
-* command to add multiple cursors, and multiple cursor/selection support for all command in metaGo (V3.6 Done!)
-* command to change active selection in multiple selections (V3.6 Done!)
-* command to select within separator pairs. i.e. '(', ')'; '[',']', '"',''',... (V3.6 Done!)
-* and more... at [changelog](https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md)
-
-if you have andy suggestion just open an [issue on github](https://github.com/metaseed/metago/issues) or discuss with us on [Gitter☕](https://gitter.im/vscode-metago/community)
-
 ## Features Summary
 MetaGo provides fast cursor movement/selection for keyboard focused users:
 * [MetaJump](https://github.com/metaseed/metaGo/blob/master/README.md#metajump)
@@ -87,13 +72,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
     * [moving/select up/down between blank lines](https://github.com/metaseed/metaGo/blob/master/README.md#moveselect-updown-between-blank-lines)
     * [jump to bracket](https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket)
 
-> MetaGo compatible with the vim plugins.
-
-> if you like this tool, and using Windows, you may also be interested in my other tool: [**metaTool**](https://github.com/metatool/metatool). (release soon) 😉    
-> with metaTool running with it's metaKeyboard plugin, you just using the 61 keys main keyboard area to type any key you want.
->
-> i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;</kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
-
+## metaJump
 
 ## metaSelection
 
@@ -126,7 +105,6 @@ you could assign a shortcut key not collision with default vscode ones, just rem
 
 #### lineSelection demo
 we use `ctrl+l` to select current line, then `ctrl+l` again to extend current selection below, then `ctrl+o` to shrink current selection above, then `alt+a` to alternate the current selection's active end with anchor end, then `ctrl+o` to extend current selection above, then `ctrl+alt+/` to add another cursor, and `ctrl+l` to select current line, `ctrl+l` again to extend selection below, then `alt+a` to alternate selection's active with anchor, then `ctrl+o` to extend selection above. 
-
 
 With the two selections, you could then delete or copy...
 ![MetaGo.LineSelection](images/line-selection.gif)
@@ -270,3 +248,10 @@ To modify the settings, press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
 <a href="https://github.com/metaseed/metago/graphs/contributors">Thank you to all the people who have already contributed to MetaGo!🤞</a>
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
+
+
+## Notes
+> if you like this tool, and using Windows, you may also be interested in my other tool: [**metaTool**](https://github.com/metatool/metatool). (release soon) 😉    
+> with metaTool running with it's metaKeyboard plugin, you just using the 61 keys main keyboard area to type any key you want.
+>
+> i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;</kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
