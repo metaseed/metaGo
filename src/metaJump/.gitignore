@@ -1,0 +1,6 @@
+out
+node_modules
+.vscode/metago_bookmarks.json
+images/Thumbs.db
+dist
+*.vsix
