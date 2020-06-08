@@ -30,7 +30,7 @@
         "html tag pair"
     ],
     "extensionPack": [
-        "metaseed.metaWord"
+        "metaseed.metaGo"
     ],
     "repository": {
         "type": "git",
@@ -52,65 +52,10 @@
     "main": "./dist/extension",
     "contributes": {
         "commands": [
-            {
-                "command": "metaGo.input.cancel",
-                "title": "xx: metaJump cancel"
-            },
-            {
-                "command": "metaGo.metaJump.backspace",
-                "title": "xx: metaJump step-cancel"
-            },
+          
             {
                 "command": "metago.showLandingPage",
                 "title": "xx: metaGo.showLandingPage.ChangeLog, what's new"
-            },
-            {
-                "command": "metaGo.gotoSmart",
-                "title": "xx: metaGo.goto Smart"
-            },
-            {
-                "command": "metaGo.gotoAfter",
-                "title": "xx: metaGo.goto After"
-            },
-            {
-                "command": "metaGo.gotoBefore",
-                "title": "xx: metaGo.goto Before"
-            },
-            {
-                "command": "metaGo.insertCursorSmart",
-                "title": "xx: metaGo.insertCursor Smart"
-            },
-            {
-                "command": "metaGo.insertCursorAfter",
-                "title": "xx: metaGo.insertCursor After"
-            },
-            {
-                "command": "metaGo.insertCursorBefore",
-                "title": "xx: metaGo.insertCursor Before"
-            },
-            {
-                "command": "metaGo.gotoSmartActive",
-                "title": "xx: metaGo.Goto Smart only in Active editor"
-            },
-            {
-                "command": "metaGo.gotoAfterActive",
-                "title": "xx: metaGo.Goto After only in Active editor"
-            },
-            {
-                "command": "metaGo.gotoBeforeActive",
-                "title": "xx: metaGo.goto Before only in Active editor"
-            },
-            {
-                "command": "metaGo.selectSmart",
-                "title": "xx: metaGo.Select to the cursor position Smartly"
-            },
-            {
-                "command": "metaGo.selectBefore",
-                "title": "xx: metaGo.Select to position Before the character"
-            },
-            {
-                "command": "metaGo.selectAfter",
-                "title": "xx: metaGo.Select to position After the character"
             },
             {
                 "command": "metaGo.selectionSwitchActiveWithAnchor",
@@ -178,64 +123,6 @@
             }
         ],
         "keybindings": [
-            {
-                "command": "metaGo.input.cancel",
-                "key": "escape",
-                "when": "editorTextFocus && metaGoInput"
-            },
-            {
-                "command": "metaGo.metaJump.backspace",
-                "key": "backspace",
-                "when": "editorTextFocus && metaGoJumping"
-            },
-            {
-                "command": "metaGo.gotoBefore",
-                "key": "alt+,",
-                "description": "goto the character and set the cursor before the character"
-            },
-            {
-                "command": "metaGo.gotoAfter",
-                "key": "alt+.",
-                "description": "goto the character and set the cursor after the character"
-            },
-            {
-                "command": "metaGo.gotoSmart",
-                "key": "alt+/",
-                "description": "goto the character and set the cursor smartly"
-            },
-            {
-                "command": "metaGo.insertCursorBefore",
-                "key": "ctrl+alt+,",
-                "description": "insert another cursor before the character"
-            },
-            {
-                "command": "metaGo.insertCursorAfter",
-                "key": "ctrl+alt+.",
-                "description": "insert another cursor after the character"
-            },
-            {
-                "command": "metaGo.insertCursorSmart",
-                "key": "ctrl+alt+/",
-                "description": "insert another cursor to the character location smartly"
-            },
-            {
-                "command": "metaGo.selectBefore",
-                "key": "alt+shift+,",
-                "when": "editorTextFocus",
-                "description": "select to the cursor position before the character"
-            },
-            {
-                "command": "metaGo.selectAfter",
-                "key": "alt+shift+.",
-                "when": "editorTextFocus",
-                "description": "select to the cursor position after the character"
-            },
-            {
-                "command": "metaGo.selectSmart",
-                "key": "alt+shift+/",
-                "when": "editorTextFocus",
-                "description": "select to the cursor position smartly"
-            },
             {
                 "command": "metaGo.selectionSwitchActiveWithAnchor",
                 "key": "alt+a",
@@ -348,110 +235,6 @@
             "title": "metaseed metaGo",
             "type": "object",
             "properties": {
-                "metaGo.decoration.useTextBasedDecorations": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Only enable if editor decorations are not showing. Use text-based decorations in editors instead of SVG based. Supports fewer customisations but may be more robust."
-                },
-                "metaGo.decoration.width": {
-                    "type": "number",
-                    "default": 8
-                },
-                "metaGo.decoration.height": {
-                    "type": "number",
-                    "default": 14,
-                    "description": "only for svg based decoration"
-                },
-                "metaGo.decoration.fontSize": {
-                    "type": "number",
-                    "default": 14,
-                    "description": "only for svg based decoration"
-                },
-                "metaGo.decoration.x": {
-                    "type": "number",
-                    "default": 1,
-                    "description": "only for svg based decoration"
-                },
-                "metaGo.decoration.y": {
-                    "type": "number",
-                    "default": 12,
-                    "description": "only for svg based decoration"
-                },
-                "metaGo.decoration.fontFamily": {
-                    "type": "string",
-                    "default": "'Operator Mono SSm Lig', 'Fira Code', Menlo, Monaco, 'Courier New', monospace",
-                    "description": "only for svg based decoration"
-                },
-                "metaGo.decoration.fontWeight": {
-                    "type": "string",
-                    "default": "bold"
-                },
-                "metaGo.decoration.borderColor": {
-                    "type": "string",
-                    "default": "#1e1e1e"
-                },
-                "metaGo.decoration.matchBackground": {
-                    "type": "string",
-                    "default": "editor.wordHighlightBackground",
-                    "description": "in sequential-target-chars jump, background color of matched chars"
-                },
-                "metaGo.decoration.targetFollowCharBackground": {
-                    "type": "string",
-                    "default": "#3058B888",
-                    "description": "in sequential-target-chars jump, background color of the char follows target char"
-                },
-                "metaGo.decoration.backgroundOpacity": {
-                    "type": "string",
-                    "default": "0.8"
-                },
-                "metaGo.decoration.backgroundColor": {
-                    "type": "string",
-                    "default": "#4068FF,yellow",
-                    "description": "code decorator background color for different code length"
-                },
-                "metaGo.decoration.color": {
-                    "type": "string",
-                    "default": "white,blue",
-                    "description": "code decorator foreground color for different code length"
-                },
-                "metaGo.decoration.characters": {
-                    "type": "string",
-                    "default": "k, j, d, f, l, s, a, h, g, i, o, n, u, r, v, c, w, e, x, m, b, p, q, t, y, z"
-                },
-                "metaGo.decoration.additionalSingleCharCodeCharacters": {
-                    "type": "string",
-                    "default": "J,D,F,L,A,H,G,I,N,R,E,M,B,Q,T,Y",
-                    "description": "only appears as one char decoration codes"
-                },
-                "metaGo.decoration.hide.triggerKey": {
-                    "type": "string",
-                    "default": "/",
-                    "description": "keyboard key, hold to hide decorators on screen, release to show again. Do NOT use any key in 'metaGo.decoration.characters'. note: if this char is a target, sequential target chars is disabled"
-                },
-                "metaGo.decoration.hide.triggerKeyDownRepeatInitialDelay": {
-                    "type": "number",
-                    "default": "560",
-                    "description": "unit: ms, increase this number if your hide trigger key not work"
-                },
-                "metaGo.decoration.hide.triggerKeyDownRepeatInterval": {
-                    "type": "number",
-                    "default": "80",
-                    "description": "unit: ms, increase this number if your hide trigger key not work"
-                },
-                "metaGo.jumper.timeout": {
-                    "type": "number",
-                    "default": "12",
-                    "description": "timeout value in seconds to cancel metaGo jumper commands."
-                },
-                "metaGo.jumper.findAllMode": {
-                    "type": "string",
-                    "default": "on",
-                    "description": "on: find all characters on viewable screen area; off: only search the first character of the words that are separated by chars configured in 'wordSeparatorPattern'"
-                },
-                "metaGo.jumper.wordSeparatorPattern": {
-                    "type": "string",
-                    "default": "[ ,-.{_(\"'<\\/[+]"
-                },
                 "metaGo.surroundPairs": {
                     "type": "object",
                     "default": [

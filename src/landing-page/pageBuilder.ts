@@ -1,6 +1,5 @@
 // import * as fs from "fs";
 import { ChangeLogItem, ChangeLogKind, Header, Sponsor } from "./contentProvider";
-import { changeLog } from "src/changelog";
 
 export class LandingPageBuilder {
 

@@ -3,7 +3,6 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { Config } from "./config";
-import { MetaJump } from './metajump/src';
 import { CurrentLineScroller } from './current-line-scroller';
 import { BlankLineJumper } from './blank-line-jumper';
 import { MetaSelection } from './metaSelect';
@@ -22,7 +21,6 @@ export function activate(context: vscode.ExtensionContext) {
     // Event to update active configuration items when changed without restarting vscode
     vscode.workspace.onDidChangeConfiguration(e => {
         config.loadConfig();
-        metaJumper.updateConfig();
         
     });
     // let editorConfig =vscode.workspace.getConfiguration("editor")
@@ -30,7 +28,6 @@ export function activate(context: vscode.ExtensionContext) {
     // let fontfamily =editorConfig.inspect("fontFamily")
     //let lineHight = editorConfig.inspect("lineHeight")
 
-    let metaJumper = new MetaJump(context, config);
     let centerEditor = new CurrentLineScroller(context);
     let spaceBlockJumper = new BlankLineJumper(context);
     let metaSelection = new MetaSelection(context, config);

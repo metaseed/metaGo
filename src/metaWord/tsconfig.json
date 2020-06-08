@@ -7,7 +7,7 @@
             "es2020"
         ],
         "sourceMap": true,
-        "baseUrl": ".",
+        "baseUrl": "./src",
         "paths": {
             "@landing-page/*": [
                 "../landing-page/*"
