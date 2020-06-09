@@ -78,7 +78,7 @@
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
 
-### add multiple cursors to the active editor or change active selection from multiple selections
+### add multiple cursors to the active editor or change the active selection from multiple selections
 1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>,</kbd> to add another cursor before the target-character, or make this selection active if the target-location within an selection.
 1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>.</kbd> to add another cursor after the target-character, or make this selection active if the target-location within an selection.
 1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>/</kbd> to add another cursor smartly to the target-character, or make this selection active if the target-location within an selection.
