@@ -79,11 +79,13 @@
 ![MetaGo.MetaJump](images/metago.jump.gif)
 
 ### add multiple cursors to the active editor or change the active selection from multiple selections
-1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>,</kbd> to add another cursor before the target-character, or make this selection active if the target-location within an selection.
-1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>.</kbd> to add another cursor after the target-character, or make this selection active if the target-location within an selection.
-1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>/</kbd> to add another cursor smartly to the target-character, or make this selection active if the target-location within an selection.
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>,</kbd> to add another cursor before the target-character.
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>.</kbd> to add another cursor after the target-character.
+1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>/</kbd> to add another cursor smartly to the target-character.
 
-> <kbd>Ctrl</kbd>+<kbd>u</kbd> to cancel last cursor action.
+> <kbd>Ctrl</kbd>+<kbd>u</kbd> to cancel last cursor action.  
+
+> the three add-cursor commands would become change-active-selection commands if the target location is inside a selection. It is useful to modify multiple selection ranges, just select one selection as the active one and do extending or shrinking there.
 
 #### add-multi-cursors demo
 we want to modify the three wrongly spelled words, `alt+/` to goto the end of one of them, and `ctrl+alt+/` two times to add two additional cursors to the end of the other two words, `ctrl+backspace` to delete them together, `esc` to escape multi-cursor mode:
@@ -94,7 +96,6 @@ we want to modify the three wrongly spelled words, `alt+/` to goto the end of on
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ### change active selection in multiple selections
-> the three add-cursor commands would become change-active-selection commands if the target location is inside a selection. It is useful to modify multiple selection ranges, just select one selection as the active one and do extending or shrinking there.
 #### change-active-selection demo
 in the gif, we use `alt+shift+/` do selection, then `alt+a`(provided in MegaGo plugin) to alternate selection's active with anchor, then `alt+shift+/` to extend selection from another end; then we use `ctrl+alt+/` to add another cursor to code above, `alt+shift+/` to do selection, then `ctrl+alt+/` to make the first selection active, `alt+shift+/` to shrink selection there:
 ![MetaGo.change-active-selection](images/metago.change-active-selection.gif)
