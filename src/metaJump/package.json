@@ -24,14 +24,14 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/metaseed/metaGo.git"
+        "url": "https://github.com/metaseed/metaGo/tree/master/src/metaJump"
     },
     "bugs": {
         "url": "https://github.com/metaseed/metaGo/issues",
         "email": "metaseed@gmail.com"
     },
-    "changelog": "https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md",
-    "manual": "https://github.com/metaseed/metaGo/blob/master/src/metaJump/CHANGELOG.md",
+    "changelog": "https://github.com/metaseed/metaGo/blob/master/src/metaJump/CHANGELOG.md",
+    "manual": "https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md",
     "categories": [
         "Other"
     ],
