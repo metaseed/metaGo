@@ -36,6 +36,7 @@
 * support having fold regions.
 * support jumping to all opened editors.
 * support adding multiple cursors and do multiple selections.
+* support change the active selection from multiple selections.
 * compatible with the vim plugins.
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
