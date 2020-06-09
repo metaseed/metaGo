@@ -30,7 +30,8 @@
 
 ### features highlight
 * code characters are based on priority, the character easier to type has higher priority. i.e. 'k','j', and code characters are configurable.
-* code character decorator is encoded with 1 or 2 characters, the code characters around cursor are easier to type.
+* at anytime continue typing would narrow down the candidate positions range.
+* code character decorator is encoded with one or more characters, the code characters around cursor are easier to type.
 * only encode characters on viewable screen area, so metaGo is faster.
 * support having fold regions
 * support jumping to all opened editors
@@ -43,13 +44,16 @@
 2. type the characters(stands for the target location) on screen, metaGo will show you some decorator codes(candidate target locations) encoded with characters. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
 3. you could continue type characters following the target location to narrow down the possible targets range, or type the code decoration characters of one location to *go* to that target location.
 
-> at any time press <kbd>ESC</kbd> to cancel the command; <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> triggers 'step-cancel')    
+> at any time press <kbd>ESC</kbd> to cancel the command;  
+> <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> triggers 'step-cancel')    
 
-> Ripple Support, Less Decorators On Screen: type location-chars to encode locations far from center(cursor location): 
+> to show less decorators on screen, metaJump introduces 'ripple-encoding' support, : type target-location-chars to encode locations far from center(cursor location) by steps.
 > 1. one target-char for current section(separated by empty lines);
 > 1. two target-chars for current doc;
 > 1. three or more target-chars for all opened editors;
-> 1. for one or two target-chars, one-char-decorators will pass through boundaries(section or document) if possible. (i.e. for one-target-char, one-char-decorators has encoded all possible target locations in the section, then it will continue encodes until all one-char-decorators are used up).
+> 1. for one or two target-chars, one-char-decorators will pass through boundaries(section or document) if possible. (i.e. for one-target-char, one-char-decorators has encoded all possible target locations in the section, then it will continue encodes until all one-char-decorators are used up).  
+
+> Note: <kbd>Enter</kbd> and <kbd>Space</kbd> are also usable as location characters. <kbd>Enter</kbd> means the end of line. You could press <kbd>Enter</kbd> any times to trigger the decorator-encoding for the line-end out side of current section(2 times) or document(3 times). (like a ripple)    
 
 * the <kbd>Alt</kbd>+<kbd>.</kbd> shortcut will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
 * the <kbd>Alt</kbd>+<kbd>,</kbd> shortcut will trigger the metaGo.gotoBefore command, the cursor will be placed before the target character;
@@ -57,7 +61,6 @@
     * if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
     * The 'word' is defined as a group of all alphanumeric or punctuation characters.
 
-> Note: <kbd>Enter</kbd> is also usable as location character, it means the end of line. You could press <kbd>Enter</kbd> any times to trigger the decorator-encoding for the line-end out side of current section(2 times) or document(3 times). (like a ripple)    
 > commands that only navigate in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
 
 
