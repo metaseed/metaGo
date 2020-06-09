@@ -73,7 +73,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
     * [jump to bracket](https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket)
 
 ## metaJump
-![MetaGo.MetaJump](https://github.com/metaseed/metaGo/blob/master/src/metaJump/images/metaJump.gif?raw=true)
+![MetaGo.MetaJump](src/metaJump/images/metaJump.gif)
 ## metaSelection
 
 ### alternate Selection's active with anchor
