@@ -27,7 +27,7 @@
 <br>
 
 ## MetaJump
-
+![MetaGo.MetaJump](images/metaJump.gif)
 ### features highlight
 * code characters are based on priority, the character easier to type has higher priority. i.e. 'k','j', and code characters are configurable.
 * at anytime continue typing would narrow down the candidate positions range.
