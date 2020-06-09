@@ -36,7 +36,7 @@
 * support having fold regions.
 * support jumping to all opened editors.
 * support adding multiple cursors and do multiple selections.
-* support change the active selection from multiple selections.
+* support change the active selection of multiple selections.
 * compatible with the vim plugins.
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
@@ -79,7 +79,7 @@
 
 ![MetaGo.MetaJump](images/metago.jump.gif)
 
-### add multiple cursors to the active editor or change the active selection from multiple selections
+### add multiple cursors to the active editor or change the active selection of multiple selections
 1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>,</kbd> to add another cursor before the target-character.
 1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>.</kbd> to add another cursor after the target-character.
 1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>/</kbd> to add another cursor smartly to the target-character.
