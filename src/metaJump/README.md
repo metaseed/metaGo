@@ -28,6 +28,8 @@
 
 ## MetaJump
 ![MetaGo.MetaJump](images/metaJump.gif)
+MetaJump provides fast cursor moving/selecting commands with decoration characters on the possible target-locations.
+
 ### features highlight
 * code characters are based on priority, the character easier to type has higher priority. i.e. 'k','j', and code characters are configurable.
 * at anytime continue typing would narrow down the candidate positions range.
