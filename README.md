@@ -73,7 +73,7 @@ MetaGo provides fast cursor movement/selection for keyboard focused users:
     * [jump to bracket](https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket)
 
 ## metaJump
-<b>metaJump</b> is one part of the tool set <i>MetaGo</i>, with the goal to do cursor moving/selecting/deleting by showing decorators on possible target-locations. ([details](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#metajump))
+<b>metaJump</b> is one part of the tool set <i>MetaGo</i>, with the goal to do cursor moving/selecting/deleting by showing decorators on possible target-locations. **([details](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#metajump))**
 ![MetaGo.MetaJump](src/metaJump/images/metaJump.gif)
 ## metaSelection
 
