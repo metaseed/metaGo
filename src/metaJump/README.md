@@ -27,7 +27,7 @@
 <br>
 
 ## MetaJump
-![MetaGo.MetaJump](images/metaJump.gif)
+![MetaGo.MetaJump](https://github.com/metaseed/metaGo/blob/master/src/metaJump/images/metaJump.gif?raw=true)
 MetaJump provides fast cursor moving/selecting commands with decoration characters on the possible target-locations.
 
 ### features highlight

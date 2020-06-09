@@ -43,7 +43,6 @@
     },
     "changelog": "https://github.com/metaseed/metaGo/blob/master/CHANGELOG.md",
     "manual": "https://github.com/metaseed/metaGo/blob/master/README.md#features-summary",
-
     "categories": [
         "Other"
     ],
@@ -53,7 +52,6 @@
     "main": "./dist/extension",
     "contributes": {
         "commands": [
-          
             {
                 "command": "metago.showLandingPage",
                 "title": "xx: metaGo.showLandingPage.ChangeLog, what's new"
