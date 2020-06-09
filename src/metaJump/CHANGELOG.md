@@ -12,7 +12,7 @@ All notable changes to the "metaJump" extension will be documented in this file.
 
 ## Current Version
 ---
-### V1.0.0 June 08, 2020
+### V1.0.0 June 09, 2020
 #### Added
  - [x] add metaJump.gif to show most features of metaJump
 #### Removed
