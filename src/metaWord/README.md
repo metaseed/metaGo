@@ -51,7 +51,7 @@
 > 'this|.|is|.|a|.|test' and ' text| a|+=| 3| +|5|-|3| +| 7|' (work as expected)  
 >
 > default deleteWordLeft command would do this:  
-> '|this.|is.|a.|test'(<=star from here, if there is only one symbol character after the previous word, the cursor would delete it with the previous word together)
+> '|this.|is.|a.|test'(<=star from here, if there is only one symbol character after the previous word, the cursor would not stop and delete it with the previous word together)
 > default deleteWordRight command would do this:
 > '|this|.|is|.|a|.|test|' (work as expected)  
 
@@ -62,10 +62,12 @@
 ### WordPart commands to moveCursor/select/delete by wordPart
 > Examples:  
 > * when forward:  
->   * 'AB|Cdef|\_\_gh|IJKL|'  
->   * 'AB|Cdef|\_\_gh|ijkl|'  
+>   * '|AB|Cdef|\_\_gh|IJKL|'  
+>   * '|AB|Cdef|\_\_gh|ijkl|'  
 > * when backward:  
->   * '|AB|Cdef\_\_|gh|IJKL' (<-start from end)  
+>   * '|AB|Cdef\_\_|gh|IJKL|' (<-start from end)  
+
+> note: the word connector('_') character is not stopped.  
 
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: move cursor left/right to the wordPart start/end.
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: left/right select from cursor to the wordPart start/end.
