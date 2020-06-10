@@ -4,6 +4,7 @@ All notable changes to the "metaJump" extension will be documented in this file.
 ## Todo List:
  - [ ] `alt+backspace`: delete to position
  - [ ] remove svg decoration
+ - [ ] fix space target char problem
 ## In Development
 ---
 ### 
