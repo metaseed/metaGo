@@ -33,10 +33,9 @@
 |word type|description|
 |---|---|
 |SpaceWord(BigWord)| characters separated by 'space'('Space' or 'Tab')|
-|Word|a group of (A-Za-z0-9_) or a group of other symbol characters|
+|Word|a group of alphanumeric character with underscore(A-Za-z0-9_) or a group of other symbol characters(i.e. ~!@#$%^&*()-+:;"',.<>/?\[]{})|
 |WordPart(SmallWord)| a group of spaces, a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters|
 
-### delete all to line left/right(start/end)
 * <kbd>shift</kbd>+<kbd>backspace</kbd>: delete all from the cursor to the line start.
 * <kbd>shift</kbd>+<kbd>del</kbd>: delete all from the cursor to the line end.
 
@@ -45,14 +44,16 @@
 > we use the default vscode 'Word' commands
 
 > **note:**  
-> default cursorWordEndRight would do this:   
-> 'console|.log|(err|)|' and 'a|+=| 3| +5|-3| +| 7|'  
+> default vscode cursorWordEndRight command would do this:   
+> '|console|.log|(err|)|' and 'a|+=| 3| +5|-3| +| 7|' (if there is only one symbol character before the next word, the cursor would not stop after the symbol)  
 >
-> default cursorWordStartLeft would do this:  
+> default vscode cursorWordStartLeft command would do this:  
 > 'this|.|is|.|a|.|test' and ' text| a|+=| 3| +|5|-|3| +| 7|' (work as expected)  
 >
-> default deleteWordLeft would do this:  
-> '|this.|is.|a.|test'(<=star from here)
+> default deleteWordLeft command would do this:  
+> '|this.|is.|a.|test'(<=star from here, if there is only one symbol character after the previous word, the cursor would delete it with the previous word together)
+> default deleteWordRight command would do this:
+> '|this|.|is|.|a|.|test|' (work as expected)  
 
 * <kbd>ctrl</kbd>+<kbd>left/right</kbd>: left/right move cursor to word start/end.
 * <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: left/right select from cursor to word start/end.
