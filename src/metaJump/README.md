@@ -80,7 +80,7 @@ MetaJump provides fast cursor moving/selecting commands with decoration characte
 
 > support to do multiple selections, 
 
-![MetaGo.MetaJump](images/metago.jump.gif)
+![MetaGo.MetaJump](https://github.com/metaseed/metaGo/blob/master/src/metaJump/images/metago.jump.gif?raw=true)
 
 ### add multiple cursors to the active editor or change the active selection of multiple selections
 1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>,</kbd> to add another cursor before the target-character.
@@ -94,7 +94,7 @@ MetaJump provides fast cursor moving/selecting commands with decoration characte
 #### add-multi-cursors demo
 we want to modify the three wrongly spelled words, `alt+/` to goto the end of one of them, and `ctrl+alt+/` two times to add two additional cursors to the end of the other two words, `ctrl+backspace` to delete them together, `esc` to escape multi-cursor mode:
 
-![MetaGo.MultiCursor](images/metago.multiCursor.gif)
+![MetaGo.MultiCursor](https://github.com/metaseed/metaGo/blob/master/src/metaJump/images/metago.multiCursor.gif?raw=true)
 
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
@@ -102,6 +102,6 @@ we want to modify the three wrongly spelled words, `alt+/` to goto the end of on
 ### change active selection in multiple selections
 #### change-active-selection demo
 in the gif, we use `alt+shift+/` do selection, then `alt+a`(provided in MegaGo plugin) to alternate selection's active with anchor, then `alt+shift+/` to extend selection from another end; then we use `ctrl+alt+/` to add another cursor to code above, `alt+shift+/` to do selection, then `ctrl+alt+/` to make the first selection active, `alt+shift+/` to shrink selection there:
-![MetaGo.change-active-selection](images/metago.change-active-selection.gif)
+![MetaGo.change-active-selection](https://github.com/metaseed/metaGo/blob/master/src/metaJump/images/metago.change-active-selection.gif?raw=true)
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
