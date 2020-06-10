@@ -29,6 +29,8 @@
 ## MetaJump
 MetaJump provides fast cursor moving/selecting commands with decoration characters on the possible target-locations.
 
+> **MetaWord is part of [MetaGo extension](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)**
+
 ![MetaGo.MetaJump](https://github.com/metaseed/metaGo/blob/master/src/metaJump/images/metaJump.gif?raw=true)
 
 ### features highlight
