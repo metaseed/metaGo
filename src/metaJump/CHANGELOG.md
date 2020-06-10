@@ -2,6 +2,8 @@
 All notable changes to the "metaJump" extension will be documented in this file.
 
 ## Todo List:
+ - [ ] `alt+backspace`: delete to position
+ - [ ] remove svg decoration
 ## In Development
 ---
 ### 
@@ -11,6 +13,14 @@ All notable changes to the "metaJump" extension will be documented in this file.
 #### Fixed
 
 ## Current Version
+---
+### V1.1.0
+#### Added
+#### Removed
+ - [x] remove findAllMode config
+#### Changed
+#### Fixed
+
 ---
 ### V1.0.0 June 09, 2020
 #### Added

@@ -260,15 +260,6 @@
                     "type": "number",
                     "default": "12",
                     "description": "timeout value in seconds to cancel metaGo jumper commands."
-                },
-                "metaGo.jumper.findAllMode": {
-                    "type": "string",
-                    "default": "on",
-                    "description": "on: find all characters on viewable screen area; off: only search the first character of the words that are separated by chars configured in 'wordSeparatorPattern'"
-                },
-                "metaGo.jumper.wordSeparatorPattern": {
-                    "type": "string",
-                    "default": "[ ,-.{_(\"'<\\/[+]"
                 }
             }
         }
