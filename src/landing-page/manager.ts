@@ -53,8 +53,8 @@ export class LandingPageManager {
         if (previousVersion) {
             const differs: semver.ReleaseType | null = semver.diff(currentVersion, previousVersion);
 
-            // to do "patch" suppress add || differs === "patch"
-            if (!differs ) { 
+            // to do "patch" suppress add 
+            if (!differs || differs === "patch") { 
                 return;
             }
         }
