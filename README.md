@@ -49,14 +49,14 @@ Give me a  [github⭐](https://github.com/metaseed/metago)
 > and MORE from you... 
 
 ## Features Summary
-MetaGo provides fast cursor movement/selection for keyboard focused users:
+MetaGo provides fast cursor movement/selection/delete for keyboard focused users:
 * [MetaJump](https://github.com/metaseed/metaGo/blob/master/README.md#metajump)
     * [features highlight](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#features-highlight)
     * [go to any character on screen with 3(most cases) or 4 times key press](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#go-to-any-character-on-screen)
     * [select to any character in the active editor](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#select-to-any-character-in-the-active-editor)
     * [add multiple cursors to the active editor](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#select-to-any-character-in-the-active-editor)
     * [change active selection in multiple selections](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#change-active-selection-in-multiple-selections)
-
+    * [delete to any character](https://github.com/metaseed/metaGo/tree/master/src/metaJump#delete-to-any-character)
 * [MetaSelection](https://github.com/metaseed/metaGo/blob/master/README.md#metaselection)
     * [alternate Selection's active with anchor](https://github.com/metaseed/metaGo/blob/master/README.md#alternate-selections-active-with-anchor)
     * [lines selection](https://github.com/metaseed/metaGo/blob/master/README.md#lines-selection)
