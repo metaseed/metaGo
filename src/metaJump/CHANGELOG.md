@@ -15,7 +15,7 @@ All notable changes to the "metaJump" extension will be documented in this file.
 
 ## Current Version
 ---
-### V1.1.0 
+### V1.1.0 June 18, 2020
 #### Added
  - [x] add MetaJump.DeleteToSmart command(`alt+d`): to delete from cursor to the position smartly
  - [x] add MetaJump.DeleteToBefore command(`alt+backspace`): to delete from cursor to the position before the target character
