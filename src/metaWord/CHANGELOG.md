@@ -11,6 +11,12 @@ All notable changes to the "metaWord" extension will be documented in this file.
 #### Fixed
 
 ## Current Version
+### 
+#### Added
+#### Removed
+#### Changed
+#### Fixed
+ - [x] cursorSpaceWordSpaceLeftDelete command not work.
 ---
 ### V1.2.0 - June 01, 2020
 #### Added

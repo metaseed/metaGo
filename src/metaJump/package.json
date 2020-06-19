@@ -100,6 +100,18 @@
             {
                 "command": "metaGo.selectAfter",
                 "title": "xx: metaGo.Select to position After the character"
+            },
+            {
+                "command": "metaGo.metaJump.deleteToSmart",
+                "title": "xx: metaGo.delete from cursor to the position smartly"
+            },
+            {
+                "command": "metaGo.metaJump.deleteToBefore",
+                "title": "xx: metaGo.delete from cursor to the position before the target character"
+            },
+            {
+                "command": "metaGo.metaJump.deleteToAfter",
+                "title": "xx: metaGo.delete from cursor to the position after the target character"
             }
         ],
         "keybindings": [
@@ -116,50 +128,65 @@
             {
                 "command": "metaGo.gotoBefore",
                 "key": "alt+,",
-                "description": "goto the character and set the cursor before the character"
+                "_description": "goto the character and set the cursor before the character"
             },
             {
                 "command": "metaGo.gotoAfter",
                 "key": "alt+.",
-                "description": "goto the character and set the cursor after the character"
+                "_description": "goto the character and set the cursor after the character"
             },
             {
                 "command": "metaGo.gotoSmart",
                 "key": "alt+/",
-                "description": "goto the character and set the cursor smartly"
+                "_description": "goto the character and set the cursor smartly"
             },
             {
                 "command": "metaGo.addCursorBefore",
                 "key": "ctrl+alt+,",
-                "description": "add another cursor before the character"
+                "_description": "add another cursor before the character"
             },
             {
                 "command": "metaGo.addCursorAfter",
                 "key": "ctrl+alt+.",
-                "description": "add another cursor after the character"
+                "_description": "add another cursor after the character"
             },
             {
                 "command": "metaGo.addCursorSmart",
                 "key": "ctrl+alt+/",
-                "description": "add another cursor to the character location smartly"
+                "_description": "add another cursor to the character location smartly"
             },
             {
                 "command": "metaGo.selectBefore",
                 "key": "alt+shift+,",
                 "when": "editorTextFocus",
-                "description": "select to the cursor position before the character"
+                "_description": "select to the cursor position before the character"
             },
             {
                 "command": "metaGo.selectAfter",
                 "key": "alt+shift+.",
                 "when": "editorTextFocus",
-                "description": "select to the cursor position after the character"
+                "_description": "select to the cursor position after the character"
             },
             {
                 "command": "metaGo.selectSmart",
                 "key": "alt+shift+/",
                 "when": "editorTextFocus",
-                "description": "select to the cursor position smartly"
+                "_description": "select to the cursor position smartly"
+            },
+            {
+                "command": "metaGo.metaJump.deleteToBefore",
+                "key": "alt+backspace",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.metaJump.deleteToAfter",
+                "key": "alt+delete",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.metaJump.deleteToSmart",
+                "key": "alt+d",
+                "when": "editorTextFocus"
             }
         ],
         "configuration": {

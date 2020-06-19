@@ -15,12 +15,17 @@ All notable changes to the "metaJump" extension will be documented in this file.
 
 ## Current Version
 ---
-### V1.1.0
+### V1.1.0 
 #### Added
+ - [x] add MetaJump.DeleteToSmart command(`alt+d`): to delete from cursor to the position smartly
+ - [x] add MetaJump.DeleteToBefore command(`alt+backspace`): to delete from cursor to the position before the target character
+ - [x] add MetaJump.DeleteToAfter command(`alt+delete`): to delete from cursor to the position after the target character
+ - [x] add delete command indicator: 'red block'
 #### Removed
  - [x] remove findAllMode config
 #### Changed
 #### Fixed
+ - [x] metaGo.selectSmart command: target cursor position is calculated by the same way as the metaGo.GotoSmart command
 
 ---
 ### V1.0.0 June 09, 2020

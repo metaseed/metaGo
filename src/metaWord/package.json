@@ -54,6 +54,10 @@
                 "title": "xx: metaGo.cursorSpaceWordLeftSelect"
             },
             {
+                "command": "metaGo.cursorSpaceWordSpaceLeftDelete",
+                "title": "xx: metaGo.cursorSpaceWordSpaceLeftDelete"
+            },
+            {
                 "command": "metaGo.cursorSpaceWordLeftDelete",
                 "title": "xx: metaGo.cursorSpaceWordLeftDelete"
             },
@@ -68,6 +72,10 @@
             {
                 "command": "metaGo.cursorSpaceWordRightDelete",
                 "title": "xx: metaGo.cursorSpaceWordRightDelete"
+            },
+            {
+                "command": "metaGo.cursorSpaceWordSpaceRightDelete",
+                "title": "xx: metaGo.cursorSpaceWordSpaceRightDelete"
             }
         ],
         "keybindings": [
@@ -177,7 +185,7 @@
                 "when": "editorTextFocus"
             },
             {
-                "command": "metaGo.cursorSpaceWordLeftSpaceDelete",
+                "command": "metaGo.cursorSpaceWordSpaceLeftDelete",
                 "key": "win+alt+shift+backspace",
                 "mac": "cmd+alt++shift+backspace",
                 "when": "editorTextFocus"

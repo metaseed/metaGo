@@ -107,3 +107,12 @@ in the gif, we use `alt+shift+/` do selection, then `alt+a`(provided in MegaGo p
 ![MetaGo.change-active-selection](https://github.com/metaseed/metaGo/blob/master/src/metaJump/images/metago.change-active-selection.gif?raw=true)
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
+
+### delete to any character
+ 1. <kbd>alt</kbd>+<kbd>d</kbd>: to delete from cursor to the position smartly
+ 1. <kbd>alt</kbd>+<kbd>backspace</kbd>: to delete from cursor to the position before the target character
+ 1. <kbd>alt</kbd>+<kbd>delete</kbd>: to delete from cursor to the position after the target character
+
+#### deleteTo commands demo:
+![MetaGo.deleteTo](https://github.com/metaseed/metaGo/blob/master/src/metaJump/images/deleteTo.gif?raw=true)
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
