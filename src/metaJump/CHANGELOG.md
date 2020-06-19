@@ -21,6 +21,7 @@ All notable changes to the "metaJump" extension will be documented in this file.
  - [x] add MetaJump.DeleteToBefore command(`alt+backspace`): to delete from cursor to the position before the target character
  - [x] add MetaJump.DeleteToAfter command(`alt+delete`): to delete from cursor to the position after the target character
  - [x] add delete command indicator: 'red block'
+ - [x] add gif demo for delete commands <a href="https://github.com/metaseed/metaGo/tree/master/src/metaJump#delete-to-any-character">(detail)</a>
 #### Removed
  - [x] remove findAllMode config
 #### Changed
