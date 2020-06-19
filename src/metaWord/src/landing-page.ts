@@ -23,7 +23,7 @@ export class LandingPage implements ContentProvider {
     provideHeader(logoUrl: string): Header {
         return <Header>{
             logo: <Image>{ src: logoUrl, height: 120, width: 120 },
-            message: `<b>MetaWord</b> is one part of the tool set <i>MetaGo</i>, with the goal to moveCursor/select/delete by different kinds of words. If you like it, you make also like other tools from <i>MetaGo</i>. <a title="Star me on GitHub" href="https://github.com/metaseed/metaGo/">GitHub⭐</a>`
+            message: `<b>MetaWord</b> is one part of the tool set <i>MetaGo</i>, with the goal to do cursor based moving/selecting/deleting by different kinds of words. <br/>If you like it, you may also like other tools from <i>MetaGo</i>. <a title="Star me on GitHub" href="https://github.com/metaseed/metaGo/">GitHub⭐</a>`
         };
     }
 
