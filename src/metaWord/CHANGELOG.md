@@ -11,7 +11,7 @@ All notable changes to the "metaWord" extension will be documented in this file.
 #### Fixed
 
 ## Current Version
-### 
+### V1.3.0
 #### Added
 #### Removed
 #### Changed
