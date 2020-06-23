@@ -2,17 +2,19 @@
 All notable changes to the "metaJump" extension will be documented in this file.
 
 ## Todo List:
- - [ ]  'alt+backspace`: delete to position
  - [ ] remove svg decoration
  - [ ] fix space target char problem
 ## In Development
 ---
 ### 
 #### Added
+ - [] add command shift+space to show/hide decorators.
 #### Removed
+ - [] '/' currently is a normal char, not act as hide-command trigger, so remove the special handling for it as the first target-sequence-char.
 #### Changed
 #### Fixed
-
+ - [] fix decorators problem if hide-command character('/') is in the target-chars-sequence, it would be considered as the hide-command trigger.
+,
 ## Current Version
 ---
 ### V1.1.0 June 18, 2020

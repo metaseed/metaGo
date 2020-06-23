@@ -55,9 +55,11 @@
 > default deleteWordRight command would do this:
 > '|this|.|is|.|a|.|test|' (work as expected)  
 
+
 * <kbd>ctrl</kbd>+<kbd>left/right</kbd>: left/right move cursor to word start/end.
 * <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: left/right select from cursor to word start/end.
 * <kbd>ctrl</kbd>+<kbd>backspace/delete</kbd>: left/right delete from cursor to word start/end.
+> Note: one Mac, the cursorWord* commands are not mapped, you may need to map them by your self.
 
 ### WordPart commands to moveCursor/select/delete by wordPart
 > Examples:  
