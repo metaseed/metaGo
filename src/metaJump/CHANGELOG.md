@@ -10,6 +10,7 @@ All notable changes to the "metaJump" extension will be documented in this file.
 #### Added  
  - [] if there is only one location remains while user typing 'flowing chars', go to that location directly. (not have to type the decorator char 'k')
  - [] add command shift+space to show/hide decorators.
+ - [] upgrade typescript, webpack
 #### Removed
  - [] '/' currently is a normal char, not act as hide-command trigger, so remove the special handling for it as the first target-sequence-char.
 #### Changed
