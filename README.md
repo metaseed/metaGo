@@ -75,7 +75,7 @@ MetaGo provides fast cursor movement/selection/delete for keyboard focused users
     * [jump to bracket](https://github.com/metaseed/metaGo/blob/master/README.md#jump-to-bracket)
 
 ## metaJump
-<b>metaJump</b> is one part of the tool set <i>MetaGo</i>, with the goal to do cursor moving/selecting/deleting by showing decorators on possible target-locations. **([details](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#metajump))**
+<b>metaJump</b> is one part of the tool set <i>MetaGo</i>, with the goal to do cursor moving/selecting/deleting by showing decorators on possible target-locations. **([detail document of MetaJump](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#metajump))**
 ![MetaGo.MetaJump](src/metaJump/images/metaJump.gif)
 ## metaSelection
 
@@ -102,6 +102,10 @@ by default selectLineUp command is configured as:
 ```
 you could assign a shortcut key not collision with default vscode ones, just remove the `editorHasSelection` condition, so it works even with no selection in editor.
 
+### alternate Selection's active with anchor
+* <kbd>Alt</kbd>+<kbd>a</kbd> to alternate the selection's active(cursor flashing) with the anchor.
+
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 #### lineSelection demo
 we use `ctrl+l` to select current line, then `ctrl+l` again to extend current selection below, then `ctrl+o` to shrink current selection above, then `alt+a` to alternate the current selection's active end with anchor end, then `ctrl+o` to extend current selection above, then `ctrl+alt+/` to add another cursor, and `ctrl+l` to select current line, `ctrl+l` again to extend selection below, then `alt+a` to alternate selection's active with anchor, then `ctrl+o` to extend selection above. 
 
@@ -110,14 +114,11 @@ With the two selections, you could then delete or copy...
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
-### alternate Selection's active with anchor
-* <kbd>Alt</kbd>+<kbd>a</kbd> to alternate the selection's active(cursor flashing) with the anchor.
 
-[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ### surrounding-pair selection
-commands to select content inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: '''; '"'...
-html tag pair is supported via regexp. (i.ed to select content between two html tag pairs: `alt+shift+p t`, `t` means tag).
+commands to select content inside a pair of separators: '(',')'; '[',']'; '{','}';'<','>'; '>', '<'; or any char pair: ''', '"'...
+html tag pair is supported via regexp. (i.e. to select content between two html tag pairs: `alt+shift+p t`, `t` means tag).
 
 * `Alt+p` to chang surrounding pairs.
 * `Alt+Shift+p` to select content between surrounding pairs.
@@ -172,7 +173,7 @@ if the cursor is in the start or end tag, `alt+shift+p t` would select both the 
 
 #### surrounding-pair changing demo
 
-in this demo, we `alt+p ' "` to change a pair of ' to ", and then goto another place use `alt+p [ (` to change a pair to '[]' to '()'. Then we switch to another html file, where we `alt+p t` to change a surrounding pair of 'h1' to 'h2`, and go to another place, to use `alt+p t` to change another pair of tag from 'h3' to 'h1', note: here is a multi-line start-tag, we use `alt+shift+//` to shrink the selection first and then modify the pair of tag.
+in this demo, we `alt+p ' "` to change a pair of ' to ", and then goto another place use `alt+p [ (` to change a pair to '[]' to '()'. Then we switch to another html file, where we `alt+p t` to change a surrounding pair of 'h1' to 'h2', and go to another place, to use `alt+p t` to change another pair of tag from 'h3' to 'h1', note: here is a multi-line start-tag, we use `alt+shift+//` to shrink the selection first and then modify the pair of tag.
 
 ![](images/metago.changing-surrounding-pair.gif)
 
