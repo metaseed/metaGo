@@ -12,7 +12,7 @@ Metago tries to make your keyboard⌨ to you as meaningful as a kitchen knife to
 <br>
 Metago as a free tool, currently is maintained and developed by me in my spare time🌙⏳, if you think it's useful to you or even indispensable like some of our users, please support me, just buy me a drink☕ would be a great inspiration for me, which means there is someone really like it. 😊
 
-Give me a  [github⭐](https://github.com/metaseed/metago)
+Give me a  [github⭐](https://github.com/metaseed/metago), or even [sponsor me at github🍻](https://github.com/sponsors/metasong)
 <table align="center" width="68%" border="0">
   <tr>
     <td>
@@ -45,7 +45,7 @@ Give me a  [github⭐](https://github.com/metaseed/metago)
 > [MetaGo is a way to move your cursor to a position quickly and without using your mouse/trackpad.](https://scotch.io/starters/visual-studio-code/metago)
 
 > [Oh, man.. I have a feeling that after that I'm going to feel crippled without it. This is fantastic.](https://www.reddit.com/r/vscode/comments/6wcucw/mouseless_setup/#t1_dm8ka1b)
-
+> [This takes a bit to get used to but so much worth it! I really think this should be mainstream and every modern editor should support this.](https://marketplace.visualstudio.com/items?itemName=metaseed.metago&ssr=false#review-details)
 > and MORE from you... 
 
 ## Features Summary

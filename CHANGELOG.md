@@ -44,10 +44,13 @@ All notable changes to the "metago" extension will be documented in this file.
 ## In Development
 
 ---
-### 
+### V5.0.0 - Sep 8, 2021
 #### Added
+   - [x] Planning for new major release.
 #### Removed
 #### Changed
+   - [x] Add the MIT license file
+   - [x] Adjust readme
 #### Fixed
 
 ## Current Version
