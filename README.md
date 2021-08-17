@@ -45,7 +45,9 @@ Give me a  [github⭐](https://github.com/metaseed/metago), or even [sponsor me 
 > [MetaGo is a way to move your cursor to a position quickly and without using your mouse/trackpad.](https://scotch.io/starters/visual-studio-code/metago)
 
 > [Oh, man.. I have a feeling that after that I'm going to feel crippled without it. This is fantastic.](https://www.reddit.com/r/vscode/comments/6wcucw/mouseless_setup/#t1_dm8ka1b)
+
 > [This takes a bit to get used to but so much worth it! I really think this should be mainstream and every modern editor should support this.](https://marketplace.visualstudio.com/items?itemName=metaseed.metago&ssr=false#review-details)
+
 > and MORE from you... 
 
 ## Features Summary
@@ -58,8 +60,8 @@ MetaGo provides fast cursor movement/selection/delete for keyboard focused users
     * [change active selection in multiple selections](https://github.com/metaseed/metaGo/blob/master/src/metaJump/README.md#change-active-selection-in-multiple-selections)
     * [delete to any character](https://github.com/metaseed/metaGo/tree/master/src/metaJump#delete-to-any-character)
 * [MetaSelection](https://github.com/metaseed/metaGo/blob/master/README.md#metaselection)
-    * [alternate Selection's active with anchor](https://github.com/metaseed/metaGo/blob/master/README.md#alternate-selections-active-with-anchor)
     * [lines selection](https://github.com/metaseed/metaGo/blob/master/README.md#lines-selection)
+    * [alternate Selection's active with anchor](https://github.com/metaseed/metaGo/blob/master/README.md#alternate-selections-active-with-anchor)
     * [surrounding-pair selection](https://github.com/metaseed/metaGo/blob/master/README.md#surrounding-pair-selection)
       * [surrounding-pair selection of common tag](https://github.com/metaseed/metaGo#surrounding-pair-selection-demo)
       * [surrounding-pair selection of html tag](https://github.com/metaseed/metaGo#surrounding-pair-selection-demo-html-tag-pairs)
@@ -77,10 +79,6 @@ MetaGo provides fast cursor movement/selection/delete for keyboard focused users
 ![MetaGo.MetaJump](src/metaJump/images/metaJump.gif)
 ## metaSelection
 
-### alternate Selection's active with anchor
-* <kbd>Alt</kbd>+<kbd>a</kbd> to alternate the selection's active(cursor flashing) with the anchor.
-
-[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
 ### lines selection
 vsCode's default select current line command(`Ctrl+l`) selects current line and puts the cursor at the next line's start position.
@@ -88,7 +86,7 @@ we create our own to extend/shrink the selection of the current line:
 * <kbd>Ctrl</kbd>+<kbd>l</kbd> to select current line if no selection at cursor, or extend/shrink selections by one line below if there is selection before/after the cursor.
 * <kbd>Ctrl</kbd>+<kbd>o</kbd> to extend/shrink selection by one line above if there is selection after/before the cursor.
 
-> extend/shrink selections work at the selection's active end(where cursor flashing), if you want to extend/shrink at the selection's anchor end, use <kbd>Alt</kbd>+<kbd>a</kdb> to alternate selection's anchor with active at first. 
+> extend/shrink selections work at the selection's active end(where cursor flashing), if you want to extend/shrink at the selection's anchor end, use <kbd>Alt</kbd>+<kbd>a</kbd> to alternate selection's anchor with active at first. 
 
 > note: <kbd>Ctrl</kbd>+<kbd>o</kbd> triggers open file by default, and it triggers extend line selection above only when there is selection in active editor.
 
@@ -109,6 +107,11 @@ we use `ctrl+l` to select current line, then `ctrl+l` again to extend current se
 
 With the two selections, you could then delete or copy...
 ![MetaGo.LineSelection](images/line-selection.gif)
+
+[*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
+
+### alternate Selection's active with anchor
+* <kbd>Alt</kbd>+<kbd>a</kbd> to alternate the selection's active(cursor flashing) with the anchor.
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
