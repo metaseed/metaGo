@@ -6,15 +6,19 @@ All notable changes to the "metaJump" extension will be documented in this file.
  - [ ] fix space target char problem
 ## In Development
 ---
-### 
-#### Added
+### V1.2.0 Aug 18, 2021
+#### Added  
+ - [] if there is only one location remains while user typing 'flowing chars', go to that location directly. (not have to type the decorator char 'k')
  - [] add command shift+space to show/hide decorators.
 #### Removed
  - [] '/' currently is a normal char, not act as hide-command trigger, so remove the special handling for it as the first target-sequence-char.
 #### Changed
 #### Fixed
+ - [] fix selection problem:  extending, shrinking, changing active selection
  - [] fix decorators problem if hide-command character('/') is in the target-chars-sequence, it would be considered as the hide-command trigger.
-,
+ - [] after press alt+\ then Tab, the indicator is expanded, that means user could not search Tab, this is a bug.
+ - [] if a Tab following a char searched, user could not type Tab to narrow down searching range.
+
 ## Current Version
 ---
 ### V1.1.0 June 18, 2020
