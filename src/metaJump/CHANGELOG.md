@@ -1,14 +1,15 @@
 # Change Log
 All notable changes to the "metaJump" extension will be documented in this file.
-
+## False Features
+ - [x] ~~if there is only one location remains while user typing 'flowing chars', go to that location directly. (not have to type the decorator char 'k')~~ (removed because user may false edit the document if continue typing after jumping)
 ## Todo List:
  - [ ] remove svg decoration
  - [ ] fix space target char problem
 ## In Development
 ---
 ### V1.2.0 Aug 18, 2021
-#### Added  
- - [] if there is only one location remains while user typing 'flowing chars', go to that location directly. (not have to type the decorator char 'k')
+#### Added
+ - [] prepare for another major release
  - [] add command shift+space to show/hide decorators.
  - [] upgrade typescript, webpack
 #### Removed
