@@ -2,6 +2,8 @@
 All notable changes to the "metaJump" extension will be documented in this file.
 ## False Features
  - [x] ~~if there is only one location remains while user typing 'flowing chars', go to that location directly. (not have to type the decorator char 'k')~~ (removed because user may false edit the document if continue typing after jumping)
+  ~~- [] after press alt+\ then Tab, the indicator is expanded, that means user could not search Tab, this is a bug.
+  - [] if a Tab following a char searched, user could not type Tab to narrow down searching range.~~ [vscode.commands.registerCommand('Type', handler), handler can not be triggered by 'Tab' key](https://github.com/microsoft/vscode/issues/131124)
 ## Todo List:
  - [ ] remove svg decoration
  - [ ] fix space target char problem
@@ -18,8 +20,6 @@ All notable changes to the "metaJump" extension will be documented in this file.
 #### Fixed
  - [] fix selection problem:  extending, shrinking, changing active selection
  - [] fix decorators problem if hide-command character('/') is in the target-chars-sequence, it would be considered as the hide-command trigger.
- - [] after press alt+\ then Tab, the indicator is expanded, that means user could not search Tab, this is a bug.
- - [] if a Tab following a char searched, user could not type Tab to narrow down searching range.
 
 ## Current Version
 ---
