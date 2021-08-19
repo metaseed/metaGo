@@ -48,7 +48,7 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 
 ### go to any character on screen
 1. type <kbd>Alt</kbd>+<kbd>/</kbd> to tell I want to *go* somewhere. (Trigger)
-2. type the characters(stands for the target location) on screen, metaGo will show you some decorator codes(candidate target locations) encoded with characters. (you could hold the <kbd>/</kbd>(configurable) to hide the location decorators, release to show again)
+2. type the characters(stands for the target location) on screen, metaGo will show you some decorator codes(candidate target locations) encoded with characters. (to see the characters behind the decoration, you could press the <kbd>shift</kbd>+<kbd>/</kbd>(configurable) to hide the location decorators for a short while(default 560ms))
 3. you could continue type characters following the target location to narrow down the possible targets range, or type the code decoration characters of one location to *go* to that target location.
 
 > at any time press <kbd>ESC</kbd> to cancel the command; <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> triggers 'step-cancel')    
@@ -60,7 +60,11 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 > 
 > for one or two target-chars, one-char-decorators will pass through boundaries(section or document) if possible. (i.e. for one-target-char, one-char-decorators has encoded all possible target locations in the section, then it will continue encodes until all one-char-decorators are used up).  
 
-> Note: <kbd>Enter</kbd> and <kbd>Space</kbd> are also usable as location characters. <kbd>Enter</kbd> means the end of line. You could press <kbd>Enter</kbd> any times to trigger the decorator-encoding for the line-end out side of current section(2 times) or document(3 times). (like a ripple)    
+> Note: <kbd>Enter</kbd> and <kbd>Space</kbd> are also usable as location characters. <kbd>Enter</kbd> means the end of line. You could press <kbd>Enter</kbd> any times to trigger the decorator-encoding for the line-end out side of current section(2 times) or document(3 times). (like a ripple)
+> but the <kbd>Tab</kbd> could not be used as the target location characters (vscode API limit)
+
+> Note: you could also config the 'metaGo.decoration.hide.triggerKey' to a character, i.e. '/', this will hide decorations if holding '/' and show them after releasing.
+> but this makes it impossible for the character i.e. '/' to be used as the following-target-character.
 
 * the <kbd>Alt</kbd>+<kbd>.</kbd> shortcut will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
 * the <kbd>Alt</kbd>+<kbd>,</kbd> shortcut will trigger the metaGo.gotoBefore command, the cursor will be placed before the target character;

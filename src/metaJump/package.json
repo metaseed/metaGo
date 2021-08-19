@@ -3,7 +3,7 @@
     "displayName": "MetaJump",
     "description": "vscode cursor move/select/delete; jump, navigation, goto, acejump",
     "icon": "images/metajump.png",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo/tree/master/src/metaJump",
     "license": "MIT",
@@ -133,7 +133,7 @@
             {
                 "command": "metaGo.metaJump.hideDecoration",
                 "key": "shift+space",
-                "when": "editorTextFocus && metaJumpDecorationShown"
+                "when": "editorTextFocus && metaGoJumping"
             },
             {
                 "command": "metaGo.gotoBefore",
@@ -280,13 +280,13 @@
                 },
                 "metaGo.decoration.hide.triggerKey": {
                     "type": "string",
-                    "default": "/",
+                    "default": "",
                     "description": "keyboard key, hold to hide decorators on screen, release to show again. Do NOT use any key in 'metaGo.decoration.characters', i.e. you could use '/' which is not in decoration.characters; empty string would disable this function. note: if this char is a target, sequential target chars is disabled. it's better to disable it and use the hide-decorator command"
                 },
                 "metaGo.decoration.hide.triggerKeyDownRepeatInitialDelay": {
                     "type": "number",
                     "default": "560",
-                    "description": "unit: ms, increase this number if your hide trigger key not work"
+                    "description": "unit: ms, initial time delay for the show event, this value is also used by the hideDecoration command as the delay time to show decoration, increase this number if your hide trigger key not work"
                 },
                 "metaGo.decoration.hide.triggerKeyDownRepeatInterval": {
                     "type": "number",

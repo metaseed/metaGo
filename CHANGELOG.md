@@ -47,7 +47,8 @@ All notable changes to the "metago" extension will be documented in this file.
 ### V5.0.0 - Sep 8, 2021
 #### Added
    - [x] Planning for new major release.
-   - [x] upgrade typescript, webpack
+   - [x] upgrade typescript(4.3.5), webpack(5.50.0), and other packages to latest version
+   - [x] support Plan section in change log
 
 #### Removed
 #### Changed

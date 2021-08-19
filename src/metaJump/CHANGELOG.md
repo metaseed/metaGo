@@ -6,23 +6,33 @@ All notable changes to the "metaJump" extension will be documented in this file.
   - [] if a Tab following a char searched, user could not type Tab to narrow down searching range.~~ [vscode.commands.registerCommand('Type', handler), handler can not be triggered by 'Tab' key](https://github.com/microsoft/vscode/issues/131124)
 ## Todo List:
  - [ ] remove svg decoration
- - [ ] fix space target char problem
+ - [ ] add commands for single-target-char
 ## In Development
 ---
-### V1.2.0 Aug 18, 2021
+### V
 #### Added
-g - [x] prepare for another major release
- - [] add command shift+space to show/hide decorators.
- - [x] upgrade typescript, webpack
- - [x] add detail description about selection in readme.
+ - 
 #### Removed
- - [x] '/' currently is a normal char, not act as hide-command trigger, so remove the special handling for it as the first target-sequence-char.(via disable the default metaGo.decoration.hide.triggerKey config)
+
 #### Changed
 #### Fixed
- - [x] fix decorators problem if hide-command character('/') is in the target-chars-sequence, it would be considered as the hide-command trigger.(via disable the default metaGo.decoration.hide.triggerKey config)
 
+#### Plan
 ## Current Version
 ---
+### V1.2.0 Aug 19, 2021
+#### Added
+ - [x] prepare for another major release
+ - [x] add command 'shift+space' to hide decoration for a configurable time.
+ - [x] upgrade typescript(4.3.5), webpack(5.50.0), and other packages to latest version
+ - [x] add detail description about selection in readme.
+#### Removed
+ - [x] '/' currently is a normal char, not act as the default hide-decoration trigger, so remove the special handling for it as the target-sequence-char.(via setting the default metaGo.decoration.hide.triggerKey = '' in config)
+#### Changed
+#### Fixed
+ - [x] fix decorators problem if hide-command character('/') is in the target-chars-sequence, it would be considered as the hide-command trigger.(this is the limitation of this hiding way, so we invent the hideDecorationCommand to overcome it)
+#### Plan
+ - [x] add option for user to enable/disable sequence-target-chars and ripple support when narrowing down target locations
 ### V1.1.0 June 18, 2020
 #### Added
  - [x] add MetaJump.DeleteToSmart command( 'alt+d'): to delete from cursor to the position smartly <a href="https://github.com/metaseed/metaGo/tree/master/src/metaJump#delete-to-any-character">(detail)</a>

@@ -200,7 +200,8 @@ ul {
 
 .changelog__badge--added {
   background-color: var(--vscode-gitDecoration-untrackedResourceForeground); }
-
+.changelog__badge--plan {
+    background-color: var(--vscode-gitDecoration-untrackedResourceForeground); }
 .changelog__badge--changed {
   background-color: var(--vscode-gitDecoration-modifiedResourceForeground);
 }
