@@ -11,15 +11,15 @@ All notable changes to the "metaJump" extension will be documented in this file.
 ---
 ### V1.2.0 Aug 18, 2021
 #### Added
- - [] prepare for another major release
+g - [x] prepare for another major release
  - [] add command shift+space to show/hide decorators.
- - [] upgrade typescript, webpack
+ - [x] upgrade typescript, webpack
+ - [x] add detail description about selection in readme.
 #### Removed
- - [] '/' currently is a normal char, not act as hide-command trigger, so remove the special handling for it as the first target-sequence-char.
+ - [x] '/' currently is a normal char, not act as hide-command trigger, so remove the special handling for it as the first target-sequence-char.(via disable the default metaGo.decoration.hide.triggerKey config)
 #### Changed
 #### Fixed
- - [] fix selection problem:  extending, shrinking, changing active selection
- - [] fix decorators problem if hide-command character('/') is in the target-chars-sequence, it would be considered as the hide-command trigger.
+ - [x] fix decorators problem if hide-command character('/') is in the target-chars-sequence, it would be considered as the hide-command trigger.(via disable the default metaGo.decoration.hide.triggerKey config)
 
 ## Current Version
 ---

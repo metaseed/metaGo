@@ -1,5 +1,4 @@
 'use strict';
-const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 
 function resolveTsconfigPathsToAlias({
@@ -29,19 +28,6 @@ const config = {
     filename: 'extension.js',
     libraryTarget: 'commonjs2',
     devtoolModuleFilenameTemplate: '../[resource-path]'
-  },
-  optimization: {
-    minimizer: [new TerserPlugin({
-      cache: true,
-      parallel: true,
-      sourceMap: true,
-      terserOptions: {
-        ecma: 8,
-        keep_classnames: false,
-        mangle: true,
-        module: true
-      }
-    })],
   },
   devtool: 'source-map',
   externals: {

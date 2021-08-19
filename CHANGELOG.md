@@ -38,8 +38,8 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
 ## Todo List for V4
-   - [ ] extract metaJump as separate vscode extension
-   - [ ] extract metaSelection as separate vscode extension
+   - [x] extract metaJump as separate vscode extension
+   - [x] extract metaSelection as separate vscode extension
    - [ ] extract metaMark as separate vscode extension
 ## In Development
 
@@ -47,6 +47,8 @@ All notable changes to the "metago" extension will be documented in this file.
 ### V5.0.0 - Sep 8, 2021
 #### Added
    - [x] Planning for new major release.
+   - [x] upgrade typescript, webpack
+
 #### Removed
 #### Changed
    - [x] Add the MIT license file

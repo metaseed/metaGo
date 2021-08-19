@@ -80,7 +80,9 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 4. repeat 1-3 to adjust your current selection.
 > at any time press <kbd>ESC</kbd> to cancel, or press <kdb>Backspace</kbd> to do step cancel to re-input last typed character
 
-> support to do multiple selections, 
+> support to do multiple selections,
+
+> selection is always the range from the active cursor to the target location
 
 ![MetaGo.MetaJump](https://github.com/metaseed/metaGo/blob/master/src/metaJump/images/metago.jump.gif?raw=true)
 
