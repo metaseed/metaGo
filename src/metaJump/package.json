@@ -51,6 +51,10 @@
                 "title": "xx: metaJump step-cancel"
             },
             {
+                "command": "metaGo.metaJump.hideDecoration",
+                "title": "xx: metaJump hideDecoration"
+            },
+            {
                 "command": "metaGo.metaJump.showLandingPage",
                 "title": "xx: metaGo.metaJump.showLandingPage.ChangeLog, what's new"
             },
@@ -125,6 +129,11 @@
                 "command": "metaGo.metaJump.backspace",
                 "key": "backspace",
                 "when": "editorTextFocus && metaGoJumping"
+            },
+            {
+                "command": "metaGo.metaJump.hideDecoration",
+                "key": "shift+space",
+                "when": "editorTextFocus && metaJumpDecorationShown"
             },
             {
                 "command": "metaGo.gotoBefore",
