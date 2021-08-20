@@ -4,3 +4,5 @@ node_modules
 images/Thumbs.db
 dist
 *.vsix
+**/release
+.env

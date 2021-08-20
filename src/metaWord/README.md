@@ -65,11 +65,11 @@
 > Examples:  
 > * when forward:  
 >   * '|AB|Cdef|\_\_gh|IJKL|'  
->   * '|AB|Cdef|\_\_gh|ijkl|'  
+>   * '|AB|Cdef|\_\_ghijkl|'  
 > * when backward:  
 >   * '|AB|Cdef\_\_|gh|IJKL|' (<-start from end)  
-
-> note: the word connector('_') character is not stopped.  
+character
+> note: the difference at the word connector('_')  dd    dd
 
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: move cursor left/right to the wordPart start/end.
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: left/right select from cursor to the wordPart start/end.

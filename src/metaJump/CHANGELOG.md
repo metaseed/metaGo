@@ -11,7 +11,7 @@ All notable changes to the "metaJump" extension will be documented in this file.
 ---
 ### V
 #### Added
- - 
+ - shrink extension size from 17kb to 
 #### Removed
 
 #### Changed
