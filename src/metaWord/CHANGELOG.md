@@ -2,23 +2,31 @@
 All notable changes to the "metaWord" extension will be documented in this file.
 
 ## Todo List:
-## In Development
+## Development Template
 ---
 ### 
 #### Added
 #### Removed
 #### Changed
 #### Fixed
-
+#### Plan
 ## Current Version
-### V1.3.0
+### 
+#### Added
+#### Removed
+#### Changed
+#### Fixed
+#### Plan
+
+---
+### V1.3.0 - Sep 01, 2021 -torelease
 #### Added
 #### Removed
 #### Changed
 #### Fixed
  - [x] cursorSpaceWordSpaceLeftDelete command not work.
  - [x] fix command map for mac: cursorSpaceWordSpaceLeftDelete
----
+ - [x] readme description minor errors
 ### V1.2.0 - June 01, 2020
 #### Added
  - [x] add commands to moveCursor/select/delete spaceWord, that include spaces before/after the word. <a href="https://github.com/metaseed/metaGo/tree/master/src/metaWord#spaceword-commands-to-movecursorselectdelete-word-separated-by-space">(detail)</a>

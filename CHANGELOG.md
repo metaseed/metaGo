@@ -37,14 +37,23 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] metaJump: alt+/ then ctrl+alt+/ could cancel and press ctrl+alt+/ to trigger.
    - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
-## Todo List for V4
-   - [x] extract metaJump as separate vscode extension
-   - [x] extract metaSelection as separate vscode extension
-   - [ ] extract metaMark as separate vscode extension
-## In Development
-
+## Development Template
+### 
+#### Added
+#### Removed
+#### Changed
+#### Fixed
+#### Plan
 ---
-### V5.0.0 - Sep 8, 2021
+## Current Version
+### 
+#### Added
+#### Removed
+#### Changed
+#### Fixed
+
+#### Plan
+### V4.3.0 - Sep 8, 2021
 #### Added
    - [x] Planning for new major release.
    - [x] upgrade typescript(4.3.5), webpack(5.50.0), and other packages to latest version
@@ -55,7 +64,10 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] Add the MIT license file
    - [x] Adjust readme
 #### Fixed
-
+#### Plan
+   - [ ] extract metaJump as separate vscode extension
+   - [ ] extract metaPair as separate vscode extension
+   - [ ] extract metaMark as separate vscode extension
 ## Current Version
 ---
 ### V4.2.0 - June 8, 2020
