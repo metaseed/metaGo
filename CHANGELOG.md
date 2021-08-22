@@ -46,14 +46,15 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Plan
 ---
 ## Current Version
-### 
+### V4.4.0 - Sep 
 #### Added
 #### Removed
 #### Changed
 #### Fixed
+ - [x] Output panel has decorators shown there, should remove them.[issue 52](https://github.com/metaseed/metaGo/issues/52)
 
 #### Plan
-### V4.3.0 - Sep 8, 2021
+### V4.3.0 - Aug 19, 2021
 #### Added
    - [x] Planning for new major release.
    - [x] upgrade typescript(4.3.5), webpack(5.50.0), and other packages to latest version
