@@ -23,6 +23,19 @@
             },
             "isBackground": true,
             "problemMatcher": ["$ts-webpack-watch", "$tslint-webpack-watch"]
+        },
+        {
+            "type": "npm",
+            "script": "tswatch",
+            "problemMatcher": "$tsc-watch",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "never"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

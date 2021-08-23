@@ -1,7 +1,4 @@
-import * as readline from "readline";
 import * as vscode from "vscode";
-import { Utilities } from './metago.lib';
-
 export class BlankLineJumper {
     constructor(context: vscode.ExtensionContext) {
         context.subscriptions.push(vscode.commands.registerCommand("metaGo.gotoEmptyLineUp", () => {
@@ -28,7 +25,7 @@ export class BlankLineJumper {
             this.markSelection(
                 editor,
                 this.nextPosition(editor.document, editor.selection.active, false),
-               editor.selection.anchor
+                editor.selection.anchor
             );
         }));
     }

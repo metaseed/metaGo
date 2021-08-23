@@ -10,6 +10,7 @@ import { BookmarkExt } from './bookmark';
 import { BracketJumper } from './bracket-jumper';
 import { LandingPage } from './landing-page';
 import { MetaSurroundingPair } from './metaSurroundingPair';
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -34,7 +35,6 @@ export function activate(context: vscode.ExtensionContext) {
     let bookmark = new BookmarkExt(context, config.bookmark);
     let bracketJumper = new BracketJumper(context);
     let metaSurroundingPair = new MetaSurroundingPair(context, config);
-
 }
 
 // this method is called when your extension is deactivated

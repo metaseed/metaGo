@@ -21,10 +21,11 @@ All notable changes to the "metago" extension will be documented in this file.
       Ctrl+o to extendLineSelection up when has selection
    - [x] metaJump: contributed command: metaGo.Cancel doesn't exist.
    - [x] exclude <br> from start tag regex
-   - [ ] metaJump: `alt+backspace` to delete to.
+   - [x] metaJump: `alt+d alt+backspace alt+delete` to delete to.
+   - [x] metaJump: backspace to cancel last input decoration code.
+   - [x] extract metaJump as separate vscode extension
+   - [x] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] bracketJump: level navigate. context conditional variable when cursor at bracket. ctrl+shift+P[ or ] to go to previous/ next level.
-   - [ ] alt+back to delete with metaJump
-   - [ ] metaJump: backspace to cancel last input decoration code.
    - [ ] ctrl+i i ': select in '; ctrl+i a ': select ' and content;
    - [ ] pair-selection: support mutiline start-pair
    - [ ] space-word: cursor move, delete, select
@@ -35,7 +36,6 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] inSurroundingPairSelection: pairs configuration
    - [ ] inSurroundingPairSelection: tag selection support
    - [ ] metaJump: alt+/ then ctrl+alt+/ could cancel and press ctrl+alt+/ to trigger.
-   - [ ] add useful my command config into package.json. i.e. Ctrl+Alt+back to delete small word left
    - [ ] Create command for move to previous/next member
 ## Development Template
 ### 
@@ -66,9 +66,9 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] Adjust readme
 #### Fixed
 #### Plan
-   - [ ] extract metaJump as separate vscode extension
    - [ ] extract metaPair as separate vscode extension
    - [ ] extract metaMark as separate vscode extension
+   - [ ] code indent as code tree, use ctrl+cmd+arrow to navigate
 ## Current Version
 ---
 ### V4.2.0 - June 8, 2020

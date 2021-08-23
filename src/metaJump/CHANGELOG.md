@@ -7,16 +7,20 @@ All notable changes to the "metaJump" extension will be documented in this file.
 ## Todo List:
  - [ ] remove svg decoration
  - [ ] add commands for single-target-char
+ - [ ] command to navigate indent code tree. (alt+/ arrow)
 ## In Development
 ---
-### V
+### V2.0.0 Sep
 #### Added
- - shrink extension size from 17kb to 
+ - [ ] support Tab via Tab shortcut command in metajump context (typing method could not catch tab key)
+ - shrink extension size
+ - [ ] add option for user to enable/disable sequence-target-chars and ripple support when narrowing down target locations
+
 #### Removed
 
 #### Changed
 #### Fixed
-
+- [x] fixed bug of displaying decorators in the Output panel of vscode <a href="https://github.com/metaseed/metaGo/issues/52">[#52]</a>
 #### Plan
 ## Current Version
 ---
