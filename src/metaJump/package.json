@@ -131,6 +131,11 @@
                 "when": "editorTextFocus && metaGoJumping"
             },
             {
+                "command": "metaGo.metaJump.tab",
+                "key": "tab",
+                "when": "editorTextFocus && metaGoJumping"
+            },
+            {
                 "command": "metaGo.metaJump.hideDecoration",
                 "key": "shift+space",
                 "when": "editorTextFocus && metaGoJumping"

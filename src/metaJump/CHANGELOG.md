@@ -12,8 +12,8 @@ All notable changes to the "metaJump" extension will be documented in this file.
 ---
 ### V2.0.0 Sep
 #### Added
- - [ ] support Tab via Tab shortcut command in metajump context (typing method could not catch tab key)
- - shrink extension size
+ - [x] Tab key could be used as a common target character
+ - [x] shrink extension size
  - [ ] add option for user to enable/disable sequence-target-chars and ripple support when narrowing down target locations
 
 #### Removed
