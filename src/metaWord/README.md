@@ -33,7 +33,7 @@
 |word type|description|
 |---|---|
 |SpaceWord(BigWord)| characters separated by 'space'('Space' or 'Tab')|
-|Word|a group of alphanumeric character with underscore(A-Za-z0-9_) or a group of other symbol characters(i.e. ~!@#$%^&*()-+:;"',.<>/?\[]{})|
+|Word|a group of alphanumeric character with underscore and (A-Za-z0-9_) or a group of other symbol characters(i.e. ~!@#$%^&*()-+:;"',.<>/?\[]{})|
 |WordPart(SmallWord)| a group of spaces, a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters|
 
 * <kbd>shift</kbd>+<kbd>backspace</kbd>: delete all from the cursor to the line start.
@@ -62,9 +62,9 @@
 > Note: one Mac, the cursorWord* commands are not mapped, you may need to map them by your self.
 
 ### WordPart commands to moveCursor/select/delete by wordPart
-> Examples:  
-> * when forward:  
->   * '|AB|Cdef|\_\_gh|IJKL|'  
+> Examples: ABCdef__ghIJKL
+> * when forward:
+>   * '|AB|Cdef|\_\_gh|IJKL|' 
 >   * '|AB|Cdef|\_\_ghijkl|'  
 > * when backward:  
 >   * '|AB|Cdef\_\_|gh|IJKL|' (<-start from end)  

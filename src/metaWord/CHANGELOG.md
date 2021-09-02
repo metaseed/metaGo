@@ -17,11 +17,13 @@ All notable changes to the "metaWord" extension will be documented in this file.
 #### Changed
 #### Fixed
 #### Plan
-
+tidy commands:
+* modify ctrl+pageup ctrl+pagedown to goto pagestart/end
+* all words has start/end so: Home(left-start), Left(left-end), Right(right-start), End(right-end)
 ---
 ### V1.3.0 - Sep 01, 2021 -torelease
 #### Added
- - [] command(alt+s) to repeat a word(space seperated) of the above line to save time of typing Same words as the above line.
+ - [] command(alt+s) to repeat a same word(space seperated) of the above line to save time of typing Same words as the above line.
 #### Removed
 #### Changed
 #### Fixed
