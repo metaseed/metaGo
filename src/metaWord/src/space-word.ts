@@ -101,9 +101,11 @@ export class MetaSpaceWord {
 
         editor.selections = selections;
     }
+
     right(editor: vscode.TextEditor, edit: vscode.TextEditorEdit, mode = Mode.Move, includeChar = false, chars = [' ', '\t']) {
         const lines = editor.document.lineCount;
         let selections: vscode.Selection[] = [];
+
         for (let s = 0; s < editor.selections.length; s++) {
             const selection = editor.selections[s];
             let i = selection.active.line;
@@ -155,7 +157,7 @@ export class MetaSpaceWord {
         editor.selections = selections;
     }
 
-    action(mode: Mode, selection: vscode.Selection, position: vscode.Position, selections: vscode.Selection[], edit: vscode.TextEditorEdit) {
+    private action(mode: Mode, selection: vscode.Selection, position: vscode.Position, selections: vscode.Selection[], edit: vscode.TextEditorEdit) {
         switch (mode) {
             case Mode.Move:
                 selections.push(new vscode.Selection(position, position));

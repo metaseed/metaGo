@@ -1,15 +1,16 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es2019",
+        "target": "es2020",
         "outDir": "out",
         "lib": [
             "es2020"
         ],
         "sourceMap": true,
-        "baseUrl": "./src",
+        "rootDir": "..",
+        "baseUrl": ".",
         "paths": {
-            "@landing-page/*": [
+            "@landing-page/*": [ 
                 "../landing-page/*"
             ]
         }
