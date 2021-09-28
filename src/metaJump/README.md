@@ -57,7 +57,13 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 > to show less decorators on screen, metaJump introduces 'ripple-encoding' support, : type target-location-chars to encode locations far from center(cursor location) by steps.
 > 1. one target-char for current section(separated by empty lines);
 > 1. two target-chars for current doc;
-> 1. three or more target-chars for all opened editors;  
+> 1. three or more target-chars for all opened editors;
+
+> tip for fast jumping:
+> 1. if goto location within the active document but not in the section(seperated by empty lines) with cursor, directly **type 2 target location chars**.
+> 1. if want to go to another document but not active, **always typing 3 target chars**.
+> 
+
 > 
 > for one or two target-chars, one-char-decorators will pass through boundaries(section or document) if possible. (i.e. for one-target-char, one-char-decorators has encoded all possible target locations in the section, then it will continue encodes until all one-char-decorators are used up).  
 

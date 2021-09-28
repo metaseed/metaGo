@@ -14,6 +14,7 @@ All notable changes to the "metaJump" extension will be documented in this file.
 #### Added
  - [x] Tab key could be used as a common target character
  - [x] shrink extension size
+ - [x] document work
  - [ ] add option for user to enable/disable sequence-target-chars and ripple support when narrowing down target locations
 
 #### Removed
