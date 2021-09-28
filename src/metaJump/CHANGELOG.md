@@ -16,8 +16,10 @@ All notable changes to the "metaJump" extension will be documented in this file.
 
 #### Changed
 #### Fixed
+
 #### Plan
 ## Current Version
+---
 ### V1.3.0 Sep 28, 2021
 #### Added
  - [x] Tab key could be used as a common target character
