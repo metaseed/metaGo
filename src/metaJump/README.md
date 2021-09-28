@@ -82,7 +82,9 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 > commands that only navigate in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
 
 > by default metajump use multiple-target-char to navigate to location, but user could config to enable single-target-char:
+> ```json
 > "metaGo.jumper.commandsToUseSingleTargetChar":["metaGo.gotoSmart", "metaGo.selectSmart"]
+> ```
 > to make the 2 commands use single-target-char: show decorations of all potential locations after user type one target char.
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
