@@ -83,7 +83,7 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 
 > by default metajump use multiple-target-char to navigate to location, but user could config to enable single-target-char:
 > "metaGo.jumper.commandsToUseSingleTargetChar":["metaGo.gotoSmart", "metaGo.selectSmart"]
-> to make the to commands use single-target-char: show decorations of all potential locations after user type one target char.
+> to make the 2 commands use single-target-char: show decorations of all potential locations after user type one target char.
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 
