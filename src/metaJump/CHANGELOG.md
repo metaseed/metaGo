@@ -10,20 +10,26 @@ All notable changes to the "metaJump" extension will be documented in this file.
  - [ ] command to navigate indent code tree. (alt+/ arrow)
 ## In Development
 ---
-### V2.0.0 Sep
+### V
+#### Added
+#### Removed
+
+#### Changed
+#### Fixed
+#### Plan
+## Current Version
+### V1.3.0 Sep 28, 2021
 #### Added
  - [x] Tab key could be used as a common target character
+ - [x] add config for user to enable single-target-char support
  - [x] shrink extension size
- - [x] document work
- - [ ] add option for user to enable/disable sequence-target-chars and ripple support when narrowing down target locations
-
+ - [x] document work for modification
 #### Removed
 
 #### Changed
 #### Fixed
 - [x] fixed bug of displaying decorators in the Output panel of vscode <a href="https://github.com/metaseed/metaGo/issues/52">[#52]</a>
 #### Plan
-## Current Version
 ---
 ### V1.2.0 Aug 19, 2021
 #### Added

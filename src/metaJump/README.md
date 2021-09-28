@@ -62,13 +62,13 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 > tip for fast jumping:
 > 1. if goto location within the active document but not in the section(seperated by empty lines) with cursor, directly **type 2 target location chars**.
 > 1. if want to go to another document but not active, **always typing 3 target chars**.
-> 
 
 > 
-> for one or two target-chars, one-char-decorators will pass through boundaries(section or document) if possible. (i.e. for one-target-char, one-char-decorators has encoded all possible target locations in the section, then it will continue encodes until all one-char-decorators are used up).  
+> for one or two target-chars:
+> one-char-decorators will pass through boundaries(section or document) if possible. (i.e. for one-target-char, one-char-decorators has encoded all possible target locations in the section, then it will continue encodes until all one-char-decorators are used up). if ripple support is enable, and candidate locations need more than one decorator chars in the section, to reduce the decorators shown on screen, only the current section are decorated.
+> two-char-decorators: if ripple support is enable, more than one document opened, and candidate locations need more than two decorator chars in the active document, to reduce the decorators shown on screen, only the current document are decorated.
 
-> Note: <kbd>Enter</kbd>, <kbd>Space</kbd> and <kbd>Space</kbd> are also usable as location characters. <kbd>Enter</kbd> means the end of line. You could press <kbd>Enter</kbd> any times to trigger the decorator-encoding for the line-end out side of current section(2 times) or document(3 times). (like a ripple)
-> but the <kbd>Tab</kbd> could not be used as the target location characters (vscode API limit)
+> Note: <kbd>Enter</kbd>, <kbd>Space</kbd> and <kbd>Tab</kbd> are also usable as location characters. <kbd>Enter</kbd> means the end of line. You could press <kbd>Enter</kbd> any times to trigger the decorator-encoding for the line-end out side of current section(2 times) or document(3 times). (like a ripple)
 
 > Note: you could also config the 'metaGo.decoration.hide.triggerKey' to a character, i.e. '/', this will hide decorations if holding '/' and show them after releasing.
 > but this makes it impossible for the character i.e. '/' to be used as the following-target-character.
@@ -81,6 +81,9 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 
 > commands that only navigate in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
 
+> by default metajump use multiple-target-char to navigate to location, but user could config to enable single-target-char:
+> "metaGo.jumper.commandsToUseSingleTargetChar":["metaGo.gotoSmart", "metaGo.selectSmart"]
+> to make the to commands use single-target-char: show decorations of all potential locations after user type one target char.
 
 [*➭Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
 

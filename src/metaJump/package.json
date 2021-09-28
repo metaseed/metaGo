@@ -3,7 +3,7 @@
     "displayName": "MetaJump",
     "description": "vscode cursor move/select/delete; jump, navigation, goto, acejump",
     "icon": "images/metajump.png",
-    "version": "1.2.1",
+    "version": "1.3.0",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo/tree/master/src/metaJump",
     "license": "MIT",
@@ -300,8 +300,13 @@
                 },
                 "metaGo.jumper.timeout": {
                     "type": "number",
-                    "default": "12",
+                    "default": "9",
                     "description": "timeout value in seconds to cancel metaGo jumper commands."
+                },
+                "metaGo.jumper.commandsToUseSingleTargetChar": {
+                    "type": "string[]",
+                    "default": [],
+                    "description": "the names of the command to use the single target char, so could only type one target location char after command is triggered"
                 }
             }
         }
