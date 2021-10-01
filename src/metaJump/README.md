@@ -59,14 +59,18 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 > 1. two target-chars for current doc;
 > 1. three or more target-chars for all opened editors;
 
-> tip for fast jumping:
-> 1. if goto location within the active document but not in the section(seperated by empty lines) with cursor, directly **type 2 target location chars**.
-> 1. if want to go to another document but not active, **always typing 3 target chars**.
+> Ripple support for sequential-target commands:
+> * ripple support are used to reduce the decorations shown on screen.
+> * it take the idea of the water ripple caused by a rock.
+> * just show target-location candidates in current section(seperated by empty lines) if user typed one target char;
+> * just show location candidates of current document, if there is more than one document visible and user typed 2 target chars.
+> * one-char-decorators will pass through boundaries(section or document) if possible. (i.e. for one-target-char, one-char-decorators has encoded all possible target locations in the section, then it will continue encodes until all one-char-decorators are used up).
+> * it is only for sequential-target commands, the default configured value is true.
 
-> 
-> for one or two target-chars:
-> one-char-decorators will pass through boundaries(section or document) if possible. (i.e. for one-target-char, one-char-decorators has encoded all possible target locations in the section, then it will continue encodes until all one-char-decorators are used up). if ripple support is enable, and candidate locations need more than one decorator chars in the section, to reduce the decorators shown on screen, only the current section are decorated.
-> two-char-decorators: if ripple support is enable, more than one document opened, and candidate locations need more than two decorator chars in the active document, to reduce the decorators shown on screen, only the current document are decorated.
+> tips for fast jumping of ripple enabled sequential-target commands:
+> 1. if go to another section within the active document but not in the active section.(sections are seperated by empty lines), directly **type 2 target location chars**.
+> 1. if want to go to another visible document, **always typing 3 target chars**.
+
 
 > Note: <kbd>Enter</kbd>, <kbd>Space</kbd> and <kbd>Tab</kbd> are also usable as location characters. <kbd>Enter</kbd> means the end of line. You could press <kbd>Enter</kbd> any times to trigger the decorator-encoding for the line-end out side of current section(2 times) or document(3 times). (like a ripple)
 
@@ -81,7 +85,7 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 
 > commands that only navigate in the active editor are also provided: metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive, you could assign shortcuts by yourself.
 
-> for the metajump location navigation commands, user could config to use single-target-char or multiple-target-chars to navigate to location:
+> for the metajump location navigation commands, user could config to use single-target-char or sequential-target-chars to navigate to location:
 > by default all the 'smart' commands (triggered with '/') are configured as single-target-char as below
 >
 > ```json

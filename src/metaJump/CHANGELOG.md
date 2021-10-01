@@ -27,7 +27,8 @@ All notable changes to the "metaJump" extension will be documented in this file.
  - [x] make all the 'smart'(triggered by '/') commands use single target encoding. (note: the others are still multiple target encoding. we could config which command to use single-target-encoding)
  - [x] document work for the changes.
 #### Fixed
- - [ ] 'Return' key's target decorators could shown if press press multiple time. (ripple function not work.)
+ - [x] 'Return' key's target decorators could shown if press press multiple time. (ripple function not work.)
+ - [x] could only show one-length decorators for multiple-target-location-chars commands.
 #### Plan
 ---
 ### V1.3.0 Sep 28, 2021

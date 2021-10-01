@@ -211,7 +211,7 @@
                 "metaGo.decoration.useTextBasedDecorations": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Only enable if editor decorations are not showing. Use text-based decorations in editors instead of SVG based. Supports fewer customisations but may be more robust."
+                    "description": "Use text-based decorations in editors instead of SVG based. Supports fewer customizations but may be more robust."
                 },
                 "metaGo.decoration.width": {
                     "type": "number",
@@ -250,6 +250,20 @@
                     "type": "string",
                     "default": "#1e1e1e"
                 },
+                "metaGo.decoration.backgroundColor": {
+                    "type": "string",
+                    "default": "#4068FF,yellow",
+                    "description": "code decorator background color for different code length"
+                },
+                "metaGo.decoration.backgroundOpacity": {
+                    "type": "string",
+                    "default": "0.8"
+                },
+                "metaGo.decoration.color": {
+                    "type": "string",
+                    "default": "white,blue",
+                    "description": "code decorator foreground color for different code length"
+                },
                 "metaGo.decoration.matchBackground": {
                     "type": "string",
                     "default": "editor.wordHighlightBackground",
@@ -259,20 +273,6 @@
                     "type": "string",
                     "default": "#3058B888",
                     "description": "in sequential-target-chars jump, background color of the char follows target char"
-                },
-                "metaGo.decoration.backgroundOpacity": {
-                    "type": "string",
-                    "default": "0.8"
-                },
-                "metaGo.decoration.backgroundColor": {
-                    "type": "string",
-                    "default": "#4068FF,yellow",
-                    "description": "code decorator background color for different code length"
-                },
-                "metaGo.decoration.color": {
-                    "type": "string",
-                    "default": "white,blue",
-                    "description": "code decorator foreground color for different code length"
                 },
                 "metaGo.decoration.characters": {
                     "type": "string",
@@ -306,7 +306,12 @@
                 "metaGo.jumper.commandsToUseSingleTargetChar": {
                     "type": "string[]",
                     "default": ["metaGo.gotoSmart", "metaGo.selectSmart", "metaGo.addCursorSmart", "metaGo.metaJump.deleteToSmart"],
-                    "description": "the names of the command to use the single target char, so could only type one target location char after command is triggered"
+                    "description": "the commands to use the single target char, so we can only type one target location char after command is triggered"
+                },
+                "metaGo.jumper.enableRippleSupportForSequentialTargetCharsCommand": {
+                    "type": "boolean",
+                    "default": true, 
+                    "description": "to reduce decorations shown on screen, just show target-location candidates in current section(seperated by empty lines) if user typed one target char; just show location candidates of current document, if there is more than one document visible and user typed 2 target chars."
                 }
             }
         }
