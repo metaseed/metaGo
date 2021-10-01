@@ -305,7 +305,7 @@
                 },
                 "metaGo.jumper.commandsToUseSingleTargetChar": {
                     "type": "string[]",
-                    "default": [],
+                    "default": ["metaGo.gotoSmart", "metaGo.selectSmart", "metaGo.addCursorSmart", "metaGo.metaJump.deleteToSmart"],
                     "description": "the names of the command to use the single target char, so could only type one target location char after command is triggered"
                 }
             }

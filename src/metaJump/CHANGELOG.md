@@ -20,6 +20,16 @@ All notable changes to the "metaJump" extension will be documented in this file.
 #### Plan
 ## Current Version
 ---
+### V
+#### Added
+#### Removed
+#### Changed
+ - [x] make all the 'smart'(triggered by '/') commands use single target encoding. (note: the others are still multiple target encoding. we could config which command to use single-target-encoding)
+ - [x] document work for the changes.
+#### Fixed
+ - [ ] 'Return' key's target decorators could shown if press press multiple time. (ripple function not work.)
+#### Plan
+---
 ### V1.3.0 Sep 28, 2021
 #### Added
  - [x] Tab key could be used as a common target character
@@ -46,6 +56,7 @@ All notable changes to the "metaJump" extension will be documented in this file.
  - [x] fix decorators problem if hide-command character('/') is in the target-chars-sequence, it would be considered as the hide-command trigger.(this is the limitation of this hiding way, so we invent the hideDecorationCommand to overcome it)
 #### Plan
  - [x] add option for user to enable/disable sequence-target-chars and ripple support when narrowing down target locations
+---
 ### V1.1.0 June 18, 2020
 #### Added
  - [x] add MetaJump.DeleteToSmart command( 'alt+d'): to delete from cursor to the position smartly <a href="https://github.com/metaseed/metaGo/tree/master/src/metaJump#delete-to-any-character">(detail)</a>
