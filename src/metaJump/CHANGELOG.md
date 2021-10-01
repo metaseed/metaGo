@@ -20,8 +20,9 @@ All notable changes to the "metaJump" extension will be documented in this file.
 #### Plan
 ## Current Version
 ---
-### V
+### V 1.3.4 (not released)
 #### Added
+ - [x] support ripple config for sequential-target-command. enabled by default.
 #### Removed
 #### Changed
  - [x] make all the 'smart'(triggered by '/') commands use single target encoding. (note: the others are still multiple target encoding. we could config which command to use single-target-encoding)
@@ -30,6 +31,7 @@ All notable changes to the "metaJump" extension will be documented in this file.
  - [x] 'Return' key's target decorators could shown if press press multiple time. (ripple function not work.)
  - [x] could only show one-length decorators for multiple-target-location-chars commands.
 #### Plan
+ - [ ] command to navigate indent code tree. (alt+/ arrow)
 ---
 ### V1.3.0 Sep 28, 2021
 #### Added
