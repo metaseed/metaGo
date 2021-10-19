@@ -32,6 +32,7 @@ All notable changes to the "metaJump" extension will be documented in this file.
  - [x] could only show one-length decorators for multiple-target-location-chars commands.
 #### Plan
  - [ ] command to navigate indent code tree. (alt+/ arrow)
+ - [ ] fix: sometime typing fast would lost key typing (currently reload the window could solve the problem).
 ---
 ### V1.3.0 Sep 28, 2021
 #### Added
