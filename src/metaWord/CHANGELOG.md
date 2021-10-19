@@ -20,7 +20,7 @@ All notable changes to the "metaWord" extension will be documented in this file.
 tidy commands:
 
 ---
-### V1.3.0 - Sep 02, 2021
+### V1.4.0 - Sep 02, 2021
 #### Added
 #### Removed
 #### Changed
