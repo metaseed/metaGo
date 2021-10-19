@@ -20,7 +20,7 @@ All notable changes to the "metaJump" extension will be documented in this file.
 #### Plan
 ## Current Version
 ---
-### V 1.3.4 (not released)
+### V 1.3.4 (Oct 19, 2021)
 #### Added
  - [x] support ripple config for sequential-target-command. enabled by default.
 #### Removed
