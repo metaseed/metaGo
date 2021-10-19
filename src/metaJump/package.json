@@ -347,7 +347,7 @@
         "source-map-support": "^0.5.19",
         "ts-loader": "^9.2.5",
         "typescript": "^4.3.5",
-        "vsce": "^1.96.1",
+        "vsce": "^1.100.1",
         "webpack": "^5.51.1",
         "webpack-cli": "^4.8.0"
     },
