@@ -20,6 +20,17 @@ All notable changes to the "metaJump" extension will be documented in this file.
 #### Plan
 ## Current Version
 ---
+### V
+#### Added
+ - [] press `Return` key 4 times only show decorators for empty lines for multi-target-ripple config.
+ - [] press `Return` key 2 times only show decorators for empty lines for multi-target without ripple config.
+#### Removed
+
+#### Changed
+#### Fixed
+
+#### Plan
+---
 ### V 1.3.4 (Oct 19, 2021)
 #### Added
  - [x] support ripple config for sequential-target-command. enabled by default.
