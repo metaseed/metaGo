@@ -37,6 +37,8 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] inSurroundingPairSelection: tag selection support
    - [ ] metaJump: alt+/ then ctrl+alt+/ could cancel and press ctrl+alt+/ to trigger.
    - [ ] Create command for move to previous/next member
+
+   -[ ] alt+shift+right to duplication selection to right
 ## Development Template
 ### 
 #### Added
@@ -45,16 +47,16 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Fixed
 #### Plan
 ---
-## Current Version
-### V4.4.0 - Sep 
+#### Plan
+### 
 #### Added
 #### Removed
 #### Changed
 #### Fixed
- - [x] Output panel has decorators shown there, should remove them.[issue 52](https://github.com/metaseed/metaGo/issues/52)
 
-#### Plan
-### V4.3.0 - Aug 19, 2021
+## Current Version
+---
+### V4.3.1 - May 19, 2022
 #### Added
    - [x] Planning for new major release.
    - [x] upgrade typescript(4.3.5), webpack(5.50.0), and other packages to latest version
@@ -65,11 +67,12 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] Add the MIT license file
    - [x] Adjust readme
 #### Fixed
+   - [x] Output panel has decorators shown there, should remove them.- [issue 52](https://github.com/metaseed/metaGo/issues/52)
+   - [x] fix inSurroundingPairSelectionWithPairs command problem
 #### Plan
    - [ ] extract metaPair as separate vscode extension
    - [ ] extract metaMark as separate vscode extension
    - [ ] code indent as code tree, use ctrl+cmd+arrow to navigate
-## Current Version
 ---
 ### V4.2.0 - June 8, 2020
 #### Added

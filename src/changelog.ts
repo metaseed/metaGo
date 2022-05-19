@@ -1,5 +1,16 @@
 import { ChangeLogItem, ChangeLogKind } from "@landing-page/index";
 export const changeLog: ChangeLogItem[] = [
+  { kind: ChangeLogKind.VERSION,   message: `V4.3.1 - May 19, 2022`},
+  { kind: ChangeLogKind.ADDED,   message: `Planning for new major release.`},
+  { kind: ChangeLogKind.ADDED,   message: `upgrade typescript(4.3.5), webpack(5.50.0), and other packages to latest version`},
+  { kind: ChangeLogKind.ADDED,   message: `support Plan section in change log`},
+  { kind: ChangeLogKind.CHANGED,   message: `Add the MIT license file`},
+  { kind: ChangeLogKind.CHANGED,   message: `Adjust readme`},
+  { kind: ChangeLogKind.FIXED,   message: `Output panel has decorators shown there, should remove them.- [issue 52](https://github.com/metaseed/metaGo/issues/52)`},
+  { kind: ChangeLogKind.FIXED,   message: `fix inSurroundingPairSelectionWithPairs command problem`},
+  { kind: ChangeLogKind.PLAN,   message: `extract metaPair as separate vscode extension`},
+  { kind: ChangeLogKind.PLAN,   message: `extract metaMark as separate vscode extension`},
+  { kind: ChangeLogKind.PLAN,   message: `code indent as code tree, use ctrl+cmd+arrow to navigate`},
   { kind: ChangeLogKind.VERSION,   message: `V4.2.0 - June 8, 2020`},
   { kind: ChangeLogKind.ADDED,   message: `landing-page as a common module that could be used by sub extension.`},
   { kind: ChangeLogKind.CHANGED,   message: `use logo v4`},
