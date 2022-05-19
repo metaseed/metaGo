@@ -47,35 +47,35 @@
             },
             {
                 "command": "metaGo.cursorSpaceWordLeft",
-                "title": "xx: metaGo.cursorSpaceWordLeft"
+                "title": "xx: metaGo.cursor Space Word Left"
             },
             {
                 "command": "metaGo.cursorSpaceWordLeftSelect",
-                "title": "xx: metaGo.cursorSpaceWordLeftSelect"
+                "title": "xx: metaGo.cursor Space Word Left Select"
             },
             {
                 "command": "metaGo.cursorSpaceWordSpaceLeftDelete",
-                "title": "xx: metaGo.cursorSpaceWordSpaceLeftDelete"
+                "title": "xx: metaGo.cursor Space Word Space Left Delete"
             },
             {
                 "command": "metaGo.cursorSpaceWordLeftDelete",
-                "title": "xx: metaGo.cursorSpaceWordLeftDelete"
+                "title": "xx: metaGo.cursor Space Word Left Delete"
             },
             {
                 "command": "metaGo.cursorSpaceWordRight",
-                "title": "xx: metaGo.cursorSpaceWordRight"
+                "title": "xx: metaGo.cursor Space Word Right"
             },
             {
                 "command": "metaGo.cursorSpaceWordRightSelect",
-                "title": "xx: metaGo.cursorSpaceWordRightSelect"
+                "title": "xx: metaGo.cursor Space Word Right Select"
             },
             {
                 "command": "metaGo.cursorSpaceWordRightDelete",
-                "title": "xx: metaGo.cursorSpaceWordRightDelete"
+                "title": "xx: metaGo.cursor Space Word Right Delete"
             },
             {
                 "command": "metaGo.cursorSpaceWordSpaceRightDelete",
-                "title": "xx: metaGo.cursorSpaceWordSpaceRightDelete"
+                "title": "xx: metaGo.cursor Space Word Space Right Delete"
             }
         ],
         "keybindings": [

@@ -11,11 +11,12 @@ All notable changes to the "metaWord" extension will be documented in this file.
 #### Fixed
 #### Plan
 ## Current Version
-### 
+### V1.5.0
 #### Added
 #### Removed
 #### Changed
 #### Fixed
+ - [x] can not search commands of metaword
 #### Plan
 tidy commands:
 
