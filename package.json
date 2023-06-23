@@ -70,15 +70,15 @@
             },
             {
                 "command": "metaGo.changeSurroundingPair",
-                "title": "xx: metaGo select the surrounding pairs"
+                "title": "xx: metaGo select(change) the surrounding pairs"
             },
             {
                 "command": "metaGo.inSurroundingPairSelection",
-                "title": "xx: metaGo select inside the surrounding pairs"
+                "title": "xx: metaGo select(change) inside the surrounding pairs"
             },
             {
                 "command": "metaGo.inSurroundingPairSelectionWithPairs",
-                "title": "xx: metaGo select both the surrounding pairs and the content inside"
+                "title": "xx: metaGo select(change) both the surrounding pairs and the content inside"
             },
             {
                 "command": "metaGo.scrollCurrentLineToMiddle",
