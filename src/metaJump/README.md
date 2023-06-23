@@ -4,29 +4,12 @@
 [![](https://img.shields.io/badge/TWITTER-%40metaseed-blue.svg?logo=twitter&style=flat)](https://twitter.com/metaseed)
 [![](https://img.shields.io/badge/gitter-join_chat-1dce73.svg?style=flat&logo=gitter-white)](https://gitter.im/vscode-metago/community)
 
-<table align="center" width="68%" border="0">
-  <tr>
-    <td>
-      <a href="https://github.com/sponsors/metasong">
-          <img src="https://github.com/metaseed/metaGo/blob/master/donate/githubSponsors.png?raw=true" style="height: 66px;" />
-      </a>
-    </td>
-    <td>
-      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=P9GXHBAAHPBMN&item_name=metago+dev&currency_code=USD&source=url">
-          <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"/>
-      </a>
-      <br>
-    </td>
-    <td>
-      <a href="https://github.com/metaseed/metaGo/blob/master/donate/index.md">
-          <img src="https://github.com/metaseed/metaGo/blob/master/donate/scan.png?raw=true" style="height: 66px;"/>
-      </a>
-    </td>
-  </tr>
-</table>
-<br>
 
 ## MetaJump
+
+MetaJump as a free tool, currently is maintained and developed by me in my spare time🌙⏳, if you think has ever saved you time, boosted your efficiency, or even indispensable like some of our users, please support me 😊
+Give me a  [github⭐](https://github.com/metaseed/metago), or even [sponsor me at github🍻](https://github.com/sponsors/metasong)
+
 MetaJump provides fast cursor moving/selecting/deleting commands with decoration characters on the possible target-locations.
 
 > **MetaWord is part of [MetaGo extension](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)**
@@ -52,7 +35,7 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 2. type the characters(stands for the target location) on screen, metaGo will show you some decorator codes(candidate target locations) encoded with characters. (to see the characters behind the decoration, you could press the <kbd>shift</kbd>+<kbd>/</kbd>(configurable) to hide the location decorators for a short while(default 560ms))
 3. you could continue type characters following the target location to narrow down the possible targets range, or type the code decoration characters of one location to *go* to that target location.
 
-> at any time press <kbd>ESC</kbd> to cancel the command; <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> triggers 'step-cancel')    
+> at any time press <kbd>ESC</kbd> to cancel the command; <kbd>Backspace</kbd> to cancel last typed char in target-char-sequence. (<kbd>Backspace</kbd> triggers 'step-cancel')
 
 > to show less decorators on screen, metaJump introduces 'ripple-encoding' support, : type target-location-chars to encode locations far from center(cursor location) by steps.
 > 1. one target-char for current section(separated by empty lines);
@@ -77,7 +60,7 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 > Note: you could also config the 'metaGo.decoration.hide.triggerKey' to a character, i.e. '/', this will hide decorations if holding '/' and show them after releasing.
 > but this makes it impossible for the character i.e. '/' to be used as the following-target-character.
 
-* the <kbd>Alt</kbd>+<kbd>.</kbd> shortcut will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;    
+* the <kbd>Alt</kbd>+<kbd>.</kbd> shortcut will trigger the metaGo.gotoAfter command, the cursor will be placed after the target character;
 * the <kbd>Alt</kbd>+<kbd>,</kbd> shortcut will trigger the metaGo.gotoBefore command, the cursor will be placed before the target character;
 * the <kbd>Alt</kbd>+<kbd>/</kbd> shortcut will trigger the metaGo.gotoSmart command which intelligently set cursor position after navigation:
     * if the target is at the begin of the word, the cursor will be set before target character, otherwise after it;
@@ -113,7 +96,7 @@ MetaJump provides fast cursor moving/selecting/deleting commands with decoration
 1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>.</kbd> to add another cursor after the target-character.
 1. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>/</kbd> to add another cursor smartly to the target-character.
 
-> <kbd>Ctrl</kbd>+<kbd>u</kbd> to cancel last cursor action.  
+> <kbd>Ctrl</kbd>+<kbd>u</kbd> to cancel last cursor action.
 
 > the three add-cursor commands would become change-active-selection commands if the target location is inside a selection. It is useful to modify multiple selection ranges, just select one selection as the active one and do extending or shrinking there.
 

@@ -7,27 +7,9 @@
 **the Goal of MetaWord is providing different kinds of words based cursorMove/Select/Delete commands.**
 
 > **MetaWord is part of [MetaGo extension](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)**
-<table align="center" width="68%" border="0">
-  <tr>
-    <td>
-      <a href="https://github.com/sponsors/metasong">
-          <img src="https://github.com/metaseed/metaGo/blob/master/donate/githubSponsors.png?raw=true" style="height: 66px;" />
-      </a>
-    </td>
-    <td>
-      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=P9GXHBAAHPBMN&item_name=metago+dev&currency_code=USD&source=url">
-          <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"/>
-      </a>
-      <br>
-    </td>
-    <td>
-      <a href="https://github.com/metaseed/metaGo/blob/master/donate/index.md">
-          <img src="https://github.com/metaseed/metaGo/blob/master/donate/scan.png?raw=true" style="height: 66px;"/>
-      </a>
-    </td>
-  </tr>
-</table>
-<br>
+
+MetaWord as a free tool, currently is maintained and developed by me in my spare time🌙⏳, if you think has ever saved you time, boosted your efficiency, or even indispensable like some of our users, please support me 😊
+Give me a  [github⭐](https://github.com/metaseed/metago), or even [sponsor me at github🍻](https://github.com/sponsors/metasong)
 
 ## MetaWord
 |word type|description|
@@ -43,17 +25,17 @@
 
 > we use the default vscode 'Word' commands
 
-> **note:**  
-> default vscode cursorWordEndRight command would do this:   
-> '|console|.log|(err|)|' and 'a|+=| 3| +5|-3| +| 7|' (if there is only one symbol character before the next word, the cursor would not stop after the symbol)  
+> **note:**
+> default vscode cursorWordEndRight command would do this:
+> '|console|.log|(err|)|' and 'a|+=| 3| +5|-3| +| 7|' (if there is only one symbol character before the next word, the cursor would not stop after the symbol)
 >
-> default vscode cursorWordStartLeft command would do this:  
-> 'this|.|is|.|a|.|test' and ' text| a|+=| 3| +|5|-|3| +| 7|' (work as expected)  
+> default vscode cursorWordStartLeft command would do this:
+> 'this|.|is|.|a|.|test' and ' text| a|+=| 3| +|5|-|3| +| 7|' (work as expected)
 >
-> default deleteWordLeft command would do this:  
+> default deleteWordLeft command would do this:
 > '|this.|is.|a.|test'(<=star from here, if there is only one symbol character after the previous word, the cursor would not stop and delete it with the previous word together)
 > default deleteWordRight command would do this:
-> '|this|.|is|.|a|.|test|' (work as expected)  
+> '|this|.|is|.|a|.|test|' (work as expected)
 
 
 * <kbd>ctrl</kbd>+<kbd>left/right</kbd>: left/right move cursor to word start/end.
@@ -64,17 +46,17 @@
 ### WordPart commands to moveCursor/select/delete by wordPart
 > Examples: ABCdef__ghIJKL
 > * when forward:
->   * '|AB|Cdef|\_\_gh|IJKL|' 
->   * '|AB|Cdef|\_\_ghijkl|'  
-> * when backward:  
->   * '|AB|Cdef\_\_|gh|IJKL|' (<-start from end)  
+>   * '|AB|Cdef|\_\_gh|IJKL|'
+>   * '|AB|Cdef|\_\_ghijkl|'
+> * when backward:
+>   * '|AB|Cdef\_\_|gh|IJKL|' (<-start from end)
 character
 > note: the difference at the word connector('_')  dd    dd
 
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: move cursor left/right to the wordPart start/end.
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: left/right select from cursor to the wordPart start/end.
 * <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>backspace</kbd>: left delete to the wordPart start.
-* on windows <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>backspace</kbd>: right delete to the wordPart end.(note: `ctrl+alt+del` on windows is a system shortcut, we could not use it)  
+* on windows <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>backspace</kbd>: right delete to the wordPart end.(note: `ctrl+alt+del` on windows is a system shortcut, we could not use it)
     > on Mac use <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>delete</kbd>
 
 ### SpaceWord commands to moveCursor/select/delete word separated by space:
@@ -92,7 +74,7 @@ character
 we modified several default command vscode command's shortcut, because we want to use it to do word based cursorMove/select/delete.
 * `ctrl+alt+left/right` by default is used by "workbench.action.moveEditorToPreviousGroup/NextGroup", so we assign `ctrl+k ctrl+left/right` to do the editor movement.
 * `ctrl+alt+shift+left/right` by default is used by "cursorColumnSelectLeft/Right" command, we think of a solution to do column based vertical selection:
-    > <kbd>alt</kbd>+<kbd>v</kbd>: toggle vertical column selection mode.  
+    > <kbd>alt</kbd>+<kbd>v</kbd>: toggle vertical column selection mode.
     > `alt+v` to enter vertical column selection model, then press `shift+left/right/up/down` as needed to do column mode selection.
 
 [*➭MetaGo Feature Summary⮵*](https://github.com/metaseed/metaGo/blob/master/README.md#features-summary)
