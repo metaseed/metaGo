@@ -3,7 +3,7 @@
     "displayName": "MetaJump",
     "description": "vscode cursor move/select/delete; jump, navigation, goto, acejump",
     "icon": "images/metajump.png",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo/tree/master/src/metaJump",
     "license": "MIT",
@@ -310,7 +310,7 @@
                 },
                 "metaGo.jumper.enableRippleSupportForSequentialTargetCharsCommand": {
                     "type": "boolean",
-                    "default": true, 
+                    "default": true,
                     "description": "to reduce decorations shown on screen, just show target-location candidates in current section(seperated by empty lines) if user typed one target char; just show location candidates of current document, if there is more than one document visible and user typed 2 target chars."
                 }
             }

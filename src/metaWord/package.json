@@ -3,7 +3,7 @@
     "displayName": "MetaWord",
     "description": "word based cursor movement, selection and deletion",
     "icon": "images/metaWord.png",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo/tree/master/src/metaWord",
     "license": "MIT",
