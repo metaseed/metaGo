@@ -1,8 +1,7 @@
-/// the gist link of this file:
-/// https://gist.githubusercontent.com/metasong/96a522a6d76b6625a48e8392532a9180/raw/option.js
+/// the url of this file: https://raw.githubusercontent.com/metaseed/metaGo/refs/heads/master/mis/surfingkeys.option.js
 
 // config doc for:
-// https://github.com/brookhong/Surfingkeys
+// https://github.com/brookhong/Surfingkeys?tab=readme-ov-file#table-of-contents
 // default mappings code:
 // https://github.com/brookhong/Surfingkeys/blob/master/src/content_scripts/common/default.js
 // https://github.com/brookhong/Surfingkeys/src/content_scripts/common/default.js
@@ -11,24 +10,28 @@
 // https://support.microsoft.com/en-us/microsoft-edge/keyboard-shortcuts-in-microsoft-edge-50d3edab-30d9-c7e4-21ce-37fe2713cfad
 
 
-// settings.hintAlign = 'center'; // default is 'left', can be 'right' or 'center'
-settings.showTabIndices = true;
+settings.showTabIndices = true; // index on tab header, default false
 /*
-# Browser Tips
+# Browser shortcuts and tips
 * ctrl+shift+b: toggle bookmark bar
 * ctrl+shift+o: open bookmark manager(obb )
-* ctrl+d: bookmark current page, (ab/-b is better)
+* ctrl+d: bookmark current page, (ab/-b is better, note: b to open from bookmark)
+
+* ctrl+h: open history
+* ctrl+j: open downloads
+
 * ctrl+shift+a(use T instead): open a tab by search, note:  not usable by keyboard to select a item
 * alt+d(or ctrl+l): select url in address bar and edit, type to search from bookmark history and tabs, or type something and press enter to search with default search engine.
-* ctrl+j: open downloads
+
 * ctrl+shift+k: dup current tab
 * ctrl+t: new tab
 * ctrl+n: new window
-* ctrl+h: open history
 * ctrl+shift+n: new incognito window
+
 * ctrl+m: toggle mute current tab
-* home: scroll to top
-* end: scroll to bottom
+
+* home: scroll to top. note: the browser is not in caret mode(F7 to toggle)
+* end: scroll to bottom. note: not in caret mode
 * space(pageDown): per screen scroll down, shift+space(pageUp): scroll up
 * F5(ctrl+r): reload current page, ctrl+F5: reload current page without cache
 * F6: the focus moves in a clockwise loop through the main regions of the interface(address bar, bookmarks bar, web content, status bar, tab strip), shift+F6: the focus moves in a counterclockwise loop.
@@ -106,13 +109,14 @@ command grammar:
 ,: previous sibling
 |:root
 ': pick, i.e. with hint
+> ' is the general go, maybe helped with hint for select/focus/jump, or select from omnibar
+> i.e. `p: goto playing tab
 
 ### combined position
 ],: end-second, (goto)length-2, i.e. }[': the last used tab,
 [.: second
 
 
-.: general go, maybe helped with hint for select/focus/jump, or select from omnibar
 
 ## action verbs
 > default(omitted if with position):goto, still need for 'goto playing tab', 'goto scrollable element', can be replaced by '.'(next) if no position
@@ -163,7 +167,8 @@ H: history of current tab
 L: regional Mode
 ": repeat last action
 :: input command
-
+> omnibar note:
+ctrl+enter to open several from list, shift+enter to open in current tab, enter to open in new tab, ctrl+d to delete, ctrl+, and ctrl+. to page
 ## objs
 w: window
 s: scrollable element
@@ -208,17 +213,16 @@ keyMaps = [
     ['[i', 'gi', true], // first input
     ['|e', ';w', true], // focus window(root) level element (<body>)
 
-    ['.s', 'cs', true, 'next scrollable target'],
-    ['.f', 'w', true, 'next frame'],
-    [".p", 'gp', true], // goto play tab
+    ['.s', 'cs', true], // change scrollable target.
 
-    /// ': tab-switching-history
+    /// ': tab-switching-history, tab-switching-history is not modified after executing these commands.
     // used, used, used, active
-    ["['", 'gT', true, 'the first(start) tab: tab-switching-history[0]'],
-    ["]'", 'gt', true, 'the last(end) tab: tab-switching-history[length-1]'],
-    ["],'", '<Ctrl-6>', true, 'goto last(previous) used tab: tab-switching-history[length-2]'],
-    [",'", 'B', true, 'backward: tab-switching-history[current-index -1]'],
-    [".'", 'F', true, 'forward: tab-switching-history[current-index + 1]'],
+    ["['", 'gT', true, 'tab-switching-history[0]: the first(start)'],
+    ["]'", 'gt', true, 'tab-switching-history[length-1]: the last(end) tab'],
+    ["],'", '<Ctrl-6>', true, 'tab-switching-history[length-2]: goto last(previous) used tab'],
+    [",'", 'B', true, 'tab-switching-history[current-index -1]: backward'],
+    [".'", 'F', true, 'tab-switching-history[current-index + 1]: forward'],
+    ['.f', 'w', true, 'goto frame'],
 
     ['<u', 'gu', true], // go up one path in url
     ['|u', 'gU', true], // goto root url
@@ -227,6 +231,7 @@ keyMaps = [
     ["'h", '<Ctrl-h>', true], // display hint for hover
     ["'H", '<Ctrl-j>', true], // un-display hint for hover
     ["'s", ';fs', true], // focus scrollable elements
+    ["'p", 'gp', true], // goto play tab
 
     // click
     ["ci", 'q', true, `#1Click image|button(interactive element)`], // click image or button
@@ -494,6 +499,16 @@ function reMap_InsertMode(newKey, oldKey, ummapOldKey, domain, annotation) {
     }
 }
 
+function reMap_Omnibar(newKey, oldKey, ummapOldKey, domain, annotation) {
+    if (!!newKey && !!oldKey) {
+        api.cmap(newKey, oldKey, domain, annotation);
+    }
+
+    // if (!!ummapOldKey || !newKey && !!oldKey) {
+    //     api.cunmap(oldKey); // no cunmap to remove shortcut
+    // }
+}
+
 
 /// move this section to end, because the 'ss' processed in the above searching section, and the 'ss' is mapped to 'ZZ'
 
@@ -530,6 +545,13 @@ insertModeKeyMaps.forEach(map => {
     reMap_InsertMode(map[0], map[1], map[2], undefined, map[3]);
 });
 
+omnibarKeyMaps = [
+    ['<PageUp>', '<Ctrl-,>'],
+    ['<PageDown>', '<Ctrl-.>'],
+];
+omnibarKeyMaps.forEach(map => {
+    reMap_Omnibar(map[0], map[1],map[2], undefined, map[3]);
+});
 // set theme
 settings.theme = `
 .sk_theme {
