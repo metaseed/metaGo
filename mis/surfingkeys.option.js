@@ -1,10 +1,9 @@
-/// the url of this file: https://raw.githubusercontent.com/metaseed/metaGo/refs/heads/master/mis/surfingkeys.option.js
+/// the URL of this file: https://raw.githubusercontent.com/metaseed/metaGo/refs/heads/master/mis/surfingkeys.option.js
 
-// config doc for:
+// config docs for:
 // https://github.com/brookhong/Surfingkeys?tab=readme-ov-file#table-of-contents
 // default mappings code:
-// https://github.com/brookhong/Surfingkeys/blob/master/src/content_scripts/common/default.js
-// https://github.com/brookhong/Surfingkeys/src/content_scripts/common/default.js
+// https://github.dev/brookhong/Surfingkeys/blob/master/src/content_scripts/common/default.js
 
 // Microsoft Edge Shortcuts:
 // https://support.microsoft.com/en-us/microsoft-edge/keyboard-shortcuts-in-microsoft-edge-50d3edab-30d9-c7e4-21ce-37fe2713cfad
@@ -12,40 +11,46 @@
 
 settings.showTabIndices = true; // index on tab header, default false
 /*
-# Browser shortcuts and tips
+# Browser shortcuts and tips:
+* shift+esc: open browser task manager.
 * ctrl+shift+b: toggle bookmark bar
-* ctrl+shift+o: open bookmark manager(obb )
+* ctrl+shift+o: open bookmark manager(obb), then type to search
 * ctrl+d: bookmark current page, (ab/-b is better, note: b to open from bookmark)
-> note: the surfingkeys do not have direct way to edit a bookmark(or edit an entry in omnibar)
+> note: Surfingkeys does not provide a direct way to edit a bookmark(or edit an entry in omnibar)
 
-* ctrl+h: open history
+* ctrl+h: open history, type to search
 * ctrl+j: open downloads
 
-* ctrl+shift+a(use T instead): open a tab by search, note:  not usable by keyboard to select a item
+* ctrl+shift+a(use T instead): open a tab by search, note:  not usable by keyboard to select an item
 * alt+d(or ctrl+l): select url in address bar and edit, type to search from bookmark history and tabs, or type something and press enter to search with default search engine.
 
-* ctrl+shift+k: dup current tab
+* ctrl+shift+k: actively duplicate current tab, yT: inactively duplicate current tab.
 * ctrl+t: new tab
 * ctrl+n: new window
 * ctrl+shift+n: new incognito window
 
 * ctrl+m: toggle mute current tab
 
-* home: scroll to top. note: the browser is not in caret mode(F7 to toggle)
-* end: scroll to bottom. note: not in caret mode
+* group: alt+shift+p to create group
+
+* home(gg): scroll to top. note: the browser is not in caret mode(F7 to toggle)
+* end(G): scroll to bottom. note: not in caret mode
 * space(pageDown): per screen scroll down, shift+space(pageUp): scroll up
 * F5(ctrl+r): reload current page, ctrl+F5: reload current page without cache
-* F6: the focus moves in a clockwise loop through the main regions of the interface(address bar, bookmarks bar, web content, status bar, tab strip), shift+F6: the focus moves in a counterclockwise loop.
+
+* F6: the focus moves in a clockwise loop through the main regions of the interface(tab strip, address bar, bookmarks bar, web content, status bar), shift+F6: the focus moves in a counterclockwise loop.
 * Ctrl+F6: move focus to web content pane
-* F7: toggle caret browsing, use arrow key to move the caret, and use shift+arrow key to select text.
+
+* F7: toggle caret browsing, use arrow keys to move the caret, and use shift+arrow keys to select text.
     > note: for selecting text, we can ctrl+f to find text, use 'enter'/'shift+enter' to navigate, and then F7 to show caret, shift+left/right to select the text, then 'app'/'shift+F10' to open context menu... or press 'ssg' to search selected text with google.
     > for surfingkey, we can use '/' to find text and 'n'/'N' to navigate, then 'v' to enter visual mode, and use h/j/k/l to select text, then 'y' to copy.
-    > surfingKey also support regular expression search, i.e. '/\bword\b' to find the whole word match.
-* F10(same as 'alt'): focus setting(...) menu, then enter to open, use arrow key to navigate, and enter to select
+    > NOTE:     SurfingKeys also supports regular expression search, i.e. '/\bword\b' to find the whole word match.
+* F10(same as 'alt' key): focus setting(...) menu, then enter to open, use arrow key to navigate, and enter to select
+* shift+F10: open context menu(same as 'app' key).
 * F11: toggle full screen
-* shift+F10: open context menu same as 'app' key.
 * F12(ctrl+shift+i): open developer tools
 
+* F6 to focus to tab strip, right focus on close button('enter' to close), we can press App button to show context menu.
 # DEBUG:
 to debug, see errors in console, and from stack look at rmap(in this file),
 in 'api.js' find '[SurfingKeys] Error found in settings'
@@ -57,7 +62,8 @@ search '.mappings.add(' in 'content.js' to view the mapping tree
 //   "background: linear-gradient(to right, #ff00cc, #3333ff); color: #fff; padding: 5px 10px; font-size: 16px; font-weight: bold; border-radius: 8px; border: 2px solid #fff; text-shadow: 2px 2px 0px #000;"
 // );
 /*
-CKAR: Common Key Action Rule of binding/mapping/shortcut
+
+SKAR: Semantic Key Action Rule of binding/mapping/shortcut
 
 # Help
 F1  or ?: help
@@ -65,9 +71,9 @@ F1  or ?: help
 # HotKeys:
 command grammar:
 [number of repeat][action verb][adv][position(index or time)][object][near adjective][far adjective]
-> position is special adv to to verb, and special adj to obj, so put it in middle, if the verb is 'goto', the verb can be omitted.
+> position is special adv to to verb, and special adj to obj, so put it in middle, if the verb is 'goto'(default verb), the verb can be omitted.
 
-* all command could be prefix with numbers to repeat.
+* all commands can be prefixed with numbers to repeat.
 * the prefix number for 'to' command is the object index in collection
 * if the action verb is omitted, it's the default verb 'goto'.
 * adverb: i.e. move *in/out*
@@ -79,7 +85,7 @@ command grammar:
 > x.cd: close next connection of dead (next dead connection)
 > when the obj is default 2 times the verb is easier to type:
 > yy: copy current page's url, easy to type.
-> use upper case for obj undo:
+> use uppercase for object undo:
 > 'h: display hover, 'H: un-display hover(': a position adv, means pick one from collection, normally via hint)
 
 > verb with adv(like obj with adj)
@@ -101,7 +107,7 @@ command grammar:
 /: all
 ?: others, except the current one
 
-### tree: multiple dimension collection
+### tree: multi-dimensional collection
 <: to parent (go out tree: parent or previous sibling if no parent(root level siblings))
 >: to child (go into tree: first child of the parent or next sibling if no children)
 [: first sibling
@@ -109,15 +115,13 @@ command grammar:
 .: next sibling
 ,: previous sibling
 |:root
-': pick, i.e. with hint
+
 > ' is the general go, maybe helped with hint for select/focus/jump, or select from omnibar
 > i.e. `p: goto playing tab
 
 ### combined position
 ],: end-second, (goto)length-2, i.e. }[': the last used tab,
 [.: second
-
-
 
 ## action verbs
 > default(omitted if with position):goto, still need for 'goto playing tab', 'goto scrollable element', can be replaced by '.'(next) if no position
@@ -140,53 +144,63 @@ g: get(restore, download). _:(not used) download from up(cloud)
 (L: regional Mode)
 m:
 n:
-(0: is not good, hard to type and can not do command repeat: 20z: is 20 times z, not 2 times reset of z)
+(0: is not good, hard to type and cannot do command repeat: 20z: is 20 times z, not 2 times reset of z)
 o: open
+(p: paste)
 q:
 r: restore; reset;reload;refresh, also for rare action, we may use Upper case of action for opposite meaning, to save char space to other actions.
 s: search, query, select chars
 (t: open in new tab from bookmark/history, or switch to tab of all windows, 'T': switch to the tab in current window, 'O': switch to a Open tab of all windows with omnibar)
+u:
 v: visual mode for selection; V: enter previous visual-caret mode
+w:
 x: close
--: remove,decrease
+(y: yank)
+z:
 r: undo, reset, reload, refresh, cancel
+-: remove,decrease
 \: move
-`: toggle: toggle + action, toggle + object
-": repeat last action
+`: toggle: toggle of action or object.
+(": repeat last action)
 (/: find('?' on the key), find on current page)
 =: set, save
 ?: (not used), for help originally
-
-(y: yank(copy))
-(p: paste)
+': goto, focus, i.e. with hint
 ;: not used(for future use, user can use this easy-to-type key as prefix for custom command)
 (:: show command input box.)
 
-# Tips
-0: scroll to leftmost, $: scroll to rightmost.
-##  omnibar note:
-ctrl+enter to open several from list, shift+enter to open in current tab, enter to open in new tab, ctrl+d to delete, ctrl+, and ctrl+. to page
 ## objs
 w: window
 s: scrollable element
 
+# Tips
+* 0: scroll to leftmost, $: scroll to rightmost.
+* omnibar note:
+`enter` to open in new tab(active open), `ctrl+enter` to open several from list(inactive open), `shift+enter` to open in current tab(replacing open), `ctrl+d` to delete, `ctrl+,`(page up) and `ctrl+.`(page down) to page up/down
+`ctrl+c` to copy the url/urls, `ctrl+i` to edit url and open, `ctrl+m` to create vim mark of current url.
+* D: dictionary, H: current tab history, T: current window tabs
+* manage tabs: `T` to show tabs of current window, `down-arrow` to show `tabs-omnibar`(directly use `O` to open tabs-omnibar), `del` to close focused tab.
+* vim-like mark, char-bookmarks: `m,<char>` to add a char-bookmark for current page, `''<char>` to open the char-bookmark.
+    note in doc, it use <ctrl-shift> + <char> in bookmark ominibar ('b' ), to a char-bookmark, but it maybe conflict with browser's default ctrl-shift+char shortcut, so if want modify a url, we just go to the option config page(eo), and open dev tool(f12), then goto 'extension storage' -> 'local' -> marks to edit it directly.
 */
 
 keyMaps = [
     // format: [usedSequence, originalSequence, isRemoveOriginal, newAnnotation]
-    // isRemoveOriginal: default false,
-    //      but default to true if !usedSequence && !!originalSequence
+    // isRemoveOriginal: default false, i.e. ['a', 'b']
+    //      but default to true if !usedSequence && !!originalSequence. i.e. [,'r']
     // newAnnotation: if start with '#groupIndex', can put the command into the 'groupIndex' group in help popup.
-    // Group Index: 0:help, 1: Mouse Click, 2: Scroll, 3: Tabs, 4: Page Navigation, 5: Sessions, 6: Search Selected with, 7: Clipboard, 8: Omnibar, 9: Visual Model, 10: vim-like marks, 11: Settings, 12: Chrome URLs, 13: Proxy, 14: Misc, 15: Insert Mode
+    // Group Index:
+    // 0:help, 1: Mouse Click, 2: Scroll, 3: Tabs, 4: Page Navigation, 5: Sessions, 6: Search Selected with, 7: Clipboard, 8: Omnibar,
+    // 9: Visual Model, 10: vim-like marks, 11: Settings, 12: Chrome URLs, 13: Proxy, 14: Misc, 15: Insert Mode
 
-    // we can put all unmap in the beginning, note: later the unmapped key is still useable for remapping.
+    // we can put all unmap in the beginning, note: later the unmapped key is still usable for remapping.
     ['<F1>', '?', true, `#0 Show Help Page`], // toggle help popup
 
-    [, 'r'], // r is originally as reload current page, use 'rr' for reload, so unmap 'r' as make it a verb of reload, reset
+    [, 'r'], // r is originally as reload current page, use 'rr'(use f5) for reload, so unmap 'r' as make it a verb of reload, reset
     [, 'u'],//api.unmap('u'); // u is used for undo
     // what is the diff? with ctrl-`
     ["??'", "'", true],//api.unmap("'");  and to temp var // ' is used for goto. original: Jump to vim-like mark
-    // note: ["''", "'", true] not working, so have to walk around with temp var, same for ['rr', 'r', true] and ['xx', 'x', true]
+    // note: ["''", "'", true] not working, so have to work around with temp var, same for ['rr', 'r', true] and ['xx', 'x', true]
     ["''", "??'", true],
     [, 'zi'], // zoom in, use ctrl-= instead
     [, 'zo'],// zoom out; use ctrl--
@@ -219,7 +233,6 @@ keyMaps = [
     ["],'", '<Ctrl-6>', true, 'tab-switching-history[length-2]: goto last(previous) used tab'],
     [",'", 'B', true, 'tab-switching-history[current-index -1]: backward'],
     [".'", 'F', true, 'tab-switching-history[current-index + 1]: forward'],
-    ['.f', 'w', true, 'goto frame'],
 
     ['<u', 'gu', true], // go up one path in url
     ['|u', 'gU', true], // goto root url
@@ -229,11 +242,13 @@ keyMaps = [
     ["'H", '<Ctrl-j>', true], // un-display hint for hover
     ["'s", ';fs', true], // focus scrollable elements
     ["'p", 'gp', true], // goto play tab
+    ["'f", 'w', true, 'goto frame'],
 
     // click
     ["ci", 'q', true, `#1Click image|button(interactive element)`], // click image or button
     // add
-    //['at', 'on', true],// new tab; use: ctrl-t and ctrl-n: new window
+    [,'on'],
+    //['at', 'on', true],// new tab; use: ctrl-t and ctrl-n: new window. note: this command add new tab just after current tab, not at the end of tab list(like ctrl-t)
 
     // remove
     ['-h', ';dh', true], // delete history older than 30 days
@@ -250,7 +265,7 @@ keyMaps = [
     ["se", 'zv', true], // display hint for visual mode element selection, then type 'y' to copy
 
     // open
-    // ['&', 'H', false, 'open from tab history of new tab'], // open from tab history of new tab
+    ['H', 'H', false, 'open from tab history of current tab'], // open from tab history of new tab
     // ['os', 'se', true, '#11Open settings'],
     ['oba', 'ga', true], // open browser about
     ['obb', 'gb', true], // open browser bookmark
@@ -264,9 +279,10 @@ keyMaps = [
     ['obi', ';i', true], // open browser inspect
     ['om', 'om', false, `#10open from vim-marks`], //  open from vim-marks,
     ['ov', ';v', true], //open neovim, for me not used
-    ['cc', 'oc', true, 'Open url in new tab from Clipboard'],
+    ['oc', 'cc', true, 'Open url in new active tab from Clipboard'],
 
     // f: fast open a url, press SHIFT to flip overlapped hints, hold SPACE to hide hints
+    ['F', 'C', true], // open a link in non-active tab with hint
     // t: open a url in new tab
     ['oo', 'go', true], // open url in current tab
     ['oumt', 'cf', true], // open multiple urls in non-active tab
@@ -289,27 +305,31 @@ keyMaps = [
     ['\\,', '<<', true], // move tab left
     ['\\.', '>>', true], // move tab right
     // move out
-    ['\\o', 'W', true], // move tab out to new window or selected window
+    ['\\o', 'W', true], // move tab out to new window(`enter` directly) or selected window
     // move in
     ['\\ia', ';gw', true],// move all tabs into current window
     ['\\if', ';gt', true], // move filtered tabs(type to filter) into current window
 
     // copy(yank)
-    // [, 'yt'], // remove duplicate current tab, use ctrl-shift-k instead
-    ['yt', 'yT', true], // duplicate current tab in background
+    ['yuu', 'yy', true], // yank current page url
+    ['yuh', 'yh', true, 'yank host url part'],
+    // [, 'yt'], // remove duplicate current tab and switch to it, use ctrl-shift-k instead
+    ['yy', 'yT', true], // duplicate current tab in background
+    ['yt', 'yl', true], // yank current page title
     ['ypf', 'yp', true], // yank form data for post
     ['ypi', ';cp', true], // yank proxy info
     ['yss', 'yj', true], //yank surfingkey settings
     // yank-browser verb
     ['ybh', ';yh', true], // yank browser history
     // yank-page verb
-    ['yps', 'ys', true],// yank page source
-    ['yph', 'yh', true],// yank page host url part
+    ['yps', 'ys', true, 'yank page source'],
     ['ye', 'yi', true],// yank text of an input
     // screen shot, yank image, After one of above shortcuts pressed, you could see a popup of captured image
     ['yif', 'yG', true],// yank the full page image
     ['yis', 'yS', true], // yank scrolling element image
     ['yic', 'yg', true], // yank current screen image
+    ['ye', 'yv', true], // yank text of an element
+    ['yme', 'ymv', true], // yank text of multiple elements with hint
 
     // paste
     ["P", 'p', true], // ephemeral pass-through-mode, auto quit after 1 second
@@ -347,8 +367,8 @@ keyMaps = [
     // ['`m', '<Alt-m>', true], // mute, use ctrl-m
     [, '<Alt-m>'],
     ['`pd', ';s', true, `#0Enable/Disable surfingkey's pdf viewer`], // toggle surfingKeys's pdf viewer
-    // in readme.md: toggle surfkey: hotkey must be one keystroke with/without modifier, it can not be a sequence of keystrokes like `gg`.
-    // as described in below link, hotkey can not be sequence key
+    // in readme.md: toggle surfkey: hotkey must be one keystroke with/without modifier, it cannot be a sequence of keystrokes like `gg`.
+    // as described in below link, hotkey cannot be sequence key
     // https://github.com/brookhong/Surfingkeys?tab=readme-ov-file#hotkey-to-toggle-surfingkeys
     ["<Alt-t>", '<Alt-s>', true, `#0Always Enable/Disable SurfingKey on current url`], // toggle surfkey on current site, defined in: Mode.specialKeys
 
@@ -360,13 +380,13 @@ keyMaps = [
     // display, show;
     // should be after the 'd' is replaced
     ['dl', ';ql', true, `#14Show Last Action`], // show last action
-    ['dm', ';pm', true], // preview markdown
+    ['dm', ';pm', true, 'preview markdown from clipboard'], // preview markdown
     // edit, should after old key of 'e'(scroll half page up) is replaced
     // ['E', 'I', true],// goto edit box with vim editor
     // ['ee', 'i', false], // the 'i' is still usable for goto the first input.
     ['eut', ';u', true, '#5edit url with vim and open in new tab'],
     ['eul', ';U', true, '#5edit url and load'],
-    ['eo', ';e', true],
+    ['eo', ';e', true, "edit Surfingkeys's options"],
 
     // scroll
     // use the default vim way now: 'h','j','k','l'
@@ -393,6 +413,7 @@ keyMaps = [
     // [';', '', true],//
     // mis
     ['D', 'Q', true], //dictionary
+    ['R', 'L', true], // enter regional hint mode.
 ];
 
 api.removeSearchAlias('g');// remove default search alias for google
@@ -503,7 +524,7 @@ function reMap_Omnibar(newKey, oldKey, ummapOldKey, domain, annotation) {
     }
 
     // if (!!ummapOldKey || !newKey && !!oldKey) {
-    //     api.cunmap(oldKey); // no cunmap to remove shortcut
+    //     api.cunmap(oldKey); // no `cunmap` in https://github.dev/brookhong/Surfingkeys/blob/master/src/content_scripts/common/api.js to remove shortcut
     // }
 }
 
@@ -513,9 +534,9 @@ function reMap_Omnibar(newKey, oldKey, ummapOldKey, domain, annotation) {
 keyMaps.forEach(map => {
     reMap(map[0], map[1], map[2], undefined, map[3]);
 });
-// ['xx', 'x', true] not work, so do walk around with below or use temp var like the["''", "'"] above.
+// ['xx', 'x', true] not work, so work around with below or use temp var like the["''", "'"] above.
 // api.mapkey('xx', '#3Close current', function () { api.RUNTIME("closeTab") });
-// ['rr', 'r', true] not work, so do walk around
+// ['rr', 'r', true] not work, so work around
 // api.mapkey('rr', '#4Reload the page', function () { api.RUNTIME("reloadTab", { nocache: false }); }); // not used use F5 or ctrl-r instead.
 // reference the note on the top of this file for debugging tips.
 console.log(
@@ -530,28 +551,30 @@ console.log(
 > Attention: have to use <Alt-d> instead of <alt-d>, case sensitive.
 */
 insertModeKeyMaps = [
-    [, '<Ctrl-e>'], // unmap: move to the end of input, use 'end' key
-    [, '<Ctrl-a>'], // unmap: move to the beginning of input, use 'home' key
+    [, '<Ctrl-e>'], // end unmap: move to the end of input, use 'end' key
+    [, '<Ctrl-a>'], // ahead unmap: move to the beginning of input, use 'home' key
+    [, '<Ctrl-f>'], // Move the cursor to the beginning of the line, use 'home' key
     //delete from cursor to the end of input, use 'shift+end' and 'delete' key
-    [, '<Ctrl-u>'], // unmap: delete from cursor to the beginning of input, use 'shift+home' and 'delete' key
-    [, '<Alt-b>'], // unmap: move left one word, use 'ctrl+left' key
-    [, '<Alt-f>'], // unmap: move right one word, use 'ctrl+right' key
-    [, '<Alt-d>'], // unmap: delete right one word, use 'ctrl+shift+right' and 'delete' key or directly use 'ctrl+delete' key
-    [, '<Alt-w>'], // unmap: delete left one word, use 'ctrl+shift+left' and 'delete' key or directly use 'ctrl+backspace' key
+    [, '<Ctrl-u>'], // 'up delete' unmap: delete from cursor to the beginning of input, use 'shift+home' and 'delete' key
+    [, '<Alt-b>'], // 'back by word'unmap: move left one word, use 'ctrl+left' key
+    [, '<Alt-f>'], // 'forward by word' unmap: move right one word, use 'ctrl+right' key
+    [, '<Alt-d>'], // 'delete word' unmap: delete right one word, use 'ctrl+shift+right' and 'delete' key or directly use 'ctrl+delete' key
+    [, '<Alt-w>'], // 'delete back word' unmap: delete left one word, use 'ctrl+shift+left' and 'delete' key or directly use 'ctrl+backspace' key
 ];
 insertModeKeyMaps.forEach(map => {
     reMap_InsertMode(map[0], map[1], map[2], undefined, map[3]);
 });
 
 omnibarKeyMaps = [
-    ['<PageUp>', '<Ctrl-,>'],
-    ['<PageDown>', '<Ctrl-.>'],
+    ['<PageUp>', '<Ctrl-,>', true],
+    ['<PageDown>', '<Ctrl-.>', true],
+    ['<Delete>', '<Ctrl-d>', true],
 ];
 omnibarKeyMaps.forEach(map => {
     reMap_Omnibar(map[0], map[1], map[2], undefined, map[3]);
 });
 
-api.mapkey('O', 'Choose a open tab from all windows with omnibar', function () {
+api.mapkey('O', 'Choose an Open tab from all windows with omnibar', function () {
     api.Front.openOmnibar({ type: "Tabs" });
 });
 
@@ -568,8 +591,12 @@ settings.llm = {
 };
 api.mapkey('A', '#8Open llm chat', function() {
     api.Front.openOmnibar({type: "LLMChat", extra: {
-        system: "You're a translator, whenever you got a message in French, please just translate it into English"
+        system: "You're a translator, whenever you receive a message in French, please just translate it into English"
     }});
+});
+
+api.imapkey('<Ctrl-q>', 'Open link hints', function() {
+    api.Normal.feedkeys('f');
 });
 // set theme
 settings.theme = `
@@ -609,4 +636,4 @@ settings.theme = `
     #sk_status, #sk_find {
         font-size: 20pt;
     }`;
-// click `Save` button to make above settings to take effect.
+// click the `Save` button for the above settings to take effect.
