@@ -309,6 +309,6 @@
         "webpack-cli": "^4.8.0"
     },
     "dependencies": {
-        "semver": "^7.3.5"
+        "semver": "^7.5.2"
     }
 }
