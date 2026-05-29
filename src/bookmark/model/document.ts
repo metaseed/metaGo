@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import fs = require("fs");
 
 import { BookmarkConfig } from '../config';
 import { Bookmark } from './bookmark';
@@ -117,44 +116,45 @@ export class Document {
         return bms.length > 0;
     }
 
-    public getBookmarkItems = (): Promise<Array<BookmarkItem>> => {
-        return new Promise((resolve, reject) => {
-            if (this.bookmarks.size === 0 || !fs.existsSync(this.key)) {
-                this.history.removeDoc(this.key);
-                resolve([]);
-                return;
+    public getBookmarkItems = async (): Promise<Array<BookmarkItem>> => {
+        if (this.bookmarks.size === 0) {
+            this.history.removeDoc(this.key);
+            return [];
+        }
+
+        try {
+            const uriDocBookmark: vscode.Uri = vscode.Uri.file(this.key);
+            const doc = await vscode.workspace.openTextDocument(uriDocBookmark);
+
+            const items: BookmarkItem[] = [];
+            const invalids: string[] = [];
+
+            for (let [key, value] of this.bookmarks) {
+                const lineNumber = value.line + 1;
+                if (lineNumber <= doc.lineCount) {
+                    const lineText = doc.lineAt(lineNumber - 1).text;
+                    const normalizedPath = Document.normalize(doc.uri.fsPath);
+                    items.push(new BookmarkItem(
+                        `${lineNumber}`,
+                        lineText,
+                        normalizedPath, null, new BookmarkLocation(this, value)
+                    ));
+                } else {
+                    invalids.push(key);
+                }
+            }
+            if (invalids.length > 0) {
+                invalids.forEach((key) => {
+                    this.bookmarks.delete(key)
+                    this.history.remove(this.key, key)
+                });
             }
 
-            let uriDocBookmark: vscode.Uri = vscode.Uri.file(this.key);
-            vscode.workspace.openTextDocument(uriDocBookmark).then(doc => {
-                let items = [];
-                let invalids = [];
-
-                for (let [key, value] of this.bookmarks) {
-                    let lineNumber = value.line + 1;
-                    if (lineNumber <= doc.lineCount) {
-                        let lineText = doc.lineAt(lineNumber - 1).text;
-                        let normalizedPath = Document.normalize(doc.uri.fsPath);
-                        items.push(new BookmarkItem(
-                            `${lineNumber}`,
-                            lineText,
-                            normalizedPath, null, new BookmarkLocation(this, value)
-                        ));
-                    } else {
-                        invalids.push(key);
-                    }
-                }
-                if (invalids.length > 0) {
-                    invalids.forEach((key) => {
-                        this.bookmarks.delete(key)
-                        this.history.remove(this.key, key)
-                    });
-                }
-
-                resolve(items);
-                return;
-            });
-        });
+            return items;
+        } catch {
+            this.history.removeDoc(this.key);
+            return [];
+        }
     }
 
     /**

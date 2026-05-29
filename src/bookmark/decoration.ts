@@ -1,4 +1,3 @@
-import fs = require('fs');
 import * as vscode from 'vscode';
 
 import { BookmarkConfig } from './config';
@@ -9,18 +8,11 @@ export class Decoration {
     private charDecorationType: vscode.TextEditorDecorationType;
 
     constructor(private config: BookmarkConfig, private context: vscode.ExtensionContext, private manager: BookmarkManager) {
-        if (config.pathIcon !== "") {
-            if (!fs.existsSync(config.pathIcon)) {
-                vscode.window.showErrorMessage('The file "' + config.pathIcon + '" used for "this.bookmarks.gutterIconPath" does not exists.');
-                config.pathIcon = this.context.asAbsolutePath("images\\bookmark.png");
-            }
-        } else {
-            config.pathIcon = this.context.asAbsolutePath("images\\bookmark.png");
-        }
-        config.pathIcon = config.pathIcon.replace(/\\/g, "/");
+        const defaultIconUri = vscode.Uri.joinPath(this.context.extensionUri, "images", "bookmark.png");
+        const gutterIconUri = this.toUriOrUndefined(config.pathIcon) ?? defaultIconUri;
 
         this.lineDecorationType = vscode.window.createTextEditorDecorationType({
-            gutterIconPath: config.pathIcon,
+            gutterIconPath: gutterIconUri,
             overviewRulerLane: vscode.OverviewRulerLane.Full,
             overviewRulerColor: "rgba(21, 126, 251, 0.7)"
         });
@@ -39,6 +31,22 @@ export class Decoration {
             }
         });
 
+    }
+
+    private toUriOrUndefined = (value: string | undefined): vscode.Uri | undefined => {
+        if (!value) {
+            return undefined;
+        }
+
+        // Allow URIs (data/http/https/vscode-resource/etc) or filesystem paths.
+        try {
+            if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(value)) {
+                return vscode.Uri.parse(value);
+            }
+            return vscode.Uri.file(value);
+        } catch {
+            return undefined;
+        }
     }
 
     public clear() {

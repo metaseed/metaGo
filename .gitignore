@@ -6,3 +6,4 @@ dist
 *.vsix
 **/release
 .env
+.vscode-test-web/

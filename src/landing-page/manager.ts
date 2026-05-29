@@ -1,4 +1,3 @@
-import path = require("path");
 import * as semver from "semver";
 import * as vscode from "vscode";
 import { ContentProvider } from "./contentProvider";
@@ -42,9 +41,9 @@ export class LandingPageManager {
         //     path.join(this.context.extensionPath, 'ui', "landing-page", "main.css"));
         // const cssUri = panel.webview.asWebviewUri(cssPathOnDisk);
         // Local path to main script run in the webview
-        const logoPathOnDisk = vscode.Uri.file(
-            path.join(this.context.extensionPath, this.extension.packageJSON.icon));
-        const logoUri = panel.webview.asWebviewUri( logoPathOnDisk);
+        const logoUri = panel.webview.asWebviewUri(
+            vscode.Uri.joinPath(this.context.extensionUri, this.extension.packageJSON.icon)
+        );
         panel.webview.html = this.getWebviewContentLocal(htmlFile, css, logoUri.toString());
     }
 

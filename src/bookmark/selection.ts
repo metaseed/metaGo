@@ -1,4 +1,3 @@
-import fs = require('fs');
 import * as vscode from 'vscode';
 
 import { BookmarkConfig } from './config';

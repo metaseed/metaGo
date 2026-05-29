@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import fs = require("fs");
 import { Document } from "./model/document";
 import { Bookmark } from './model/bookmark';
 import { History } from './model/history';
@@ -77,13 +76,6 @@ export class BookmarkManager {
 
             if (!this.documents.get(bm.documentKey).bookmarks.has(bm.bookmarkKey)) {
                 this.history.remove(bm.documentKey, bm.bookmarkKey);
-                this.nextBookmark().then((bm) => resolve(bm)).catch((e) => reject(e));
-                return;
-            }
-
-            if (!fs.existsSync(bm.documentKey)) {
-                this.documents.delete(bm.documentKey);
-                this.history.removeDoc(bm.documentKey);
                 this.nextBookmark().then((bm) => resolve(bm)).catch((e) => reject(e));
                 return;
             }

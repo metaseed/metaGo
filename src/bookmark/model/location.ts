@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import fs = require("fs");
 import { Document } from "./document";
 import { Bookmark } from './bookmark';
 

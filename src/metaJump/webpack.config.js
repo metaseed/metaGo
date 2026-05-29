@@ -20,7 +20,7 @@ function resolveTsconfigPathsToAlias({
 }
 
 /**@type {import('webpack').Configuration}*/
-const config = {
+const nodeConfig = {
   target: 'node', // vscode extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/
   entry: './src/extension.ts', // the entry point of this extension, 📖 -> https://webpack.js.org/configuration/entry-context/
   output: {
@@ -57,4 +57,37 @@ const config = {
     ]
   }
 };
-module.exports = config;
+
+/**@type {import('webpack').Configuration}*/
+const webConfig = {
+  target: 'webworker',
+  entry: './src/extension.ts',
+  output: {
+    path: path.resolve(__dirname, 'dist', 'web'),
+    filename: 'extension.js',
+    libraryTarget: 'commonjs2',
+    devtoolModuleFilenameTemplate: '../[resource-path]'
+  },
+  devtool: 'source-map',
+  externals: {
+    vscode: 'commonjs vscode'
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
+    alias: resolveTsconfigPathsToAlias(),
+    fallback: {
+      fs: false,
+      path: false,
+      os: false,
+      child_process: false,
+      crypto: false,
+      net: false,
+      tls: false
+    }
+  },
+  module: {
+    rules: nodeConfig.module.rules
+  }
+};
+
+module.exports = [nodeConfig, webConfig];

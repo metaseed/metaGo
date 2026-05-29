@@ -233,3 +233,46 @@ To modify the settings, press <kbd>ctrl</kbd>+<kbd>,</kbd>, and search metago...
 > with metaTool running with it's metaKeyboard plugin, you just using the 61 keys main keyboard area to type any key you want.
 >
 > i.e. to jump next blank line in the document, currently the default trigger is <kbd>Alt</kbd>+<kbd>End</kbd>, now you could use<kbd>LAlt</kbd>+<kbd>;</kbd>, because <kbd>LAlt</kbd>+<kbd>;</kbd> is expanded to <kbd>Alt</kbd>+<kbd>end</kbd>
+
+## Local exploration smoke-test (VSCode Web)
+
+This repo supports VSCode Web builds via the `"browser"` entrypoint and the `dist/web/extension.js` bundle.
+
+### 1) Install
+
+```bash
+npm install
+npm install -D @vscode/test-web
+```
+
+### 2) Build (produces `dist/web/extension.js`)
+
+```bash
+npm run build:prd
+cd src/metaJump && npm run build:prd
+cd ../metaWord && npm run build:prd
+```
+
+### 3) Run VSCode Web locally
+
+MetaGo:
+
+```bash
+npx @vscode/test-web --extensionDevelopmentPath . --browserType chromium --port 3000
+```
+
+MetaJump:
+
+```bash
+npx @vscode/test-web --extensionDevelopmentPath src/metaJump --browserType chromium --port 3001
+```
+
+MetaWord:
+
+```bash
+npx @vscode/test-web --extensionDevelopmentPath src/metaWord --browserType chromium --port 3002
+```
+
+Open the printed `http://localhost:PORT` URL, open any file, and run a command from the Command Palette to confirm activation (e.g. `metaGo.gotoSmart`, `metaGo.cursorSpaceWordLeft`, `metaGo.bookmark.toggle`).
+
+> Note: `@vscode/test-web` downloads a local VSCode Web build into `.vscode-test-web/` (gitignored).

@@ -39,6 +39,7 @@
         "*"
     ],
     "main": "./dist/extension",
+    "browser": "./dist/web/extension",
     "contributes": {
         "commands": [
             {
