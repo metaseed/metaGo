@@ -1,9 +1,3 @@
-[![Version](https://vsmarketplacebadge.apphb.com/version/metaseed.metaword.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metaword)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/metaseed.metaword.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metaword)
-[![Ratings](https://vsmarketplacebadge.apphb.com/rating/metaseed.metaword.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metaword)
-[![](https://img.shields.io/badge/TWITTER-%40metaseed-blue.svg?logo=twitter&style=flat)](https://twitter.com/metaseed)
-[![](https://img.shields.io/badge/gitter-join_chat-1dce73.svg?style=flat&logo=gitter-white)](https://gitter.im/vscode-metago/community)
-
 **the Goal of MetaWord is providing different kinds of words based cursorMove/Select/Delete commands.**
 
 > **MetaWord is part of [MetaGo extension](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)**
@@ -12,10 +6,10 @@ MetaWord as a free tool, currently is maintained and developed by me in my spare
 Give me a  [github⭐](https://github.com/metaseed/metago), or even [sponsor me at github🍻](https://github.com/sponsors/metasong)
 
 ## MetaWord
-|word type|description|
-|---|---|
-|SpaceWord(BigWord)| characters separated by 'space'('Space' or 'Tab')|
-|Word|a group of alphanumeric character with underscore and (A-Za-z0-9_) or a group of other symbol characters(i.e. ~!@#$%^&*()-+:;"',.<>/?\[]{})|
+|word type|description|examples|
+|---|---|---|
+|SpaceWord(BigWord)| characters separated by 'space'('Space' or 'Tab')|"abc $1024 (apple,pineapple...)" are three SpaceWords
+|Word|a group of alphanumeric character with underscore and (A-Za-z0-9_) or a group of other symbol characters(i.e. ~!@#$%^&*()-+:;"',.<>/?\[]{})|"abc $1024 (apple,pineapple...)" are words seperated by '/' as "abc/ $/1024/ (/apple/,/pineapple/...)"
 |WordPart(SmallWord)| a group of spaces, a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters|
 
 * <kbd>shift</kbd>+<kbd>backspace</kbd>: delete all from the cursor to the line start.

@@ -3,7 +3,7 @@
     "displayName": "MetaGo",
     "description": "vscode cursor move and select; jump, navigation, goto, acejump",
     "icon": "images/metagoV4.gif",
-    "version": "4.3.2",
+    "version": "4.3.3",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo",
     "license": "MIT",
@@ -27,7 +27,8 @@
         "surrounding-pair",
         "change pair",
         "select pair",
-        "html tag pair"
+        "html tag pair",
+        "break line to above"
     ],
     "extensionPack": [
         "metaseed.metaWord",
@@ -235,7 +236,7 @@
             "type": "object",
             "properties": {
                 "metaGo.surroundPairs": {
-                    "type": "object",
+                    "type": "array",
                     "default": [
                         [
                             "{",
@@ -276,7 +277,8 @@
     "scripts": {
         "changelog": "node changelog.js",
         "login": "vsce login metaseed",
-        "vscode:prepublish": "node changelog.js && webpack-cli --mode production",
+        "build:prd": "webpack-cli --mode production",
+        "vscode:prepublish": "node changelog.js && npm run build:prd",
         "publish": "git tag -a %npm_package_name%V%npm_package_version% -m '%npm_package_name%V%npm_package_version%' && git push origin --tags && npm run publishOnly",
         "publishOnly": "vsce publish",
         "vscode:prepackage": "node changelog.js && webpack --mode production",
@@ -304,9 +306,9 @@
         "source-map-support": "^0.5.19",
         "ts-loader": "^9.2.5",
         "typescript": "^4.3.5",
-        "vsce": "^1.96.1",
-        "webpack": "^5.50.0",
-        "webpack-cli": "^4.8.0"
+        "vsce": "^1.103.1",
+        "webpack": "^5.88.0",
+        "webpack-cli": "^4.10.0"
     },
     "dependencies": {
         "semver": "^7.3.5"

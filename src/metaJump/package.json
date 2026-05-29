@@ -3,7 +3,7 @@
     "displayName": "MetaJump",
     "description": "vscode cursor move/select/delete; jump, navigation, goto, acejump",
     "icon": "images/metajump.png",
-    "version": "1.4.1",
+    "version": "1.4.4",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo/tree/master/src/metaJump",
     "license": "MIT",
@@ -280,7 +280,7 @@
                 },
                 "metaGo.decoration.additionalSingleCharCodeCharacters": {
                     "type": "string",
-                    "default": "J,D,F,L,A,H,G,I,N,R,E,M,B,Q,T,Y",
+                    "default": "J,D,F,L,A,H,G,I,N,R,E,M,B,Q,T,Y,1, 2, 3, 4, 5, 6, 7, 8, 9, 0",
                     "description": "only appears as one char decoration codes"
                 },
                 "metaGo.decoration.hide.triggerKey": {
@@ -318,7 +318,8 @@
     },
     "scripts": {
         "changelog": "node ../../changelog.js",
-        "vscode:prepublish": "npm run changelog && webpack --mode production",
+        "build:prd": "webpack-cli --mode production",
+        "vscode:prepublish": "npm run changelog && npm run build:prd",
         "publish": "git tag -a %npm_package_name%V%npm_package_version% -m '%npm_package_name%V%npm_package_version%' && git push origin --tags && npm run publishOnly",
         "publishOnly": "vsce publish",
         "login": "vsce login metaseed",
@@ -347,9 +348,9 @@
         "source-map-support": "^0.5.19",
         "ts-loader": "^9.2.5",
         "typescript": "^4.3.5",
-        "vsce": "^1.100.1",
-        "webpack": "^5.51.1",
-        "webpack-cli": "^4.8.0"
+        "vsce": "^1.103.1",
+        "webpack": "^5.88.0",
+        "webpack-cli": "^4.10.0"
     },
     "dependencies": {
         "semver": "^7.3.5"

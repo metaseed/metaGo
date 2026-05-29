@@ -12,6 +12,9 @@ All notable changes to the "metaJump" extension will be documented in this file.
 ---
 ### V
 #### Added
+ - [] press 'Return' key 4 times only show decorators for empty lines for multi-target-ripple config.
+ - [] press 'Return' key 2 times only show decorators for empty lines for multi-target without ripple config.
+ - [] `shift+enter`: split line to above line
 #### Removed
 
 #### Changed
@@ -20,10 +23,9 @@ All notable changes to the "metaJump" extension will be documented in this file.
 #### Plan
 ## Current Version
 ---
-### V
+### V 1.4.2
 #### Added
- - [] press `Return` key 4 times only show decorators for empty lines for multi-target-ripple config.
- - [] press `Return` key 2 times only show decorators for empty lines for multi-target without ripple config.
+ - [] support vscode in browser
 #### Removed
 
 #### Changed

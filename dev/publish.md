@@ -6,6 +6,7 @@
 
 ## Token
 1. go to https://metaseed.visualstudio.com/
+> account: metaseed@live.com
 1. follow steps: https://code.visualstudio.com/api/working-with-extensions/publishing-extension#get-a-personal-access-token
    1. personal access tokens: https://metaseed.visualstudio.com/_usersSettings/tokens
      ![](https://code.visualstudio.com/assets/api/working-with-extensions/publishing-extension/token1.png)

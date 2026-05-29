@@ -1,10 +1,3 @@
-[![Version](https://vsmarketplacebadge.apphb.com/version/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
-[![Ratings](https://vsmarketplacebadge.apphb.com/rating/metaseed.metago.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metago)
-[![](https://img.shields.io/badge/TWITTER-%40metaseed-blue.svg?logo=twitter&style=flat)](https://twitter.com/metaseed)
-[![](https://img.shields.io/badge/gitter-join_chat-1dce73.svg?style=flat&logo=gitter-white)](https://gitter.im/vscode-metago/community)
----
-
 First of all, Metago is a tool made for myself, it comes from the voice in my heart💖as a programmer.
 Metago tries its best to be the coolest😎 keyboard(mouseless) focused navigation tool in vscode.
 Metago tries to make your keyboard⌨ to you as meaningful as a kitchen knife to a master chef👩‍🍳.

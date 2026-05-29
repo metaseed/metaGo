@@ -1,10 +1,3 @@
-[![Version](https://vsmarketplacebadge.apphb.com/version/metaseed.metajump.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metajump)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/metaseed.metajump.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metajump)
-[![Ratings](https://vsmarketplacebadge.apphb.com/rating/metaseed.metajump.svg)](https://marketplace.visualstudio.com/items?itemName=metaseed.metajump)
-[![](https://img.shields.io/badge/TWITTER-%40metaseed-blue.svg?logo=twitter&style=flat)](https://twitter.com/metaseed)
-[![](https://img.shields.io/badge/gitter-join_chat-1dce73.svg?style=flat&logo=gitter-white)](https://gitter.im/vscode-metago/community)
-
-
 ## MetaJump
 
 MetaJump as a free tool, currently is maintained and developed by me in my spare time🌙⏳, if you think has ever saved you time, boosted your efficiency, or even indispensable like some of our users, please support me 😊
