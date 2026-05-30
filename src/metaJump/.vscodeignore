@@ -9,6 +9,10 @@ tsconfig.json
 vsc-extension-quickstart.md
 node_modules
 webpack.config.js
+esbuild.js
+eslint.config.mjs
+.vscode-test.*
+.env
 design
 dev
 changelog.js

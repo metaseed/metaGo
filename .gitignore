@@ -7,3 +7,4 @@ dist
 **/release
 .env
 .vscode-test-web/
+.vscode-test/

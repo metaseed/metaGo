@@ -36,9 +36,6 @@
     "categories": [
         "Other"
     ],
-    "activationEvents": [
-        "*"
-    ],
     "main": "./dist/extension",
     "browser": "./dist/web/extension",
     "contributes": {
@@ -306,7 +303,12 @@
                 },
                 "metaGo.jumper.commandsToUseSingleTargetChar": {
                     "type": "string[]",
-                    "default": ["metaGo.gotoSmart", "metaGo.selectSmart", "metaGo.addCursorSmart", "metaGo.metaJump.deleteToSmart"],
+                    "default": [
+                        "metaGo.gotoSmart",
+                        "metaGo.selectSmart",
+                        "metaGo.addCursorSmart",
+                        "metaGo.metaJump.deleteToSmart"
+                    ],
                     "description": "the commands to use the single target char, so we can only type one target location char after command is triggered"
                 },
                 "metaGo.jumper.enableRippleSupportForSequentialTargetCharsCommand": {
@@ -319,38 +321,38 @@
     },
     "scripts": {
         "changelog": "node ../../changelog.js",
-        "build:prd": "webpack --mode production",
+        "build:prd": "node esbuild.js --production",
         "vscode:prepublish": "npm run changelog && npm run build:prd",
+        "lint": "eslint src",
         "publishOnly": "vsce publish",
         "publish": "git tag -a %npm_package_name%V%npm_package_version% -m '%npm_package_name%V%npm_package_version%' && git push origin --tags && npm run publishOnly",
         "login": "vsce login metaseed",
-        "vscode:prepackage": "npm run changelog && webpack --mode production",
+        "vscode:prepackage": "npm run changelog && npm run build:prd",
         "package": "vsce package -o release",
         "deploy": "npm run package && code --uninstall-extension metaseed.%npm_package_name% && code --install-extension release/%npm_package_name%-%npm_package_version%.vsix",
-        "build": "webpack --mode development",
-        "watch": "webpack --mode development --watch",
+        "build": "node esbuild.js",
+        "watch": "node esbuild.js --watch",
         "test-compile": "tsc -p ./",
         "tswatch": "tsc -watch -p ./",
         "compile": "tsc -p ./",
-        "pretest": "npm run compile",
-        "test": "node ./out/test/runTest.js"
+        "pretest": "npm run compile && npm run lint",
+        "test": "vscode-test"
     },
     "engines": {
-        "vscode": "^1.59.0"
+        "vscode": "^1.96.0"
     },
     "devDependencies": {
         "@types/mocha": "^10.0.10",
         "@types/node": "^22.19.0",
         "@types/vscode": "^1.96.0",
+        "@vscode/test-cli": "^0.0.12",
+        "@vscode/test-electron": "^2.5.2",
         "@vscode/vsce": "^3.9.1",
+        "esbuild": "^0.28.0",
         "eslint": "^9.39.0",
         "mocha": "^11.7.0",
-        "raw-loader": "^4.0.2",
-        "source-map-support": "^0.5.21",
-        "ts-loader": "^9.6.0",
         "typescript": "^5.9.3",
-        "webpack": "^5.107.0",
-        "webpack-cli": "^5.1.4"
+        "typescript-eslint": "^8.60.0"
     },
     "dependencies": {
         "semver": "^7.8.1"
