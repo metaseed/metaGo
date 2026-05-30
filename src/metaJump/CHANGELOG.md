@@ -23,9 +23,9 @@ All notable changes to the "metaJump" extension will be documented in this file.
 #### Plan
 ## Current Version
 ---
-### V 1.4.2
+### V 1.4.5
 #### Added
- - [] support vscode in browser
+ - [x] support vscode in browser
 #### Removed
 
 #### Changed
