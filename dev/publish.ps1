@@ -71,10 +71,30 @@ param(
   [Parameter(Mandatory = $false)]
   [switch] $DryRun
 )
-
 $ErrorActionPreference = 'Stop'
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
+
+# Fail fast if the repo has uncommitted changes. The full-publish path bumps the
+# changelog, creates a git tag and pushes, so a dirty tree would tag/publish an
+# unexpected state. Honored only for tagging modes; DryRun warns instead.
+function Assert-CleanWorkingTree {
+  $status = & git -C $repoRoot status --porcelain
+  if ($LASTEXITCODE -ne 0) {
+    throw "Failed to read git status (is '$repoRoot' a git repo?)."
+  }
+  if ($status) {
+    if ($DryRun) {
+      Write-Host "  DRY RUN: working directory is not clean (would fail):" -ForegroundColor Magenta
+      $status | ForEach-Object { Write-Host "    $_" -ForegroundColor Magenta }
+      return
+    }
+    Write-Host ""
+    Write-Host "Working directory is not clean. Commit or stash these changes first:" -ForegroundColor Red
+    $status | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
+    throw "Working directory is not clean."
+  }
+}
 
 function Get-ExtensionDir([string] $repoRoot, [string] $target) {
   switch ($target) {
@@ -399,6 +419,12 @@ Write-Host "  repo:     $repoRoot"
 Write-Host "  targets:  $($targets -join ', ')"
 Write-Host "  mode:     $(if ($PackageOnly) { 'package-only' } elseif ($Pat) { 'pat-publish' } elseif ($NoGitTag) { 'publish (no tag)' } else { 'full publish' })"
 if ($DryRun) { Write-Host "  DRY RUN:  no commands will be executed" -ForegroundColor Magenta }
+
+# The full-publish path (no -PackageOnly/-NoGitTag/-Pat) tags and pushes, so the
+# working tree must be clean before we start.
+if (-not $PackageOnly -and -not $NoGitTag -and -not $Pat) {
+  Assert-CleanWorkingTree
+}
 
 # vsce is required by every mode (package + publish). Ensure it's available,
 # auto-installing globally if missing (unless -SkipVsceInstall).
