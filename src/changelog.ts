@@ -1,5 +1,8 @@
 import { ChangeLogItem, ChangeLogKind } from "@landing-page/index";
 export const changeLog: ChangeLogItem[] = [
+  { kind: ChangeLogKind.VERSION,   message: `V4.4.0 - May 31, 2026`},
+  { kind: ChangeLogKind.ADDED,   message: `pair-selection: 'space' char can be used as a selection char pair`},
+  { kind: ChangeLogKind.CHANGED,   message: `all projects was changed tu use modern dev framework(esbuild, eslint9, new test harness...)`},
   { kind: ChangeLogKind.VERSION,   message: `V4.3.1 - May 19, 2022`},
   { kind: ChangeLogKind.ADDED,   message: `Planning for new major release.`},
   { kind: ChangeLogKind.ADDED,   message: `upgrade typescript(4.3.5), webpack(5.50.0), and other packages to latest version`},
@@ -33,7 +36,7 @@ export const changeLog: ChangeLogItem[] = [
   { kind: ChangeLogKind.ADDED,   message: `metaSelection: surrounding-pair-selection command's pairs support regex, html tag selection is supported.<a href="https://github.com/metaseed/metaGo/blob/master/README.md#surroundpairs-config">(Detail)</a>`},
   { kind: ChangeLogKind.REMOVED,   message: `metaJump: Remove find in selection and it's config. (never use)`},
   { kind: ChangeLogKind.FIXED,   message: `metaJump: Command indicator is not removed sometimes.`},
-  { kind: ChangeLogKind.VERSION,   message: `V3.6.6 - April 26, 2020 `},
+  { kind: ChangeLogKind.VERSION,   message: `V3.6.6 - April 26, 2020`},
   { kind: ChangeLogKind.ADDED,   message: `metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCursorSmart) <a href="https://github.com/metaseed/metaGo#add-multiple-cursors-to-the-active-editor">(Detail)</a>`},
   { kind: ChangeLogKind.ADDED,   message: `metaJump: selection support multi cursor, could add more selection parts to current selections.`},
   { kind: ChangeLogKind.ADDED,   message: `metaJump: the addCursor command could be used to change active selection when there are multiple selections.<a href="https://github.com/metaseed/metaGo#change-active-selection-demo">(Detail)</a>`},

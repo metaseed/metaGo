@@ -2,9 +2,9 @@
 All notable changes to the "metago" extension will be documented in this file.
 
 ## Todo List:
-   - [x] close issues. 
+   - [x] close issues.
    - [x] support real viewport range, not use config
-   - [x] jumper support fold region    
+   - [x] jumper support fold region
    - [x] Color settings support referencing [Theme Color Id](https://code.visualstudio.com/api/references/theme-color)
    - [x] sequential-target-chars support: type a sequence of target-chars, and dynamically change decoration codes while typing, at any time type the decoration codes to navigate. This means we provide two sets of codes one set is the target chars sequence and another set is the dynamically generated decorators. you could type the chars sequence as long as you want to narrow down the searched possible locations, and then type the decoration codes to got the the exact location.
    - [x] add following char decorator in sequential-target.
@@ -40,7 +40,7 @@ All notable changes to the "metago" extension will be documented in this file.
 
    -[ ] alt+shift+right to duplication selection to right
 ## Development Template
-### 
+###
 #### Added
 #### Removed
 #### Changed
@@ -48,13 +48,21 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Plan
 ---
 #### Plan
-### 
+###
 #### Added
 #### Removed
 #### Changed
 #### Fixed
 
 ## Current Version
+---
+### V4.4.0 - May 31, 2026
+#### Added
+   - [x] pair-selection: 'space' char can be used as a selection char pair
+#### Removed
+#### Changed
+   - [x] all projects was changed tu use modern dev framework(esbuild, eslint9, new test harness...)
+#### Fixed
 ---
 ### V4.3.1 - May 19, 2022
 #### Added
@@ -93,7 +101,7 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Fixed
 ---
 ### V3.8.0 - May 09, 2020
-#### Added 
+#### Added
    - [x] metaWord: add commands to moveCursor/select/delete one space-word left/right. <a href="https://github.com/metaseed/metaGo/blob/master/README.md#metaword">(Detail)</a> (with this and vscode's cursorWordPartStartLeft, cursorWordStartLeft..., we could do bigWord, smallWord and partialWord navigation/selection/deletion, I would include my hotkey config for vscode's default word commands, and separate it into a signal vscode extension in next version)
    - [x] metaSurroundingPair: add command to change surrounding pairs. <a href="https://github.com/metaseed/metaGo#surrounding-pair-changing-demo">(Detail)</a>
    - [x] metaSurroundingPair: rewrite surroundPairsSelection to support multiline tags, i.e the html-start-tag is multiline sometimes, html staring tag regex is revised. (this consumes most of my time for this release🤣)
@@ -119,10 +127,10 @@ All notable changes to the "metago" extension will be documented in this file.
    - [x] metaJump: Command indicator is not removed sometimes.
 ---
 
-### V3.6.6 - April 26, 2020 
+### V3.6.6 - April 26, 2020
 #### Added
    - [x] metaJump: commands to add additional cursor via screen decorators.(metaGo.insertCursorBefore, metaGo.insertCursorAfter, metaGo.insertCursorSmart) <a href="https://github.com/metaseed/metaGo#add-multiple-cursors-to-the-active-editor">(Detail)</a>
-   - [x] metaJump: selection support multi cursor, could add more selection parts to current selections. 
+   - [x] metaJump: selection support multi cursor, could add more selection parts to current selections.
    - [x] metaJump: the addCursor command could be used to change active selection when there are multiple selections.<a href="https://github.com/metaseed/metaGo#change-active-selection-demo">(Detail)</a>
    - [x] metaJump: show typed target chars in status bar. <a href="https://github.com/metaseed/metaGo#change-active-selection-demo">(Detail)</a>
    - [x] metaJump: different command indication colors for jump, selection and addCursor command.
@@ -188,7 +196,7 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Fixed
 * background color of matched target chars
 * fix enter key at end of sequential-target jump
----     
+---
 
 ### V3.3.0 - Mar 10, 2020
 #### Added
@@ -197,7 +205,7 @@ All notable changes to the "metago" extension will be documented in this file.
 * feat: Color settings support referencing [Theme Color Id](https://code.visualstudio.com/api/references/theme-color), note: when use svg we not support them color
 #### Removed
 * removed config: metaGo.decoration.upperCase: use as it is.
-* add config: metaGo.decoration.additionalSingleCharCodeCharacters: only appears as one char decoration codes 
+* add config: metaGo.decoration.additionalSingleCharCodeCharacters: only appears as one char decoration codes
 #### Changed
 #### Fixed
 
@@ -226,7 +234,7 @@ All notable changes to the "metago" extension will be documented in this file.
 * metaGo.gotoAfterActive, metaGo.gotoBeforeActive, metaGo.gotoSmartActive commands only for active editor.
 * support <kbd>Enter</kbd>, <kbd>Space</kbd> as target chars.
 #### Removed
-~~after the trigger(<kbd>Alt</kbd>+<kbd>.</kbd> or <kbd>Alt</kbd>+<kbd>,</kbd> or  <kbd>Alt</kbd>+<kbd>\/</kbd>)press <kbd>Enter</kbd> to directly go to the one before the current cursor position~~    
+~~after the trigger(<kbd>Alt</kbd>+<kbd>.</kbd> or <kbd>Alt</kbd>+<kbd>,</kbd> or  <kbd>Alt</kbd>+<kbd>\/</kbd>)press <kbd>Enter</kbd> to directly go to the one before the current cursor position~~
 ~~after the trigger, press <kbd>Space</kbd> to directly go to the one after the current cursor position;~~
 #### Changed
 * replace Promise with async/await in MetaJump
@@ -237,7 +245,7 @@ All notable changes to the "metago" extension will be documented in this file.
 
 ### V3.0.0 - Feb 19, 2020
 #### Added
-* add/change commands: metaGo.gotoBefore, metaGo.gotoAfter, metaGo.gotoSmart; metaGo.selectBefore, metaGo.selectAfter, metaGo.selectSmart; 
+* add/change commands: metaGo.gotoBefore, metaGo.gotoAfter, metaGo.gotoSmart; metaGo.selectBefore, metaGo.selectAfter, metaGo.selectSmart;
 * add feature of holding <kbd>/</kbd>(could be modified in config) to hide decorators and release it to show again.
 #### Removed
 * removed delete related command, and no future implementation scheduled, because of unrelated to cursor jumping
