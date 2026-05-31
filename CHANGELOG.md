@@ -33,8 +33,8 @@ All notable changes to the "metago" extension will be documented in this file.
    - [ ] bookmark: use treeView and implement tag mark.
    - [ ] metaSelection: active selection's cursor should be special to identify, when there are multiple selections or multiple cursors
    - [ ] extend selecttobracket alt+shift+\ command to do further extension
-   - [ ] inSurroundingPairSelection: pairs configuration
-   - [ ] inSurroundingPairSelection: tag selection support
+   - [*] inSurroundingPairSelection: pairs configuration
+   - [*] inSurroundingPairSelection: tag selection support
    - [ ] metaJump: alt+/ then ctrl+alt+/ could cancel and press ctrl+alt+/ to trigger.
    - [ ] Create command for move to previous/next member
 
@@ -55,6 +55,16 @@ All notable changes to the "metago" extension will be documented in this file.
 #### Fixed
 
 ## Current Version
+---
+### V4.5.0 - May 31, 2026
+#### Added
+ - [x] metago: shared tab input handling in Input Control
+ - [x] metago: metaPair: select between 'tab' keys is supported now.
+ - [x] metago: metaPair: fix: change pair from pair-char to pair-chars(i.e. '[',']') directly use one '[' or ']', not a pair.
+#### Removed
+#### Changed
+#### Fixed
+
 ---
 ### V4.4.0 - May 31, 2026
 #### Added
