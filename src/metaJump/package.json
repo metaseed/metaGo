@@ -129,9 +129,9 @@
                 "when": "editorTextFocus && metaGoJumping"
             },
             {
-                "command": "metaGo.metaJump.tab",
+                "command": "metaGo.input.tab",
                 "key": "tab",
-                "when": "editorTextFocus && metaGoJumping"
+                "when": "editorTextFocus && metaGoInput"
             },
             {
                 "command": "metaGo.metaJump.hideDecoration",

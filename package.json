@@ -122,6 +122,11 @@
         ],
         "keybindings": [
             {
+                "command": "metaGo.input.tab",
+                "key": "tab",
+                "when": "editorTextFocus && metaGoInput"
+            },
+            {
                 "command": "metaGo.selectionSwitchActiveWithAnchor",
                 "key": "alt+a",
                 "when": "editorTextFocus && editorHasSelection"
