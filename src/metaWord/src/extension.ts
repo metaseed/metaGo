@@ -17,8 +17,8 @@ export function activate(context: vscode.ExtensionContext) {
         spaceWord.updateConfig();
         
     });
-    let spaceWord = new MetaSpaceWord(context, config);
-    new SpaceMode(context);
+    let spaceWord = new MetaSpaceWord(config);
+    new SpaceMode(context, spaceWord);
 }
 
 // this method is called when your extension is deactivated

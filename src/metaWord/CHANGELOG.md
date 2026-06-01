@@ -11,9 +11,11 @@ All notable changes to the "metaWord" extension will be documented in this file.
 #### Fixed
 #### Plan
 ## Current Version
-### V1.5.0
+### V1.5.0 - Jun 01, 2026
 #### Added
+ - [x] new space-mode for space/tab seperated words navigation/selection/deletion.
 #### Removed
+ - [x] removed default shortcuts related to space/tab seperated words navigation/selection/deletion. commands are kept for configuration by user.
 #### Changed
 #### Fixed
  - [x] can not search commands of metaword

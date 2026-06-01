@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { Config } from './config';
 
-enum Mode { Move, Select, Delete }
+export enum Mode { Move, Select, Delete }
 export class MetaSpaceWord {
 
     updateConfig() {
@@ -51,7 +51,7 @@ export class MetaSpaceWord {
         )
     }
 
-    left(editor: vscode.TextEditor, edit: vscode.TextEditorEdit, mode = Mode.Move, includeChar = false, chars = [' ', '\t']) {
+    left(editor: vscode.TextEditor, edit: vscode.TextEditorEdit, mode = Mode.Move, includeChar = true, chars = [' ', '\t']) {
         let selections: vscode.Selection[] = [];
         for (let s = 0; s < editor.selections.length; s++) {
             const selection = editor.selections[s];
@@ -102,7 +102,7 @@ export class MetaSpaceWord {
         editor.selections = selections;
     }
 
-    right(editor: vscode.TextEditor, edit: vscode.TextEditorEdit, mode = Mode.Move, includeChar = false, chars = [' ', '\t']) {
+    right(editor: vscode.TextEditor, edit: vscode.TextEditorEdit, mode = Mode.Move, includeChar = true, chars = [' ', '\t']) {
         const lines = editor.document.lineCount;
         let selections: vscode.Selection[] = [];
 
@@ -155,6 +155,61 @@ export class MetaSpaceWord {
         }
 
         editor.selections = selections;
+    }
+
+    up(editor: vscode.TextEditor, edit: vscode.TextEditorEdit, mode = Mode.Move, includeChar = true, chars = [' ', '\t']) {
+        this.vertical(editor, edit, mode, includeChar, chars, true);
+    }
+
+    down(editor: vscode.TextEditor, edit: vscode.TextEditorEdit, mode = Mode.Move, includeChar = true, chars = [' ', '\t']) {
+        this.vertical(editor, edit, mode, includeChar, chars, false);
+    }
+
+    /**
+     * Move up/down by reusing the left/right space-word scan: hop onto the nearest
+     * non-empty line (skipping blank/whitespace-only lines) and then run left (for up,
+     * scanning back from the line end) or right (for down, from the line start).
+     */
+    private vertical(editor: vscode.TextEditor, edit: vscode.TextEditorEdit, mode: Mode, includeChar: boolean, chars: string[], isUp: boolean) {
+        const doc = editor.document;
+        const origin = editor.selections;
+        const originActive = origin.map(s => s.active);
+        const targetLines = origin.map(sel => this.adjacentNonEmptyLine(doc, sel.active.line, isUp ? -1 : 1));
+        if (targetLines.every(line => line < 0)) return; // nowhere to go (top/bottom of file)
+
+        // hop each cursor onto its target line, keeping the anchor for Select.
+        editor.selections = origin.map((sel, k) => {
+            if (targetLines[k] < 0) return sel;
+            const col = isUp ? doc.lineAt(targetLines[k]).text.length : 0;
+            const pos = new vscode.Position(targetLines[k], col);
+            return new vscode.Selection(sel.anchor, pos);
+        });
+
+        // let left/right land on the space-word boundary; for Delete we land first, then remove.
+        const scanMode = mode === Mode.Delete ? Mode.Move : mode;
+        if (isUp) this.left(editor, edit, scanMode, includeChar, chars);
+        else this.right(editor, edit, scanMode, includeChar, chars);
+
+        // restore any cursor that had no target line (left/right would have nudged it sideways).
+        if (targetLines.some(line => line < 0)) {
+            editor.selections = editor.selections.map((sel, k) => targetLines[k] < 0 ? origin[k] : sel);
+        }
+
+        if (mode === Mode.Delete) {
+            editor.selections = editor.selections.map((sel, k) => {
+                if (targetLines[k] < 0) return sel;
+                edit.delete(new vscode.Range(originActive[k], sel.active));
+                return new vscode.Selection(sel.active, sel.active);
+            });
+        }
+    }
+
+    /** nearest non-empty (non whitespace-only) line in `step` direction, or -1 if none. */
+    private adjacentNonEmptyLine(doc: vscode.TextDocument, fromLine: number, step: number): number {
+        for (let i = fromLine + step; i >= 0 && i < doc.lineCount; i += step) {
+            if (doc.lineAt(i).text.trim().length > 0) return i;
+        }
+        return -1;
     }
 
     private action(mode: Mode, selection: vscode.Selection, position: vscode.Position, selections: vscode.Selection[], edit: vscode.TextEditorEdit) {

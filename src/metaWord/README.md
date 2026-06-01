@@ -57,26 +57,55 @@ character
 
 ### SpaceWord commands to moveCursor/select/delete word separated by space:
 
-#### new design
 <kbd>alt+;</kbd> enter space mode, then:
 * move: <kbd>arrow: left/right/up/down</kbd> to move between spaces;
-  > note: the up/down is also work: up -> last space in line above; down -> first space in line below
+  > note: up/down also work: they skip empty/whitespace-only lines and jump to the nearest non-empty line — up lands like `left` from the end of that line, down lands like `right` from its start.
 * select: <kbd>shift + arrow keys</kbd> to select; up/down same as move's logic.
 * delete: <kbd>backspace</kbd> to delete backward; <kbd>delete</kbd> to delete to another direction.
 * <kbd>escape</kbd> exits the mode.
 * any other key(except: arrow, delete/backspace) escape the mode, and the key also take effect in editor.
 
-#### old design not used, because the shortcuts are used by win11 now
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: move cursor left/right by one space-word and set cursor at the begin/end of the word.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: select to left/right by one space-word.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>backspace</kbd>: delete one space-word left.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>del</kbd>: delete one space-word right.
+> ⚠️ **If some keys don't work in space mode** (e.g. `up`/`down` or `backspace` do nothing or behave normally while `left`/`right`/`delete` are fine), the key is being captured by something with higher priority than this extension — **check these in order**:
+> 1. **Your own keybindings** (`Preferences: Open Keyboard Shortcuts (JSON)`): a user keybinding for that key (e.g. `up`→`cursorUp` with a `when` like `textInputFocus`) **always overrides extension keybindings**. Remove it, or scope it with `&& !metaGoSpaceMode`.
+> 2. **Other extensions**: another extension may bind the same key (e.g. *Markdown All in One* claims `backspace` in `.md` files). One extension can't reliably out-prioritize another, so disable/uninstall the conflicting one, or add a user keybinding for that key → the matching `metaGo.spaceMode.*` command gated by `metaGoSpaceMode` (user keybindings win over everything).
+>
+> These space-mode bindings ship in this extension's `package.json` and work out of the box on a clean setup; the above only matters when a higher-priority binding shadows them.
 
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>home/end</kbd>: move cursor left/right by one space-word and set cursor at the begin/end of the spaces surrounding the word.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>home/end</kbd>: select to left/right by one space-word, spaces before/after the word is selected too.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>backspace</kbd>: delete one space-word left, spaces before the word are also deleted.
-* <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>del</kbd>: delete one space-word right, spaces after the word are also deleted.
+#### Additional commands (manual keybinding)
 
+These are the original **non-modal** SpaceWord commands (same logic as SpaceMode), but **no default shortcuts are assigned** (because some historical shortcuts are taken by OS / other features, e.g. Win11).
+
+**Commands**
+
+* `metaGo.cursorSpaceWordLeft`: move left by one space-word (cursor stops at the word boundary)
+* `metaGo.cursorSpaceWordLeftSelect`: select left by one space-word
+* `metaGo.cursorSpaceWordLeftDelete`: delete left by one space-word
+
+* `metaGo.cursorSpaceWordRight`: move right by one space-word
+* `metaGo.cursorSpaceWordRightSelect`: select right by one space-word
+* `metaGo.cursorSpaceWordRightDelete`: delete right by one space-word
+
+* `metaGo.cursorSpaceWordSpaceLeft`: move left by one space-word **including surrounding spaces**
+* `metaGo.cursorSpaceWordSpaceLeftSelect`: select left by one space-word including surrounding spaces
+* `metaGo.cursorSpaceWordSpaceLeftDelete`: delete left by one space-word including surrounding spaces
+
+* `metaGo.cursorSpaceWordSpaceRight`: move right by one space-word including surrounding spaces
+* `metaGo.cursorSpaceWordSpaceRightSelect`: select right by one space-word including surrounding spaces
+* `metaGo.cursorSpaceWordSpaceRightDelete`: delete right by one space-word including surrounding spaces
+
+**Example keybindings**
+
+Add your preferred keys in `Preferences: Open Keyboard Shortcuts (JSON)`:
+
+```json
+ {
+    "command": "metaGo.cursorSpaceWordLeft",
+    "key": "win+alt+left", // note: win11 already used this key, I don't know other reasonable key to use, so create space-mode.
+    "when": "editorTextFocus"
+    "mac": "cmd+alt+left",
+    "when": "editorTextFocus"
+ },
+```
 ## Note
 we modified several default command vscode command's shortcut, because we want to use it to do word based cursorMove/select/delete.
 * `ctrl+alt+left/right` by default is used by "workbench.action.moveEditorToPreviousGroup/NextGroup", so we assign `ctrl+k ctrl+left/right` to do the editor movement.

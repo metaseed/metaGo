@@ -3,7 +3,7 @@
     "displayName": "MetaWord",
     "description": "word based cursor movement, selection and deletion",
     "icon": "images/metaWord.png",
-    "version": "1.3.2",
+    "version": "1.5.0",
     "publisher": "metaseed",
     "homepage": "https://github.com/metaseed/metaGo/tree/master/src/metaWord",
     "license": "MIT",
@@ -200,78 +200,6 @@
             {
                 "key": "alt+v",
                 "command": "editor.action.toggleColumnSelection"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordLeft",
-                "key": "win+alt+left",
-                "mac": "cmd+alt+left",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordLeftSelect",
-                "key": "win+alt+shift+left",
-                "mac": "cmd+alt+shift+left",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordLeftDelete",
-                "key": "win+alt+backspace",
-                "mac": "cmd+alt+backspace",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordRight",
-                "key": "win+alt+right",
-                "mac": "cmd+alt+right",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordRightSelect",
-                "key": "win+shift+alt+right",
-                "mac": "cmd+shift+alt+right",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordRightDelete",
-                "key": "win+alt+delete",
-                "mac": "cmd+alt+delete",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordSpaceLeft",
-                "key": "win+alt+home",
-                "mac": "cmd+alt+home",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordSpaceLeftSelect",
-                "key": "win+alt+shift+home",
-                "mac": "cmd+alt+shift+home",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordSpaceLeftDelete",
-                "key": "win+alt+shift+backspace",
-                "mac": "cmd+alt+shift+backspace",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordSpaceRight",
-                "key": "win+alt+end",
-                "mac": "cmd+alt+end",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordSpaceRightSelect",
-                "key": "win+shift+alt+end",
-                "mac": "cmd+shift+alt+end",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "metaGo.cursorSpaceWordSpaceRightDelete",
-                "key": "win+alt+shift+delete",
-                "mac": "cmd+alt+shift+delete",
-                "when": "editorTextFocus"
             }
         ]
     },
