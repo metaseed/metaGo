@@ -15,9 +15,9 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidChangeConfiguration(e => {
         config.loadConfig();
         spaceWord.updateConfig();
-        
+
     });
-    let spaceWord = new MetaSpaceWord(config);
+    let spaceWord = new MetaSpaceWord(context, config);
     new SpaceMode(context, spaceWord);
 }
 
