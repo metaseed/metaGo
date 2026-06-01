@@ -1,5 +1,9 @@
 import { ChangeLogItem, ChangeLogKind } from "@landing-page/index";
 export const changeLog: ChangeLogItem[] = [
+  { kind: ChangeLogKind.VERSION,   message: `V1.5.1 - Jun 01, 2026`},
+  { kind: ChangeLogKind.ADDED,   message: `new space-mode for space/tab seperated words navigation/selection/deletion.`},
+  { kind: ChangeLogKind.REMOVED,   message: `removed default shortcuts related to space/tab seperated words navigation/selection/deletion. commands are kept for configuration by user.`},
+  { kind: ChangeLogKind.FIXED,   message: `can not search commands of metaword`},
   { kind: ChangeLogKind.VERSION,   message: `V1.4.0 - Sep 02, 2021`},
   { kind: ChangeLogKind.FIXED,   message: `cursorSpaceWordSpaceLeftDelete command not work.`},
   { kind: ChangeLogKind.FIXED,   message: `fix command map for mac: cursorSpaceWordSpaceLeftDelete`},

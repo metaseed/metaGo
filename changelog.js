@@ -17,9 +17,20 @@ for (let i = 0; i < lines.length; i++) {
         continue;
     }
 
-    if (findCurrentVersion && !findStart && line.startsWith('---')) {
-        findStart = true;
-        continue;
+    // Some changelog files start the "Current Version" section immediately with a "### Vx.y.z"
+    // without a leading '---'. Support both layouts.
+    if (findCurrentVersion && !findStart) {
+        if (line.startsWith('---')) {
+            findStart = true;
+            continue;
+        }
+        if (line.startsWith('### ')) {
+            findStart = true;
+            changeType = 'Version';
+            line = line.substring(4);
+            write.write(`  { kind: ChangeLogKind.${changeType.toUpperCase()},   message: \`${line}\`},\n`);
+            continue;
+        }
     }
 
     if (findStart) {

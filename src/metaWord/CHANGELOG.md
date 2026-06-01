@@ -3,15 +3,18 @@ All notable changes to the "metaWord" extension will be documented in this file.
 
 ## Todo List:
 ## Development Template
+blow
 ---
-###
+### (ver) - (date))
 #### Added
 #### Removed
 #### Changed
 #### Fixed
 #### Plan
+up
 ## Current Version
-### V1.5.0 - Jun 01, 2026
+---
+### V1.5.1 - Jun 01, 2026
 #### Added
  - [x] new space-mode for space/tab seperated words navigation/selection/deletion.
 #### Removed
@@ -20,8 +23,6 @@ All notable changes to the "metaWord" extension will be documented in this file.
 #### Fixed
  - [x] can not search commands of metaword
 #### Plan
-tidy commands:
-re-config shortcuts: the win+alt+left/right windows window's movement default shortcut, default Word the same as vscode default, Bigword use `ctrl+alt`, SmallWord use `ctrl+k left/right/delete/backspace`
 ---
 ### V1.4.0 - Sep 02, 2021
 #### Added

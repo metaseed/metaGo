@@ -69,7 +69,9 @@ param(
   [switch] $SkipVsceInstall,
 
   [Parameter(Mandatory = $false)]
-  [switch] $DryRun
+  [switch] $DryRun,
+    [Parameter(Mandatory = $false)]
+  [switch] $CheckDirty
 )
 $ErrorActionPreference = 'Stop'
 
@@ -422,7 +424,7 @@ if ($DryRun) { Write-Host "  DRY RUN:  no commands will be executed" -Foreground
 
 # The full-publish path (no -PackageOnly/-NoGitTag/-Pat) tags and pushes, so the
 # working tree must be clean before we start.
-if (-not $PackageOnly -and -not $NoGitTag -and -not $Pat) {
+if (-not $PackageOnly -and -not $NoGitTag -and -not $Pat -and $CheckDirty) {
   Assert-CleanWorkingTree
 }
 
