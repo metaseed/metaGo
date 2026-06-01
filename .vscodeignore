@@ -17,3 +17,6 @@ design
 dev
 changelog.js
 
+# local tooling / configs (not part of extension)
+mis/surfingkeys.option.js
+

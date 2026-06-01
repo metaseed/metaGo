@@ -57,6 +57,10 @@ param(
   [string] $Target = 'all',
 
   [Parameter(Mandatory = $false)]
+  [ValidateSet('all', 'vscode', 'openVSX')]
+  [string] $Marketplace = 'all',
+
+  [Parameter(Mandatory = $false)]
   [switch] $PackageOnly,
 
   [Parameter(Mandatory = $false)]
@@ -64,6 +68,9 @@ param(
 
   [Parameter(Mandatory = $false)]
   [string] $Pat,
+
+  [Parameter(Mandatory = $false)]
+  [string] $OvsxPat,
 
   [Parameter(Mandatory = $false)]
   [switch] $SkipVsceInstall,
@@ -131,6 +138,7 @@ function Resolve-Launcher([string] $name) {
 $script:NpmCmd = Resolve-Launcher 'npm'
 $script:NpxCmd = Resolve-Launcher 'npx'
 $script:Publisher = 'metaseed'
+$script:OpenVsxTokenEnvKey = 'OVSX_PAT'
 
 function Test-CommandExists([string] $name) {
   return [bool](Get-Command $name -ErrorAction SilentlyContinue)
@@ -374,6 +382,297 @@ function Run-Npm([string[]] $npmArgs) {
   }
 }
 
+function Get-PackageMeta([string] $dir) {
+  $pkgPath = Join-Path $dir 'package.json'
+  if (-not (Test-Path $pkgPath)) {
+    throw "package.json not found in $dir"
+  }
+  $pkg = Get-Content -Raw -Path $pkgPath | ConvertFrom-Json
+  if (-not $pkg.name -or -not $pkg.version) {
+    throw "package.json in $dir must contain name and version."
+  }
+  return @{
+    name    = [string]$pkg.name
+    version = [string]$pkg.version
+  }
+}
+
+function Test-GitTagExists([string] $tag) {
+  & git -C $repoRoot show-ref --tags --verify --quiet ("refs/tags/{0}" -f $tag)
+  return ($LASTEXITCODE -eq 0)
+}
+
+function New-GitAnnotatedTag([string] $tag) {
+  Write-Host "  > git tag -a $tag -m '$tag'" -ForegroundColor DarkGray
+  if ($DryRun) { return }
+  & git -C $repoRoot tag -a $tag -m $tag
+  if ($LASTEXITCODE -ne 0) { throw "git tag failed with exit code $LASTEXITCODE." }
+}
+
+function Push-GitTags {
+  Write-Host "  > git push origin --tags" -ForegroundColor DarkGray
+  if ($DryRun) { return }
+  & git -C $repoRoot push origin --tags
+  if ($LASTEXITCODE -ne 0) { throw "git push --tags failed with exit code $LASTEXITCODE." }
+}
+
+function Vsce-PublishSkipDuplicate([string] $pat) {
+  # Ensure changelog + both bundles are built (desktop + web) before publishing.
+  Run-Npm @('run', 'vscode:prepublish')
+
+  $args = @('publish', '--skip-duplicate')
+  if ($pat) { $args += @('-p', $pat) }
+
+  if ($pat) {
+    Write-Host "  > vsce publish --skip-duplicate -p ****" -ForegroundColor DarkGray
+  } else {
+    Write-Host "  > vsce publish --skip-duplicate" -ForegroundColor DarkGray
+  }
+
+  if ($DryRun) { return }
+  Invoke-Vsce $args
+  if ($LASTEXITCODE -ne 0) { throw "vsce publish failed with exit code $LASTEXITCODE." }
+}
+
+function Want-VsMarketplace {
+  return ($Marketplace -eq 'all' -or $Marketplace -eq 'vscode')
+}
+
+function Want-OpenVsx {
+  return ($Marketplace -eq 'all' -or $Marketplace -eq 'openVSX')
+}
+
+# Resolve an env var from (in priority order): explicit value, process env var,
+# then a KEY=... line in the repo-root .env.
+function Resolve-Token([string] $key, [string] $explicitValue) {
+  if ($explicitValue) { return $explicitValue }
+
+  $existing = [Environment]::GetEnvironmentVariable($key)
+  if ($existing) { return $existing }
+
+  $envFile = Join-Path $repoRoot '.env'
+  if (Test-Path $envFile) {
+    $pattern = "^\s*$([Regex]::Escape($key))\s*=\s*(.+?)\s*$"
+    $match = Select-String -Path $envFile -Pattern $pattern | Select-Object -First 1
+    if ($match) {
+      return $match.Matches[0].Groups[1].Value.Trim().Trim('"').Trim("'")
+    }
+  }
+
+  return $null
+}
+
+function Ensure-Ovsx {
+  Write-Host ""
+  Write-Host "Checking ovsx availability..." -ForegroundColor White
+
+  if (Test-CommandExists 'ovsx') {
+    Write-Host "  ovsx: found on PATH (global)" -ForegroundColor Green
+    return
+  }
+
+  Write-Host "  ovsx: not found on PATH; will use 'npx -y ovsx'." -ForegroundColor Yellow
+}
+
+function Invoke-Ovsx([string[]] $ovsxArgs) {
+  $cmd = Get-Command 'ovsx' -ErrorAction SilentlyContinue
+  if ($cmd) {
+    & $cmd.Source @ovsxArgs
+  } else {
+    & $script:NpxCmd '-y' 'ovsx' @ovsxArgs
+  }
+}
+
+function Show-OvsxGuidance {
+  Write-Host ""
+  Write-Host "============================================================" -ForegroundColor Yellow
+  Write-Host " No valid Open VSX Personal Access Token (PAT) found." -ForegroundColor Yellow
+  Write-Host "============================================================" -ForegroundColor Yellow
+  Write-Host ""
+  Write-Host "Open VSX publishing needs a token for namespace '$script:Publisher'."
+  Write-Host "How to get one:" -ForegroundColor White
+  Write-Host "  1. Sign in to Open VSX:"
+  Write-Host "       https://open-vsx.org/"
+  Write-Host "  2. Create a Personal Access Token:"
+  Write-Host "       https://open-vsx.org/user-settings/tokens"
+  Write-Host "  3. Ensure the namespace exists (first-time only):"
+  Write-Host "       ovsx create-namespace $script:Publisher -p <TOKEN>"
+  Write-Host "  3. Provide the token to this script in ONE of these ways:"
+  Write-Host "       a) Pass it inline:        ./dev/publish.ps1 -OvsxPat <TOKEN>"
+  Write-Host "       b) Set an env var:        `$env:$script:OpenVsxTokenEnvKey = '<TOKEN>'"
+  Write-Host "       c) Add to repo .env:      $script:OpenVsxTokenEnvKey=<TOKEN>   (.env is git-ignored)"
+  Write-Host "       d) Or log in once:        ovsx login $script:Publisher"
+  Write-Host ""
+  Write-Host "Docs: https://github.com/eclipse-openvsx/openvsx/wiki/Publishing-Extensions"
+  Write-Host ""
+}
+
+function Read-OvsxPatInteractive {
+  $secure = Read-Host -Prompt "Paste your Open VSX token (input hidden, Enter to cancel)" -AsSecureString
+  if (-not $secure -or $secure.Length -eq 0) { return $null }
+
+  $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure)
+  try {
+    $plain = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
+  } finally {
+    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
+  }
+
+  if ([string]::IsNullOrWhiteSpace($plain)) { return $null }
+  return $plain.Trim()
+}
+
+function Save-OvsxPatToEnvFile([string] $pat) {
+  Ensure-EnvGitignored
+  $envFile = Join-Path $repoRoot '.env'
+
+  if (Test-Path $envFile) {
+    $lines = @(Get-Content $envFile)
+    if ($lines -match "^\s*$script:OpenVsxTokenEnvKey\s*=") {
+      $lines = $lines | ForEach-Object {
+        if ($_ -match "^\s*$script:OpenVsxTokenEnvKey\s*=") { "$script:OpenVsxTokenEnvKey=$pat" } else { $_ }
+      }
+    } else {
+      $lines += "$script:OpenVsxTokenEnvKey=$pat"
+    }
+  } else {
+    $lines = @("$script:OpenVsxTokenEnvKey=$pat")
+  }
+
+  Set-Content -Path $envFile -Value $lines -Encoding UTF8
+  Write-Host "  saved Open VSX token to $envFile (git-ignored)" -ForegroundColor Green
+}
+
+function Read-StorageChoiceOvsx {
+  Write-Host ""
+  Write-Host "Store this Open VSX token for next time?" -ForegroundColor White
+  Write-Host "  [1] repo .env file  ($script:OpenVsxTokenEnvKey=..., git-ignored)   [recommended]"
+  Write-Host "  [2] persistent user environment variable ($script:OpenVsxTokenEnvKey)"
+  Write-Host "  [3] don't store - use for this run only"
+  do {
+    $choice = (Read-Host "Choose 1/2/3").Trim()
+  } while ($choice -notin @('1', '2', '3'))
+  return $choice
+}
+
+function Test-OvsxAuth([string] $pat) {
+  Write-Host "  > ovsx verify-pat $script:Publisher" -ForegroundColor DarkGray
+  if ($DryRun) { return $true }
+
+  # Allow callers to inspect the last failure reason.
+  $script:LastOvsxAuthError = $null
+
+  $args = @('verify-pat', $script:Publisher)
+  if ($pat) { $args += @('-p', $pat) }
+
+  $output = Invoke-Ovsx $args 2>&1
+  $ok = ($LASTEXITCODE -eq 0)
+  if (-not $ok) {
+    $joined = @($output) -join "`n"
+    if ($joined -match 'Namespace not found') {
+      $script:LastOvsxAuthError = 'namespace-not-found'
+    } else {
+      $script:LastOvsxAuthError = 'verify-failed'
+    }
+    Write-Host "  Open VSX auth check failed. ovsx output:" -ForegroundColor Yellow
+    if ($output) {
+      $output | ForEach-Object { Write-Host "    $_" -ForegroundColor Yellow }
+    } else {
+      Write-Host "    (no output)" -ForegroundColor Yellow
+    }
+  }
+  return $ok
+}
+
+function Ensure-OvsxNamespace([string] $pat) {
+  if ($DryRun) {
+    Write-Host "  DRY RUN: would create Open VSX namespace '$script:Publisher'." -ForegroundColor Magenta
+    return
+  }
+  if (-not $pat) {
+    throw "Open VSX namespace '$script:Publisher' does not exist, but no token was provided to create it. Provide -OvsxPat / OVSX_PAT / .env and re-run."
+  }
+
+  Write-Host "  creating Open VSX namespace '$script:Publisher'..." -ForegroundColor Yellow
+  Write-Host "  > ovsx create-namespace $script:Publisher -p ****" -ForegroundColor DarkGray
+  Invoke-Ovsx @('create-namespace', $script:Publisher, '-p', $pat)
+  if ($LASTEXITCODE -ne 0) {
+    throw "Failed to create Open VSX namespace '$script:Publisher'."
+  }
+  Write-Host "  namespace created." -ForegroundColor Green
+}
+
+function Resolve-OvsxPatInteractively {
+  Show-OvsxGuidance
+
+  if (-not [Environment]::UserInteractive) {
+    throw "No valid Open VSX token and the session is non-interactive. Supply one via -OvsxPat, $script:OpenVsxTokenEnvKey, or .env (see guidance above)."
+  }
+
+  $maxTries = 3
+  for ($i = 1; $i -le $maxTries; $i++) {
+    Write-Host ""
+    $entered = Read-OvsxPatInteractive
+    if (-not $entered) {
+      throw "No Open VSX token entered. Aborting."
+    }
+
+    Write-Host "  validating token..." -ForegroundColor DarkGray
+    if (Test-OvsxAuth -pat $entered) {
+      Write-Host "  token is valid." -ForegroundColor Green
+
+      switch (Read-StorageChoiceOvsx) {
+        '1' { Save-OvsxPatToEnvFile $entered }
+        '2' {
+          [Environment]::SetEnvironmentVariable($script:OpenVsxTokenEnvKey, $entered, 'User')
+          Write-Host "  saved as persistent user env var $script:OpenVsxTokenEnvKey (new shells will see it)" -ForegroundColor Green
+        }
+        '3' { Write-Host "  not stored - using for this run only" -ForegroundColor Yellow }
+      }
+
+      Set-Item -Path ("Env:{0}" -f $script:OpenVsxTokenEnvKey) -Value $entered
+      return $entered
+    }
+
+    if ($script:LastOvsxAuthError -eq 'namespace-not-found') {
+      # Auto-heal first-time setup: create the namespace and retry verify.
+      Ensure-OvsxNamespace -pat $entered
+      Write-Host "  re-validating token after namespace creation..." -ForegroundColor DarkGray
+      if (Test-OvsxAuth -pat $entered) {
+        Write-Host "  token is valid." -ForegroundColor Green
+
+        switch (Read-StorageChoiceOvsx) {
+          '1' { Save-OvsxPatToEnvFile $entered }
+          '2' {
+            [Environment]::SetEnvironmentVariable($script:OpenVsxTokenEnvKey, $entered, 'User')
+            Write-Host "  saved as persistent user env var $script:OpenVsxTokenEnvKey (new shells will see it)" -ForegroundColor Green
+          }
+          '3' { Write-Host "  not stored - using for this run only" -ForegroundColor Yellow }
+        }
+
+        Set-Item -Path ("Env:{0}" -f $script:OpenVsxTokenEnvKey) -Value $entered
+        return $entered
+      }
+    }
+
+    Write-Host "  that token did not validate ($i/$maxTries)." -ForegroundColor Yellow
+  }
+
+  throw "Could not obtain a valid Open VSX token after $maxTries attempts."
+}
+
+function Get-VsixPath([string] $extensionDir) {
+  $releaseDir = Join-Path $extensionDir 'release'
+  if (-not (Test-Path $releaseDir)) { return $null }
+
+  $vsix = Get-ChildItem -Path $releaseDir -Filter '*.vsix' -File -ErrorAction SilentlyContinue |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+
+  if (-not $vsix) { return $null }
+  return $vsix.FullName
+}
+
 function Publish-Extension([string] $target) {
   $dir = Get-ExtensionDir -repoRoot $repoRoot -target $target
 
@@ -388,27 +687,56 @@ function Publish-Extension([string] $target) {
       return
     }
 
-    if ($Pat) {
-      # Bypass the npm scripts' tag/push and call vsce directly with the PAT.
-      # vsce:prepublish still runs (changelog + production build of both bundles).
-      Write-Host "    mode: vsce publish with PAT" -ForegroundColor Yellow
-      Run-Npm @('run', 'build:prd')
-      Write-Host "  > vsce publish -p ****" -ForegroundColor DarkGray
-      if (-not $DryRun) {
-        Invoke-Vsce @('publish', '-p', $Pat)
-        if ($LASTEXITCODE -ne 0) { throw "vsce publish failed with exit code $LASTEXITCODE." }
+    if (Want-VsMarketplace) {
+      if ($Pat) {
+        # Bypass the npm scripts' tag/push and call vsce directly with the PAT.
+        # vsce:prepublish still runs (changelog + production build of both bundles).
+        Write-Host "    mode: VS Marketplace publish (vsce) with PAT" -ForegroundColor Yellow
+        Vsce-PublishSkipDuplicate -pat $Pat
+      } elseif ($NoGitTag) {
+        Write-Host "    mode: VS Marketplace publish (vsce, no git tag)" -ForegroundColor Yellow
+        Vsce-PublishSkipDuplicate
+      } else {
+        Write-Host "    mode: VS Marketplace full publish (changelog + git tag + push + vsce publish)" -ForegroundColor Yellow
+
+        # Do the tag/push in PowerShell so we can treat "tag already exists" as non-fatal.
+        $meta = Get-PackageMeta (Get-Location).Path
+        $tag = ("{0}V{1}" -f $meta.name, $meta.version)
+
+        if (Test-GitTagExists $tag) {
+          Write-Host "  WARNING: git tag '$tag' already exists; skipping tag creation and continuing." -ForegroundColor Yellow
+        } else {
+          New-GitAnnotatedTag $tag
+          Push-GitTags
+        }
+
+        # Publish via vsce without tagging; skip duplicates instead of failing.
+        Vsce-PublishSkipDuplicate
       }
-      return
     }
 
-    if ($NoGitTag) {
-      Write-Host "    mode: vsce publish (no git tag)" -ForegroundColor Yellow
-      Run-Npm @('run', 'publishOnly')
-      return
-    }
+    if (Want-OpenVsx) {
+      Write-Host "    mode: Open VSX publish (ovsx)" -ForegroundColor Yellow
 
-    Write-Host "    mode: full publish (changelog + git tag + push + vsce publish)" -ForegroundColor Yellow
-    Run-Npm @('run', 'publish')
+      # Open VSX publishing uses a packaged VSIX.
+      Run-Npm @('run', 'package')
+
+      $vsixPath = Get-VsixPath (Get-Location).Path
+      if (-not $vsixPath) {
+        throw "Open VSX publish failed: could not find a .vsix under $(Join-Path (Get-Location).Path 'release')."
+      }
+
+      $token = Resolve-Token -key $script:OpenVsxTokenEnvKey -explicitValue $OvsxPat
+      if (-not $token) {
+        throw "Open VSX publish requires an Open VSX token. Provide it via -OvsxPat, `$env:$script:OpenVsxTokenEnvKey, or a $script:OpenVsxTokenEnvKey=... line in the repo-root .env."
+      }
+
+      Write-Host "  > ovsx publish --skip-duplicate -p **** $vsixPath" -ForegroundColor DarkGray
+      if (-not $DryRun) {
+        Invoke-Ovsx @('publish', '--skip-duplicate', '-p', $token, $vsixPath)
+        if ($LASTEXITCODE -ne 0) { throw "ovsx publish failed with exit code $LASTEXITCODE." }
+      }
+    }
   }
 
   Write-Host "    done: $target" -ForegroundColor Green
@@ -419,23 +747,29 @@ $targets = Get-Targets -Target $Target
 Write-Host "Auto-publish plan:" -ForegroundColor White
 Write-Host "  repo:     $repoRoot"
 Write-Host "  targets:  $($targets -join ', ')"
-Write-Host "  mode:     $(if ($PackageOnly) { 'package-only' } elseif ($Pat) { 'pat-publish' } elseif ($NoGitTag) { 'publish (no tag)' } else { 'full publish' })"
+Write-Host "  market:   $Marketplace"
+Write-Host "  mode:     $(if ($PackageOnly) { 'package-only' } elseif ($Pat) { 'pat-publish (vscode)' } elseif ($NoGitTag) { 'publish (no tag, vscode)' } else { 'full publish (vscode)' })"
 if ($DryRun) { Write-Host "  DRY RUN:  no commands will be executed" -ForegroundColor Magenta }
 
 # The full-publish path (no -PackageOnly/-NoGitTag/-Pat) tags and pushes, so the
 # working tree must be clean before we start.
-if (-not $PackageOnly -and -not $NoGitTag -and -not $Pat -and $CheckDirty) {
-  Assert-CleanWorkingTree
-}
+# if (Want-VsMarketplace -and -not $PackageOnly -and -not $NoGitTag -and -not $Pat -and $CheckDirty) {
+#   Assert-CleanWorkingTree
+# }
 
 # vsce is required by every mode (package + publish). Ensure it's available,
 # auto-installing globally if missing (unless -SkipVsceInstall).
 $targetDirs = @($targets | ForEach-Object { Get-ExtensionDir -repoRoot $repoRoot -target $_ })
-Ensure-Vsce -targetDirs $targetDirs
+if (Want-VsMarketplace -or $PackageOnly) {
+  Ensure-Vsce -targetDirs $targetDirs
+}
+if (Want-OpenVsx) {
+  Ensure-Ovsx
+}
 
 # Pre-flight auth check (publishing modes only). Resolve a PAT and verify it; if
 # we can't authenticate, guide the user to create/supply one and stop early.
-if (-not $PackageOnly) {
+if (Want-VsMarketplace -and -not $PackageOnly) {
   $resolvedPat = Get-ResolvedPat
   # Export so the npm 'publish'/'publishOnly' scripts (vsce publish, no -p) use it.
   if ($resolvedPat) { $env:VSCE_PAT = $resolvedPat }
@@ -445,6 +779,26 @@ if (-not $PackageOnly) {
   if (-not (Test-VsceAuth -pat $resolvedPat)) {
     # Guide the user, let them paste a PAT, validate it, and choose where to store it.
     $resolvedPat = Resolve-PatInteractively
+  }
+  Write-Host "  auth: OK" -ForegroundColor Green
+}
+
+if (Want-OpenVsx -and -not $PackageOnly) {
+  $resolvedOvsx = Resolve-Token -key $script:OpenVsxTokenEnvKey -explicitValue $OvsxPat
+  if ($resolvedOvsx) { Set-Item -Path ("Env:{0}" -f $script:OpenVsxTokenEnvKey) -Value $resolvedOvsx }
+
+  Write-Host ""
+  Write-Host "Checking Open VSX auth for namespace '$script:Publisher'..." -ForegroundColor White
+  if (-not (Test-OvsxAuth -pat $resolvedOvsx)) {
+    if ($script:LastOvsxAuthError -eq 'namespace-not-found') {
+      # First-time Open VSX: create namespace automatically (requires a token).
+      Ensure-OvsxNamespace -pat $resolvedOvsx
+      if (-not (Test-OvsxAuth -pat $resolvedOvsx)) {
+        $resolvedOvsx = Resolve-OvsxPatInteractively
+      }
+    } else {
+      $resolvedOvsx = Resolve-OvsxPatInteractively
+    }
   }
   Write-Host "  auth: OK" -ForegroundColor Green
 }

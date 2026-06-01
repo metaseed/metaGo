@@ -49,6 +49,9 @@
     ],
     "main": "./dist/extension",
     "browser": "./dist/web/extension",
+    "activationEvents": [
+        "onStartupFinished"
+    ],
     "contributes": {
         "commands": [
             {
