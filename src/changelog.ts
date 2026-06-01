@@ -1,5 +1,9 @@
 import { ChangeLogItem, ChangeLogKind } from "@landing-page/index";
 export const changeLog: ChangeLogItem[] = [
+  { kind: ChangeLogKind.VERSION,   message: `V4.5.0 - May 31, 2026`},
+  { kind: ChangeLogKind.ADDED,   message: `metago: shared tab input handling in Input Control`},
+  { kind: ChangeLogKind.ADDED,   message: `metago: metaPair: select between 'tab' keys is supported now.`},
+  { kind: ChangeLogKind.ADDED,   message: `metago: metaPair: fix: change pair from pair-char to pair-chars(i.e. '[',']') directly use one '[' or ']', not a pair.`},
   { kind: ChangeLogKind.VERSION,   message: `V4.4.0 - May 31, 2026`},
   { kind: ChangeLogKind.ADDED,   message: `pair-selection: 'space' char can be used as a selection char pair`},
   { kind: ChangeLogKind.CHANGED,   message: `all projects was changed tu use modern dev framework(esbuild, eslint9, new test harness...)`},

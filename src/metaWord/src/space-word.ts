@@ -51,7 +51,7 @@ export class MetaSpaceWord {
         )
     }
 
-    left(editor, edit, mode = Mode.Move, includeChar = false, chars = [' ', '\t']) {
+    left(editor: vscode.TextEditor, edit: vscode.TextEditorEdit, mode = Mode.Move, includeChar = false, chars = [' ', '\t']) {
         let selections: vscode.Selection[] = [];
         for (let s = 0; s < editor.selections.length; s++) {
             const selection = editor.selections[s];
@@ -61,7 +61,7 @@ export class MetaSpaceWord {
                 i--;
             }
 
-            let position: vscode.Position;
+            let position: vscode.Position = selection.active;
             const line = editor.document.lineAt(i);
             var text = line.text;
             if (i !== selection.active.line)
@@ -117,7 +117,7 @@ export class MetaSpaceWord {
                 text = editor.document.lineAt(i).text;
                 charIndex = 0;
             }
-            let position: vscode.Position;
+            let position: vscode.Position = selection.active;
 
             let findNoneSpace = false;
             let findSpace = false;

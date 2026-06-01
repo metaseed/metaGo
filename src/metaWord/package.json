@@ -37,11 +37,18 @@
     ],
     "main": "./dist/extension",
     "browser": "./dist/web/extension",
+    "activationEvents": [
+        "onStartupFinished"
+    ],
     "contributes": {
         "commands": [
             {
                 "command": "metaWord.showLandingPage",
                 "title": "xx: metaWord.showLandingPage.ChangeLog, what's new"
+            },
+            {
+                "command": "metaGo.spaceMode.start",
+                "title": "metaGo: Enter Space mode (move/select/delete by space-word)"
             },
             {
                 "command": "metaGo.cursorSpaceWordLeft",
@@ -77,6 +84,66 @@
             }
         ],
         "keybindings": [
+            {
+                "command": "metaGo.spaceMode.start",
+                "key": "alt+;",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "metaGo.spaceMode.exit",
+                "key": "escape",
+                "when": "editorTextFocus && metaGoSpaceMode"
+            },
+            {
+                "command": "metaGo.spaceMode.left",
+                "key": "left",
+                "when": "editorTextFocus && metaGoSpaceMode"
+            },
+            {
+                "command": "metaGo.spaceMode.right",
+                "key": "right",
+                "when": "editorTextFocus && metaGoSpaceMode"
+            },
+            {
+                "command": "metaGo.spaceMode.up",
+                "key": "up",
+                "when": "editorTextFocus && metaGoSpaceMode"
+            },
+            {
+                "command": "metaGo.spaceMode.down",
+                "key": "down",
+                "when": "editorTextFocus && metaGoSpaceMode"
+            },
+            {
+                "command": "metaGo.spaceMode.leftSelect",
+                "key": "shift+left",
+                "when": "editorTextFocus && metaGoSpaceMode"
+            },
+            {
+                "command": "metaGo.spaceMode.rightSelect",
+                "key": "shift+right",
+                "when": "editorTextFocus && metaGoSpaceMode"
+            },
+            {
+                "command": "metaGo.spaceMode.upSelect",
+                "key": "shift+up",
+                "when": "editorTextFocus && metaGoSpaceMode"
+            },
+            {
+                "command": "metaGo.spaceMode.downSelect",
+                "key": "shift+down",
+                "when": "editorTextFocus && metaGoSpaceMode"
+            },
+            {
+                "command": "metaGo.spaceMode.deleteLeft",
+                "key": "backspace",
+                "when": "editorTextFocus && metaGoSpaceMode && !editorReadonly"
+            },
+            {
+                "command": "metaGo.spaceMode.deleteRight",
+                "key": "delete",
+                "when": "editorTextFocus && metaGoSpaceMode && !editorReadonly"
+            },
             {
                 "key": "shift+backspace",
                 "command": "deleteAllLeft",

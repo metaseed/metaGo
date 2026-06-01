@@ -9,8 +9,8 @@ Give me a  [github⭐](https://github.com/metaseed/metago), or even [sponsor me 
 |word type|description|examples|
 |---|---|---|
 |SpaceWord(BigWord)| characters separated by 'space'('Space' or 'Tab')|"abc $1024 (apple,pineapple...)" are three SpaceWords
-|Word|a group of alphanumeric character with underscore and (A-Za-z0-9_) or a group of other symbol characters(i.e. ~!@#$%^&*()-+:;"',.<>/?\[]{})|"abc $1024 (apple,pineapple...)" are words seperated by '/' as "abc/ $/1024/ (/apple/,/pineapple/...)"
-|WordPart(SmallWord)| a group of spaces, a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters|
+|Word|a group of alphanumeric character with underscore:(A-Za-z0-9_) or a group of other symbol characters:~!@#$%^&*()-+:;"',.<>/?\[]{} **note: include 'space'**|"abc $1024 (apple,pineapple...)" are words seperated by '/' as "abc/ $/1024/ (/apple/,/pineapple/...)"
+|WordPart(SmallWord)| a part in a group of CamelCase (A-Za-z0-9) characters, a part of '_' connected (A-Za-z0-9) characters, or a group of other symbol characters| a group of spaces; WordPart: Word/Part; word-part: word/-part/
 
 * <kbd>shift</kbd>+<kbd>backspace</kbd>: delete all from the cursor to the line start.
 * <kbd>shift</kbd>+<kbd>del</kbd>: delete all from the cursor to the line end.
@@ -20,8 +20,10 @@ Give me a  [github⭐](https://github.com/metaseed/metago), or even [sponsor me 
 > we use the default vscode 'Word' commands
 
 > **note:**
-> default vscode cursorWordEndRight command would do this:
-> '|console|.log|(err|)|' and 'a|+=| 3| +5|-3| +| 7|' (if there is only one symbol character before the next word, the cursor would not stop after the symbol)
+> default vscode cursorWordEndRight command would do this: \
+> `console.log(err)`: '|console|.log|(err|)|' \
+> `a+= 3 +5-3 + 7`:'|a|+=| 3| +5|-3| +| 7|'(from left) or 'a|+= |3 |+|5|-|3 |+ |7|'(from right)\
+> (if there is only one symbol character before the next word, the cursor would not stop after the symbol)
 >
 > default vscode cursorWordStartLeft command would do this:
 > 'this|.|is|.|a|.|test' and ' text| a|+=| 3| +|5|-|3| +| 7|' (work as expected)
@@ -54,6 +56,17 @@ character
     > on Mac use <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>delete</kbd>
 
 ### SpaceWord commands to moveCursor/select/delete word separated by space:
+
+#### new design
+<kbd>alt+;</kbd> enter space mode, then:
+* move: <kbd>arrow: left/right/up/down</kbd> to move between spaces;
+  > note: the up/down is also work: up -> last space in line above; down -> first space in line below
+* select: <kbd>shift + arrow keys</kbd> to select; up/down same as move's logic.
+* delete: <kbd>backspace</kbd> to delete backward; <kbd>delete</kbd> to delete to another direction.
+* <kbd>escape</kbd> exits the mode.
+* any other key(except: arrow, delete/backspace) escape the mode, and the key also take effect in editor.
+
+#### old design not used, because the shortcuts are used by win11 now
 * <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>left/right</kbd>: move cursor left/right by one space-word and set cursor at the begin/end of the word.
 * <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>left/right</kbd>: select to left/right by one space-word.
 * <kbd>win/cmd</kbd>+<kbd>alt</kbd>+<kbd>backspace</kbd>: delete one space-word left.

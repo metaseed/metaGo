@@ -12,7 +12,7 @@
             "type": "npm",
             "script": "build",
             "group": "build",
-            "problemMatcher": ["$ts-webpack", "$tslint-webpack"] // install vscode extension: TypeScript + Webpack Problem Matchers
+            "problemMatcher": []
         },
         {
             "type": "npm",
@@ -22,7 +22,101 @@
                 "isDefault": true
             },
             "isBackground": true,
-            "problemMatcher": ["$ts-webpack-watch", "$tslint-webpack-watch"]
+            "problemMatcher": {
+                "owner": "esbuild",
+                "fileLocation": "absolute",
+                "pattern": [
+                    {
+                        "regexp": "^✘ \\[ERROR\\] (.+)$",
+                        "message": 1
+                    },
+                    {
+                        "regexp": "^\\s+(.+):(\\d+):(\\d+):$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3
+                    }
+                ],
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^\\[watch\\] build started",
+                    "endsPattern": "^\\[watch\\] build finished"
+                }
+            }
+        },
+        {
+            "type": "npm",
+            "script": "build",
+            "path": "src/metaWord/",
+            "label": "metaWord: build",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "watch",
+            "path": "src/metaWord/",
+            "label": "metaWord: watch",
+            "isBackground": true,
+            "group": "build",
+            "problemMatcher": {
+                "owner": "esbuild",
+                "fileLocation": "absolute",
+                "pattern": [
+                    {
+                        "regexp": "^✘ \\[ERROR\\] (.+)$",
+                        "message": 1
+                    },
+                    {
+                        "regexp": "^\\s+(.+):(\\d+):(\\d+):$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3
+                    }
+                ],
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^\\[watch\\] build started",
+                    "endsPattern": "^\\[watch\\] build finished"
+                }
+            }
+        },
+        {
+            "type": "npm",
+            "script": "build",
+            "path": "src/metaJump/",
+            "label": "metaJump: build",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "watch",
+            "path": "src/metaJump/",
+            "label": "metaJump: watch",
+            "isBackground": true,
+            "group": "build",
+            "problemMatcher": {
+                "owner": "esbuild",
+                "fileLocation": "absolute",
+                "pattern": [
+                    {
+                        "regexp": "^✘ \\[ERROR\\] (.+)$",
+                        "message": 1
+                    },
+                    {
+                        "regexp": "^\\s+(.+):(\\d+):(\\d+):$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3
+                    }
+                ],
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^\\[watch\\] build started",
+                    "endsPattern": "^\\[watch\\] build finished"
+                }
+            }
         }
     ]
 }

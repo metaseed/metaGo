@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import { Config } from "./config";
 import { LandingPage } from './landing-page';
 import {MetaSpaceWord} from './space-word';
+import { SpaceMode } from './space-mode';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -17,6 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
         
     });
     let spaceWord = new MetaSpaceWord(context, config);
+    new SpaceMode(context);
 }
 
 // this method is called when your extension is deactivated

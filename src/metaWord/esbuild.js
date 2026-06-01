@@ -78,6 +78,24 @@ function resolveCandidate(candidate) {
   return null;
 }
 
+// emits markers that the VS Code esbuild background problem matcher keys on,
+// so `watch` works as a preLaunchTask (launch waits for the first build to finish).
+function esbuildProblemMatcherPlugin() {
+  return {
+    name: 'esbuild-problem-matcher',
+    setup(build) {
+      build.onStart(() => console.log('[watch] build started'));
+      build.onEnd((result) => {
+        result.errors.forEach(({ text, location }) => {
+          console.error(`✘ [ERROR] ${text}`);
+          if (location) console.error(`    ${path.resolve(location.file)}:${location.line}:${location.column}:`);
+        });
+        console.log('[watch] build finished');
+      });
+    },
+  };
+}
+
 async function buildAll({ production, watch }) {
   const tsconfig = path.resolve(__dirname, 'tsconfig.json');
   const shared = {
@@ -100,6 +118,7 @@ async function buildAll({ production, watch }) {
     format: 'cjs',
     outfile: path.resolve(__dirname, 'dist', 'extension.js'),
     external: ['vscode'],
+    plugins: [...shared.plugins, esbuildProblemMatcherPlugin()],
   };
 
   const webOptions = {
