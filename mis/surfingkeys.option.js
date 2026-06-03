@@ -183,11 +183,10 @@ s: scrollable element
 * vim-like mark, char-bookmarks: `m,<char>` to add a char-bookmark for current page, `''<char>` to open the char-bookmark.
     note in doc, it use <ctrl-shift> + <char> in bookmark ominibar ('b' ), to a char-bookmark, but it maybe conflict with browser's default ctrl-shift+char shortcut, so if want modify a url, we just go to the option config page(eo), and open dev tool(f12), then goto 'extension storage' -> 'local' -> marks to edit it directly.
 */
-
+// clickKey = 'q';
 keyMaps = [
     // format: [usedSequence, originalSequence, isRemoveOriginal, newAnnotation]
     // isRemoveOriginal: default false, i.e. ['a', 'b']
-    //      but default to true if !usedSequence && !!originalSequence. i.e. [,'r']
     // newAnnotation: if start with '#groupIndex', can put the command into the 'groupIndex' group in help popup.
     // Group Index:
     // 0:help, 1: Mouse Click, 2: Scroll, 3: Tabs, 4: Page Navigation, 5: Sessions, 6: Search Selected with, 7: Clipboard, 8: Omnibar,
@@ -195,7 +194,7 @@ keyMaps = [
 
     // we can put all unmap in the beginning, note: later the unmapped key is still usable for remapping.
     ['<F1>', '?', true, `#0 Show Help Page`], // toggle help popup
-
+    // [, 'f'], // Unmap 'f' (Link Hints) to free it up for other mappings
     [, 'r'], // r is originally as reload current page, use 'rr'(use f5) for reload, so unmap 'r' as make it a verb of reload, reset
     [, 'u'],//api.unmap('u'); // u is used for undo
     // what is the diff? with ctrl-`
@@ -535,6 +534,12 @@ keyMaps.forEach(map => {
     reMap(map[0], map[1], map[2], undefined, map[3]);
 });
 // ['xx', 'x', true] not work, so work around with below or use temp var like the["''", "'"] above.
+
+// Workaround for 'f' key remapping not working reliably
+// api.mapkey(clickKey, '#1Click a link with hint', function() {
+//     // While api.clickLink() is a wrapper, calling the Hints API directly is the most reliable way to trigger the "Hint Mode" programmatically in recent versions of Surfingkeys. The "a" parameter specifies the hint type (links), and dispatch handles the click action, preserving the features you mentioned in your comments (like Shift to flip and Space to hide).
+//     api.Hints.create("a", api.Hints.dispatch);
+// });
 // api.mapkey('xx', '#3Close current', function () { api.RUNTIME("closeTab") });
 // ['rr', 'r', true] not work, so work around
 // api.mapkey('rr', '#4Reload the page', function () { api.RUNTIME("reloadTab", { nocache: false }); }); // not used use F5 or ctrl-r instead.
@@ -596,7 +601,7 @@ api.mapkey('A', '#8Open llm chat', function() {
 });
 
 api.imapkey('<Ctrl-q>', 'Open link hints', function() {
-    api.Normal.feedkeys('f');
+    api.Normal.feedkeys(clickKey);
 });
 // set theme
 settings.theme = `
